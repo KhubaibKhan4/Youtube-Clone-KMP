@@ -1,4 +1,4 @@
-package org.company.app.utils.usecases
+package org.company.app.domain.usecases
 
 import org.company.app.data.model.Youtube
 

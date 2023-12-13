@@ -13,7 +13,7 @@ data class Snippet(
     @SerialName("channelTitle")
     val channelTitle: String,
     @SerialName("defaultAudioLanguage")
-    val defaultAudioLanguage: String,
+    val defaultAudioLanguage: String?,
     @SerialName("defaultLanguage")
     val defaultLanguage: String?,
     @SerialName("description")

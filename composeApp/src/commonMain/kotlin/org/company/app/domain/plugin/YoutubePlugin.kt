@@ -1,7 +1,6 @@
-package org.company.app.data.plugin
+package org.company.app.domain.plugin
 
 import org.company.app.data.model.Youtube
-import org.company.app.utils.usecases.YoutubeState
 
 interface YoutubePlugin {
     suspend fun getVideoList() : Youtube

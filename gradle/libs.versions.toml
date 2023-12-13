@@ -46,6 +46,8 @@ com-google-code-gson = { module = "com.google.code.gson:gson", version.ref = "gs
 io-ktor-ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+voyager-tab-navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
 
 

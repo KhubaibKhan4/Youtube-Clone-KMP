@@ -11,7 +11,7 @@ data class Thumbnails(
     @SerialName("high")
     val high: High,
     @SerialName("maxres")
-    val maxres: Maxres,
+    val maxres: Maxres?,
     @SerialName("medium")
     val medium: Medium,
     @SerialName("standard")

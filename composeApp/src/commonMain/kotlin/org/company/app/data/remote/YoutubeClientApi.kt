@@ -40,7 +40,7 @@ object YoutubeClientApi {
     }
 
     suspend fun getVideoList(): Youtube {
-        val url = BASE_URL + "videos?part=snippet&chart=mostPopular&regionCode=us&key=$API_KEY"
+        val url = BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics&chart=mostPopular&regionCode=us&maxResults=2000&key=$API_KEY"
         return client.get(url).body()
     }
 }

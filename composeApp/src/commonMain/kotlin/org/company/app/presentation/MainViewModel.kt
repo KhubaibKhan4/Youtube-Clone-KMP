@@ -1,12 +1,12 @@
-package org.company.app.viewmodels
+package org.company.app.presentation
 
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.company.app.repository.Repository
-import org.company.app.utils.usecases.YoutubeState
+import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.YoutubeState
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
