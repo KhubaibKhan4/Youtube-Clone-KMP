@@ -1,4 +1,4 @@
-package org.company.app.data.model
+package org.company.app.data.model.videos
 
 
 import kotlinx.serialization.SerialName

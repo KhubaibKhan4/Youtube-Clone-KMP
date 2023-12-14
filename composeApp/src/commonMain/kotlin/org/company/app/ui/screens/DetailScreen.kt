@@ -1,5 +1,6 @@
 package org.company.app.ui.screens
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,26 +28,44 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import com.seiko.imageloader.rememberImagePainter
+import io.kamel.core.Resource
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import org.company.app.data.model.Item
+import org.company.app.data.model.videos.Item
+import org.company.app.data.model.videos.Youtube
+import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.YoutubeState
+import org.company.app.presentation.MainViewModel
+import org.company.app.ui.components.ErrorBox
+import org.company.app.ui.components.LoadingBox
+import org.company.app.ui.components.VideosList
 
 class DetailScreen(
     private val video: Item
@@ -55,26 +74,59 @@ class DetailScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
+        val repository = remember { Repository() }
+        val viewModel = remember { MainViewModel(repository) }
+        var state by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
+        var data by remember { mutableStateOf<Youtube?>(null) }
+
+        LaunchedEffect(Unit) {
+            viewModel.getVideosList()
+        }
+        state = viewModel.videos.collectAsState().value
+
+        when (state) {
+            is YoutubeState.LOADING -> {
+                LoadingBox()
+            }
+
+            is YoutubeState.SUCCESS -> {
+                var data = (state as YoutubeState.SUCCESS).youtube
+                data = data
+
+            }
+
+            is YoutubeState.ERROR -> {
+                val error = (state as YoutubeState.ERROR).error
+                ErrorBox(error)
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
         ) {
             // Thumbnail
-            Image(
-                painter = rememberImagePainter(video.snippet.thumbnails.medium.url),
+            val image: Resource<Painter> = asyncPainterResource(data = video.snippet.thumbnails.high.url)
+            KamelImage(
+                resource = image,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(200.dp),
+                onLoading = {
+                    CircularProgressIndicator(it)
+                },
+                onFailure = {
+                    Text(text = "Failed to Load Image")
+                },
+                animationSpec = tween()
             )
-
             // Title and Arrow Down Icon
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -96,7 +148,7 @@ class DetailScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -123,6 +175,7 @@ class DetailScreen(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 16.dp,vertical = 8.dp),
             ) {
                 // Thumbs Up
                 Card(
@@ -258,12 +311,6 @@ class DetailScreen(
                             modifier = Modifier.size(24.dp),
                             tint = Color.Black
                         )
-
-                        Text(
-                            text = "Save",
-                            fontSize = 14.sp,
-                            color = Color.Black
-                        )
                     }
                 }
             }
@@ -285,7 +332,7 @@ class DetailScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(horizontal = 16.dp,vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -338,7 +385,7 @@ class DetailScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(horizontal = 16.dp,vertical = 8.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -386,15 +433,9 @@ class DetailScreen(
                 text = "More Videos",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
-                modifier = Modifier.padding(vertical = 8.dp)
+                modifier = Modifier.padding(horizontal = 16.dp,vertical = 8.dp),
             )
-
-            LazyColumn {
-                items(10) { index ->
-                    // Replace this with actual content for each video in the list
-                    Text(text = "Video $index")
-                }
-            }
+            data?.let { VideosList(it) }
         }
     }
 }

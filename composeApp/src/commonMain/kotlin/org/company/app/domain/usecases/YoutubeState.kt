@@ -1,6 +1,6 @@
 package org.company.app.domain.usecases
 
-import org.company.app.data.model.Youtube
+import org.company.app.data.model.videos.Youtube
 
 sealed class YoutubeState {
     object LOADING : YoutubeState()

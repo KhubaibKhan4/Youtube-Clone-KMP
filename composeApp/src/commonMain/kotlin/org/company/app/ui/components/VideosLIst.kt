@@ -1,5 +1,6 @@
 package org.company.app.ui.components
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,12 +43,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
+import io.kamel.core.Resource
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import org.company.app.data.model.Item
-import org.company.app.data.model.Youtube
+import org.company.app.data.model.videos.Item
+import org.company.app.data.model.videos.Youtube
 import org.company.app.ui.screens.DetailScreen
 
 @Composable
@@ -80,13 +86,21 @@ fun VideoItemCard(video: Item) {
     ) {
         Column {
             Box(modifier = Modifier.fillMaxWidth()) {
-                Image(
-                    painter = rememberImagePainter(video.snippet.thumbnails.medium.url),
+                val image: Resource<Painter> = asyncPainterResource(data = video.snippet.thumbnails.high.url)
+                KamelImage(
+                    resource = image,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
+                        .height(200.dp),
+                    onLoading = {
+                        CircularProgressIndicator(it)
+                    },
+                    onFailure = {
+                        Text(text = "Failed to Load Image")
+                    },
+                    animationSpec = tween()
                 )
 
                 // Video Total Time
@@ -114,8 +128,9 @@ fun VideoItemCard(video: Item) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Channel Image
-                Image(
-                    painter = rememberImagePainter(video.snippet.thumbnails.default.url),
+                val image: Resource<Painter> = asyncPainterResource(data = video.snippet.thumbnails.high.url)
+                KamelImage(
+                    resource = image,
                     contentDescription = null,
                     modifier = Modifier
                         .size(40.dp)

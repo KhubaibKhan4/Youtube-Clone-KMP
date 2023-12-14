@@ -1,11 +1,11 @@
-package org.company.app.data.model
+package org.company.app.data.model.videos
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Standard(
+data class Maxres(
     @SerialName("height")
     val height: Int,
     @SerialName("url")
