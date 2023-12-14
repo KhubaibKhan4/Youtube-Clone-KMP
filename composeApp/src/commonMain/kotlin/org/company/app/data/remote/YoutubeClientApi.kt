@@ -45,8 +45,8 @@ object YoutubeClientApi {
         return client.get(url).body()
     }
 
-    suspend fun getRelevance(): Youtube {
-        val url = BASE_URL + "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&regionCode=us&order=relevance&key=AIzaSyAikz1lBgiCVZRfHEvKBhSExrcVyhrKdvE"
+    suspend fun getRelevance(id: String): Youtube {
+        val url = BASE_URL + "search?part=snippet&type=video&regionCode=us&order=relevance&key=AIzaSyAikz1lBgiCVZRfHEvKBhSExrcVyhrKdvE"
         return client.get(url).body()
     }
 }

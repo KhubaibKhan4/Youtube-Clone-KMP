@@ -10,7 +10,7 @@ class Repository : YoutubePlugin {
        return YoutubeClientApi.getVideoList()
     }
 
-    override suspend fun getRelevance(): Youtube {
-        return YoutubeClientApi.getRelevance()
+    override suspend fun getRelevance(id: String): Youtube {
+        return YoutubeClientApi.getRelevance(id)
     }
 }

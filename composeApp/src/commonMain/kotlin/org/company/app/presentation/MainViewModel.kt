@@ -32,11 +32,11 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getRelevance() {
+    fun getRelevance(id: String) {
         viewModelScope.launch {
             _relevance.value = YoutubeState.LOADING
             try {
-                val response = repository.getRelevance()
+                val response = repository.getRelevance(id)
                 _relevance.value = YoutubeState.SUCCESS(response)
             } catch (e: Exception) {
                 val error = e.message.toString()

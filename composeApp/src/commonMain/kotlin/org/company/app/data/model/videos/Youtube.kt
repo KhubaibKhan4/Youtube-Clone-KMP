@@ -15,5 +15,5 @@ data class Youtube(
     @SerialName("nextPageToken")
     val nextPageToken: String,
     @SerialName("pageInfo")
-    val pageInfo: PageInfo
+    val pageInfo: PageInfo,
 )

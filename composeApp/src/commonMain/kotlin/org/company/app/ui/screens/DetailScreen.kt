@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -65,10 +64,10 @@ import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
-import org.company.app.ui.components.VideosList
+import org.company.app.ui.components.RelevanceList
 
 class DetailScreen(
-    private val video: Item
+    private val video: Item,
 ) : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -77,12 +76,12 @@ class DetailScreen(
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
         var state by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
-        var data by remember { mutableStateOf<Youtube?>(null) }
+        var relevanceData by remember { mutableStateOf<Youtube?>(null) }
 
         LaunchedEffect(Unit) {
-            viewModel.getVideosList()
+            viewModel.getRelevance(video.id)
         }
-        state = viewModel.videos.collectAsState().value
+        state = viewModel.relevance.collectAsState().value
 
         when (state) {
             is YoutubeState.LOADING -> {
@@ -91,7 +90,7 @@ class DetailScreen(
 
             is YoutubeState.SUCCESS -> {
                 var data = (state as YoutubeState.SUCCESS).youtube
-                data = data
+                relevanceData = data
 
             }
 
@@ -435,7 +434,7 @@ class DetailScreen(
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 16.dp,vertical = 8.dp),
             )
-            data?.let { VideosList(it) }
+            relevanceData?.let { RelevanceList(it) }
         }
     }
 }
