@@ -1,11 +1,11 @@
-package org.company.app.data.model.videos
+package org.company.app.data.model.relevance
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Youtube(
+data class Relevance(
     @SerialName("etag")
     val etag: String,
     @SerialName("items")
@@ -13,9 +13,9 @@ data class Youtube(
     @SerialName("kind")
     val kind: String,
     @SerialName("nextPageToken")
-    val nextPageToken: String? = null,
-    @SerialName("regionCode")
-    val regionCode: String? = null,
+    val nextPageToken: String,
     @SerialName("pageInfo")
     val pageInfo: PageInfo,
+    @SerialName("regionCode")
+    val regionCode: String
 )

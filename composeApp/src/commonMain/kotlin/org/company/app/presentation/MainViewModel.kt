@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.company.app.data.model.videos.Item
 import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.YoutubeState
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
@@ -17,6 +19,14 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     //Relevance
     private val _relevance = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
     val relevance: StateFlow<YoutubeState> = _relevance.asStateFlow()
+
+    //Channel Details
+    private val _channel = MutableStateFlow<ChannelState>(ChannelState.LOADING)
+    val channelDetails : StateFlow<ChannelState> = _channel.asStateFlow()
+
+    //Relevance Videos
+    private val _relevance_videos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    val relevanceVideos : StateFlow<YoutubeState> = _relevance_videos.asStateFlow()
 
     fun getVideosList() {
         viewModelScope.launch {
@@ -32,15 +42,43 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getRelevance(id: String) {
+    fun getRelevance() {
         viewModelScope.launch {
             _relevance.value = YoutubeState.LOADING
             try {
-                val response = repository.getRelevance(id)
+                val response = repository.getRelevance()
                 _relevance.value = YoutubeState.SUCCESS(response)
             } catch (e: Exception) {
                 val error = e.message.toString()
                 _relevance.value = YoutubeState.ERROR(error)
+            }
+
+        }
+    }
+
+    fun getChannelDetails(channelId: String) {
+        viewModelScope.launch {
+            _channel.value = ChannelState.LOADING
+            try {
+                val response = repository.getChannelDetail(channelId)
+                _channel.value = ChannelState.SUCCESS(response)
+            } catch (e: Exception) {
+                val error = e.message.toString()
+                _channel.value = ChannelState.ERROR(error)
+            }
+
+        }
+    }
+
+    fun getRelevanceVideos() {
+        viewModelScope.launch {
+            _relevance_videos.value = YoutubeState.LOADING
+            try {
+                val response = repository.getRelevanceVideos()
+                _relevance_videos.value = YoutubeState.SUCCESS(response)
+            } catch (e: Exception) {
+                val error = e.message.toString()
+                _relevance_videos.value = YoutubeState.ERROR(error)
             }
 
         }

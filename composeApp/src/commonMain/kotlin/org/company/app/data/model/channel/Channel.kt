@@ -1,21 +1,17 @@
-package org.company.app.data.model.videos
+package org.company.app.data.model.channel
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Youtube(
+data class Channel(
     @SerialName("etag")
     val etag: String,
     @SerialName("items")
     val items: List<Item>,
     @SerialName("kind")
     val kind: String,
-    @SerialName("nextPageToken")
-    val nextPageToken: String? = null,
-    @SerialName("regionCode")
-    val regionCode: String? = null,
     @SerialName("pageInfo")
-    val pageInfo: PageInfo,
+    val pageInfo: PageInfo
 )
