@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -58,7 +57,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -73,9 +71,9 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.company.app.VideoPlayer
 import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.videos.Item
-import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.YoutubeState
@@ -95,7 +93,6 @@ class DetailScreen(
         val viewModel = remember { MainViewModel(repository) }
         var state by remember { mutableStateOf<ChannelState>(ChannelState.LOADING) }
         var stateRelevance by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
-        var relevanceData by remember { mutableStateOf<Youtube?>(null) }
         var channelData by remember { mutableStateOf<Channel?>(null) }
         var descriptionEnabled by remember { mutableStateOf(false) }
 
@@ -123,28 +120,17 @@ class DetailScreen(
             }
         }
 
-        when (stateRelevance) {
-            is YoutubeState.LOADING -> {
-                LoadingBox()
-            }
-
-            is YoutubeState.SUCCESS -> {
-                var data = (stateRelevance as YoutubeState.SUCCESS).youtube
-                relevanceData = data
-
-            }
-
-            is YoutubeState.ERROR -> {
-                val error = (stateRelevance as YoutubeState.ERROR).error
-                // ErrorBox(error)
-            }
-        }
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             // Thumbnail
+            VideoPlayer(
+                modifier = Modifier.fillMaxWidth()
+                    .height(200.dp),
+                url = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+            )
             val image: Resource<Painter> =
                 asyncPainterResource(data = video.snippet.thumbnails.high.url)
             KamelImage(
@@ -483,7 +469,7 @@ class DetailScreen(
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             )
-            relevanceData?.let { RelevanceList(it) }
+            RelevanceList(stateRelevance)
 
             if (descriptionEnabled) {
                 ModalBottomSheet(
@@ -491,8 +477,7 @@ class DetailScreen(
                         descriptionEnabled = false
                     },
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(645.dp),
+                        .fillMaxWidth(),
                     sheetState = rememberModalBottomSheetState(
                         skipPartiallyExpanded = true,
                         confirmValueChange = { true }
@@ -685,7 +670,10 @@ class DetailScreen(
                                 fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 8.dp), // Adjust padding as needed
+                                    .padding(
+                                        horizontal = 16.dp,
+                                        vertical = 8.dp
+                                    ), // Adjust padding as needed
                                 maxLines = 1,
                                 textAlign = TextAlign.Justify,
                                 overflow = TextOverflow.Ellipsis,
@@ -697,7 +685,10 @@ class DetailScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 4.dp), // Adjust padding as needed
+                                .padding(
+                                    horizontal = 8.dp,
+                                    vertical = 4.dp
+                                ), // Adjust padding as needed
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {

@@ -74,12 +74,16 @@ kotlin {
             implementation(libs.compose.uitooling)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.media3.exoplayer)
+            implementation(libs.androidx.media3.exoplayer.dash)
+            implementation(libs.androidx.media3.ui)
         }
 
         jvmMain.dependencies {
             implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.vlcj)
         }
 
         jsMain.dependencies {

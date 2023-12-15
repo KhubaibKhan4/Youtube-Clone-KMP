@@ -1,7 +1,6 @@
 package org.company.app.ui.components
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,15 +21,32 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.Block
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Downloading
+import androidx.compose.material.icons.outlined.IosShare
+import androidx.compose.material.icons.outlined.PlaylistAdd
+import androidx.compose.material.icons.outlined.SaveAlt
+import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.outlined.Timelapse
+import androidx.compose.material.icons.outlined.Timeline
+import androidx.compose.material.icons.outlined.WatchLater
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,7 +58,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -70,9 +85,11 @@ fun VideosList(youtube: Youtube) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VideoItemCard(video: Item) {
     val navigator = LocalNavigator.current
+    var moreVertEnable by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -86,7 +103,8 @@ fun VideoItemCard(video: Item) {
     ) {
         Column {
             Box(modifier = Modifier.fillMaxWidth()) {
-                val image: Resource<Painter> = asyncPainterResource(data = video.snippet.thumbnails.high.url)
+                val image: Resource<Painter> =
+                    asyncPainterResource(data = video.snippet.thumbnails.high.url)
                 KamelImage(
                     resource = image,
                     contentDescription = null,
@@ -128,7 +146,8 @@ fun VideoItemCard(video: Item) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Channel Image
-                val image: Resource<Painter> = asyncPainterResource(data = video.snippet.thumbnails.high.url)
+                val image: Resource<Painter> =
+                    asyncPainterResource(data = video.snippet.thumbnails.high.url)
                 KamelImage(
                     resource = image,
                     contentDescription = null,
@@ -177,11 +196,106 @@ fun VideoItemCard(video: Item) {
                 Spacer(modifier = Modifier.width(8.dp))
 
                 // Vertical Three Dots Icon
-                IconButton(onClick = {}) {
+                IconButton(onClick = {
+                    moreVertEnable = !moreVertEnable
+                }) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = null,
                         modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+        }
+    }
+    if (moreVertEnable) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                moreVertEnable = false
+            },
+            modifier = Modifier.fillMaxWidth(),
+            sheetState = androidx.compose.material3.rememberModalBottomSheetState(),
+            shape = RoundedCornerShape(4.dp),
+            contentColor = Color.Black,  // Adjust color as needed
+            scrimColor = Color.Transparent,
+            tonalElevation = 4.dp,
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(imageVector = Icons.Outlined.WatchLater, contentDescription = "Time")
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Save to Watch later",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(imageVector = Icons.Outlined.PlaylistAdd, contentDescription = "Time")
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Save to playlist",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(imageVector = Icons.Outlined.Download, contentDescription = "Time")
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Download video",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(imageVector = Icons.Outlined.Share, contentDescription = "Time")
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Share",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(imageVector = Icons.Outlined.Block, contentDescription = "Time")
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Not interested",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
                     )
                 }
             }
