@@ -21,7 +21,7 @@ internal actual fun openUrl(url: String?) {
 }
 
 @Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?) {
+internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail:String?) {
     val mediaPlayerComponent = remember { initializeMediaPlayerComponent() }
     val mediaPlayer = remember { mediaPlayerComponent.mediaPlayer() }
 

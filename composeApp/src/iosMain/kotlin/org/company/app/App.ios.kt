@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
+import kotlinx.cinterop.CValue
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
 
@@ -13,7 +14,7 @@ internal actual fun openUrl(url: String?) {
 }
 
 @Composable
-internal actual fun VideoPlayer(modifier: Modifier,url: String?){
+internal actual fun VideoPlayer(modifier: Modifier,url: String?,thumbnail:String?){
 
     val player = remember { AVPlayer(uRL = NSURL.URLWithString(url)!!) }
     val playerLayer = remember { AVPlayerLayer() }

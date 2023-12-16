@@ -3,17 +3,22 @@ package org.company.app
 import android.app.Application
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.widget.MediaController
 import android.widget.VideoView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import org.company.app.ui.CustomVideoPlayer
+import org.company.app.ui.YoutubeVideoPlayer
 
 class AndroidApp : Application() {
     companion object {
@@ -44,40 +49,39 @@ internal actual fun openUrl(url: String?) {
     }
     AndroidApp.INSTANCE.startActivity(intent)
 }
-@Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?) {
+/*@Composable
+internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     AndroidView(
         modifier = modifier,
         factory = { context ->
             VideoView(context).apply {
-                try {
-                    setVideoURI(Uri.parse(url)) // Use setVideoURI instead of setVideoPath
-                    val mediaController = MediaController(context)
-                    mediaController.setAnchorView(this)
-                    setMediaController(mediaController)
-
-                    // Introduce a delay before calling start
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        start()
-                    }, 1000) // 1000 milliseconds delay
-                } catch (e: Exception) {
-                    Log.e("VideoPlayer", "Error setting up video playback: ${e.message}")
-                }
-
-                setOnErrorListener { mp, what, extra ->
-                    Log.e("VideoPlayer", "Error during playback - what: $what, extra: $extra")
-                    true // Return true to indicate that the error is handled
-                }
-
-                setOnPreparedListener {
-                    Log.d("VideoPlayer", "Video prepared successfully")
-                }
-
-                setOnCompletionListener {
-                    Log.d("VideoPlayer", "Video playback completed")
-                }
+                setVideoPath(url)
+                val mediaController = MediaController(context)
+                mediaController.setAnchorView(this)
+                setMediaController(mediaController)
+                start()
             }
         },
-        update = {}
+        update = {})
+}*/
+@RequiresApi(Build.VERSION_CODES.S)
+@Composable
+internal actual fun VideoPlayer(modifier: Modifier,url: String?, thumbnail:String?){
+    var isPlaying by remember { mutableStateOf(false) }
+    CustomVideoPlayer(
+        modifier = modifier,
+        videoUrl = url,
+        thumbnailResId = thumbnail.toString(),
+        isPlaying = isPlaying,
+        onClickPlay = {
+            // Toggle the play state
+            isPlaying = !isPlaying
+        }
     )
 }
+
+//@RequiresApi(Build.VERSION_CODES.S)
+//@Composable
+//internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
+//    YoutubeVideoPlayer(youtubeURL = url)
+//}

@@ -123,4 +123,4 @@ fun RowScope.TabItem(tab: Tab) {
 
 internal expect fun openUrl(url: String?)
 @Composable
-internal expect fun VideoPlayer(modifier: Modifier,url: String?)
+internal expect fun VideoPlayer(modifier: Modifier,url: String?, thumbnail:String?)

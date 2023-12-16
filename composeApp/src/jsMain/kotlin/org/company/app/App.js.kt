@@ -8,6 +8,6 @@ internal actual fun openUrl(url: String?) {
     url?.let { window.open(it) }
 }
 @Composable
-internal actual fun VideoPlayer(modifier: Modifier,url: String?){
+internal actual fun VideoPlayer(modifier: Modifier,url: String?,thumbnail:String?){
 
 }

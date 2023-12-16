@@ -1,6 +1,5 @@
 package org.company.app.ui.screens
 
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,7 +32,6 @@ import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -55,7 +53,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -64,9 +61,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import com.seiko.imageloader.rememberImagePainter
-import io.kamel.core.Resource
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -83,7 +77,8 @@ import org.company.app.ui.components.LoadingBox
 import org.company.app.ui.components.RelevanceList
 
 class DetailScreen(
-    private val video: Item,
+    private val video: Item? = null,
+    private val search: org.company.app.data.model.search.Item? = null
 ) : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -97,7 +92,7 @@ class DetailScreen(
         var descriptionEnabled by remember { mutableStateOf(false) }
 
         LaunchedEffect(Unit) {
-            viewModel.getChannelDetails(video.snippet.channelId)
+            video?.snippet?.channelId?.let { viewModel.getChannelDetails(it) }
             viewModel.getRelevance()
         }
         state = viewModel.channelDetails.collectAsState().value
@@ -120,7 +115,8 @@ class DetailScreen(
             }
         }
 
-
+//
+        //https://www.youtube.com/watch?v=${video.id}
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -128,26 +124,27 @@ class DetailScreen(
             // Thumbnail
             VideoPlayer(
                 modifier = Modifier.fillMaxWidth()
-                    .height(200.dp),
-                url = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                    .height(220.dp),
+                url = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                thumbnail = video?.snippet?.thumbnails?.high?.url
             )
-            val image: Resource<Painter> =
-                asyncPainterResource(data = video.snippet.thumbnails.high.url)
-            KamelImage(
-                resource = image,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                onLoading = {
-                    CircularProgressIndicator(it)
-                },
-                onFailure = {
-                    Text(text = "Failed to Load Image")
-                },
-                animationSpec = tween()
-            )
+//            val image: Resource<Painter> =
+//                asyncPainterResource(data = video.snippet.thumbnails.high.url)
+//            KamelImage(
+//                resource = image,
+//                contentDescription = null,
+//                contentScale = ContentScale.Crop,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(200.dp),
+//                onLoading = {
+//                    CircularProgressIndicator(it)
+//                },
+//                onFailure = {
+//                    Text(text = "Failed to Load Image")
+//                },
+//                animationSpec = tween()
+//            )
             // Title and Arrow Down Icon
             Row(
                 modifier = Modifier
@@ -156,13 +153,15 @@ class DetailScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = video.snippet.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    modifier = Modifier
-                        .weight(0.9f)
-                )
+                video?.snippet?.title?.let {
+                    Text(
+                        text = it,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .weight(0.9f)
+                    )
+                }
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
@@ -181,10 +180,12 @@ class DetailScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "${formatViewCount(video.statistics?.viewCount)} views - ${
-                        getFormattedDate(
-                            video.snippet.publishedAt
-                        )
+                    text = "${formatViewCount(video?.statistics?.viewCount)} views - ${
+                        video?.snippet?.publishedAt?.let {
+                            getFormattedDate(
+                                it
+                            )
+                        }
                     }",
                     fontSize = 14.sp
                 )
@@ -228,7 +229,7 @@ class DetailScreen(
                         )
 
                         Text(
-                            text = formatLikes(video.statistics?.likeCount),
+                            text = formatLikes(video?.statistics?.likeCount),
                             fontSize = 14.sp,
                             color = Color.Black
                         )
@@ -385,11 +386,13 @@ class DetailScreen(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Text(
-                        text = video.snippet.channelTitle,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
-                    )
+                    video?.snippet?.channelTitle?.let {
+                        Text(
+                            text = it,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp
+                        )
+                    }
                     Text(
                         text = "${formatSubscribers(channelData?.items?.get(0)?.statistics?.subscriberCount)} Subscribers",
                         fontSize = 14.sp
@@ -424,13 +427,19 @@ class DetailScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // User Image (Replace the imagePainter with your actual logic)
-                Image(
-                    painter = rememberImagePainter(video.snippet.thumbnails.default.url),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
-                )
+                video?.snippet?.thumbnails?.default?.url?.let {
+                    rememberImagePainter(
+                        it
+                    )
+                }?.let {
+                    Image(
+                        painter = it,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                    )
+                }
 
                 // Comment Text
                 Column(
@@ -517,16 +526,18 @@ class DetailScreen(
                             color = DividerDefaults.color
                         )
 
-                        Text(
-                            text = video.snippet.title,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(12.dp),
-                            maxLines = 2,
-                            textAlign = TextAlign.Justify,
-                            overflow = TextOverflow.Ellipsis,
-                        )
+                        video?.snippet?.title?.let {
+                            Text(
+                                text = it,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                modifier = Modifier.fillMaxWidth()
+                                    .padding(12.dp),
+                                maxLines = 2,
+                                textAlign = TextAlign.Justify,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
 
                         Row(
                             modifier = Modifier.fillMaxWidth()
@@ -544,7 +555,7 @@ class DetailScreen(
                                     painter = it,
                                     contentDescription = null,
                                     modifier = Modifier
-                                        .size(20.dp)
+                                        .size(15.dp)
                                         .clip(CircleShape),
                                     contentScale = ContentScale.FillBounds
                                 )
@@ -577,7 +588,7 @@ class DetailScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(
-                                    text = formatLikes(video.statistics?.likeCount),
+                                    text = formatLikes(video?.statistics?.likeCount),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = MaterialTheme.typography.titleMedium.fontSize
                                 )
@@ -594,7 +605,7 @@ class DetailScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(
-                                    text = formatViewCount(video.statistics?.viewCount),
+                                    text = formatViewCount(video?.statistics?.viewCount),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = MaterialTheme.typography.titleMedium.fontSize
                                 )
@@ -610,7 +621,7 @@ class DetailScreen(
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                val (formattedMonth, day, year) = getFormattedDateLikeMonthDay(video.snippet.publishedAt)
+                                val (formattedMonth, day, year) = getFormattedDateLikeMonthDay(video?.snippet?.publishedAt.toString())
 
                                 Text(
                                     text = "$formattedMonth $day",
@@ -637,14 +648,16 @@ class DetailScreen(
                             horizontalArrangement = Arrangement.SpaceAround
                         ) {
                             var desc_expanded by remember { mutableStateOf(false) }
-                            Text(
-                                text = video.snippet.description,
-                                modifier = Modifier.fillMaxWidth().weight(1f)
-                                    .padding(top = 16.dp, start = 4.dp, end = 4.dp),
-                                maxLines = if (desc_expanded) 40 else 9,
-                                overflow = TextOverflow.Ellipsis,
-                                fontSize = MaterialTheme.typography.bodySmall.fontSize
-                            )
+                            video?.snippet?.description?.let {
+                                Text(
+                                    text = it,
+                                    modifier = Modifier.fillMaxWidth().weight(1f)
+                                        .padding(top = 16.dp, start = 4.dp, end = 4.dp),
+                                    maxLines = if (desc_expanded) 40 else 9,
+                                    overflow = TextOverflow.Ellipsis,
+                                    fontSize = MaterialTheme.typography.bodySmall.fontSize
+                                )
+                            }
                             Text(
                                 text = if (desc_expanded) "less" else "more",
                                 fontSize = MaterialTheme.typography.bodySmall.fontSize,

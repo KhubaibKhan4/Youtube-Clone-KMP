@@ -1,11 +1,10 @@
 package org.company.app.domain.repository
 
 import org.company.app.data.model.channel.Channel
-import org.company.app.data.model.videos.Item
+import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
-import org.company.app.domain.plugin.YoutubePlugin
 import org.company.app.data.remote.YoutubeClientApi
-import org.company.app.domain.usecases.YoutubeState
+import org.company.app.domain.plugin.YoutubePlugin
 
 class Repository : YoutubePlugin {
 
@@ -23,5 +22,9 @@ class Repository : YoutubePlugin {
 
     override suspend fun getRelevanceVideos(): Youtube {
         return YoutubeClientApi.getRelevanceVideos()
+    }
+
+    override suspend fun getSearch(query: String): Search {
+        return YoutubeClientApi.getSearch(query)
     }
 }

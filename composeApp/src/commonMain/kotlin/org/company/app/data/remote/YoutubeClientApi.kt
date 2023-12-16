@@ -13,7 +13,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.company.app.data.model.channel.Channel
-import org.company.app.data.model.videos.Item
+import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.utils.Constant.API_KEY
 import org.company.app.utils.Constant.BASE_URL
@@ -58,8 +58,14 @@ object YoutubeClientApi {
         return client.get(url).body()
     }
 
-    suspend fun getRelevanceVideos(): Youtube{
-        val url = BASE_URL+"search?part=snippet&order=date&type=video&videoEmbeddable=true&maxResults=200&key=$API_KEY&regionCode=us"
+    suspend fun getRelevanceVideos(): Youtube {
+        val url =
+            BASE_URL + "search?part=snippet&order=date&type=video&videoEmbeddable=true&maxResults=200&key=$API_KEY&regionCode=us"
+        return client.get(url).body()
+    }
+
+    suspend fun getSearch(query: String): Search {
+        val url = BASE_URL + "search?part=snippet&q=kotlin&type=video&maxResults=200&key=$API_KEY"
         return client.get(url).body()
     }
 }

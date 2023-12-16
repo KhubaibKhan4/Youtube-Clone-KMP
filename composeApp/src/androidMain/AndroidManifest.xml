@@ -3,6 +3,7 @@
 <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".AndroidApp"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:icon="@android:drawable/ic_menu_compass"
         android:label="Youtube Clone"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">

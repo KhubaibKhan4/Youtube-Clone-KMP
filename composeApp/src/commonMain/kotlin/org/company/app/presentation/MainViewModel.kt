@@ -5,9 +5,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.company.app.data.model.videos.Item
+import org.company.app.data.model.search.Search
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ChannelState
+import org.company.app.domain.usecases.SearchState
 import org.company.app.domain.usecases.YoutubeState
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
@@ -22,11 +23,15 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
     //Channel Details
     private val _channel = MutableStateFlow<ChannelState>(ChannelState.LOADING)
-    val channelDetails : StateFlow<ChannelState> = _channel.asStateFlow()
+    val channelDetails: StateFlow<ChannelState> = _channel.asStateFlow()
 
     //Relevance Videos
     private val _relevance_videos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
-    val relevanceVideos : StateFlow<YoutubeState> = _relevance_videos.asStateFlow()
+    val relevanceVideos: StateFlow<YoutubeState> = _relevance_videos.asStateFlow()
+
+    //Search Videos
+    private val _search = MutableStateFlow<SearchState>(SearchState.LOADING)
+    val search: StateFlow<SearchState> = _search.asStateFlow()
 
     fun getVideosList() {
         viewModelScope.launch {
@@ -79,6 +84,20 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             } catch (e: Exception) {
                 val error = e.message.toString()
                 _relevance_videos.value = YoutubeState.ERROR(error)
+            }
+
+        }
+    }
+
+    fun getSearch(query: String) {
+        viewModelScope.launch {
+            _search.value = SearchState.LOADING
+            try {
+                val response = repository.getSearch(query)
+                _search.value = SearchState.SUCCESS(response)
+            } catch (e: Exception) {
+                val error = e.message.toString()
+                _search.value = SearchState.ERROR(error)
             }
 
         }
