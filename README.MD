@@ -1,7 +1,8 @@
 # YouTube Clone Kotlin Mutliplatform
 ## Screen Shots
 <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/1.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/2.png" width="400px" height="800px" />
-<img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/3.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/4.png" /> 
+<img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/3.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/7.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/8.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/9.png" width="400px" height="800px" />
+<img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/4.png" /> 
 <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/5.png" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/6.png"  /> 
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
