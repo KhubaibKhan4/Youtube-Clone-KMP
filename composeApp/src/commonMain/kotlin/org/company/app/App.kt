@@ -55,7 +55,7 @@ internal fun App() = AppTheme {
                 }
             }
         ) {
-            Column(modifier = Modifier.fillMaxSize().padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding())) {
+            Column(modifier = Modifier.fillMaxSize().padding( bottom = it.calculateBottomPadding())) {
                 CurrentTab()
             }
         }

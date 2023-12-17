@@ -64,24 +64,24 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
         },
         update = {})
 }*/
-@RequiresApi(Build.VERSION_CODES.S)
-@Composable
-internal actual fun VideoPlayer(modifier: Modifier,url: String?, thumbnail:String?){
-    var isPlaying by remember { mutableStateOf(false) }
-    CustomVideoPlayer(
-        modifier = modifier,
-        videoUrl = url,
-        thumbnailResId = thumbnail.toString(),
-        isPlaying = isPlaying,
-        onClickPlay = {
-            // Toggle the play state
-            isPlaying = !isPlaying
-        }
-    )
-}
-
 //@RequiresApi(Build.VERSION_CODES.S)
 //@Composable
-//internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
-//    YoutubeVideoPlayer(youtubeURL = url)
+//internal actual fun VideoPlayer(modifier: Modifier,url: String?, thumbnail:String?){
+//    var isPlaying by remember { mutableStateOf(false) }
+//    CustomVideoPlayer(
+//        modifier = modifier,
+//        videoUrl = url,
+//        thumbnailResId = thumbnail.toString(),
+//        isPlaying = isPlaying,
+//        onClickPlay = {
+//            // Toggle the play state
+//            isPlaying = !isPlaying
+//        }
+//    )
 //}
+
+@RequiresApi(Build.VERSION_CODES.S)
+@Composable
+internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
+    YoutubeVideoPlayer(youtubeURL = url)
+}

@@ -85,6 +85,7 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.vlcj)
+            implementation("org.bytedeco.javacpp-presets:ffmpeg-platform:4.1-1.4.4")
         }
 
         jsMain.dependencies {
