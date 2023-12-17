@@ -1,16 +1,27 @@
 package org.company.app
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 
 
@@ -133,7 +144,7 @@ fun VideoPlayerFFMpeg(
                     lastTs = currentTs
                 }
             }
-            //delay(5)
+            delay(5)
         }
         state.stop()
         state.close()
@@ -141,15 +152,30 @@ fun VideoPlayerFFMpeg(
 
 
     videoImage.value?.let { image ->
-        Spacer(modifier.drawBehind {
-            //val c = frame
-            val scaleW = size.width / image.width.toFloat()
-            val scaleH = size.height / image.height.toFloat()
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(300.dp)// This makes the Spacer take the full available size
+                .background(color = Color.Black) // Optional: Set background color to black
+                .drawBehind {
+                    val scaleW = size.width / image.width.toFloat()
+                    val scaleH = size.height / image.height.toFloat()
 
-            //val size = IntSize(size.width.toInt(), size.height.toInt())
-            scale(scale = kotlin.math.min(scaleH, scaleW), pivot = Offset.Zero) {
-                drawImage(image)
-            }
-        })
+                    // Choose the desired scaling factor
+                    val scale = kotlin.math.min(scaleH, scaleW)
+
+                    // Center the video in the Spacer
+                    val offsetX = (size.width - image.width * scale) / 2
+                    val offsetY = (size.height - image.height * scale) / 2
+
+                    // Apply the scale and translation
+                    scale(scale, pivot = Offset.Zero) {
+                        translate(offsetX, offsetY) {
+                            drawImage(image)
+                        }
+                    }
+                }
+        )
     }
+
 }
