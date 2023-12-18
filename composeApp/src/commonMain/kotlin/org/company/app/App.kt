@@ -4,14 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -40,28 +36,28 @@ import org.company.app.ui.navigation.SubscruptionsTab
 internal fun App() = AppTheme {
 
     TabNavigator(HomeTab) { tabNavigator ->
-        Scaffold(
-            bottomBar = {
-                BottomNavigation(
-                    modifier = Modifier.fillMaxWidth().height(69.dp),
-                    backgroundColor = MaterialTheme.colorScheme.background,
-                    contentColor = contentColorFor(Color.Red),
-                    elevation = 8.dp
-                ) {
-                    TabItem(HomeTab)
-                    TabItem(ShortsTab)
-                    TabItem(SubscruptionsTab)
-                    TabItem(LibraryTab)
-                }
+        Scaffold(bottomBar = {
+            BottomNavigation(
+                modifier = Modifier.fillMaxWidth().height(69.dp),
+                backgroundColor = MaterialTheme.colorScheme.background,
+                contentColor = contentColorFor(Color.Red),
+                elevation = 8.dp
+            ) {
+                TabItem(HomeTab)
+                TabItem(ShortsTab)
+                TabItem(SubscruptionsTab)
+                TabItem(LibraryTab)
             }
-        ) {
-            Column(modifier = Modifier.fillMaxSize().padding( bottom = it.calculateBottomPadding())) {
+        }) {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(bottom = it.calculateBottomPadding())
+            ) {
                 CurrentTab()
             }
         }
     }
 
-
+//UnComment for the Top App Bar with Text and Dark Theme Enable Features.
     /* Column(modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
          Navigator(HomeScreen())
 
@@ -93,24 +89,28 @@ internal fun App() = AppTheme {
 @Composable
 fun RowScope.TabItem(tab: Tab) {
     val tabNavigator = LocalTabNavigator.current
-    BottomNavigationItem(
-        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
-            .height(58.dp)
-            .clip(RoundedCornerShape(16.dp)),
+    BottomNavigationItem(modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+        .height(58.dp).clip(RoundedCornerShape(16.dp)),
         selected = tabNavigator.current == tab,
         onClick = {
             tabNavigator.current = tab
         },
         icon = {
             tab.options.icon?.let { painter ->
-                Icon(painter, contentDescription = tab.options.title,
+                Icon(
+                    painter,
+                    contentDescription = tab.options.title,
                     tint = if (tabNavigator.current == tab) Color.Red else Color.Black
                 )
             }
         },
         label = {
             tab.options.title.let { title ->
-                Text(title, fontSize = 12.sp, color =if (tabNavigator.current == tab) Color.Red else Color.Black )
+                Text(
+                    title,
+                    fontSize = 12.sp,
+                    color = if (tabNavigator.current == tab) Color.Red else Color.Black
+                )
             }
         },
         enabled = true,
@@ -122,5 +122,6 @@ fun RowScope.TabItem(tab: Tab) {
 }
 
 internal expect fun openUrl(url: String?)
+
 @Composable
-internal expect fun VideoPlayer(modifier: Modifier,url: String?, thumbnail:String?)
+internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)
