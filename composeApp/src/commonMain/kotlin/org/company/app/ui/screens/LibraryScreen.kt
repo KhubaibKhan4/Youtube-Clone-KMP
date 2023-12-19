@@ -25,10 +25,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import org.company.app.ui.components.TopBar
 
 class LibraryScreen: Screen {
     @Composable
     override fun Content() {
+        TopBar(modifier = Modifier.fillMaxWidth().padding(top = 49.dp))
         Column(
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 30.dp, start = 16.dp, end = 16.dp),

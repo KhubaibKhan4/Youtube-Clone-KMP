@@ -135,7 +135,7 @@ class DetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(state= rememberScrollState())
+                .verticalScroll(state = rememberScrollState())
         ) {
 
             // Thumbnail
@@ -171,17 +171,23 @@ class DetailScreen(
                     )
 
                     //play icon
-                    IconButton(
-                        onClick = {
-                            displayVideoPlayer = !displayVideoPlayer
-                        },
-                        modifier = Modifier.align(alignment = Alignment.Center)
+                    Box(
+                        modifier = Modifier.width(89.dp).height(120.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Filled.PlayArrow, contentDescription = "play icon",
-                            tint = Color.White,
-                            modifier = Modifier.size(300.dp)
-                        )
+                        IconButton(
+                            onClick = {
+                                displayVideoPlayer = !displayVideoPlayer
+                            },
+                            modifier = Modifier.align(alignment = Alignment.Center)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.PlayArrow,
+                                contentDescription = "play icon",
+                                tint = Color.White,
+                                modifier = Modifier.size(300.dp)
+                            )
+                        }
                     }
 
                     IconButton(
@@ -284,7 +290,7 @@ class DetailScreen(
                         Text(
                             text = formatLikes(video?.statistics?.likeCount),
                             fontSize = 14.sp,
-                            color =if(isDark) Color.White else Color.Black
+                            color = if (isDark) Color.White else Color.Black
                         )
 
                         Spacer(modifier = Modifier.width(4.dp))
@@ -304,7 +310,7 @@ class DetailScreen(
                             imageVector = Icons.Default.ThumbDown,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp).clickable { },
-                            tint = if(isDark) Color.White else Color.Black
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -325,13 +331,13 @@ class DetailScreen(
                             imageVector = Icons.Default.Share,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = if(isDark) Color.White else Color.Black
+                            tint = if (isDark) Color.White else Color.Black
                         )
 
                         Text(
                             text = "Share",
                             fontSize = 14.sp,
-                            color = if(isDark) Color.White else Color.Black
+                            color = if (isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -352,13 +358,13 @@ class DetailScreen(
                             imageVector = Icons.Default.Download,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = if(isDark) Color.White else Color.Black
+                            tint = if (isDark) Color.White else Color.Black
                         )
 
                         Text(
                             text = "Download",
                             fontSize = 14.sp,
-                            color = if(isDark) Color.White else Color.Black
+                            color = if (isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -379,7 +385,7 @@ class DetailScreen(
                             imageVector = Icons.Default.Save,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = if(isDark) Color.White else Color.Black
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -420,8 +426,7 @@ class DetailScreen(
                             .clip(CircleShape)
                             .clickable {
                                 navigator?.push(ChannelScreen(channelData!!.items[0]))
-                            }
-                        ,
+                            },
                         contentScale = ContentScale.FillBounds
                     )
                 }
@@ -544,8 +549,9 @@ class DetailScreen(
                     dragHandle = null,
                     windowInsets = BottomSheetDefaults.windowInsets,
                 ) {
-                    Column(modifier = Modifier.fillMaxWidth()
-                        .verticalScroll(state = rememberScrollState())
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                            .verticalScroll(state = rememberScrollState())
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth()
@@ -605,9 +611,8 @@ class DetailScreen(
                                         .size(15.dp)
                                         .clip(CircleShape)
                                         .clickable {
-                                                   navigator?.push(ChannelScreen(channelData!!.items[0]))
-                                        }
-                                    ,
+                                            navigator?.push(ChannelScreen(channelData!!.items[0]))
+                                        },
                                     contentScale = ContentScale.FillBounds
                                 )
                             }

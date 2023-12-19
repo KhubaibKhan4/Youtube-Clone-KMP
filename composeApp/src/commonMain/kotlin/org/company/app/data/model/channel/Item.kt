@@ -6,6 +6,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Item(
+    @SerialName("brandingSettings")
+    val brandingSettings: BrandingSettings? = null,
+    @SerialName("contentDetails")
+    val contentDetails: ContentDetails? = null,
     @SerialName("etag")
     val etag: String,
     @SerialName("id")
@@ -13,7 +17,7 @@ data class Item(
     @SerialName("kind")
     val kind: String,
     @SerialName("snippet")
-    val snippet: Snippet,
+    val snippet: Snippet? = null,
     @SerialName("statistics")
-    val statistics: Statistics
+    val statistics: Statistics? = null
 )

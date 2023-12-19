@@ -5,19 +5,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Snippet(
+data class ChannelX(
     @SerialName("country")
     val country: String,
-    @SerialName("customUrl")
-    val customUrl: String,
     @SerialName("description")
     val description: String,
-    @SerialName("localized")
-    val localized: Localized,
-    @SerialName("publishedAt")
-    val publishedAt: String,
-    @SerialName("thumbnails")
-    val thumbnails: Thumbnails,
+    @SerialName("keywords")
+    val keywords: String? = null,
     @SerialName("title")
-    val title: String
+    val title: String,
+    @SerialName("unsubscribedTrailer")
+    val unsubscribedTrailer: String? = null
 )

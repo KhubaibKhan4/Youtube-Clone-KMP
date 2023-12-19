@@ -1,12 +1,12 @@
 package org.company.app.ui.screens
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,6 +19,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.ScrollableTabRow
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -28,11 +32,14 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,15 +47,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.channel.Item
+import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.ChannelState
+import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
+import org.company.app.ui.components.ErrorBox
+import org.company.app.ui.components.LoadingBox
 
 class ChannelScreen(
     private val channel: Item
@@ -56,8 +69,35 @@ class ChannelScreen(
     @Composable
     override fun Content() {
         val isDark by LocalThemeIsDark.current
+        val repository = remember { Repository() }
+        val viewModel = remember { MainViewModel(repository) }
+        var state by remember { mutableStateOf<ChannelState>(ChannelState.LOADING) }
+        var channelBranding by remember { mutableStateOf<Channel?>(null) }
+
+        LaunchedEffect(Unit) {
+            viewModel.getChanelBranding(channel.id)
+        }
+        state = viewModel.channelBranding.collectAsState().value
+
+        when (state) {
+            is ChannelState.LOADING -> {
+                LoadingBox()
+            }
+
+            is ChannelState.SUCCESS -> {
+                val data = (state as ChannelState.SUCCESS).channel
+                channelBranding = data
+            }
+
+            is ChannelState.ERROR -> {
+                val error = (state as ChannelState.ERROR).error
+                ErrorBox(error)
+            }
+        }
+
         Column(
             modifier = Modifier.fillMaxWidth()
+                .padding(top = 49.dp)
                 .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -74,7 +114,8 @@ class ChannelScreen(
                     navigator?.pop()
                 }) {
                     Icon(
-                        imageVector = Icons.Default.ArrowBack, contentDescription = "Arrow Back",
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Arrow Back",
                         tint = if (isDark) Color.White else Color.Black
                     )
                 }
@@ -84,7 +125,7 @@ class ChannelScreen(
 
                 // Title
                 Text(
-                    text = channel.snippet.title,
+                    text = channel.snippet?.title.toString(),
                     fontSize = MaterialTheme.typography.titleSmall.fontSize,
                     color = if (isDark) Color.White else Color.Black
                 )
@@ -95,7 +136,8 @@ class ChannelScreen(
                 // Search Icon
                 IconButton(onClick = { /* Handle search button click */ }) {
                     Icon(
-                        imageVector = Icons.Default.Search, contentDescription = "Search Arrow",
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Arrow",
                         tint = if (isDark) Color.White else Color.Black
                     )
                 }
@@ -103,7 +145,8 @@ class ChannelScreen(
                 // More Vert Icon
                 IconButton(onClick = { /* Handle more vert button click */ }) {
                     Icon(
-                        imageVector = Icons.Default.MoreVert, contentDescription = "More Vert",
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "More Vert",
                         tint = if (isDark) Color.White else Color.Black
                     )
                 }
@@ -111,12 +154,11 @@ class ChannelScreen(
 
             // Channel Poster Image
             val poster: Resource<Painter> =
-                asyncPainterResource(channel.snippet.thumbnails.high.url)
+                asyncPainterResource(channelBranding?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString())
             KamelImage(
                 resource = poster,
                 contentDescription = null,
-                modifier = Modifier.fillMaxWidth()
-                    .height(170.dp),
+                modifier = Modifier.fillMaxWidth().height(170.dp),
                 contentScale = ContentScale.Crop,
                 onLoading = {
                     CircularProgressIndicator(it)
@@ -129,31 +171,25 @@ class ChannelScreen(
 
             // Channel Details
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Channel Image
-                channel.snippet.thumbnails.default.url.let {
-                    rememberImagePainter(it)
-                }.let {
-                    Image(
-                        painter = it,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(60.dp)
-                            .clip(CircleShape),
-                        contentScale = ContentScale.FillBounds
-                    )
-                }
+                val image: Resource<Painter> =
+                    asyncPainterResource(data = channel.snippet?.thumbnails?.default?.url.toString())
+                KamelImage(
+                    resource = image,
+                    contentDescription = null,
+                    modifier = Modifier.size(60.dp).clip(CircleShape),
+                    contentScale = ContentScale.FillBounds
+                )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // Channel Title
                 Text(
-                    text = channel.snippet.title,
+                    text = channel.snippet?.title.toString(),
                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
                     color = if (isDark) Color.White else Color.Black
                 )
@@ -162,10 +198,12 @@ class ChannelScreen(
 
                 // Channel Subscribers and Videos
                 Text(
-                    text = "@GarandeThumb • 3.55M Subscribers • 398 videos",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
+                    text = "${channel.snippet?.customUrl} • ${formatSubscribers(channel.statistics?.subscriberCount)} Subscribers • ${
+                        formatLikes(
+                            channel.statistics?.videoCount
+                        )
+                    } videos",
+                    modifier = Modifier.fillMaxWidth().wrapContentHeight()
                         .padding(horizontal = 16.dp),
                     textAlign = TextAlign.Center,
                     color = if (isDark) Color.White else Color.Black
@@ -180,17 +218,22 @@ class ChannelScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     // Channel Description
-                    Text(
-                        text = "Retired military guy who enjoys firearms, fitness, and humor. Enjoy!",
-                        color = if (isDark) Color.White else Color.Black
-                    )
+                    channel.snippet?.localized?.description?.let {
+                        Text(
+                            text = it,
+                            color = if (isDark) Color.White else Color.Black,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize
+                        )
+                    }
 
                     // Arrow Icon
                     IconButton(onClick = {}) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowRight,
                             contentDescription = null,
-                            tint =if (isDark) Color.White else Color.Black
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -198,71 +241,121 @@ class ChannelScreen(
 
 
             // Channel Links
-            Text(text = "facebook.com/grandThumb?ref=book...",
-                color = if (isDark) Color.White else Color.Black)
+            Text(
+                text = "facebook.com/grandThumb?ref=book...",
+                color = if (isDark) Color.White else Color.Black
+            )
 
             // Subscribe Button
             TextButton(
                 onClick = {},
-                modifier = Modifier.fillMaxWidth()
-                    .padding(8.dp),
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (isDark) Color.Red else Color.Black
                 )
             ) {
                 Text(
-                    text = "Subscribe",
-                    color = Color.White
+                    text = "Subscribe", color = Color.White
                 )
             }
         }
 
-        // TabRow
-        TabRow(
-            selectedTabIndex = 0,
-            containerColor = if (isDark) Color.Black else Color.White,
-            contentColor = if (isDark) Color.White else Color.Black,
+        var selectedTabIndex by remember { mutableStateOf(0) }
+
+
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(8.dp)
         ) {
-            Tab(
-                selected = true,
-                onClick = {},
-                modifier = Modifier
-                    .padding(8.dp)
-                    .background(MaterialTheme.colorScheme.primary),
+            ScrollableTabRow(
+                selectedTabIndex = selectedTabIndex,
+                edgePadding = 8.dp,
+                indicator = { tabPositions ->
+                    TabRowDefaults.Indicator(
+                        modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
+                            .height(2.dp).background(MaterialTheme.colorScheme.primary)
+                    )
+                },
+                backgroundColor = MaterialTheme.colorScheme.surface,
+                contentColor = if (isDark) Color.White else Color.Black,
+                modifier = Modifier.fillMaxWidth().padding(8.dp)
             ) {
-                Text(text = "Home")
+                Tab(
+                    selected = selectedTabIndex == 0,
+                    onClick = {
+                        selectedTabIndex = 0
+                    },
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                ) {
+                    Text(text = "Home")
+                }
+                Tab(
+                    selected = selectedTabIndex == 1,
+                    onClick = {
+                        selectedTabIndex = 1
+                    },
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                ) {
+                    Text(text = "Videos")
+                }
+                Tab(
+                    selected = selectedTabIndex == 2,
+                    onClick = {
+                        selectedTabIndex = 2
+                    },
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                ) {
+                    Text(text = "Live")
+                }
+                Tab(
+                    selected = selectedTabIndex == 3,
+                    onClick = {
+                        selectedTabIndex = 3
+                    },
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                ) {
+                    Text(text = "Playlists")
+                }
+                Tab(
+                    selected = selectedTabIndex == 4,
+                    onClick = {
+                        selectedTabIndex = 4
+                    },
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                ) {
+                    Text(text = "Community")
+                }
+                Spacer(modifier = Modifier.height(8.dp))
             }
-            Tab(
-                selected = false,
-                onClick = {},
-                modifier = Modifier.padding(8.dp),
+            //Data of Row Tabs
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
             ) {
-                Text(text = "Videos")
-            }
-            Tab(
-                selected = false,
-                onClick = {},
-                modifier = Modifier.padding(8.dp),
-            ) {
-                Text(text = "Live")
-            }
-            Tab(
-                selected = false,
-                onClick = {},
-                modifier = Modifier.padding(8.dp),
-            ) {
-                Text(text = "Playlists")
-            }
-            Tab(
-                selected = false,
-                onClick = {},
-                modifier = Modifier.padding(8.dp),
-            ) {
-                Text(text = "Community")
+                when (selectedTabIndex) {
+                    0 -> {
+                        Text(text = "Hey Welcome to Home")
+                    }
+
+                    1 -> {
+                        Text(text = "Hey Videos")
+                    }
+
+                    2 -> {
+                        Text(text = "No Live Stream")
+                    }
+
+                    3 -> {
+                        Text(text = "No Playlists")
+                    }
+
+                    4 -> {
+                        Text(text = "Community Text")
+                    }
+                }
             }
         }
     }

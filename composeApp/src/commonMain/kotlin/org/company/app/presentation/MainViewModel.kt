@@ -25,6 +25,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     private val _channel = MutableStateFlow<ChannelState>(ChannelState.LOADING)
     val channelDetails: StateFlow<ChannelState> = _channel.asStateFlow()
 
+    //Channel Details
+    private val _channelBranding = MutableStateFlow<ChannelState>(ChannelState.LOADING)
+    val channelBranding: StateFlow<ChannelState> = _channelBranding.asStateFlow()
+
     //Relevance Videos
     private val _relevance_videos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
     val relevanceVideos: StateFlow<YoutubeState> = _relevance_videos.asStateFlow()
@@ -98,6 +102,20 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             } catch (e: Exception) {
                 val error = e.message.toString()
                 _search.value = SearchState.ERROR(error)
+            }
+
+        }
+    }
+
+    fun getChanelBranding(channelId: String) {
+        viewModelScope.launch {
+            _channelBranding.value = ChannelState.LOADING
+            try {
+                val response = repository.getChannelBranding(channelId)
+                _channelBranding.value = ChannelState.SUCCESS(response)
+            } catch (e: Exception) {
+                val error = e.message.toString()
+                _channelBranding.value = ChannelState.ERROR(error)
             }
 
         }

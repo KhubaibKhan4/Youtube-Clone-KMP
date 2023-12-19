@@ -26,6 +26,7 @@ object YoutubeClientApi {
             json(Json {
                 isLenient = true
                 explicitNulls = false
+                ignoreUnknownKeys = true
             })
         }
 
@@ -54,7 +55,13 @@ object YoutubeClientApi {
     }
 
     suspend fun getChannelDetails(channelId: String): Channel {
-        val url = BASE_URL + "channels?part=snippet,statistics&id=$channelId&key=$API_KEY"
+        val url =
+            BASE_URL + "channels?part=snippet,contentDetails,statistics&id=$channelId&key=$API_KEY"
+        return client.get(url).body()
+    }
+
+    suspend fun getChannelBranding(channelId: String): Channel {
+        val url = BASE_URL + "channels?part=brandingSettings&id=$channelId&key=$API_KEY"
         return client.get(url).body()
     }
 

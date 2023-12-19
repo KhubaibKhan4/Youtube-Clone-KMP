@@ -112,7 +112,6 @@ internal fun App() = AppTheme {
                     start = if (showNavigationRail) 80.dp else 0.dp
                 )
             ) {
-                TopBar(modifier = Modifier.padding(top = it.calculateTopPadding()))
                 CurrentTab()
             }
         }

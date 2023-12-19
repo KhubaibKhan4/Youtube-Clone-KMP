@@ -27,4 +27,8 @@ class Repository : YoutubePlugin {
     override suspend fun getSearch(query: String): Search {
         return YoutubeClientApi.getSearch(query)
     }
+
+    override suspend fun getChannelBranding(channelId: String): Channel {
+        return YoutubeClientApi.getChannelBranding(channelId)
+    }
 }

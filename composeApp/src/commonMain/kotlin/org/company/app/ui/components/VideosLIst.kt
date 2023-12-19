@@ -74,6 +74,7 @@ fun VideosList(youtube: Youtube) {
         color = MaterialTheme.colorScheme.background
     ) {
         Column {
+            TopBar(modifier = Modifier.fillMaxWidth())
             LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
                 items(youtube.items) { videos ->
                     VideoItemCard(videos)
