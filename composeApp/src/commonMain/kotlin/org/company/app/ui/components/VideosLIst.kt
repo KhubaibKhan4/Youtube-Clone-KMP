@@ -53,7 +53,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.seiko.imageloader.model.ImageAction
 import com.seiko.imageloader.rememberImagePainter
+import com.seiko.imageloader.rememberImageSuccessPainter
+import com.seiko.imageloader.ui.AutoSizeBox
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -71,7 +74,6 @@ fun VideosList(youtube: Youtube) {
         color = MaterialTheme.colorScheme.background
     ) {
         Column {
-            TopBar()
             LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
                 items(youtube.items) { videos ->
                     VideoItemCard(videos)
@@ -114,9 +116,8 @@ fun VideoItemCard(video: Item) {
                     onFailure = {
                         Text(text = "Failed to Load Image")
                     },
-                    animationSpec = tween()
+                    animationSpec = tween(),
                 )
-
                 // Video Total Time
                 Box(
                     modifier = Modifier

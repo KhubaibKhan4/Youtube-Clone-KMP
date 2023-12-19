@@ -17,13 +17,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ThumbDown
@@ -63,6 +67,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -78,6 +83,7 @@ import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
 import org.company.app.ui.components.RelevanceList
@@ -96,6 +102,9 @@ class DetailScreen(
         var stateRelevance by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
         var channelData by remember { mutableStateOf<Channel?>(null) }
         var descriptionEnabled by remember { mutableStateOf(false) }
+        var displayVideoPlayer by remember { mutableStateOf(false) }
+        val navigator = LocalNavigator.current
+        val isDark by LocalThemeIsDark.current
 
         LaunchedEffect(Unit) {
             video?.snippet?.channelId?.let { viewModel.getChannelDetails(it) }
@@ -122,34 +131,73 @@ class DetailScreen(
         }
 
         //https://www.youtube.com/watch?v=${video.id}
+        //"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(state= rememberScrollState())
         ) {
+
             // Thumbnail
-            VideoPlayer(
-                modifier = Modifier.fillMaxWidth()
-                    .height(220.dp),
-                url = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                thumbnail = video?.snippet?.thumbnails?.high?.url
-            )
-            /*val image: Resource<Painter> =
-                asyncPainterResource(data = video?.snippet?.thumbnails?.high?.url.toString())
-            KamelImage(
-                resource = image,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                onLoading = {
-                    CircularProgressIndicator(it)
-                },
-                onFailure = {
-                    Text(text = "Failed to Load Image")
-                },
-                animationSpec = tween()
-            )*/
+            if (displayVideoPlayer) {
+                VideoPlayer(
+                    modifier = Modifier.fillMaxWidth()
+                        .height(220.dp),
+                    url = "https://www.youtube.com/watch?v=${video?.id}",
+                    thumbnail = video?.snippet?.thumbnails?.high?.url
+                )
+            } else {
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                        .height(200.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+
+                    val image: Resource<Painter> =
+                        asyncPainterResource(data = video?.snippet?.thumbnails?.high?.url.toString())
+                    KamelImage(
+                        resource = image,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        onLoading = {
+                            CircularProgressIndicator(it)
+                        },
+                        onFailure = {
+                            Text(text = "Failed to Load Image")
+                        },
+                        animationSpec = tween()
+                    )
+
+                    //play icon
+                    IconButton(
+                        onClick = {
+                            displayVideoPlayer = !displayVideoPlayer
+                        },
+                        modifier = Modifier.align(alignment = Alignment.Center)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.PlayArrow, contentDescription = "play icon",
+                            tint = Color.White,
+                            modifier = Modifier.size(300.dp)
+                        )
+                    }
+
+                    IconButton(
+                        onClick = { navigator?.pop() },
+                        modifier = Modifier.padding(top = 8.dp, start = 6.dp)
+                            .align(alignment = Alignment.TopStart)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowLeft,
+                            contentDescription = "Arrow Back",
+                            tint = Color.White
+                        )
+                    }
+                }
+            }
+
             // Title and Arrow Down Icon
             Row(
                 modifier = Modifier
@@ -236,7 +284,7 @@ class DetailScreen(
                         Text(
                             text = formatLikes(video?.statistics?.likeCount),
                             fontSize = 14.sp,
-                            color = Color.Black
+                            color =if(isDark) Color.White else Color.Black
                         )
 
                         Spacer(modifier = Modifier.width(4.dp))
@@ -256,7 +304,7 @@ class DetailScreen(
                             imageVector = Icons.Default.ThumbDown,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp).clickable { },
-                            tint = Color.Black
+                            tint = if(isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -265,11 +313,7 @@ class DetailScreen(
                 Card(
                     modifier = Modifier
                         .height(40.dp)
-                        .padding(4.dp)
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(8.dp)
-                        ),
+                        .padding(4.dp),
                     onClick = { /* Handle Share click */ },
                 ) {
                     Row(
@@ -281,13 +325,13 @@ class DetailScreen(
                             imageVector = Icons.Default.Share,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = Color.Black
+                            tint = if(isDark) Color.White else Color.Black
                         )
 
                         Text(
                             text = "Share",
                             fontSize = 14.sp,
-                            color = Color.Black
+                            color = if(isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -296,11 +340,7 @@ class DetailScreen(
                 Card(
                     modifier = Modifier
                         .height(40.dp)
-                        .padding(4.dp)
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(8.dp)
-                        ),
+                        .padding(4.dp),
                     onClick = { /* Handle Download click */ },
                 ) {
                     Row(
@@ -312,13 +352,13 @@ class DetailScreen(
                             imageVector = Icons.Default.Download,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = Color.Black
+                            tint = if(isDark) Color.White else Color.Black
                         )
 
                         Text(
                             text = "Download",
                             fontSize = 14.sp,
-                            color = Color.Black
+                            color = if(isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -327,11 +367,7 @@ class DetailScreen(
                 Card(
                     modifier = Modifier
                         .height(40.dp)
-                        .padding(4.dp)
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(8.dp)
-                        ),
+                        .padding(4.dp),
                     onClick = { /* Handle Save click */ },
                 ) {
                     Row(
@@ -343,7 +379,7 @@ class DetailScreen(
                             imageVector = Icons.Default.Save,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
-                            tint = Color.Black
+                            tint = if(isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -381,7 +417,11 @@ class DetailScreen(
                         contentDescription = null,
                         modifier = Modifier
                             .size(60.dp)
-                            .clip(CircleShape),
+                            .clip(CircleShape)
+                            .clickable {
+                                navigator?.push(ChannelScreen(channelData!!.items[0]))
+                            }
+                        ,
                         contentScale = ContentScale.FillBounds
                     )
                 }
@@ -504,7 +544,9 @@ class DetailScreen(
                     dragHandle = null,
                     windowInsets = BottomSheetDefaults.windowInsets,
                 ) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.fillMaxWidth()
+                        .verticalScroll(state = rememberScrollState())
+                    ) {
                         Row(
                             modifier = Modifier.fillMaxWidth()
                                 .padding(6.dp),
@@ -561,7 +603,11 @@ class DetailScreen(
                                     contentDescription = null,
                                     modifier = Modifier
                                         .size(15.dp)
-                                        .clip(CircleShape),
+                                        .clip(CircleShape)
+                                        .clickable {
+                                                   navigator?.push(ChannelScreen(channelData!!.items[0]))
+                                        }
+                                    ,
                                     contentScale = ContentScale.FillBounds
                                 )
                             }

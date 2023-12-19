@@ -25,7 +25,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Cast
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MoreVert
@@ -81,13 +81,15 @@ import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.SearchState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
+import org.company.app.ui.screens.AccountScreen
 import org.company.app.ui.screens.DetailScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class, InternalComposeApi::class)
 @Composable
-fun TopBar() {
+fun TopBar(modifier: Modifier) {
     var isDark by LocalThemeIsDark.current
+    val navigator = LocalNavigator.current
     var isSearchEnabled by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     var state by remember { mutableStateOf<SearchState>(SearchState.LOADING) }
@@ -102,26 +104,29 @@ fun TopBar() {
         TopAppBar(
             title = {
                 Image(
-                    org.jetbrains.compose.resources.painterResource("logo.webp"),
+                    org.jetbrains.compose.resources.painterResource(if (isDark) "youtube_logo_dark.webp" else "youtube_logo_light.webp"),
                     contentDescription = null,
-                    modifier = Modifier.size(120.dp)
+                    modifier = Modifier.size(120.dp),
                 )
             },
             actions = {
-                IconButton(onClick = {}) {
-                    Icon(imageVector = Icons.Default.Cast, contentDescription = "Cast")
-                }
                 IconButton(
                     onClick = { isDark = !isDark }
                 ) {
-                    Icon(imageVector = Icons.Outlined.Notifications, contentDescription = "Account")
+                    Icon(imageVector = Icons.Outlined.Notifications, contentDescription = "Notifications")
                 }
                 IconButton(
                     onClick = { isSearchEnabled = !isSearchEnabled }
                 ) {
                     Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
                 }
-            }
+                IconButton(
+                    onClick = { navigator?.push(AccountScreen) }
+                ) {
+                    Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = "Account")
+                }
+            },
+            modifier = modifier
         )
     } else {
         LaunchedEffect(Unit) {
@@ -254,7 +259,7 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                 navigator?.push(DetailScreen(video = null,search = video))
+                navigator?.push(DetailScreen(video = null, search = video))
             },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
