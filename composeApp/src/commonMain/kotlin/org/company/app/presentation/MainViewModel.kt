@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.company.app.data.model.search.Search
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.SearchState
@@ -36,6 +35,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     //Search Videos
     private val _search = MutableStateFlow<SearchState>(SearchState.LOADING)
     val search: StateFlow<SearchState> = _search.asStateFlow()
+
+    //Playlist Videos
+    private val _playlists = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    val playlists: StateFlow<YoutubeState> = _playlists.asStateFlow()
 
     fun getVideosList() {
         viewModelScope.launch {
@@ -118,6 +121,19 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
                 _channelBranding.value = ChannelState.ERROR(error)
             }
 
+        }
+    }
+
+    fun getPlaylists(channelId: String){
+        viewModelScope.launch {
+            _playlists.value = YoutubeState.LOADING
+            try {
+                val response = repository.getPlaylists(channelId)
+                _playlists.value = YoutubeState.SUCCESS(response)
+            }catch (e: Exception){
+                val error = e.message.toString()
+                _playlists.value = YoutubeState.ERROR(error)
+            }
         }
     }
 

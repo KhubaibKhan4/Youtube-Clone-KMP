@@ -1,6 +1,7 @@
 package org.company.app
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -17,8 +18,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import org.company.app.ui.CustomVideoPlayer
 import org.company.app.ui.YoutubeVideoPlayer
+import kotlin.coroutines.coroutineContext
 
 class AndroidApp : Application() {
     companion object {

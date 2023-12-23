@@ -31,4 +31,9 @@ class Repository : YoutubePlugin {
     override suspend fun getChannelBranding(channelId: String): Channel {
         return YoutubeClientApi.getChannelBranding(channelId)
     }
+
+    override suspend fun getPlaylists(channelId: String): Youtube {
+        return YoutubeClientApi.getPlaylists(channelId)
+    }
+
 }

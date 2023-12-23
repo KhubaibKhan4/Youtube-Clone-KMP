@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -48,8 +46,8 @@ fun RelevanceList(stateRelevance: YoutubeState) {
         ) {
             LazyVerticalGrid(columns = GridCells.Adaptive(300.dp), modifier = Modifier.height(700.dp)) {
                 relevanceData?.let {
-                    items(it.items) { videos ->
-                        VideoItemCard(videos)
+                    items(it.items!!) { videos ->
+                            VideoItemCard(videos)
                     }
                 }
             }

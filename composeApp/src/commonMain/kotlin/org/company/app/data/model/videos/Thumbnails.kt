@@ -15,5 +15,5 @@ data class Thumbnails(
     @SerialName("medium")
     val medium: Medium,
     @SerialName("standard")
-    val standard: Standard
+    val standard: Standard? = null
 )

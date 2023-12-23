@@ -2,6 +2,8 @@ package org.company.app.ui.screens
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -54,14 +56,15 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.channel.Item
+import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.ChannelState
+import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
+import org.company.app.ui.components.PlaylistsVideosList
 
 class ChannelScreen(
     private val channel: Item
@@ -71,34 +74,33 @@ class ChannelScreen(
         val isDark by LocalThemeIsDark.current
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
-        var state by remember { mutableStateOf<ChannelState>(ChannelState.LOADING) }
-        var channelBranding by remember { mutableStateOf<Channel?>(null) }
+        var playlists by remember { mutableStateOf<Youtube?>(null) }
 
         LaunchedEffect(Unit) {
-            viewModel.getChanelBranding(channel.id)
+            viewModel.getPlaylists(channel.id)
         }
-        state = viewModel.channelBranding.collectAsState().value
-
+        val state by viewModel.playlists.collectAsState()
         when (state) {
-            is ChannelState.LOADING -> {
+            is YoutubeState.LOADING -> {
                 LoadingBox()
             }
 
-            is ChannelState.SUCCESS -> {
-                val data = (state as ChannelState.SUCCESS).channel
-                channelBranding = data
+            is YoutubeState.SUCCESS -> {
+                val response = (state as YoutubeState.SUCCESS).youtube
+                playlists = response
             }
 
-            is ChannelState.ERROR -> {
-                val error = (state as ChannelState.ERROR).error
-                ErrorBox(error)
+            is YoutubeState.ERROR -> {
+                val error = (state as YoutubeState.ERROR).error
+                ErrorBox(error = error)
             }
         }
 
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = 49.dp)
-                .verticalScroll(state = rememberScrollState()),
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -120,7 +122,6 @@ class ChannelScreen(
                     )
                 }
 
-                // Spacer to create space between back icon and title
                 Spacer(modifier = Modifier.width(16.dp))
 
                 // Title
@@ -130,7 +131,6 @@ class ChannelScreen(
                     color = if (isDark) Color.White else Color.Black
                 )
 
-                // Spacer to create space between title and search/more vert icons
                 Spacer(modifier = Modifier.weight(1f))
 
                 // Search Icon
@@ -154,7 +154,7 @@ class ChannelScreen(
 
             // Channel Poster Image
             val poster: Resource<Painter> =
-                asyncPainterResource(channelBranding?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString())
+                asyncPainterResource(channel.brandingSettings?.image?.bannerExternalUrl.toString())
             KamelImage(
                 resource = poster,
                 contentDescription = null,
@@ -259,105 +259,112 @@ class ChannelScreen(
                     text = "Subscribe", color = Color.White
                 )
             }
-        }
-
-        var selectedTabIndex by remember { mutableStateOf(0) }
+            var selectedTabIndex by remember { mutableStateOf(0) }
 
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp)
-        ) {
-            ScrollableTabRow(
-                selectedTabIndex = selectedTabIndex,
-                edgePadding = 8.dp,
-                indicator = { tabPositions ->
-                    TabRowDefaults.Indicator(
-                        modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
-                            .height(2.dp).background(MaterialTheme.colorScheme.primary)
-                    )
-                },
-                backgroundColor = MaterialTheme.colorScheme.surface,
-                contentColor = if (isDark) Color.White else Color.Black,
-                modifier = Modifier.fillMaxWidth().padding(8.dp)
-            ) {
-                Tab(
-                    selected = selectedTabIndex == 0,
-                    onClick = {
-                        selectedTabIndex = 0
-                    },
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                ) {
-                    Text(text = "Home")
-                }
-                Tab(
-                    selected = selectedTabIndex == 1,
-                    onClick = {
-                        selectedTabIndex = 1
-                    },
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                ) {
-                    Text(text = "Videos")
-                }
-                Tab(
-                    selected = selectedTabIndex == 2,
-                    onClick = {
-                        selectedTabIndex = 2
-                    },
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                ) {
-                    Text(text = "Live")
-                }
-                Tab(
-                    selected = selectedTabIndex == 3,
-                    onClick = {
-                        selectedTabIndex = 3
-                    },
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                ) {
-                    Text(text = "Playlists")
-                }
-                Tab(
-                    selected = selectedTabIndex == 4,
-                    onClick = {
-                        selectedTabIndex = 4
-                    },
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                ) {
-                    Text(text = "Community")
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            //Data of Row Tabs
             Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
             ) {
-                when (selectedTabIndex) {
-                    0 -> {
-                        Text(text = "Hey Welcome to Home")
+                ScrollableTabRow(
+                    selectedTabIndex = selectedTabIndex,
+                    edgePadding = 8.dp,
+                    indicator = { tabPositions ->
+                        TabRowDefaults.Indicator(
+                            modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
+                                .height(2.dp).background(MaterialTheme.colorScheme.primary)
+                        )
+                    },
+                    backgroundColor = MaterialTheme.colorScheme.surface,
+                    contentColor = if (isDark) Color.White else Color.Black,
+                    modifier = Modifier.fillMaxWidth().padding(8.dp)
+                ) {
+                    Tab(
+                        selected = selectedTabIndex == 0,
+                        onClick = {
+                            selectedTabIndex = 0
+                        },
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                    ) {
+                        Text(text = "Home")
                     }
-
-                    1 -> {
-                        Text(text = "Hey Videos")
+                    Tab(
+                        selected = selectedTabIndex == 1,
+                        onClick = {
+                            selectedTabIndex = 1
+                        },
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                    ) {
+                        Text(text = "Videos")
                     }
-
-                    2 -> {
-                        Text(text = "No Live Stream")
+                    Tab(
+                        selected = selectedTabIndex == 2,
+                        onClick = {
+                            selectedTabIndex = 2
+                        },
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                    ) {
+                        Text(text = "Live")
                     }
-
-                    3 -> {
-                        Text(text = "No Playlists")
+                    Tab(
+                        selected = selectedTabIndex == 3,
+                        onClick = {
+                            selectedTabIndex = 3
+                        },
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                    ) {
+                        Text(text = "Playlists")
                     }
+                    Tab(
+                        selected = selectedTabIndex == 4,
+                        onClick = {
+                            selectedTabIndex = 4
+                        },
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                    ) {
+                        Text(text = "Community")
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                //Data of Row Tabs
+                Column(
+                    modifier = Modifier.height(500.dp)
+                        .scrollable(
+                            state = rememberScrollState(),
+                            orientation = Orientation.Vertical
+                        ),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    when (selectedTabIndex) {
+                        0 -> {
+                            playlists.let {
+                                it?.let { it1 -> PlaylistsVideosList(it1) }
+                            }
+                            Text(text = "Hey Welcome to Home $playlists")
+                        }
 
-                    4 -> {
-                        Text(text = "Community Text")
+                        1 -> {
+                            Text(text = "Hey Videos")
+                        }
+
+                        2 -> {
+                            Text(text = "No Live Stream")
+                        }
+
+                        3 -> {
+                            Text(text = "No Playlists")
+                        }
+
+                        4 -> {
+                            Text(text = "Community Text")
+                        }
                     }
                 }
             }
         }
+
     }
 }
 

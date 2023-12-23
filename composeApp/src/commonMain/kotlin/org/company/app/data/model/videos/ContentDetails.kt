@@ -7,19 +7,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ContentDetails(
     @SerialName("caption")
-    val caption: String,
+    val caption: String? = null,
     @SerialName("contentRating")
     val contentRating: ContentRating?,
     @SerialName("definition")
-    val definition: String,
+    val definition: String? = null,
     @SerialName("dimension")
-    val dimension: String,
+    val dimension: String? = null,
     @SerialName("duration")
-    val duration: String,
+    val duration: String? = null,
     @SerialName("licensedContent")
-    val licensedContent: Boolean,
+    val licensedContent: Boolean? = null,
     @SerialName("projection")
-    val projection: String,
+    val projection: String? = null,
     @SerialName("regionRestriction")
     val regionRestriction: RegionRestriction?
 )

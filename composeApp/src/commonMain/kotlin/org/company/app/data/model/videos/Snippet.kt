@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Snippet(
     @SerialName("categoryId")
-    val categoryId: String,
+    val categoryId: String? = null,
     @SerialName("channelId")
     val channelId: String,
     @SerialName("channelTitle")
@@ -19,7 +19,7 @@ data class Snippet(
     @SerialName("description")
     val description: String,
     @SerialName("liveBroadcastContent")
-    val liveBroadcastContent: String,
+    val liveBroadcastContent: String? = null,
     @SerialName("localized")
     val localized: Localized,
     @SerialName("publishedAt")

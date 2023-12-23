@@ -76,7 +76,7 @@ fun VideosList(youtube: Youtube) {
         Column {
             TopBar(modifier = Modifier.fillMaxWidth())
             LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                items(youtube.items) { videos ->
+                items(youtube.items!!) { videos ->
                     VideoItemCard(videos)
                 }
             }
@@ -103,7 +103,8 @@ fun VideoItemCard(video: Item) {
         Column {
             Box(modifier = Modifier.fillMaxWidth()) {
                 val image: Resource<Painter> =
-                    asyncPainterResource(data = video.snippet.thumbnails.high.url)
+                    asyncPainterResource(data = video.snippet?.thumbnails?.high?.url!!)
+
                 KamelImage(
                     resource = image,
                     contentDescription = null,
@@ -145,7 +146,7 @@ fun VideoItemCard(video: Item) {
             ) {
                 // Channel Image
                 val image: Resource<Painter> =
-                    asyncPainterResource(data = video.snippet.thumbnails.high.url)
+                    asyncPainterResource(data = video.snippet!!.thumbnails.high.url)
                 KamelImage(
                     resource = image,
                     contentDescription = null,

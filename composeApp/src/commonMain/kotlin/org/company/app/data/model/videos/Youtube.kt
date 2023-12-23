@@ -7,15 +7,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Youtube(
     @SerialName("etag")
-    val etag: String,
+    val etag: String? = null,
     @SerialName("items")
-    val items: List<Item>,
+    val items: List<Item>? = null,
     @SerialName("kind")
-    val kind: String,
+    val kind: String?= null,
     @SerialName("nextPageToken")
     val nextPageToken: String? = null,
     @SerialName("regionCode")
     val regionCode: String? = null,
     @SerialName("pageInfo")
-    val pageInfo: PageInfo,
+    val pageInfo: PageInfo? = null,
 )

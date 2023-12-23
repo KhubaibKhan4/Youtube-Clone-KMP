@@ -9,13 +9,13 @@ data class Item(
     @SerialName("contentDetails")
     val contentDetails: ContentDetails? = null,
     @SerialName("etag")
-    val etag: String,
+    val etag: String? = null,
     @SerialName("id")
-    val id: String,
+    val id: String? = null,
     @SerialName("kind")
-    val kind: String,
+    val kind: String? = null,
     @SerialName("snippet")
-    val snippet: Snippet,
+    val snippet: Snippet? = null,
     @SerialName("statistics")
     val statistics: Statistics? = null
 )
