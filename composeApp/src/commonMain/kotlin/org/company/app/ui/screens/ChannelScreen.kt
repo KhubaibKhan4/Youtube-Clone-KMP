@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -57,17 +56,21 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.channel.Item
 import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.SearchState
 import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
+import org.company.app.ui.components.ChannelCommunity
 import org.company.app.ui.components.ChannelHome
 import org.company.app.ui.components.ChannelLiveStream
 import org.company.app.ui.components.ChannelPlaylists
+import org.company.app.ui.components.ChannelVideos
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
 
@@ -82,11 +85,15 @@ class ChannelScreen(
         var playlists by remember { mutableStateOf<Youtube?>(null) }
         var channelSections by remember { mutableStateOf<Youtube?>(null) }
         var channelLiveStream by remember { mutableStateOf<Search?>(null) }
+        var channelAllVideos by remember { mutableStateOf<Channel?>(null) }
+        var channelCommunities by remember { mutableStateOf<Youtube?>(null) }
 
         LaunchedEffect(Unit) {
             viewModel.getPlaylists(channel.id)
             viewModel.getChannelSections(channel.id)
             viewModel.getChannelLiveStreams(channel.id)
+            viewModel.getChannelVideos(channel.contentDetails?.relatedPlaylists?.uploads.toString())
+            viewModel.getChannelCommunity(channel.id)
         }
         //Simple Playlist
         val state by viewModel.playlists.collectAsState()
@@ -96,6 +103,12 @@ class ChannelScreen(
 
         //Channel LiveStreams
         val liveStreams by viewModel.channelLiveStream.collectAsState()
+
+        //Channel All Videos
+        val allVideos by viewModel.channelVideos.collectAsState()
+
+        //Channel Community
+        val channelCommunity by viewModel.channelCommunity.collectAsState()
 
         when (state) {
             is YoutubeState.LOADING -> {
@@ -141,6 +154,40 @@ class ChannelScreen(
 
             is SearchState.ERROR -> {
                 val error = (liveStreams as SearchState.ERROR).error
+                ErrorBox(error = error)
+            }
+        }
+
+        //Channel All Videos
+        when (allVideos) {
+            is ChannelState.LOADING -> {
+                LoadingBox()
+            }
+
+            is ChannelState.SUCCESS -> {
+                val response = (allVideos as ChannelState.SUCCESS).channel
+                channelAllVideos = response
+            }
+
+            is ChannelState.ERROR -> {
+                val error = (allVideos as ChannelState.ERROR).error
+                ErrorBox(error = error)
+            }
+        }
+
+        //Channel Community
+        when (channelCommunity) {
+            is YoutubeState.LOADING -> {
+                LoadingBox()
+            }
+
+            is YoutubeState.SUCCESS -> {
+                val response = (channelCommunity as YoutubeState.SUCCESS).youtube
+                channelCommunities = response
+            }
+
+            is YoutubeState.ERROR -> {
+                val error = (channelCommunity as YoutubeState.ERROR).error
                 ErrorBox(error = error)
             }
         }
@@ -406,7 +453,7 @@ class ChannelScreen(
                         }
 
                         1 -> {
-                            Text(text = "Hey Videos")
+                            channelAllVideos?.let { ChannelVideos(it) }
                         }
 
                         2 -> {
@@ -420,7 +467,9 @@ class ChannelScreen(
                         }
 
                         4 -> {
-                            Text(text = "Community Text")
+                            channelCommunities?.let { youtube ->
+                                ChannelCommunity(youtube, channel.brandingSettings?.image?.bannerExternalUrl.toString())
+                            }
                         }
                     }
                 }

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RelatedPlaylists(
     @SerialName("likes")
-    val likes: String,
+    val likes: String? = null,
     @SerialName("uploads")
-    val uploads: String
+    val uploads: String? = null
 )

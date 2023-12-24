@@ -9,7 +9,7 @@ import org.company.app.domain.plugin.YoutubePlugin
 class Repository : YoutubePlugin {
 
     override suspend fun getVideoList(): Youtube {
-       return YoutubeClientApi.getVideoList()
+        return YoutubeClientApi.getVideoList()
     }
 
     override suspend fun getRelevance(): Youtube {
@@ -42,6 +42,14 @@ class Repository : YoutubePlugin {
 
     override suspend fun getChannelLiveStreams(channelID: String): Search {
         return YoutubeClientApi.getChannelLiveStreams(channelID)
+    }
+
+    override suspend fun getChannelVideos(playlistID: String): Channel {
+        return YoutubeClientApi.getChannelVideos(playlistID)
+    }
+
+    override suspend fun getChannelCommunity(channelId: String): Youtube {
+        return YoutubeClientApi.getChannelCommunity(channelId)
     }
 
 }
