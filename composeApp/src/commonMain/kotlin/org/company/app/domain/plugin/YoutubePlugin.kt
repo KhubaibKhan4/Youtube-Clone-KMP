@@ -12,4 +12,6 @@ interface YoutubePlugin {
     suspend fun getSearch(query: String): Search
     suspend fun getChannelBranding(channelId: String): Channel
     suspend fun getPlaylists(channelId: String): Youtube
+    suspend fun getChannelSections(channelId: String): Youtube
+    suspend fun getChannelLiveStreams(channelID: String): Search
 }

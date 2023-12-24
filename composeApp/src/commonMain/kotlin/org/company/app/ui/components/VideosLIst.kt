@@ -146,7 +146,7 @@ fun VideoItemCard(video: Item) {
             ) {
                 // Channel Image
                 val image: Resource<Painter> =
-                    asyncPainterResource(data = video.snippet!!.thumbnails.high.url)
+                    asyncPainterResource(data = video.snippet!!.thumbnails?.high?.url.toString())
                 KamelImage(
                     resource = image,
                     contentDescription = null,
@@ -162,7 +162,7 @@ fun VideoItemCard(video: Item) {
                         .weight(1f)
                 ) {
                     Text(
-                        text = video.snippet.title,
+                        text = video.snippet.title.toString(),
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,
                         fontSize = 12.sp,
@@ -176,7 +176,7 @@ fun VideoItemCard(video: Item) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Text(text = video.snippet.channelTitle, fontSize = 10.sp)
+                        Text(text = video.snippet.channelTitle.toString(), fontSize = 10.sp)
                         Text(text = "•")
                         Text(
                             text = "${video.statistics?.viewCount?.let { formatViewCount(it) }} views",
@@ -184,7 +184,7 @@ fun VideoItemCard(video: Item) {
                         )
                         Text(text = "•")
                         Text(
-                            text = getFormattedDate(video.snippet.publishedAt),
+                            text = getFormattedDate(video.snippet.publishedAt.toString()),
                             fontSize = 10.sp,
                             maxLines = 1,
                             modifier = Modifier

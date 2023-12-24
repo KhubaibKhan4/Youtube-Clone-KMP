@@ -36,4 +36,12 @@ class Repository : YoutubePlugin {
         return YoutubeClientApi.getPlaylists(channelId)
     }
 
+    override suspend fun getChannelSections(channelId: String): Youtube {
+        return YoutubeClientApi.getChannelSections(channelId)
+    }
+
+    override suspend fun getChannelLiveStreams(channelID: String): Search {
+        return YoutubeClientApi.getChannelLiveStreams(channelID)
+    }
+
 }

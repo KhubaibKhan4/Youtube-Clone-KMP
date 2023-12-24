@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -57,14 +58,18 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.data.model.channel.Item
+import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.SearchState
 import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
+import org.company.app.ui.components.ChannelHome
+import org.company.app.ui.components.ChannelLiveStream
+import org.company.app.ui.components.ChannelPlaylists
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
-import org.company.app.ui.components.PlaylistsVideosList
 
 class ChannelScreen(
     private val channel: Item
@@ -75,11 +80,23 @@ class ChannelScreen(
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
         var playlists by remember { mutableStateOf<Youtube?>(null) }
+        var channelSections by remember { mutableStateOf<Youtube?>(null) }
+        var channelLiveStream by remember { mutableStateOf<Search?>(null) }
 
         LaunchedEffect(Unit) {
             viewModel.getPlaylists(channel.id)
+            viewModel.getChannelSections(channel.id)
+            viewModel.getChannelLiveStreams(channel.id)
         }
+        //Simple Playlist
         val state by viewModel.playlists.collectAsState()
+
+        //Channel Section Data Like Home Screens Videos,Playlists ID,Featured Channels
+        val channelState by viewModel.channelSections.collectAsState()
+
+        //Channel LiveStreams
+        val liveStreams by viewModel.channelLiveStream.collectAsState()
+
         when (state) {
             is YoutubeState.LOADING -> {
                 LoadingBox()
@@ -92,6 +109,38 @@ class ChannelScreen(
 
             is YoutubeState.ERROR -> {
                 val error = (state as YoutubeState.ERROR).error
+                ErrorBox(error = error)
+            }
+        }
+        //Channel Sections
+        when (channelState) {
+            is YoutubeState.LOADING -> {
+                LoadingBox()
+            }
+
+            is YoutubeState.SUCCESS -> {
+                val response = (channelState as YoutubeState.SUCCESS).youtube
+                channelSections = response
+            }
+
+            is YoutubeState.ERROR -> {
+                val error = (channelState as YoutubeState.ERROR).error
+                ErrorBox(error = error)
+            }
+        }
+        //Channel LiveStreams
+        when (liveStreams) {
+            is SearchState.LOADING -> {
+                LoadingBox()
+            }
+
+            is SearchState.SUCCESS -> {
+                val response = (liveStreams as SearchState.SUCCESS).search
+                channelLiveStream = response
+            }
+
+            is SearchState.ERROR -> {
+                val error = (liveStreams as SearchState.ERROR).error
                 ErrorBox(error = error)
             }
         }
@@ -158,7 +207,11 @@ class ChannelScreen(
             KamelImage(
                 resource = poster,
                 contentDescription = null,
-                modifier = Modifier.fillMaxWidth().height(170.dp),
+                modifier = Modifier.fillMaxWidth()
+                    .height(130.dp)
+                    .padding(start = 20.dp, end = 20.dp)
+                    .clip(shape = RoundedCornerShape(14.dp))
+                ,
                 contentScale = ContentScale.Crop,
                 onLoading = {
                     CircularProgressIndicator(it)
@@ -166,7 +219,7 @@ class ChannelScreen(
                 onFailure = {
                     Text(text = "Failed to Load Image")
                 },
-                animationSpec = tween()
+                animationSpec = tween(),
             )
 
             // Channel Details
@@ -305,7 +358,7 @@ class ChannelScreen(
                         },
                         modifier = Modifier.padding(horizontal = 8.dp),
                     ) {
-                        Text(text = "Live")
+                        Text(text = "LiveStreams")
                     }
                     Tab(
                         selected = selectedTabIndex == 3,
@@ -329,7 +382,8 @@ class ChannelScreen(
                 }
                 //Data of Row Tabs
                 Column(
-                    modifier = Modifier.height(500.dp)
+                    modifier = Modifier
+                        .height(500.dp)
                         .scrollable(
                             state = rememberScrollState(),
                             orientation = Orientation.Vertical
@@ -339,8 +393,14 @@ class ChannelScreen(
                 ) {
                     when (selectedTabIndex) {
                         0 -> {
-                            playlists.let {
-                                it?.let { it1 -> PlaylistsVideosList(it1) }
+                            playlists.let { youtube ->
+                                youtube?.let { it1 ->
+                                    ChannelHome(
+                                        youtube = it1,
+                                        modifier = Modifier,
+                                        title = "Videos"
+                                    )
+                                }
                             }
                             Text(text = "Hey Welcome to Home $playlists")
                         }
@@ -350,11 +410,13 @@ class ChannelScreen(
                         }
 
                         2 -> {
-                            Text(text = "No Live Stream")
+                            channelLiveStream?.let { ChannelLiveStream(it) }
                         }
 
                         3 -> {
-                            Text(text = "No Playlists")
+                            playlists?.let { youtube: Youtube? ->
+                                ChannelPlaylists(youtube!!)
+                            }
                         }
 
                         4 -> {
@@ -367,7 +429,3 @@ class ChannelScreen(
 
     }
 }
-
-
-
-

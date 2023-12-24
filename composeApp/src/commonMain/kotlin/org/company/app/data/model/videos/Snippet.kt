@@ -11,23 +11,23 @@ data class Snippet(
     @SerialName("channelId")
     val channelId: String,
     @SerialName("channelTitle")
-    val channelTitle: String,
+    val channelTitle: String? = null,
     @SerialName("defaultAudioLanguage")
     val defaultAudioLanguage: String?,
     @SerialName("defaultLanguage")
     val defaultLanguage: String?,
     @SerialName("description")
-    val description: String,
+    val description: String? = null,
     @SerialName("liveBroadcastContent")
     val liveBroadcastContent: String? = null,
     @SerialName("localized")
-    val localized: Localized,
+    val localized: Localized? = null,
     @SerialName("publishedAt")
-    val publishedAt: String,
+    val publishedAt: String? = null,
     @SerialName("tags")
     val tags: List<String>?,
     @SerialName("thumbnails")
-    val thumbnails: Thumbnails,
+    val thumbnails: Thumbnails? = null,
     @SerialName("title")
-    val title: String
+    val title: String? = null
 )

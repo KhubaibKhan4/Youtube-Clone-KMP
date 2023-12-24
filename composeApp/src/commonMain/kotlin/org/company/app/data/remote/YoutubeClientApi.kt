@@ -77,7 +77,22 @@ object YoutubeClientApi {
     }
 
     suspend fun getPlaylists(channelId: String): Youtube {
-        val url = BASE_URL + "playlists?part=snippet,contentDetails&channelId=${channelId}&maxResults=50&key=${API_KEY}"
+        val url =
+            BASE_URL + "playlists?part=snippet,contentDetails&channelId=${channelId}&maxResults=50&key=${API_KEY}"
+        return client.get(url).body()
+    }
+
+    suspend fun getChannelSections(channelId: String): Youtube {
+        val url = BASE_URL + "channelSections?part=snippet,contentDetails&channelId=${channelId}&key=${API_KEY}"
+        return client.get(url).body()
+    }
+
+    suspend fun getChannelLiveStreams(channelID: String): Search{
+        val url = BASE_URL + "search?part=snippet&eventType=live&type=video&id=${channelID}&maxResults=30&regionCode=us&key=${API_KEY}"
+        return client.get(url).body()
+    }
+    suspend fun getChannelVideos(playlistID: String): Channel{
+        val url = BASE_URL+"playlistItems?part=snippet,contentDetails&playlistId=${playlistID}&key=$API_KEY"
         return client.get(url).body()
     }
 }

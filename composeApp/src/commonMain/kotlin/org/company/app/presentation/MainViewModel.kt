@@ -40,6 +40,14 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     private val _playlists = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
     val playlists: StateFlow<YoutubeState> = _playlists.asStateFlow()
 
+    //Channel Sections
+    private val _channelSections  = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    val channelSections: StateFlow<YoutubeState> = _channelSections
+
+    //Channel LiveStream
+    private val _channelLiveSteam = MutableStateFlow<SearchState>(SearchState.LOADING)
+    val channelLiveStream : StateFlow<SearchState> = _channelLiveSteam.asStateFlow()
+
     fun getVideosList() {
         viewModelScope.launch {
             _videos.value = YoutubeState.LOADING
@@ -133,6 +141,31 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             }catch (e: Exception){
                 val error = e.message.toString()
                 _playlists.value = YoutubeState.ERROR(error)
+            }
+        }
+    }
+    fun getChannelSections(channelId: String){
+        viewModelScope.launch {
+            _channelSections.value = YoutubeState.LOADING
+            try {
+                val response = repository.getChannelSections(channelId)
+                _channelSections.value = YoutubeState.SUCCESS(response)
+            }catch (e: Exception){
+                val error = e.message.toString()
+                _channelSections.value = YoutubeState.ERROR(error)
+            }
+        }
+    }
+
+    fun getChannelLiveStreams(channelId: String){
+        viewModelScope.launch {
+            _channelLiveSteam.value = SearchState.LOADING
+            try {
+                val response = repository.getChannelLiveStreams(channelId)
+                _channelLiveSteam.value = SearchState.SUCCESS(response)
+            }catch (e: Exception){
+                val error = e.message.toString()
+                _channelLiveSteam.value = SearchState.ERROR(error)
             }
         }
     }

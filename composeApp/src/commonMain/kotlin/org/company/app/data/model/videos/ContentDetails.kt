@@ -20,6 +20,8 @@ data class ContentDetails(
     val licensedContent: Boolean? = null,
     @SerialName("projection")
     val projection: String? = null,
+    @SerialName("itemCount")
+    val itemCount: Int? = null,
     @SerialName("regionRestriction")
     val regionRestriction: RegionRestriction?
 )
