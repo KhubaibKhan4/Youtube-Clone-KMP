@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ChannelState
+import org.company.app.domain.usecases.CommentsState
 import org.company.app.domain.usecases.SearchState
 import org.company.app.domain.usecases.YoutubeState
 
@@ -49,12 +50,16 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val channelLiveStream : StateFlow<SearchState> = _channelLiveSteam.asStateFlow()
 
     //Channel Videos
-    private val _channelVideos = MutableStateFlow<ChannelState>(ChannelState.LOADING)
-    val channelVideos : StateFlow<ChannelState> = _channelVideos.asStateFlow()
+    private val _channelVideos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    val channelVideos : StateFlow<YoutubeState> = _channelVideos.asStateFlow()
 
     //Channel Community
     private val _channelCommunity = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
     val channelCommunity : StateFlow<YoutubeState> = _channelCommunity.asStateFlow()
+
+    //Video Comments
+    private val _videoComments = MutableStateFlow<CommentsState>(CommentsState.LOADING)
+    val videoComments : StateFlow<CommentsState> = _videoComments.asStateFlow()
 
     fun getVideosList() {
         viewModelScope.launch {
@@ -180,13 +185,13 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
     fun getChannelVideos(playlistId: String){
         viewModelScope.launch {
-            _channelVideos.value = ChannelState.LOADING
+            _channelVideos.value = YoutubeState.LOADING
             try {
                 val response = repository.getChannelVideos(playlistId)
-                _channelVideos.value = ChannelState.SUCCESS(response)
+                _channelVideos.value = YoutubeState.SUCCESS(response)
             }catch (e: Exception){
                 val error = e.message.toString()
-                _channelVideos.value = ChannelState.ERROR(error)
+                _channelVideos.value = YoutubeState.ERROR(error)
             }
         }
     }
@@ -200,6 +205,19 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             }catch (e: Exception){
                 val error = e.message.toString()
                 _channelCommunity.value = YoutubeState.ERROR(error)
+            }
+        }
+    }
+
+    fun getVideoComments(videoId: String){
+        viewModelScope.launch {
+            _videoComments.value = CommentsState.LOADING
+            try {
+                val response = repository.getVideoComments(videoId)
+                _videoComments.value = CommentsState.SUCCESS(response)
+            }catch (e: Exception){
+                val error = e.message.toString()
+                _videoComments.value = CommentsState.ERROR(error)
             }
         }
     }

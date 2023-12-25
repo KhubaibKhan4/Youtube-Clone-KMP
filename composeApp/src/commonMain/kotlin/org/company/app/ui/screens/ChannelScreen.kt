@@ -85,7 +85,7 @@ class ChannelScreen(
         var playlists by remember { mutableStateOf<Youtube?>(null) }
         var channelSections by remember { mutableStateOf<Youtube?>(null) }
         var channelLiveStream by remember { mutableStateOf<Search?>(null) }
-        var channelAllVideos by remember { mutableStateOf<Channel?>(null) }
+        var channelAllVideos by remember { mutableStateOf<Youtube?>(null) }
         var channelCommunities by remember { mutableStateOf<Youtube?>(null) }
 
         LaunchedEffect(Unit) {
@@ -160,17 +160,17 @@ class ChannelScreen(
 
         //Channel All Videos
         when (allVideos) {
-            is ChannelState.LOADING -> {
+            is YoutubeState.LOADING -> {
                 LoadingBox()
             }
 
-            is ChannelState.SUCCESS -> {
-                val response = (allVideos as ChannelState.SUCCESS).channel
+            is YoutubeState.SUCCESS -> {
+                val response = (allVideos as YoutubeState.SUCCESS).youtube
                 channelAllVideos = response
             }
 
-            is ChannelState.ERROR -> {
-                val error = (allVideos as ChannelState.ERROR).error
+            is YoutubeState.ERROR -> {
+                val error = (allVideos as YoutubeState.ERROR).error
                 ErrorBox(error = error)
             }
         }
@@ -445,11 +445,11 @@ class ChannelScreen(
                                     ChannelHome(
                                         youtube = it1,
                                         modifier = Modifier,
-                                        title = "Videos"
+                                        title = "Home"
                                     )
                                 }
                             }
-                            Text(text = "Hey Welcome to Home $playlists")
+                            channelAllVideos?.let { ChannelVideos(it) }
                         }
 
                         1 -> {

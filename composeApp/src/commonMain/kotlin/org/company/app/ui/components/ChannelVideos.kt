@@ -12,20 +12,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FeaturedPlayList
-import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -37,32 +32,45 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.videos.Item
 import org.company.app.data.model.videos.Youtube
 import kotlin.random.Random
 
 @Composable
 fun ChannelVideos(
-    channel: Channel,
+    youtube: Youtube
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(300.dp),
-        modifier = Modifier.fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
     ) {
-        items(channel.items) { videos ->
-            ChannelVideosItems(videos)
+        Text(
+            text = "Videos",
+            fontSize = MaterialTheme.typography.titleMedium.fontSize
+        )
+        Spacer(modifier = Modifier.height(6.dp))
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(300.dp),
+            modifier = Modifier.fillMaxWidth()
+                .padding(start = 8.dp, end = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            youtube.items?.let { items ->
+                items(items) { videos ->
+                    ChannelVideosItems(videos)
+                }
+            }
         }
     }
 }
 
 @Composable
-fun ChannelVideosItems(videos: org.company.app.data.model.channel.Item) {
+fun ChannelVideosItems(videos: Item) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -94,6 +102,20 @@ fun ChannelVideosItems(videos: org.company.app.data.model.channel.Item) {
                 },
                 animationSpec = tween()
             )
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(8.dp)
+                    .background(MaterialTheme.colorScheme.primary)
+                    .clip(RoundedCornerShape(4.dp))
+            ) {
+                androidx.compose.material3.Text(
+                    text = videos.contentDetails?.duration?.let { formatVideoDuration(it) }
+                        ?: "00:00",
+                    color = Color.White,
+                    fontSize = 10.sp
+                )
+            }
         }
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -125,19 +147,20 @@ fun ChannelVideosItems(videos: org.company.app.data.model.channel.Item) {
                 )
 
                 // More options icon
-               Box(contentAlignment = Alignment.TopEnd){
-                   IconButton(
-                       onClick = {},
-                       modifier = Modifier.align(alignment = Alignment.TopEnd)
-                   ) {
-                       Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More Vert")
-                   }
-               }
+                Box(contentAlignment = Alignment.TopEnd) {
+                    IconButton(
+                        onClick = {},
+                        modifier = Modifier.align(alignment = Alignment.TopEnd)
+                    ) {
+                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More Vert")
+                    }
+                }
             }
         }
     }
 }
-private fun getRandomColors(): Color{
+
+private fun getRandomColors(): Color {
     val random = Random
     return Color(
         red = random.nextFloat(),

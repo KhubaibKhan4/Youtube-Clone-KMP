@@ -58,8 +58,10 @@ fun ChannelHome(
                 fontSize = MaterialTheme.typography.titleMedium.fontSize
             )
         }
-        items(youtube.items!!) { videos ->
-            ChannelHomeItems(videos)
+        youtube.items?.let { items ->
+            items(items) { videos ->
+                ChannelHomeItems(videos)
+            }
         }
     }
 }

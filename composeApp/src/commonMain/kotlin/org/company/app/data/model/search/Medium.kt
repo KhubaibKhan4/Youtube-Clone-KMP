@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Medium(
     @SerialName("height")
-    val height: Int,
+    val height: Int? = null,
     @SerialName("url")
     val url: String,
     @SerialName("width")
-    val width: Int
+    val width: Int?=null
 )

@@ -64,8 +64,10 @@ fun ChannelPlaylists(
                 Icon(imageVector = Icons.Default.KeyboardArrowDown, contentDescription = null)
             }
         }
-        items(youtube.items!!) { videos ->
-            ChannelPlaylistsItems(videos)
+        youtube.items?.let { items ->
+            items(items) { videos ->
+                ChannelPlaylistsItems(videos)
+            }
         }
     }
 }

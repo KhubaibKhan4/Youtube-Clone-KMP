@@ -9,9 +9,9 @@ data class Youtube(
     @SerialName("etag")
     val etag: String? = null,
     @SerialName("items")
-    val items: List<Item>? = null,
+    val items: List<Item>?,
     @SerialName("kind")
-    val kind: String?= null,
+    val kind: String? = null,
     @SerialName("nextPageToken")
     val nextPageToken: String? = null,
     @SerialName("regionCode")

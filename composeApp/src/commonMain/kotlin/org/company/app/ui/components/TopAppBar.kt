@@ -130,9 +130,6 @@ fun TopBar(modifier: Modifier) {
             modifier = modifier
         )
     } else {
-        LaunchedEffect(Unit) {
-            // viewModel.getSearch(query)
-        }
         state = viewModel.search.collectAsState().value
         when (state) {
             is SearchState.LOADING -> {
@@ -154,7 +151,7 @@ fun TopBar(modifier: Modifier) {
         }
         Column(
             modifier = Modifier.fillMaxSize()
-                .padding(top = 6.dp),
+                .padding(top = 49.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -174,6 +171,7 @@ fun TopBar(modifier: Modifier) {
                     onValueChange = {
                         query = it
                     },
+                    maxLines = 1,
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
@@ -263,7 +261,7 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                navigator?.push(DetailScreen(video = null, search = video))
+                navigator?.push(DetailScreen(search = video))
             },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface

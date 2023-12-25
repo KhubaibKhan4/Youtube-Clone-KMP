@@ -1,7 +1,6 @@
 package org.company.app.ui.components
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,10 +52,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.model.ImageAction
-import com.seiko.imageloader.rememberImagePainter
-import com.seiko.imageloader.rememberImageSuccessPainter
-import com.seiko.imageloader.ui.AutoSizeBox
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -76,8 +71,10 @@ fun VideosList(youtube: Youtube) {
         Column {
             TopBar(modifier = Modifier.fillMaxWidth())
             LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                items(youtube.items!!) { videos ->
-                    VideoItemCard(videos)
+                youtube.items?.let { items ->
+                    items(items) { videos ->
+                        VideoItemCard(videos)
+                    }
                 }
             }
         }

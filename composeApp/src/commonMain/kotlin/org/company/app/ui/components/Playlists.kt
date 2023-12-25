@@ -67,8 +67,10 @@ fun PlaylistsVideosList(youtube: Youtube) {
     ) {
         Column {
             LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                items(youtube.items!!) { videos ->
-                    PlaylistsVideoItemCard(videos)
+                youtube.items?.let { items ->
+                    items(items) { videos ->
+                        PlaylistsVideoItemCard(videos)
+                    }
                 }
             }
         }

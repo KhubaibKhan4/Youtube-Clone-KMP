@@ -1,6 +1,7 @@
 package org.company.app.domain.repository
 
 import org.company.app.data.model.channel.Channel
+import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.data.remote.YoutubeClientApi
@@ -44,12 +45,16 @@ class Repository : YoutubePlugin {
         return YoutubeClientApi.getChannelLiveStreams(channelID)
     }
 
-    override suspend fun getChannelVideos(playlistID: String): Channel {
+    override suspend fun getChannelVideos(playlistID: String): Youtube {
         return YoutubeClientApi.getChannelVideos(playlistID)
     }
 
     override suspend fun getChannelCommunity(channelId: String): Youtube {
         return YoutubeClientApi.getChannelCommunity(channelId)
+    }
+
+    override suspend fun getVideoComments(videoId: String): Comments {
+        return YoutubeClientApi.getComments(videoId)
     }
 
 }

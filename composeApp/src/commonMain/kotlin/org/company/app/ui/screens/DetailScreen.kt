@@ -21,17 +21,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ModalBottomSheetDefaults
+import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material.icons.filled.UnfoldMoreDouble
 import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.material3.BottomSheetDefaults
@@ -46,7 +48,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -56,6 +60,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -78,12 +83,15 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.company.app.VideoPlayer
 import org.company.app.data.model.channel.Channel
+import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.videos.Item
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ChannelState
+import org.company.app.domain.usecases.CommentsState
 import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
+import org.company.app.ui.components.CommentsList
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
 import org.company.app.ui.components.RelevanceList
@@ -93,7 +101,7 @@ class DetailScreen(
     private val search: org.company.app.data.model.search.Item? = null
 ) : Screen {
 
-    @OptIn(ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
         val repository = remember { Repository() }
@@ -101,17 +109,31 @@ class DetailScreen(
         var state by remember { mutableStateOf<ChannelState>(ChannelState.LOADING) }
         var stateRelevance by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
         var channelData by remember { mutableStateOf<Channel?>(null) }
+        var commentData by remember { mutableStateOf<Comments?>(null) }
         var descriptionEnabled by remember { mutableStateOf(false) }
         var displayVideoPlayer by remember { mutableStateOf(false) }
+        var isCommentLive by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
         val isDark by LocalThemeIsDark.current
 
         LaunchedEffect(Unit) {
-            video?.snippet?.channelId?.let { viewModel.getChannelDetails(it) }
+            //Channel Details
+            if (video?.snippet?.channelId.isNullOrBlank()) {
+                viewModel.getChannelDetails(search?.snippet?.channelId.toString())
+            } else {
+                viewModel.getChannelDetails(video?.snippet?.channelId.toString())
+            }
+            //Video Comments
+            if (video?.id.isNullOrBlank()) {
+                viewModel.getVideoComments(search?.id.toString())
+            } else {
+                viewModel.getVideoComments(video?.id.toString())
+            }
             viewModel.getRelevance()
         }
         state = viewModel.channelDetails.collectAsState().value
         stateRelevance = viewModel.relevance.collectAsState().value
+        val commentsState by viewModel.videoComments.collectAsState()
 
         when (state) {
             is ChannelState.LOADING -> {
@@ -130,37 +152,57 @@ class DetailScreen(
             }
         }
 
+        when (commentsState) {
+            is CommentsState.LOADING -> {
+                LoadingBox()
+            }
+
+            is CommentsState.SUCCESS -> {
+                val data = (commentsState as CommentsState.SUCCESS).comments
+                commentData = data
+            }
+
+            is CommentsState.ERROR -> {
+                val error = (commentsState as CommentsState.ERROR).error
+                ErrorBox(error)
+            }
+        }
+
         //https://www.youtube.com/watch?v=${video.id}
         //"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(state = rememberScrollState())
+            modifier = Modifier.fillMaxSize().verticalScroll(state = rememberScrollState())
         ) {
 
             // Thumbnail
             if (displayVideoPlayer) {
-                VideoPlayer(
-                    modifier = Modifier.fillMaxWidth()
-                        .height(220.dp),
-                    url = "https://www.youtube.com/watch?v=${video?.id}",
-                    thumbnail = video?.snippet?.thumbnails?.high?.url
-                )
+                if (video?.id.isNullOrBlank()) {
+                    VideoPlayer(
+                        modifier = Modifier.fillMaxWidth().height(220.dp),
+                        url = "https://www.youtube.com/watch?v=${search?.id}",
+                        thumbnail = search?.snippet?.thumbnails?.high?.url
+                    )
+                } else {
+                    VideoPlayer(
+                        modifier = Modifier.fillMaxWidth().height(220.dp),
+                        url = "https://www.youtube.com/watch?v=${video?.id}",
+                        thumbnail = video?.snippet?.thumbnails?.high?.url
+                    )
+                }
+
             } else {
                 Box(
-                    modifier = Modifier.fillMaxWidth()
-                        .height(200.dp),
+                    modifier = Modifier.fillMaxWidth().height(200.dp),
                     contentAlignment = Alignment.Center
                 ) {
 
                     val image: Resource<Painter> =
-                        asyncPainterResource(data = video?.snippet?.thumbnails?.high?.url.toString())
+                        asyncPainterResource(data = if (video?.snippet?.thumbnails?.high?.url.isNullOrBlank()) search?.snippet?.thumbnails?.high?.url.toString() else video?.snippet?.thumbnails?.high?.url.toString())
                     KamelImage(
                         resource = image,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         onLoading = {
                             CircularProgressIndicator(it)
                         },
@@ -178,8 +220,7 @@ class DetailScreen(
                         IconButton(
                             onClick = {
                                 displayVideoPlayer = !displayVideoPlayer
-                            },
-                            modifier = Modifier.align(alignment = Alignment.Center)
+                            }, modifier = Modifier.align(alignment = Alignment.Center)
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.PlayArrow,
@@ -206,55 +247,51 @@ class DetailScreen(
 
             // Title and Arrow Down Icon
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                video?.snippet?.title?.let {
+                if (video?.snippet?.title.isNullOrBlank()) {
+
                     Text(
-                        text = it,
+                        text = search?.snippet?.title.toString(),
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
-                        modifier = Modifier
-                            .weight(0.9f)
+                        modifier = Modifier.weight(0.9f)
+                    )
+
+                } else {
+                    Text(
+                        text = video?.snippet?.title.toString(),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        modifier = Modifier.weight(0.9f)
                     )
                 }
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
+                Icon(imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp).clickable {
                         descriptionEnabled = true
-                    }
-                )
+                    })
             }
 
             // Views, Date, Likes, Dislikes, Share, Download, Save
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                val views = video?.statistics?.viewCount.toString()
+                val pubDate =
+                    if (video?.snippet?.publishedAt.isNullOrBlank()) search?.snippet?.publishedAt.toString() else video?.snippet?.publishedAt.toString()
                 Text(
-                    text = "${formatViewCount(video?.statistics?.viewCount)} views - ${
-                        video?.snippet?.publishedAt?.let {
-                            getFormattedDate(
-                                it
-                            )
-                        }
-                    }",
+                    text = "${formatViewCount(views)} views - ${getFormattedDate(pubDate)}",
                     fontSize = 14.sp
                 )
             }
             // Horizontal Divider
             Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .padding(vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth().height(1.dp).padding(vertical = 8.dp),
                 thickness = 4.dp,
                 color = Color.DarkGray
             )
@@ -262,18 +299,13 @@ class DetailScreen(
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
             ) {
                 // Thumbs Up
                 Card(
-                    modifier = Modifier
-                        .height(40.dp)
-                        .padding(4.dp)
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(8.dp)
-                        ),
+                    modifier = Modifier.height(40.dp).padding(4.dp).background(
+                        color = Color.White, shape = RoundedCornerShape(8.dp)
+                    ),
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -297,10 +329,7 @@ class DetailScreen(
 
                         // Vertical line
                         Box(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .width(1.dp)
-                                .background(Color.White)
+                            modifier = Modifier.fillMaxHeight().width(1.dp).background(Color.White)
                         )
 
                         Spacer(modifier = Modifier.width(4.dp))
@@ -317,9 +346,7 @@ class DetailScreen(
 
                 // Share
                 Card(
-                    modifier = Modifier
-                        .height(40.dp)
-                        .padding(4.dp),
+                    modifier = Modifier.height(40.dp).padding(4.dp),
                     onClick = { /* Handle Share click */ },
                 ) {
                     Row(
@@ -344,9 +371,7 @@ class DetailScreen(
 
                 // Download
                 Card(
-                    modifier = Modifier
-                        .height(40.dp)
-                        .padding(4.dp),
+                    modifier = Modifier.height(40.dp).padding(4.dp),
                     onClick = { /* Handle Download click */ },
                 ) {
                     Row(
@@ -371,9 +396,7 @@ class DetailScreen(
 
                 // Save
                 Card(
-                    modifier = Modifier
-                        .height(40.dp)
-                        .padding(4.dp),
+                    modifier = Modifier.height(40.dp).padding(4.dp),
                     onClick = { /* Handle Save click */ },
                 ) {
                     Row(
@@ -396,9 +419,7 @@ class DetailScreen(
 
             // Horizontal Divider
             Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(2.dp),
+                modifier = Modifier.fillMaxWidth().height(2.dp),
                 thickness = 1.dp, // Adjust the thickness as needed
                 color = Color.LightGray // Use a different color for better visibility
             )
@@ -406,9 +427,7 @@ class DetailScreen(
 
             // Channel Section
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -421,93 +440,91 @@ class DetailScreen(
                     Image(
                         painter = it,
                         contentDescription = null,
-                        modifier = Modifier
-                            .size(60.dp)
-                            .clip(CircleShape)
-                            .clickable {
-                                navigator?.push(ChannelScreen(channelData!!.items[0]))
-                            },
+                        modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
+                            navigator?.push(ChannelScreen(channelData!!.items[0]))
+                        },
                         contentScale = ContentScale.FillBounds
                     )
                 }
 
                 // Channel Info
                 Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    video?.snippet?.channelTitle?.let {
-                        Text(
-                            text = it,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
-                        )
-                    }
+                    val channelTitle =
+                        if (video?.snippet?.channelTitle.isNullOrBlank()) search?.snippet?.channelTitle.toString() else video?.snippet?.channelTitle.toString()
+
+                    Text(
+                        text = channelTitle, fontWeight = FontWeight.Bold, fontSize = 16.sp
+                    )
                     Text(
                         text = "${formatSubscribers(channelData?.items?.get(0)?.statistics?.subscriberCount)} Subscribers",
                         fontSize = 14.sp
                     )
 
                 }
-                Text(
-                    text = "SUBSCRIBE",
+                Text(text = "SUBSCRIBE",
                     color = Color.Red,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    modifier = Modifier.clickable { /* Handle subscribe click */ }
-                )
+                    modifier = Modifier.clickable { /* Handle subscribe click */ })
             }
 
             // Horizontal Divider
             Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(2.dp),
+                modifier = Modifier.fillMaxWidth().height(2.dp),
                 thickness = 1.dp, // Adjust the thickness as needed
                 color = Color.LightGray // Use a different color for better visibility
             )
 
 
             // Sample Comment
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.fillMaxWidth()
+                    .clickable {
+                        isCommentLive = !isCommentLive
+                    }
+                    .padding(8.dp)
             ) {
-                // User Image (Replace the imagePainter with your actual logic)
-                video?.snippet?.thumbnails?.default?.url?.let {
-                    rememberImagePainter(
-                        it
-                    )
-                }?.let {
-                    Image(
-                        painter = it,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                    )
-                }
-
-                // Comment Text
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Text(text = "amazing video... ", modifier = Modifier.padding(start = 3.dp))
-                }
-
-                // Arrow Right Icon
-                Box(
+                Row(
                     modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.CenterEnd
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
                 ) {
+                    Text(
+                        text = "Comments ${formatViewComments(video?.statistics?.commentCount.toString())}",
+                        fontSize = MaterialTheme.typography.labelMedium.fontSize
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
                     Icon(
-                        imageVector = Icons.Default.KeyboardArrowRight,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp).align(alignment = Alignment.CenterEnd)
+                        imageVector = Icons.Default.UnfoldMoreDouble,
+                        contentDescription = "More Comments Icon"
+                    )
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    val commentProfile: Resource<Painter> =
+                        asyncPainterResource(data = commentData?.items?.get(0)?.snippet?.channelId.toString())
+                    val demoImage: Resource<Painter> =
+                        asyncPainterResource(data = channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString())
+                    KamelImage(
+                        resource = demoImage,
+                        contentDescription = "Comment User Profile",
+                        modifier = Modifier.size(25.dp).clip(shape = CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    val firstComment =
+                        commentData?.items?.get(0)?.snippet?.topLevelComment?.snippet?.textOriginal.toString()
+                    Text(
+                        text = firstComment,
+                        modifier = Modifier.padding(start = 3.dp),
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = MaterialTheme.typography.labelSmall.fontSize
                     )
                 }
             }
@@ -515,11 +532,9 @@ class DetailScreen(
 
             // Horizontal Divider
             Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(2.dp),
-                thickness = 1.dp, // Adjust the thickness as needed
-                color = Color.LightGray // Use a different color for better visibility
+                modifier = Modifier.fillMaxWidth().height(2.dp),
+                thickness = 1.dp,
+                color = Color.LightGray
             )
             // More Videos Section (Lazy Column)
             Text(
@@ -535,12 +550,9 @@ class DetailScreen(
                     onDismissRequest = {
                         descriptionEnabled = false
                     },
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    sheetState = rememberModalBottomSheetState(
-                        skipPartiallyExpanded = true,
-                        confirmValueChange = { true }
-                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true,
+                        confirmValueChange = { true }),
                     shape = RoundedCornerShape(12.dp),
                     containerColor = MaterialTheme.colorScheme.surface,
                     contentColor = Color.Black,
@@ -554,8 +566,7 @@ class DetailScreen(
                             .verticalScroll(state = rememberScrollState())
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(6.dp),
+                            modifier = Modifier.fillMaxWidth().padding(6.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
@@ -579,18 +590,18 @@ class DetailScreen(
                             color = DividerDefaults.color
                         )
 
-                        video?.snippet?.title?.let {
-                            Text(
-                                text = it,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                                modifier = Modifier.fillMaxWidth()
-                                    .padding(12.dp),
-                                maxLines = 2,
-                                textAlign = TextAlign.Justify,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        }
+                        val videoTitle =
+                            if (video?.snippet?.title.isNullOrBlank()) search?.snippet?.title.toString() else video?.snippet?.title.toString()
+                        Text(
+                            text = videoTitle,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                            modifier = Modifier.fillMaxWidth().padding(12.dp),
+                            maxLines = 2,
+                            textAlign = TextAlign.Justify,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+
 
                         Row(
                             modifier = Modifier.fillMaxWidth()
@@ -607,12 +618,9 @@ class DetailScreen(
                                 Image(
                                     painter = it,
                                     contentDescription = null,
-                                    modifier = Modifier
-                                        .size(15.dp)
-                                        .clip(CircleShape)
-                                        .clickable {
-                                            navigator?.push(ChannelScreen(channelData!!.items[0]))
-                                        },
+                                    modifier = Modifier.size(15.dp).clip(CircleShape).clickable {
+                                        navigator?.push(ChannelScreen(channelData!!.items[0]))
+                                    },
                                     contentScale = ContentScale.FillBounds
                                 )
                             }
@@ -704,24 +712,23 @@ class DetailScreen(
                             horizontalArrangement = Arrangement.SpaceAround
                         ) {
                             var desc_expanded by remember { mutableStateOf(false) }
-                            video?.snippet?.description?.let {
-                                Text(
-                                    text = it,
-                                    modifier = Modifier.fillMaxWidth().weight(1f)
-                                        .padding(top = 16.dp, start = 4.dp, end = 4.dp),
-                                    maxLines = if (desc_expanded) 40 else 9,
-                                    overflow = TextOverflow.Ellipsis,
-                                    fontSize = MaterialTheme.typography.bodySmall.fontSize
-                                )
-                            }
+                            val videoDescription =
+                                if (video?.snippet?.description.isNullOrBlank()) search?.snippet?.description.toString() else video?.snippet?.description.toString()
+                            Text(
+                                text = videoDescription,
+                                modifier = Modifier.fillMaxWidth().weight(1f)
+                                    .padding(top = 16.dp, start = 4.dp, end = 4.dp),
+                                maxLines = if (desc_expanded) 40 else 9,
+                                overflow = TextOverflow.Ellipsis,
+                                fontSize = MaterialTheme.typography.bodySmall.fontSize
+                            )
+
                             Text(
                                 text = if (desc_expanded) "less" else "more",
                                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                                modifier = Modifier
-                                    .clickable {
-                                        desc_expanded = !desc_expanded
-                                    }
-                                    .align(alignment = Alignment.Bottom)
+                                modifier = Modifier.clickable {
+                                    desc_expanded = !desc_expanded
+                                }.align(alignment = Alignment.Bottom)
                             )
                         }
 
@@ -737,12 +744,9 @@ class DetailScreen(
                                 text = "More From $it",
                                 fontWeight = FontWeight.Normal,
                                 fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        horizontal = 16.dp,
-                                        vertical = 8.dp
-                                    ), // Adjust padding as needed
+                                modifier = Modifier.fillMaxWidth().padding(
+                                    horizontal = 16.dp, vertical = 8.dp
+                                ), // Adjust padding as needed
                                 maxLines = 1,
                                 textAlign = TextAlign.Justify,
                                 overflow = TextOverflow.Ellipsis,
@@ -752,12 +756,9 @@ class DetailScreen(
                         Spacer(modifier = Modifier.height(2.dp))
 
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 8.dp,
-                                    vertical = 4.dp
-                                ), // Adjust padding as needed
+                            modifier = Modifier.fillMaxWidth().padding(
+                                horizontal = 8.dp, vertical = 4.dp
+                            ), // Adjust padding as needed
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
@@ -815,6 +816,145 @@ class DetailScreen(
                         }
 
                     }
+                }
+            }
+        }
+        if (isCommentLive) {
+            var commentInput by remember { mutableStateOf("") }
+
+            ModalBottomSheet(
+                onDismissRequest = {
+                    isCommentLive = false
+                },
+                sheetState = rememberModalBottomSheetState(),
+                tonalElevation = ModalBottomSheetDefaults.Elevation,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    // Comment Title Section
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(start = 12.dp, end = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Text(
+                            text = "Comments",
+                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        IconButton(onClick = {}) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Close Icon"
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(14.dp))
+
+                    // Top and Newest Icon Button
+                    val buttons = listOf(
+                        "Top",
+                        "Newest"
+                    )
+                    var selectedButton by remember { mutableStateOf(buttons.first()) }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(start = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        buttons.forEach { title ->
+                            TextButton(
+                                onClick = { selectedButton = title },
+                                modifier = Modifier
+                                    .clip(shape = RoundedCornerShape(12.dp))
+                                    .background(
+                                        color = if (selectedButton == title) Color.Black else Color.Transparent
+                                    )
+                            ) {
+                                Text(
+                                    text = title,
+                                    color = if (selectedButton == title) Color.White else Color.Black
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                            }
+                        }
+                    }
+
+                    // Terms and conditions
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(12.dp)
+                            .background(color = Color.LightGray),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Text(
+                            text = "Remember to keep comments respectful and to follow our Community Guidelines",
+                            fontSize = MaterialTheme.typography.labelSmall.fontSize,
+                            color = Color.Black
+                        )
+                    }
+
+                    // Comments Lists
+                    commentData?.let { comments ->
+                        CommentsList(comments, modifier = Modifier.weight(1f))
+                    }
+
+                    // Own Channel Image and TextField
+                    Row(
+                        modifier = Modifier
+                            .background(color = Color.White)
+                            .padding(12.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically, // Align vertically centered
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        // Own Channel Image
+                        val ownChannelImage: Resource<Painter> =
+                            asyncPainterResource(data = channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString())
+                        KamelImage(
+                            resource = ownChannelImage,
+                            contentDescription = "Channel Image",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.size(25.dp)
+                                .clip(CircleShape)
+                                .align(alignment = Alignment.CenterVertically)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        // TextField
+                        TextField(
+                            value = commentInput,
+                            onValueChange = {
+                                commentInput = it
+                            },
+                            enabled = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .padding(
+                                    start = 8.dp,
+                                    bottom = 8.dp
+                                ),
+                            placeholder = {
+                                Text(text = "Add a comment...")
+                            },
+                            singleLine = true,
+                            maxLines = 1,
+                            shape = RoundedCornerShape(12.dp),
+                        )
+                    }
+
                 }
             }
         }
@@ -894,8 +1034,7 @@ fun getFormattedDateLikeMonthDay(videoPublishedAt: String): Triple<String, Int, 
         val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
 
         val months = arrayOf(
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
         )
 
         val formattedMonth = months[localDateTime.monthNumber - 1]

@@ -13,6 +13,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.company.app.data.model.channel.Channel
+import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.utils.Constant.API_KEY
@@ -72,7 +73,7 @@ object YoutubeClientApi {
     }
 
     suspend fun getSearch(query: String): Search {
-        val url = BASE_URL + "search?part=snippet&q=${query}&type=video&maxResults=200&key=$API_KEY"
+        val url = BASE_URL + "search?part=snippet&q=${query}&type=any&maxResults=200&key=$API_KEY"
         return client.get(url).body()
     }
 
@@ -83,25 +84,26 @@ object YoutubeClientApi {
     }
 
     suspend fun getChannelSections(channelId: String): Youtube {
-        val url =
-            BASE_URL + "channelSections?part=snippet,contentDetails&channelId=${channelId}&key=${API_KEY}"
+        val url = BASE_URL + "channelSections?part=snippet,contentDetails&channelId=${channelId}&key=${API_KEY}"
         return client.get(url).body()
     }
 
     suspend fun getChannelLiveStreams(channelID: String): Search {
-        val url =
-            BASE_URL + "search?part=snippet&eventType=live&type=video&id=${channelID}&maxResults=500&regionCode=us&key=${API_KEY}"
+        val url = BASE_URL + "search?part=snippet&eventType=live&type=video&id=${channelID}&maxResults=500&regionCode=us&key=${API_KEY}"
         return client.get(url).body()
     }
 
-    suspend fun getChannelVideos(playlistID: String): Channel {
-        val url =
-            BASE_URL + "playlistItems?part=snippet,contentDetails&&maxResults=500&playlistId=${playlistID}&key=$API_KEY"
+    suspend fun getChannelVideos(playlistID: String): Youtube {
+        val url = BASE_URL + "playlistItems?part=snippet,contentDetails&&maxResults=500&playlistId=${playlistID}&key=$API_KEY"
         return client.get(url).body()
     }
 
     suspend fun getChannelCommunity(channelId: String): Youtube {
         val url = BASE_URL + "activities?part=snippet,contentDetails&channelId=${channelId}&maxResults=500&key=${API_KEY}"
+        return client.get(url).body()
+    }
+    suspend fun getComments(videoId: String): Comments {
+        val url = BASE_URL+"commentThreads?part=snippet,replies&videoId=${videoId}&maxResults=50&key=${API_KEY}"
         return client.get(url).body()
     }
 }

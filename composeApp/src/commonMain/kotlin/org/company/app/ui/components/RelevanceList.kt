@@ -28,7 +28,7 @@ fun RelevanceList(stateRelevance: YoutubeState) {
         }
 
         is YoutubeState.SUCCESS -> {
-            var data = (stateRelevance as YoutubeState.SUCCESS).youtube
+            val data = (stateRelevance as YoutubeState.SUCCESS).youtube
             relevanceData = data
 
         }
@@ -45,9 +45,9 @@ fun RelevanceList(stateRelevance: YoutubeState) {
             modifier = Modifier.fillMaxWidth()
         ) {
             LazyVerticalGrid(columns = GridCells.Adaptive(300.dp), modifier = Modifier.height(700.dp)) {
-                relevanceData?.let {
-                    items(it.items!!) { videos ->
-                            VideoItemCard(videos)
+                relevanceData?.items?.let {items ->
+                    items(items) { videos ->
+                        VideoItemCard(videos)
                     }
                 }
             }

@@ -1,7 +1,6 @@
 package org.company.app.ui.components
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,20 +11,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FeaturedPlayList
-import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -41,8 +35,6 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.data.model.search.Search
-import org.company.app.data.model.videos.Item
-import org.company.app.data.model.videos.Youtube
 import kotlin.random.Random
 
 @Composable
@@ -64,7 +56,9 @@ fun ChannelLiveStream(
             }
         }
         items(search.items) { videos ->
-            ChannelLiveStreamItems(videos)
+            videos.let {items ->
+                ChannelLiveStreamItems(items)
+            }
         }
     }
 }
@@ -133,19 +127,20 @@ fun ChannelLiveStreamItems(videos: org.company.app.data.model.search.Item) {
                 )
 
                 // More options icon
-               Box(contentAlignment = Alignment.TopEnd){
-                   IconButton(
-                       onClick = {},
-                       modifier = Modifier.align(alignment = Alignment.TopEnd)
-                   ) {
-                       Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More Vert")
-                   }
-               }
+                Box(contentAlignment = Alignment.TopEnd) {
+                    IconButton(
+                        onClick = {},
+                        modifier = Modifier.align(alignment = Alignment.TopEnd)
+                    ) {
+                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More Vert")
+                    }
+                }
             }
         }
     }
 }
-private fun getRandomColors(): Color{
+
+private fun getRandomColors(): Color {
     val random = Random
     return Color(
         red = random.nextFloat(),
