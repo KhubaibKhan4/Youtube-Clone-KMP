@@ -57,7 +57,7 @@ object YoutubeClientApi {
 
     suspend fun getChannelDetails(channelId: String): Channel {
         val url =
-            BASE_URL + "channels?part=snippet,contentDetails,statistics,brandingSettings&id=$channelId&key=$API_KEY"
+            BASE_URL + "channels?part=contentDetails,brandingSettings,contentDetails,contentOwnerDetails,id,localizations,snippet,statistics,status,topicDetails&id=${channelId}&key=${API_KEY}"
         return client.get(url).body()
     }
 
@@ -102,8 +102,8 @@ object YoutubeClientApi {
         val url = BASE_URL + "activities?part=snippet,contentDetails&channelId=${channelId}&maxResults=500&key=${API_KEY}"
         return client.get(url).body()
     }
-    suspend fun getComments(videoId: String): Comments {
-        val url = BASE_URL+"commentThreads?part=snippet,replies&videoId=${videoId}&maxResults=50&key=${API_KEY}"
+    suspend fun getComments(videoId: String, order: String): Comments {
+        val url = BASE_URL+"commentThreads?part=snippet,replies&videoId=${videoId}&order=${order}&maxResults=2000&key=${API_KEY}"
         return client.get(url).body()
     }
 }

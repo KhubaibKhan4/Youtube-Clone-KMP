@@ -53,8 +53,7 @@ class Repository : YoutubePlugin {
         return YoutubeClientApi.getChannelCommunity(channelId)
     }
 
-    override suspend fun getVideoComments(videoId: String): Comments {
-        return YoutubeClientApi.getComments(videoId)
+    override suspend fun getComments(videoId: String, order: String): Comments {
+        return YoutubeClientApi.getComments(videoId, order)
     }
-
 }

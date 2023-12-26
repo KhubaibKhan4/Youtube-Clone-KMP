@@ -48,7 +48,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -125,9 +124,9 @@ class DetailScreen(
             }
             //Video Comments
             if (video?.id.isNullOrBlank()) {
-                viewModel.getVideoComments(search?.id.toString())
+                viewModel.getVideoComments(search?.id.toString(), order = "relevance")
             } else {
-                viewModel.getVideoComments(video?.id.toString())
+                viewModel.getVideoComments(video?.id.toString(), order = "relevance")
             }
             viewModel.getRelevance()
         }
@@ -154,7 +153,7 @@ class DetailScreen(
 
         when (commentsState) {
             is CommentsState.LOADING -> {
-                LoadingBox()
+                //LoadingBox()
             }
 
             is CommentsState.SUCCESS -> {
@@ -752,6 +751,49 @@ class DetailScreen(
                                 overflow = TextOverflow.Ellipsis,
                             )
                         }
+                        // Channel Section
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // Channel Image
+                            channelData?.items?.get(0)?.snippet?.thumbnails?.default?.url?.let {
+                                rememberImagePainter(
+                                    it
+                                )
+                            }?.let {
+                                Image(
+                                    painter = it,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
+                                        navigator?.push(ChannelScreen(channelData!!.items[0]))
+                                    },
+                                    contentScale = ContentScale.FillBounds
+                                )
+                            }
+
+                            // Channel Info
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                val channelTitle =
+                                    if (video?.snippet?.channelTitle.isNullOrBlank()) search?.snippet?.channelTitle.toString() else video?.snippet?.channelTitle.toString()
+
+                                Text(
+                                    text = channelTitle,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp
+                                )
+                                Text(
+                                    text = "${formatSubscribers(channelData?.items?.get(0)?.statistics?.subscriberCount)} Subscribers",
+                                    fontSize = 14.sp
+                                )
+
+                            }
+                        }
 
                         Spacer(modifier = Modifier.height(2.dp))
 
@@ -789,7 +831,11 @@ class DetailScreen(
                             }
 
                             OutlinedCard(
-                                onClick = {},
+                                onClick = {
+                                    channelData?.let { channel ->
+                                        navigator?.push(ChannelDetail(channel))
+                                    }
+                                },
                                 shape = CardDefaults.outlinedShape,
                                 enabled = true,
                                 border = BorderStroke(width = 1.dp, color = Color.Black),
@@ -849,13 +895,16 @@ class DetailScreen(
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(modifier = Modifier.weight(1f))
-                        IconButton(onClick = {}) {
+                        IconButton(onClick = {
+                            isCommentLive = false
+                        }) {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = "Close Icon"
                             )
                         }
                     }
+                    Divider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
 
                     Spacer(modifier = Modifier.height(14.dp))
 
@@ -866,15 +915,26 @@ class DetailScreen(
                     )
                     var selectedButton by remember { mutableStateOf(buttons.first()) }
 
+                    // Function to fetch comments based on the selected order
+                    fun fetchComments(order: String) {
+                        if (video?.id.isNullOrBlank()) {
+                            viewModel.getVideoComments(search?.id.toString(), order)
+                        } else {
+                            viewModel.getVideoComments(video?.id.toString(), order)
+                        }
+                    }
+
                     Row(
-                        modifier = Modifier.fillMaxWidth()
-                            .padding(start = 12.dp),
+                        modifier = Modifier.fillMaxWidth().padding(start = 12.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start
                     ) {
                         buttons.forEach { title ->
                             TextButton(
-                                onClick = { selectedButton = title },
+                                onClick = {
+                                    selectedButton = title
+                                    fetchComments(if (title == "Top") "relevance" else "time")
+                                },
                                 modifier = Modifier
                                     .clip(shape = RoundedCornerShape(12.dp))
                                     .background(
@@ -890,9 +950,11 @@ class DetailScreen(
                         }
                     }
 
+
                     // Terms and conditions
                     Row(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(12.dp)
                             .background(color = Color.LightGray),
                         verticalAlignment = Alignment.CenterVertically,
@@ -901,9 +963,12 @@ class DetailScreen(
                         Text(
                             text = "Remember to keep comments respectful and to follow our Community Guidelines",
                             fontSize = MaterialTheme.typography.labelSmall.fontSize,
-                            color = Color.Black
+                            color = Color.Black,
+                            modifier = Modifier.fillMaxWidth().padding(12.dp)
                         )
                     }
+
+                    Divider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
 
                     // Comments Lists
                     commentData?.let { comments ->
@@ -916,7 +981,7 @@ class DetailScreen(
                             .background(color = Color.White)
                             .padding(12.dp)
                             .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically, // Align vertically centered
+                        verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start
                     ) {
                         // Own Channel Image

@@ -56,12 +56,10 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.channel.Item
 import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.SearchState
 import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
@@ -286,7 +284,7 @@ class ChannelScreen(
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
-
+                
                 // Channel Title
                 Text(
                     text = channel.snippet?.title.toString(),

@@ -209,11 +209,11 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getVideoComments(videoId: String){
+    fun getVideoComments(videoId: String, order:String){
         viewModelScope.launch {
             _videoComments.value = CommentsState.LOADING
             try {
-                val response = repository.getVideoComments(videoId)
+                val response = repository.getComments(videoId,order)
                 _videoComments.value = CommentsState.SUCCESS(response)
             }catch (e: Exception){
                 val error = e.message.toString()

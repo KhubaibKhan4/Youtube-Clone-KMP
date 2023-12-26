@@ -7,13 +7,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ChannelX(
     @SerialName("country")
-    val country: String? = null,
+    val country: String,
     @SerialName("description")
-    val description: String? = null,
+    val description: String,
     @SerialName("keywords")
-    val keywords: String? = null,
+    val keywords: String,
     @SerialName("title")
     val title: String,
+    @SerialName("trackingAnalyticsAccountId")
+    val trackingAnalyticsAccountId: String? = null,
     @SerialName("unsubscribedTrailer")
-    val unsubscribedTrailer: String? = null
+    val unsubscribedTrailer: String
 )

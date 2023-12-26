@@ -17,5 +17,5 @@ interface YoutubePlugin {
     suspend fun getChannelLiveStreams(channelID: String): Search
     suspend fun getChannelVideos(playlistID: String): Youtube
     suspend fun getChannelCommunity(channelId: String): Youtube
-    suspend fun getVideoComments(videoId: String): Comments
+    suspend fun getComments(videoId: String, order: String): Comments
 }

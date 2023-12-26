@@ -7,9 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BrandingSettings(
     @SerialName("channel")
-    val channel: ChannelX? = null,
+    val channel: ChannelX,
     @SerialName("image")
-    val image: Image,
-    @SerialName("trackingAnalyticsAccountId")
-    val trackingAnalyticsAccountId: String? = null
+    val image: Image
 )
