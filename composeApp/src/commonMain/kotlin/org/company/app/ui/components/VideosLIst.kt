@@ -10,14 +10,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -32,7 +30,6 @@ import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.PlaylistAdd
 import androidx.compose.material.icons.outlined.Share
-import androidx.compose.material.icons.outlined.TrendingUp
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -46,8 +43,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
@@ -152,121 +147,101 @@ fun VideosList(youtube: Youtube) {
     }
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    ModalNavigationDrawer(
-        modifier = Modifier.wrapContentWidth().fillMaxHeight(),
-        drawerState = drawerState,
-        gesturesEnabled = true,
-        drawerContent = {
-            NavigationDrawerItem(
-                label = {
-                    Text("Trending")
-                },
-                selected = false,
-                onClick = {},
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.TrendingUp,
-                        contentDescription = "Trending Icon"
-                    )
-                }
-            )
-        }
+    Surface(
+        color = MaterialTheme.colorScheme.background
     ) {
-        Surface(
-            color = MaterialTheme.colorScheme.background
-        ) {
-            Column {
-                TopBar(modifier = Modifier.fillMaxWidth())
+        Column {
+            TopBar(modifier = Modifier.fillMaxWidth())
 
-                // Buttons section (Compass icon and "All" button)
-                Row(
-                    modifier = Modifier
-                        .horizontalScroll(state = rememberScrollState())
-                        .width(1500.dp)
-                        .padding(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+            // Buttons section (Compass icon and "All" button)
+            Row(
+                modifier = Modifier
+                    .horizontalScroll(state = rememberScrollState())
+                    .width(1500.dp)
+                    .padding(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                // Compass icon button
+                IconButton(
+                    onClick = {
+                        coroutineScope.launch {
+                            drawerState.open()
+                        }
+                    },
+                    modifier = Modifier.size(48.dp).clip(shape = RoundedCornerShape(6.dp)),
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = Color.LightGray.copy(alpha = 0.55f)
+                    ),
                 ) {
-                    // Compass icon button
-                    IconButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                drawerState.open()
-                            }
-                        },
-                        modifier = Modifier.size(48.dp).clip(shape = RoundedCornerShape(6.dp)),
-                        colors = IconButtonDefaults.iconButtonColors(
-                            containerColor = Color.LightGray.copy(alpha = 0.55f)
-                        ),
-                    ) {
-                        Icon(
-                            painter = painterResource("compass_icon.xml"),
-                            contentDescription = "Compass Icon",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-
-                    // "All" button
-                    CategoryButton(
-                        category = org.company.app.data.model.categories.Item(
-                            etag = "",
-                            id = "all",
-                            kind = "",
-                            Snippet(assignable = true, title = "All", channelId = "")
-                        ),
-                        isSelected = selectedCategory == "all",
-                        onCategorySelected = {
-                            selectedCategory = "all"
-                            isAnyCategorySelected = true
-                        }
+                    Icon(
+                        painter = painterResource("compass_icon.xml"),
+                        contentDescription = "Compass Icon",
+                        tint = MaterialTheme.colorScheme.primary
                     )
-                    // Scrollable row of category buttons
-                    videoCategories?.let { categories ->
-                        LazyRow(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 8.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(categories.items ?: emptyList()) { category ->
-                                CategoryButton(
-                                    category = category,
-                                    isSelected = category.id == selectedCategory,
-                                    onCategorySelected = {
-                                        selectedCategory = category.id
-                                        isAnyCategorySelected = true
-                                    }
-                                )
-                            }
-                        }
-                    }
-
                 }
 
-                if (!isAnyCategorySelected) {
-                    // LazyVerticalGrid of videos
-                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                        youtube.items?.let { items ->
-                            items(items) { videos ->
-                                VideoItemCard(videos)
-                            }
+                // "All" button
+                CategoryButton(
+                    category = org.company.app.data.model.categories.Item(
+                        etag = "",
+                        id = "all",
+                        kind = "",
+                        Snippet(assignable = true, title = "All", channelId = "")
+                    ),
+                    isSelected = selectedCategory == "all",
+                    onCategorySelected = {
+                        selectedCategory = "all"
+                        isAnyCategorySelected = true
+                    }
+                )
+                // Scrollable row of category buttons
+                videoCategories?.let { categories ->
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 8.dp),
+                        contentPadding = PaddingValues(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(categories.items ?: emptyList()) { category ->
+                            CategoryButton(
+                                category = category,
+                                isSelected = category.id == selectedCategory,
+                                onCategorySelected = {
+                                    selectedCategory = category.id
+                                    isAnyCategorySelected = true
+                                }
+                            )
                         }
                     }
+                }
 
-                } else {
-                    // LazyVerticalGrid of videos
-                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                        videosByCategories?.items?.let { items ->
-                            items(items) { videos ->
-                                SearchVideoItemCard(videos)
-                            }
+            }
+
+            if (!isAnyCategorySelected) {
+                // LazyVerticalGrid of videos
+                LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                    youtube.items?.let { items ->
+                        items(items) { videos ->
+                            VideoItemCard(videos)
+                        }
+                    }
+                }
+
+            } else {
+                // LazyVerticalGrid of videos
+                LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                    videosByCategories?.items?.let { items ->
+                        items(items) { videos ->
+                            SearchVideoItemCard(videos)
                         }
                     }
                 }
             }
         }
     }
+
 }
 
 
