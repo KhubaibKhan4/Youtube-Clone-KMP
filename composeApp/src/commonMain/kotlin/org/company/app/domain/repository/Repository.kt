@@ -1,5 +1,6 @@
 package org.company.app.domain.repository
 
+import org.company.app.data.model.categories.VideoCategories
 import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.search.Search
@@ -59,5 +60,9 @@ class Repository : YoutubePlugin {
 
     override suspend fun getComments(videoId: String, order: String): Comments {
         return YoutubeClientApi.getComments(videoId, order)
+    }
+
+    override suspend fun getVideoCategories(): VideoCategories {
+        return YoutubeClientApi.getVideoCategories()
     }
 }

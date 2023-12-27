@@ -12,6 +12,7 @@ import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import org.company.app.data.model.categories.VideoCategories
 import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.search.Search
@@ -102,7 +103,8 @@ object YoutubeClientApi {
     }
 
     suspend fun getOwnChannelVideos(channelId: String): Search {
-        val url = BASE_URL + "search?key=${API_KEY}&part=snippet&channelId=${channelId}&type=video&maxResults=500"
+        val url =
+            BASE_URL + "search?key=${API_KEY}&part=snippet&channelId=${channelId}&type=video&maxResults=500"
         return client.get(url).body()
     }
 
@@ -115,6 +117,11 @@ object YoutubeClientApi {
     suspend fun getComments(videoId: String, order: String): Comments {
         val url =
             BASE_URL + "commentThreads?part=snippet,replies&videoId=${videoId}&order=${order}&maxResults=2000&key=${API_KEY}"
+        return client.get(url).body()
+    }
+
+    suspend fun getVideoCategories(): VideoCategories {
+        val url = BASE_URL + "videoCategories?key=${API_KEY}&part=snippet&maxResults=200&regionCode=us"
         return client.get(url).body()
     }
 }

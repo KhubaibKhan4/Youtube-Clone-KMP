@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.CategoriesState
 import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.CommentsState
 import org.company.app.domain.usecases.SearchState
@@ -64,6 +65,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     //Channel Own Videos
     private val _ownChannelVideos = MutableStateFlow<SearchState>(SearchState.LOADING)
     val ownChannelVideos : StateFlow<SearchState> = _ownChannelVideos.asStateFlow()
+
+    //Video Categories
+    private val _videoCategories = MutableStateFlow<CategoriesState>(CategoriesState.LOADING)
+    val videoCategories : StateFlow<CategoriesState> = _videoCategories.asStateFlow()
 
     fun getVideosList() {
         viewModelScope.launch {
@@ -235,6 +240,19 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             }catch (e: Exception){
                 val error = e.message.toString()
                 _ownChannelVideos.value = SearchState.ERROR(error)
+            }
+        }
+    }
+
+    fun getVideoCategories(){
+        viewModelScope.launch {
+            _videoCategories.value = CategoriesState.LOADING
+            try {
+                val response = repository.getVideoCategories()
+                _videoCategories.value = CategoriesState.SUCCESS(response)
+            }catch (e: Exception){
+                val error = e.message.toString()
+                _videoCategories.value = CategoriesState.ERROR(error)
             }
         }
     }

@@ -1,5 +1,6 @@
 package org.company.app.domain.plugin
 
+import org.company.app.data.model.categories.VideoCategories
 import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.search.Search
@@ -19,4 +20,5 @@ interface YoutubePlugin {
     suspend fun getOwnChannelVideos(channelId: String): Search
     suspend fun getChannelCommunity(channelId: String): Youtube
     suspend fun getComments(videoId: String, order: String): Comments
+    suspend fun getVideoCategories(): VideoCategories
 }
