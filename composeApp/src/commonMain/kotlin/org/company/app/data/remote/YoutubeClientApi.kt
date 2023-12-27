@@ -84,26 +84,37 @@ object YoutubeClientApi {
     }
 
     suspend fun getChannelSections(channelId: String): Youtube {
-        val url = BASE_URL + "channelSections?part=snippet,contentDetails&channelId=${channelId}&key=${API_KEY}"
+        val url =
+            BASE_URL + "channelSections?part=snippet,contentDetails&channelId=${channelId}&key=${API_KEY}"
         return client.get(url).body()
     }
 
     suspend fun getChannelLiveStreams(channelID: String): Search {
-        val url = BASE_URL + "search?part=snippet&eventType=live&type=video&id=${channelID}&maxResults=500&regionCode=us&key=${API_KEY}"
+        val url =
+            BASE_URL + "search?part=snippet&eventType=live&type=video&id=${channelID}&maxResults=500&regionCode=us&key=${API_KEY}"
         return client.get(url).body()
     }
 
     suspend fun getChannelVideos(playlistID: String): Youtube {
-        val url = BASE_URL + "playlistItems?part=snippet,contentDetails&&maxResults=500&playlistId=${playlistID}&key=$API_KEY"
+        val url =
+            BASE_URL + "playlistItems?part=snippet,contentDetails&&maxResults=500&playlistId=${playlistID}&key=$API_KEY"
+        return client.get(url).body()
+    }
+
+    suspend fun getOwnChannelVideos(channelId: String): Search {
+        val url = BASE_URL + "search?key=${API_KEY}&part=snippet&channelId=${channelId}&type=video&maxResults=500"
         return client.get(url).body()
     }
 
     suspend fun getChannelCommunity(channelId: String): Youtube {
-        val url = BASE_URL + "activities?part=snippet,contentDetails&channelId=${channelId}&maxResults=500&key=${API_KEY}"
+        val url =
+            BASE_URL + "activities?part=snippet,contentDetails&channelId=${channelId}&maxResults=500&key=${API_KEY}"
         return client.get(url).body()
     }
+
     suspend fun getComments(videoId: String, order: String): Comments {
-        val url = BASE_URL+"commentThreads?part=snippet,replies&videoId=${videoId}&order=${order}&maxResults=2000&key=${API_KEY}"
+        val url =
+            BASE_URL + "commentThreads?part=snippet,replies&videoId=${videoId}&order=${order}&maxResults=2000&key=${API_KEY}"
         return client.get(url).body()
     }
 }

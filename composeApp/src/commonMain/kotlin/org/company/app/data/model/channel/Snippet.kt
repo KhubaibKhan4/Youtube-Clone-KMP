@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Snippet(
     @SerialName("country")
-    val country: String,
+    val country: String? = null,
     @SerialName("customUrl")
     val customUrl: String,
     @SerialName("description")

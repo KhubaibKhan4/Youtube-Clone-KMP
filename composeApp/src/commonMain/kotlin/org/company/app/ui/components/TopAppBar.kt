@@ -243,8 +243,10 @@ fun SearchVideosList(youtube: Search) {
     ) {
         Column {
             LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                items(youtube.items) { videos ->
-                    SearchVideoItemCard(videos)
+                youtube.items?.let { items ->
+                    items(items) { videos ->
+                        SearchVideoItemCard(videos)
+                    }
                 }
             }
         }

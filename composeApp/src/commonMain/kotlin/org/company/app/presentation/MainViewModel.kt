@@ -61,6 +61,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     private val _videoComments = MutableStateFlow<CommentsState>(CommentsState.LOADING)
     val videoComments : StateFlow<CommentsState> = _videoComments.asStateFlow()
 
+    //Channel Own Videos
+    private val _ownChannelVideos = MutableStateFlow<SearchState>(SearchState.LOADING)
+    val ownChannelVideos : StateFlow<SearchState> = _ownChannelVideos.asStateFlow()
+
     fun getVideosList() {
         viewModelScope.launch {
             _videos.value = YoutubeState.LOADING
@@ -218,6 +222,19 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             }catch (e: Exception){
                 val error = e.message.toString()
                 _videoComments.value = CommentsState.ERROR(error)
+            }
+        }
+    }
+
+    fun getOwnChannelVideos(channelId: String){
+        viewModelScope.launch {
+            _ownChannelVideos.value = SearchState.LOADING
+            try {
+                val response = repository.getOwnChannelVideos(channelId)
+                _ownChannelVideos.value = SearchState.SUCCESS(response)
+            }catch (e: Exception){
+                val error = e.message.toString()
+                _ownChannelVideos.value = SearchState.ERROR(error)
             }
         }
     }

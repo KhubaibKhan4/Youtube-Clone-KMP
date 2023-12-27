@@ -20,9 +20,21 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.PlaylistAdd
+import androidx.compose.material.icons.outlined.PlaylistAddCheck
+import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -55,16 +67,18 @@ fun ChannelLiveStream(
                 )
             }
         }
-        items(search.items) { videos ->
-            videos.let {items ->
-                ChannelLiveStreamItems(items)
+        search.items?.let { items ->
+            items(items) { videos ->
+                ChannelLiveStreamItems(videos)
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChannelLiveStreamItems(videos: org.company.app.data.model.search.Item) {
+    var moreVertEnable by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -129,11 +143,125 @@ fun ChannelLiveStreamItems(videos: org.company.app.data.model.search.Item) {
                 // More options icon
                 Box(contentAlignment = Alignment.TopEnd) {
                     IconButton(
-                        onClick = {},
+                        onClick = {
+                            moreVertEnable = !moreVertEnable
+                        },
                         modifier = Modifier.align(alignment = Alignment.TopEnd)
                     ) {
                         Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More Vert")
                     }
+                }
+            }
+        }
+        if (moreVertEnable) {
+            ModalBottomSheet(
+                onDismissRequest = {
+                    moreVertEnable = false
+                },
+                modifier = Modifier.fillMaxWidth(),
+                sheetState = rememberModalBottomSheetState(),
+                shape = RoundedCornerShape(4.dp),
+                contentColor = Color.Black,  // Adjust color as needed
+                scrimColor = Color.Transparent,
+                tonalElevation = 4.dp,
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        androidx.compose.material3.Icon(
+                            imageVector = Icons.Outlined.PlaylistAdd,
+                            contentDescription = "Time"
+                        )
+                        Spacer(modifier = Modifier.width(20.dp))
+                        androidx.compose.material3.Text(
+                            text = "Play in next queue",
+                            modifier = Modifier.weight(1f),
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        )
+                        androidx.compose.material3.Icon(
+                            imageVector = Icons.Outlined.PlaylistAddCheck,
+                            contentDescription = "Time"
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        androidx.compose.material3.Icon(
+                            imageVector = Icons.Outlined.WatchLater,
+                            contentDescription = "Time"
+                        )
+                        Spacer(modifier = Modifier.width(20.dp))
+                        androidx.compose.material3.Text(
+                            text = "Save to Watch later",
+                            modifier = Modifier.weight(1f),
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        androidx.compose.material3.Icon(
+                            imageVector = Icons.Outlined.PlaylistAdd,
+                            contentDescription = "Time"
+                        )
+                        Spacer(modifier = Modifier.width(20.dp))
+                        androidx.compose.material3.Text(
+                            text = "Save to playlist",
+                            modifier = Modifier.weight(1f),
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        androidx.compose.material3.Icon(
+                            imageVector = Icons.Outlined.Download,
+                            contentDescription = "Time"
+                        )
+                        Spacer(modifier = Modifier.width(20.dp))
+                        androidx.compose.material3.Text(
+                            text = "Download video",
+                            modifier = Modifier.weight(1f),
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        androidx.compose.material3.Icon(
+                            imageVector = Icons.Outlined.Share,
+                            contentDescription = "Time"
+                        )
+                        Spacer(modifier = Modifier.width(20.dp))
+                        androidx.compose.material3.Text(
+                            text = "Share",
+                            modifier = Modifier.weight(1f),
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
             }
         }
@@ -149,5 +277,3 @@ private fun getRandomColors(): Color {
         alpha = 0.75f
     )
 }
-
-

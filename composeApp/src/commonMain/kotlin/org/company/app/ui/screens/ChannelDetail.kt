@@ -1,5 +1,6 @@
 package org.company.app.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,19 +16,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cast
-import androidx.compose.material.icons.filled.Countertops
 import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.TrendingUp
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Map
-import androidx.compose.material.icons.outlined.NetworkLocked
-import androidx.compose.material.icons.outlined.ViewCarousel
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,19 +31,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import org.company.app.data.model.channel.Channel
+import org.company.app.data.model.channel.Item
 
 class ChannelDetail(
-    private val channel: Channel
+    private val channel: Item
 ) : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
+        val localUri = LocalUriHandler.current
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -76,7 +73,7 @@ class ChannelDetail(
                         )
                     }
                     Text(
-                        text = channel.items[0].snippet?.title.toString(),
+                        text = channel.snippet?.title.toString(),
                         fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         modifier = Modifier.weight(1f),
                         fontWeight = FontWeight.Bold,
@@ -108,7 +105,7 @@ class ChannelDetail(
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                val description = channel.items[0].brandingSettings.channel.description
+                val description = channel.brandingSettings.channel.description
                 Text(
                     text = description,
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
@@ -188,9 +185,20 @@ class ChannelDetail(
                     verticalAlignment = Alignment.Top,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    Icon(imageVector = Icons.Default.Link, contentDescription = "Link Icon",modifier = Modifier.size(25.dp))
+                    Icon(
+                        imageVector = Icons.Default.Link,
+                        contentDescription = "Link Icon",
+                        modifier = Modifier.size(25.dp)
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "https://www/youtube.com/" + channel.items[0].snippet.customUrl)
+                    val channelURL = "https://www/youtube.com/" + channel.snippet.customUrl
+                    Text(
+                        text = channelURL,
+                        color = Color.Blue,
+                        modifier = Modifier.clickable {
+                            localUri.openUri(channelURL)
+                        }
+                    )
                     Spacer(modifier = Modifier.height(6.dp))
                 }
 
@@ -201,23 +209,29 @@ class ChannelDetail(
                     verticalAlignment = Alignment.Top,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    Icon(imageVector = Icons.Default.Public, contentDescription = "Country Icon",modifier = Modifier.size(25.dp))
+                    Icon(
+                        imageVector = Icons.Default.Public,
+                        contentDescription = "Country Icon",
+                        modifier = Modifier.size(25.dp)
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = channel.items[0].brandingSettings.channel.country)
+                    Text(text = channel.brandingSettings.channel.country.toString())
                     Spacer(modifier = Modifier.height(6.dp))
                 }
 
-               // View Info
+                // View Info
                 Row(
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 12.dp),
                     verticalAlignment = Alignment.Top,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    Icon(imageVector = Icons.Default.TrendingUp, contentDescription = "View Icon",
-                        modifier = Modifier.size(25.dp))
+                    Icon(
+                        imageVector = Icons.Default.TrendingUp, contentDescription = "View Icon",
+                        modifier = Modifier.size(25.dp)
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "${channel.items[0].statistics.viewCount} views")
+                    Text(text = "${channel.statistics.viewCount} views")
                     Spacer(modifier = Modifier.height(6.dp))
                 }
 

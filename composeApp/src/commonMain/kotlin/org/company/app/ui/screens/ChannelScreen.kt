@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -56,10 +57,12 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.channel.Item
 import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.SearchState
 import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
@@ -70,6 +73,7 @@ import org.company.app.ui.components.ChannelLiveStream
 import org.company.app.ui.components.ChannelPlaylists
 import org.company.app.ui.components.ChannelVideos
 import org.company.app.ui.components.ErrorBox
+import org.company.app.ui.components.FeaturedChannel
 import org.company.app.ui.components.LoadingBox
 
 class ChannelScreen(
@@ -85,13 +89,24 @@ class ChannelScreen(
         var channelLiveStream by remember { mutableStateOf<Search?>(null) }
         var channelAllVideos by remember { mutableStateOf<Youtube?>(null) }
         var channelCommunities by remember { mutableStateOf<Youtube?>(null) }
+        var ownChannelVideo by remember { mutableStateOf<Search?>(null) }
+        var featuresChannels by remember { mutableStateOf<Channel?>(null) }
 
         LaunchedEffect(Unit) {
             viewModel.getPlaylists(channel.id)
             viewModel.getChannelSections(channel.id)
             viewModel.getChannelLiveStreams(channel.id)
-            viewModel.getChannelVideos(channel.contentDetails?.relatedPlaylists?.uploads.toString())
+            viewModel.getChannelVideos(channel.contentDetails.relatedPlaylists.uploads.toString())
             viewModel.getChannelCommunity(channel.id)
+            viewModel.getOwnChannelVideos(channel.id)
+
+            // Assuming channelSections?.items is a list of objects with channel IDs
+            val channelIds = channelSections?.items?.map { it.id.toString() }
+
+            if (!channelIds.isNullOrEmpty()) {
+                viewModel.getChannelDetails(channelIds.toString())
+            }
+
         }
         //Simple Playlist
         val state by viewModel.playlists.collectAsState()
@@ -107,6 +122,12 @@ class ChannelScreen(
 
         //Channel Community
         val channelCommunity by viewModel.channelCommunity.collectAsState()
+
+        //OWN Channel Videos
+        val ownChannelVideos by viewModel.ownChannelVideos.collectAsState()
+
+        //Featured Channels
+        val channelDetails by viewModel.channelDetails.collectAsState()
 
         when (state) {
             is YoutubeState.LOADING -> {
@@ -190,6 +211,38 @@ class ChannelScreen(
             }
         }
 
+        //Own Channel Videos
+        when (ownChannelVideos) {
+            is SearchState.LOADING -> {
+                LoadingBox()
+            }
+
+            is SearchState.SUCCESS -> {
+                val response = (ownChannelVideos as SearchState.SUCCESS).search
+                ownChannelVideo = response
+            }
+
+            is SearchState.ERROR -> {
+                val error = (ownChannelVideos as SearchState.ERROR).error
+                ErrorBox(error = error)
+            }
+        }
+        //Channel Details
+        when (channelDetails) {
+            is ChannelState.LOADING -> {
+               // LoadingBox()
+            }
+
+            is ChannelState.SUCCESS -> {
+                val response = (channelDetails as ChannelState.SUCCESS).channel
+                featuresChannels = response
+            }
+
+            is ChannelState.ERROR -> {
+                val error = (channelDetails as ChannelState.ERROR).error
+                ErrorBox(error = error)
+            }
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -237,7 +290,9 @@ class ChannelScreen(
                 }
 
                 // More Vert Icon
-                IconButton(onClick = { /* Handle more vert button click */ }) {
+                IconButton(onClick = {
+
+                }) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = "More Vert",
@@ -255,8 +310,7 @@ class ChannelScreen(
                 modifier = Modifier.fillMaxWidth()
                     .height(130.dp)
                     .padding(start = 20.dp, end = 20.dp)
-                    .clip(shape = RoundedCornerShape(14.dp))
-                ,
+                    .clip(shape = RoundedCornerShape(14.dp)),
                 contentScale = ContentScale.Crop,
                 onLoading = {
                     CircularProgressIndicator(it)
@@ -284,7 +338,7 @@ class ChannelScreen(
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 // Channel Title
                 Text(
                     text = channel.snippet?.title.toString(),
@@ -322,12 +376,15 @@ class ChannelScreen(
                             color = if (isDark) Color.White else Color.Black,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
-                            fontSize = MaterialTheme.typography.bodySmall.fontSize
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                            modifier = Modifier.weight(1f)
                         )
                     }
 
                     // Arrow Icon
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        navigator?.push(ChannelDetail(channel = channel))
+                    }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowRight,
                             contentDescription = null,
@@ -428,16 +485,13 @@ class ChannelScreen(
                 //Data of Row Tabs
                 Column(
                     modifier = Modifier
-                        .height(500.dp)
-                        .scrollable(
-                            state = rememberScrollState(),
-                            orientation = Orientation.Vertical
-                        ),
+                        .height(900.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
                 ) {
                     when (selectedTabIndex) {
                         0 -> {
+
                             playlists.let { youtube ->
                                 youtube?.let { it1 ->
                                     ChannelHome(
@@ -447,11 +501,15 @@ class ChannelScreen(
                                     )
                                 }
                             }
-                            channelAllVideos?.let { ChannelVideos(it) }
+                            ownChannelVideo?.let { ChannelVideos(it) }
+                            featuresChannels?.let { channel ->
+                                FeaturedChannel(channel, featuredText = "Sub To All Channels for Cookie")
+                            }
                         }
 
+
                         1 -> {
-                            channelAllVideos?.let { ChannelVideos(it) }
+                            ownChannelVideo?.let { ChannelVideos(it) }
                         }
 
                         2 -> {
@@ -466,7 +524,10 @@ class ChannelScreen(
 
                         4 -> {
                             channelCommunities?.let { youtube ->
-                                ChannelCommunity(youtube, channel.brandingSettings?.image?.bannerExternalUrl.toString())
+                                ChannelCommunity(
+                                    youtube,
+                                    channel.brandingSettings?.image?.bannerExternalUrl.toString()
+                                )
                             }
                         }
                     }

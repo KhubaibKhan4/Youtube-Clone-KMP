@@ -833,7 +833,7 @@ class DetailScreen(
                             OutlinedCard(
                                 onClick = {
                                     channelData?.let { channel ->
-                                        navigator?.push(ChannelDetail(channel))
+                                        navigator?.push(ChannelDetail(channel.items[0]))
                                     }
                                 },
                                 shape = CardDefaults.outlinedShape,

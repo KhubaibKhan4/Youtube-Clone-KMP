@@ -9,7 +9,7 @@ data class Search(
     @SerialName("etag")
     val etag: String? = null,
     @SerialName("items")
-    val items: List<Item>,
+    val items: List<Item>? = null,
     @SerialName("kind")
     val kind: String? = null,
     @SerialName("nextPageToken")

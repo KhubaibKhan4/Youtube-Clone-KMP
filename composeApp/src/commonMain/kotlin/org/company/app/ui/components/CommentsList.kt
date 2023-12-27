@@ -44,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -72,6 +73,7 @@ fun CommentsList(
 
 @Composable
 fun CommentItems(comments: Item) {
+    val localNavigator = LocalNavigator.current
     val repository = remember { Repository() }
     val viewModel = remember { MainViewModel(repository) }
     var channelData by remember { mutableStateOf<Channel?>(null) }
@@ -275,9 +277,9 @@ fun CommentItems(comments: Item) {
                     repliesExpanded = !repliesExpanded
                 }
             )
-            if (comments.snippet.totalReplyCount == 0){
+            if (comments.snippet.totalReplyCount == 0) {
                 // TODO:Can't Navigate Because Replies are zero
-            }else{
+            } else {
                 AnimatedVisibility(visible = repliesExpanded) {
                     CommentItemWithReplies(comments)
                 }
@@ -316,10 +318,16 @@ fun CommentItemWithReplies(commentItem: Item) {
                                 .size(40.dp)
                                 .clip(CircleShape),
                             onLoading = {
-                                CircularProgressIndicator(modifier = Modifier.size(35.dp), progress = it)
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(35.dp),
+                                    progress = it
+                                )
                             },
                             onFailure = {
-                                Icon(Icons.Outlined.SmsFailed, contentDescription = "Failed to Load Images")
+                                Icon(
+                                    Icons.Outlined.SmsFailed,
+                                    contentDescription = "Failed to Load Images"
+                                )
                             }
                         )
                         Spacer(modifier = Modifier.width(12.dp))

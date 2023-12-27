@@ -49,6 +49,10 @@ class Repository : YoutubePlugin {
         return YoutubeClientApi.getChannelVideos(playlistID)
     }
 
+    override suspend fun getOwnChannelVideos(channelId: String): Search {
+        return YoutubeClientApi.getOwnChannelVideos(channelId)
+    }
+
     override suspend fun getChannelCommunity(channelId: String): Youtube {
         return YoutubeClientApi.getChannelCommunity(channelId)
     }
