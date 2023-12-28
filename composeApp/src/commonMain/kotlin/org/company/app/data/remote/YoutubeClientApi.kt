@@ -44,6 +44,13 @@ object YoutubeClientApi {
         }
     }
 
+    private fun getRandomVideoIds(): String? {
+        val videoIds = listOf(
+            "Ra9KOsF4BjY,XTtTtlVhh5g,NIM_drzGMJk,-yMaznEn1LM,NiMWG8KyBY4,bQpGIcRphCo,urXQVXswcgc,8OVCL0lMV1I,8qcqpwJ1LBw,C_sEA0c94zs,wxBtwCZtDAg,IX0QVURTqb8,74pnrYPozcU,MDZlKThUOSw,At4T3Ujv4xk,AIt_6ReFzEw,D_rY6oJlCoM,pXtmG1b1-Pw,Fq23VNXRV40,gzlwegTk1AM,Y9HKtiq0q9A,wjY_1Z27_sE,GFo32hjd1QY,aTCq7fHpcww,-Cqe6xIe3ys"
+        )
+        return videoIds.shuffled().firstOrNull()
+    }
+
     suspend fun getVideoList(): Youtube {
         val url =
             BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics&chart=mostPopular&regionCode=us&maxResults=2000&key=$API_KEY"
@@ -52,7 +59,7 @@ object YoutubeClientApi {
 
     suspend fun getRelevance(): Youtube {
         val url =
-            BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics,statistics&id=GFo32hjd1QY,aTCq7fHpcww,-Cqe6xIe3ys&key=$API_KEY"
+            BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics,statistics&id=${getRandomVideoIds()}&key=$API_KEY"
         return client.get(url).body()
     }
 
@@ -74,7 +81,8 @@ object YoutubeClientApi {
     }
 
     suspend fun getSearch(query: String): Search {
-        val url = BASE_URL + "search?part=snippet&q=${query}&type=any&maxResults=200&key=$API_KEY"
+        val url =
+            BASE_URL + "search?part=snippet&q=${query}&type=any&maxResults=200&key=$API_KEY&regionCode=US"
         return client.get(url).body()
     }
 
@@ -121,7 +129,13 @@ object YoutubeClientApi {
     }
 
     suspend fun getVideoCategories(): VideoCategories {
-        val url = BASE_URL + "videoCategories?key=${API_KEY}&part=snippet&maxResults=200&regionCode=us"
+        val url =
+            BASE_URL + "videoCategories?key=${API_KEY}&part=snippet&maxResults=250&regionCode=us"
+        return client.get(url).body()
+    }
+
+    suspend fun getSingleVideoDetail(videoId: String): Youtube {
+        val url = BASE_URL + "videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
         return client.get(url).body()
     }
 }

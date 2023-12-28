@@ -46,3 +46,14 @@ internal actual fun VideoPlayer(modifier: Modifier,url: String?,thumbnail:String
         },
         modifier = modifier)
 }
+
+@Composable
+internal actual fun Notify(message: String){
+    val alertController = UIAlertController.alertControllerWithTitle(
+        title = UIDevice.currentDevice.systemName,
+        message = message,
+        preferredStyle = UIAlertControllerStyleUIAlertControllerStyleAlert
+    )
+    alertController.addAction(UIAlertAction.actionWithTitle("OK", style = UIAlertActionStyleUIAlertActionStyleDefault, handler = null))
+    viewController.presentViewController(alertController, animated = true, completion = null)
+}

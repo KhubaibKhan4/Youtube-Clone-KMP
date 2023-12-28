@@ -59,7 +59,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -80,10 +79,12 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.company.app.Notify
 import org.company.app.VideoPlayer
 import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.videos.Item
+import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.CommentsState
@@ -94,13 +95,14 @@ import org.company.app.ui.components.CommentsList
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
 import org.company.app.ui.components.RelevanceList
+import org.company.app.ui.components.formatVideoDuration
 
 class DetailScreen(
     private val video: Item? = null,
     private val search: org.company.app.data.model.search.Item? = null
 ) : Screen {
 
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val repository = remember { Repository() }
@@ -109,6 +111,7 @@ class DetailScreen(
         var stateRelevance by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
         var channelData by remember { mutableStateOf<Channel?>(null) }
         var commentData by remember { mutableStateOf<Comments?>(null) }
+        var videoDetail by remember { mutableStateOf<Youtube?>(null) }
         var descriptionEnabled by remember { mutableStateOf(false) }
         var displayVideoPlayer by remember { mutableStateOf(false) }
         var isCommentLive by remember { mutableStateOf(false) }
@@ -239,6 +242,22 @@ class DetailScreen(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = "Arrow Back",
                             tint = Color.White
+                        )
+                    }
+
+                    // Video Total Time
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(8.dp)
+                            .background(MaterialTheme.colorScheme.primary)
+                            .clip(RoundedCornerShape(4.dp))
+                    ) {
+                        Text(
+                            text = video?.contentDetails?.duration?.let { formatVideoDuration(it) }
+                                ?: "00:00",
+                            color = Color.White,
+                            fontSize = 10.sp
                         )
                     }
                 }
@@ -866,6 +885,9 @@ class DetailScreen(
             }
         }
         if (isCommentLive) {
+            if (video?.statistics?.commentCount.isNullOrBlank()) {
+                Notify(message = "No Comments Found...")
+            }
             var commentInput by remember { mutableStateOf("") }
 
             ModalBottomSheet(

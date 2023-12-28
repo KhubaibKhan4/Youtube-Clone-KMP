@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.MediaController
+import android.widget.Toast
 import android.widget.VideoView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import org.company.app.ui.CustomVideoPlayer
@@ -87,4 +89,9 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     YoutubeVideoPlayer(youtubeURL = url)
+}
+@Composable
+internal actual fun Notify(message: String) {
+    val coroutineContext = LocalContext.current
+    Toast.makeText(coroutineContext, message, Toast.LENGTH_LONG).show()
 }

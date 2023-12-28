@@ -1,6 +1,7 @@
 package org.company.app.ui.components
 
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -10,12 +11,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -24,28 +27,37 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ModalDrawer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.Audiotrack
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Games
+import androidx.compose.material.icons.outlined.Lightbulb
+import androidx.compose.material.icons.outlined.Newspaper
 import androidx.compose.material.icons.outlined.PlaylistAdd
 import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.outlined.ShoppingBag
+import androidx.compose.material.icons.outlined.Sports
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -82,11 +94,12 @@ import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.CategoriesState
 import org.company.app.domain.usecases.SearchState
 import org.company.app.presentation.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.DetailScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun VideosList(youtube: Youtube) {
     val repository = remember { Repository() }
@@ -146,102 +159,307 @@ fun VideosList(youtube: Youtube) {
         }
     }
 
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    Surface(
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Column {
-            TopBar(modifier = Modifier.fillMaxWidth())
+    val windowSizeClass = calculateWindowSizeClass()
+    val showRails = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
 
-            // Buttons section (Compass icon and "All" button)
-            Row(
-                modifier = Modifier
-                    .horizontalScroll(state = rememberScrollState())
-                    .width(1500.dp)
-                    .padding(4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+    val drawerState =
+        androidx.compose.material.rememberDrawerState(initialValue = androidx.compose.material.DrawerValue.Closed)
+
+    val isDark = LocalThemeIsDark.current.value
+    if (showRails) {
+        coroutineScope.launch {
+            drawerState.close()
+        }
+    }
+
+
+    ModalDrawer(
+        drawerBackgroundColor = MaterialTheme.colorScheme.surface,
+        drawerContentColor = if (isDark) Color.White else Color.Black,
+        drawerState = drawerState,
+        gesturesEnabled = true,
+        modifier = Modifier.fillMaxHeight().wrapContentWidth(),
+        drawerContent = {
+            Column(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(start = 6.dp, top = 8.dp, end = 6.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
             ) {
-                // Compass icon button
-                IconButton(
+                Image(
+                    painterResource(if (isDark) "youtube_logo_dark.webp" else "youtube_logo_light.webp"),
+                    contentDescription = null,
+                    modifier = Modifier.size(120.dp),
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+                NavigationDrawerItem(
+                    label = {
+                        Text(text = "Trending")
+                    },
                     onClick = {
                         coroutineScope.launch {
-                            drawerState.open()
+                            selectedCategory = "Trending"
+                            isAnyCategorySelected = true
+                            drawerState.close()
                         }
                     },
-                    modifier = Modifier.size(48.dp).clip(shape = RoundedCornerShape(6.dp)),
-                    colors = IconButtonDefaults.iconButtonColors(
-                        containerColor = Color.LightGray.copy(alpha = 0.55f)
-                    ),
-                ) {
-                    Icon(
-                        painter = painterResource("compass_icon.xml"),
-                        contentDescription = "Compass Icon",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-
-                // "All" button
-                CategoryButton(
-                    category = org.company.app.data.model.categories.Item(
-                        etag = "",
-                        id = "all",
-                        kind = "",
-                        Snippet(assignable = true, title = "All", channelId = "")
-                    ),
-                    isSelected = selectedCategory == "all",
-                    onCategorySelected = {
-                        selectedCategory = "all"
-                        isAnyCategorySelected = true
+                    selected = false,
+                    icon = {
+                        Icon(
+                            painterResource("trending.png"),
+                            contentDescription = "Trending",
+                            modifier = Modifier.size(25.dp),
+                            tint = if (isDark) Color.White else Color.Black
+                        )
                     }
                 )
-                // Scrollable row of category buttons
-                videoCategories?.let { categories ->
-                    LazyRow(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 8.dp),
-                        contentPadding = PaddingValues(horizontal = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(categories.items ?: emptyList()) { category ->
-                            CategoryButton(
-                                category = category,
-                                isSelected = category.id == selectedCategory,
-                                onCategorySelected = {
-                                    selectedCategory = category.id
-                                    isAnyCategorySelected = true
-                                }
-                            )
-                        }
-                    }
-                }
 
+                Spacer(modifier = Modifier.height(4.dp))
+                NavigationDrawerItem(
+                    label = {
+                        Text(text = "Music")
+                    },
+                    onClick = {
+                        coroutineScope.launch {
+                            selectedCategory = "Music"
+                            isAnyCategorySelected = true
+                            drawerState.close()
+                        }
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Audiotrack,
+                            contentDescription = "Music"
+                        )
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+                NavigationDrawerItem(
+                    label = {
+                        Text(text = "Live")
+                    },
+                    onClick = {
+                        coroutineScope.launch {
+                            selectedCategory = "Live"
+                            isAnyCategorySelected = true
+                            drawerState.close()
+                        }
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            painterResource("livestream_icon.png"),
+                            contentDescription = "Live",
+                            modifier = Modifier.size(25.dp),
+                            tint = if (isDark) Color.White else Color.Black
+                        )
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+                NavigationDrawerItem(
+                    label = {
+                        Text(text = "Gaming")
+                    },
+                    onClick = {
+                        coroutineScope.launch {
+                            selectedCategory = "Gaming"
+                            isAnyCategorySelected = true
+                            drawerState.close()
+                        }
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Games,
+                            contentDescription = "Gaming"
+                        )
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+                NavigationDrawerItem(
+                    label = {
+                        Text(text = "News")
+                    },
+                    onClick = {
+                        coroutineScope.launch {
+                            selectedCategory = "News"
+                            isAnyCategorySelected = true
+                            drawerState.close()
+                        }
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Newspaper,
+                            contentDescription = "News"
+                        )
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+                NavigationDrawerItem(
+                    label = {
+                        Text(text = "Sports")
+                    },
+                    onClick = {
+                        coroutineScope.launch {
+                            selectedCategory = "Sports"
+                            isAnyCategorySelected = true
+                            drawerState.close()
+                        }
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Sports,
+                            contentDescription = "Sports"
+                        )
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+                NavigationDrawerItem(
+                    label = {
+                        Text(text = "Learning")
+                    },
+                    onClick = {
+                        coroutineScope.launch {
+                            selectedCategory = "Learning"
+                            isAnyCategorySelected = true
+                            drawerState.close()
+                        }
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Lightbulb,
+                            contentDescription = "Learning"
+                        )
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+                NavigationDrawerItem(
+                    label = {
+                        Text(text = "Fashion & Beauty")
+                    },
+                    onClick = {
+                        coroutineScope.launch {
+                            selectedCategory = "Fashion & Beauty"
+                            isAnyCategorySelected = true
+                            drawerState.close()
+                        }
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.ShoppingBag,
+                            contentDescription = "Fashion & Beauty"
+                        )
+                    }
+                )
             }
+        }) {
+        Surface(
+            color = MaterialTheme.colorScheme.background,
+        ) {
+            Column {
+                TopBar(modifier = Modifier.fillMaxWidth())
 
-            if (!isAnyCategorySelected) {
-                // LazyVerticalGrid of videos
-                LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                    youtube.items?.let { items ->
-                        items(items) { videos ->
-                            VideoItemCard(videos)
+                // Buttons section (Compass icon and "All" button)
+                Row(
+                    modifier = Modifier
+                        .horizontalScroll(state = rememberScrollState())
+                        .width(1500.dp)
+                        .padding(4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // Compass icon button
+                    IconButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                drawerState.open()
+                            }
+                        },
+                        modifier = Modifier.size(48.dp).clip(shape = RoundedCornerShape(6.dp)),
+                        colors = IconButtonDefaults.iconButtonColors(
+                            containerColor = Color.LightGray.copy(alpha = 0.55f)
+                        ),
+                    ) {
+                        Icon(
+                            painter = painterResource("compass_icon.xml"),
+                            contentDescription = "Compass Icon",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    // "All" button
+                    CategoryButton(
+                        category = org.company.app.data.model.categories.Item(
+                            etag = "",
+                            id = "all",
+                            kind = "",
+                            Snippet(assignable = true, title = "All", channelId = "")
+                        ),
+                        isSelected = selectedCategory == "all",
+                        onCategorySelected = {
+                            selectedCategory = "all"
+                            isAnyCategorySelected = true
+                        }
+                    )
+                    // Scrollable row of category buttons
+                    videoCategories?.let { categories ->
+                        LazyRow(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 8.dp),
+                            contentPadding = PaddingValues(horizontal = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(categories.items ?: emptyList()) { category ->
+                                CategoryButton(
+                                    category = category,
+                                    isSelected = category.id == selectedCategory,
+                                    onCategorySelected = {
+                                        selectedCategory = category.id
+                                        isAnyCategorySelected = true
+                                    }
+                                )
+                            }
                         }
                     }
+
                 }
 
-            } else {
-                // LazyVerticalGrid of videos
-                LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                    videosByCategories?.items?.let { items ->
-                        items(items) { videos ->
-                            SearchVideoItemCard(videos)
+                if (!isAnyCategorySelected) {
+                    // LazyVerticalGrid of videos
+                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                        youtube.items?.let { items ->
+                            items(items) { videos ->
+                                VideoItemCard(videos)
+                            }
+                        }
+                    }
+
+                } else {
+                    // LazyVerticalGrid of videos
+                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                        videosByCategories?.items?.let { items ->
+                            items(items) { videos ->
+                                SearchVideoItemCard(videos)
+                            }
                         }
                     }
                 }
             }
         }
     }
-
 }
 
 

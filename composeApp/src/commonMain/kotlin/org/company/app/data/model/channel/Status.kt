@@ -11,7 +11,7 @@ data class Status(
     @SerialName("longUploadsStatus")
     val longUploadsStatus: String,
     @SerialName("madeForKids")
-    val madeForKids: Boolean,
+    val madeForKids: Boolean? = null,
     @SerialName("privacyStatus")
     val privacyStatus: String
 )

@@ -85,6 +85,7 @@ import org.company.app.ui.screens.AccountScreen
 import org.company.app.ui.screens.DetailScreen
 import org.company.app.ui.screens.HomeScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class, InternalComposeApi::class)
 @Composable
@@ -100,12 +101,12 @@ fun TopBar(modifier: Modifier) {
     var isLoading by remember { mutableStateOf(false) }
     var query by remember { mutableStateOf("") }
     val repository = remember { Repository() }
-    var viewModel = remember { MainViewModel(repository) }
+    val viewModel = remember { MainViewModel(repository) }
     if (!isSearchEnabled) {
         TopAppBar(
             title = {
                 Image(
-                    org.jetbrains.compose.resources.painterResource(if (isDark) "youtube_logo_dark.webp" else "youtube_logo_light.webp"),
+                    painterResource(if (isDark) "youtube_logo_dark.webp" else "youtube_logo_light.webp"),
                     contentDescription = null,
                     modifier = Modifier.size(120.dp),
                 )
@@ -325,7 +326,7 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                     contentScale = ContentScale.FillBounds
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))// Video Title and Time in a Box
+                Spacer(modifier = Modifier.width(8.dp))
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -336,7 +337,7 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                         maxLines = 2,
                         fontSize = 12.sp,
                         overflow = TextOverflow.Ellipsis,
-                        lineHeight = 20.sp // Adjust the lineHeight value as needed
+                        lineHeight = 20.sp
                     )
                     //Spacer(modifier = Modifier.height(4.dp))
 

@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class VideoCategories(
     @SerialName("etag")
-    val etag: String,
+    val etag: String? = null,
     @SerialName("items")
-    val items: List<Item>,
+    val items: List<Item>? = null,
     @SerialName("kind")
-    val kind: String
+    val kind: String? = null
 )

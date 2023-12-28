@@ -21,4 +21,5 @@ interface YoutubePlugin {
     suspend fun getChannelCommunity(channelId: String): Youtube
     suspend fun getComments(videoId: String, order: String): Comments
     suspend fun getVideoCategories(): VideoCategories
+    suspend fun getSingleVideoDetail(videoId: String): Youtube
 }
