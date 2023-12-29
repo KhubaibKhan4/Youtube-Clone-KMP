@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Block
+import androidx.compose.material.icons.outlined.Cast
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.PlaylistAdd
@@ -53,7 +54,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.InternalComposeApi
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -83,7 +83,6 @@ import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.AccountScreen
 import org.company.app.ui.screens.DetailScreen
-import org.company.app.ui.screens.HomeScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -113,9 +112,19 @@ fun TopBar(modifier: Modifier) {
             },
             actions = {
                 IconButton(
+                    onClick = {
+
+                    }
+                ) {
+                    Icon(imageVector = Icons.Outlined.Cast, contentDescription = "Cast Screen")
+                }
+                IconButton(
                     onClick = { isDark = !isDark }
                 ) {
-                    Icon(imageVector = Icons.Outlined.Notifications, contentDescription = "Notifications")
+                    Icon(
+                        imageVector = Icons.Outlined.Notifications,
+                        contentDescription = "Notifications"
+                    )
                 }
                 IconButton(
                     onClick = { isSearchEnabled = !isSearchEnabled }
