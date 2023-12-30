@@ -43,6 +43,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import kotlinx.serialization.Contextual
 import org.company.app.theme.AppTheme
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.TopBar
@@ -214,3 +215,6 @@ internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 
 @Composable
 internal expect fun Notify(message: String)
+
+@Composable
+internal expect fun ShareManager(title: String, videoUrl: String)

@@ -1,6 +1,8 @@
 package org.company.app
 
 import android.app.Application
+import android.app.Application.ActivityLifecycleCallbacks
+import android.content.ContentProvider
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -12,6 +14,7 @@ import android.widget.VideoView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import kotlinx.coroutines.isActive
 import org.company.app.ui.CustomVideoPlayer
 import org.company.app.ui.YoutubeVideoPlayer
 import kotlin.coroutines.coroutineContext
@@ -94,4 +98,15 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 internal actual fun Notify(message: String) {
     val coroutineContext = LocalContext.current
     Toast.makeText(coroutineContext, message, Toast.LENGTH_LONG).show()
+}
+
+@Composable
+internal actual fun ShareManager(title: String, videoUrl: String){
+   val shareIntent = Intent().apply {
+       action = Intent.ACTION_SEND
+       putExtra(Intent.EXTRA_SUBJECT, title)
+       putExtra(Intent.EXTRA_TEXT, "$title: $videoUrl")
+       type = "text/plain"
+   }
+    LocalContext.current.startActivity(Intent.createChooser(shareIntent, "Share Video"))
 }

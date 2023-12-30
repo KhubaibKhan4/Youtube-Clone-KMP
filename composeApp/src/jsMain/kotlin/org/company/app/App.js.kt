@@ -32,3 +32,8 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 internal actual fun Notify(message: String) {
     window.alert(message)
 }
+
+@Composable
+internal actual fun ShareManager(title:String, videoUrl: String){
+    window.open(url = videoUrl, "_blank")
+}

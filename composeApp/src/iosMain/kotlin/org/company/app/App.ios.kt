@@ -57,3 +57,11 @@ internal actual fun Notify(message: String){
     alertController.addAction(UIAlertAction.actionWithTitle("OK", style = UIAlertActionStyleUIAlertActionStyleDefault, handler = null))
     viewController.presentViewController(alertController, animated = true, completion = null)
 }
+
+@Composable
+internal actual fun ShareManager(title: String, videoUrl: String) {
+    val viewController = UIApplication.sharedApplication.keyWindow?.rootViewController
+    val activityItems = listOf("$title: $videoUrl")
+    val activityViewController = UIActivityViewController(activityItems, null)
+    viewController?.presentViewController(activityViewController, true, null)
+}

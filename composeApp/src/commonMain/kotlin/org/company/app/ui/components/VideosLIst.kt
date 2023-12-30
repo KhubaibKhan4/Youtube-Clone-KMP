@@ -85,6 +85,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.company.app.ShareManager
 import org.company.app.data.model.categories.Snippet
 import org.company.app.data.model.categories.VideoCategories
 import org.company.app.data.model.search.Search
@@ -608,6 +609,7 @@ fun VideoItemCard(video: Item) {
         }
     }
     if (moreVertEnable) {
+        var isShareEnabled by remember { mutableStateOf(false) }
         ModalBottomSheet(
             onDismissRequest = {
                 moreVertEnable = false
@@ -678,9 +680,15 @@ fun VideoItemCard(video: Item) {
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Share",
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f)
+                            .clickable {
+                                isShareEnabled = !isShareEnabled
+                            },
                         fontSize = MaterialTheme.typography.bodyMedium.fontSize
                     )
+                    if (isShareEnabled){
+                        ShareManager(title = video.snippet?.title.toString(), videoUrl = "https://www.youtube.com/watch?v=${video.id}")
+                    }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
 

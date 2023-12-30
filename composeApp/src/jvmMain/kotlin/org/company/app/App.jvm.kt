@@ -3,8 +3,6 @@ package org.company.app
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.resource
 import java.awt.Desktop
 import java.awt.SystemTray
 import java.awt.Toolkit
@@ -18,16 +16,14 @@ internal actual fun openUrl(url: String?) {
 }
 
 
-
-
 @Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail:String?) {
-      VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
+internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
+    VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
 }
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-internal actual fun Notify(message:String){
+internal actual fun Notify(message: String) {
     if (SystemTray.isSupported()) {
         val tray = SystemTray.getSystemTray()
         val image = Toolkit.getDefaultToolkit().createImage("logo.webp")
@@ -36,6 +32,18 @@ internal actual fun Notify(message:String){
         trayIcon.displayMessage("Desktop Notification", message, TrayIcon.MessageType.INFO)
     } else {
         // Fallback for systems that don't support SystemTray
-        JOptionPane.showMessageDialog(null, message, "Desktop Notification", JOptionPane.INFORMATION_MESSAGE)
+        JOptionPane.showMessageDialog(
+            null,
+            message,
+            "Desktop Notification",
+            JOptionPane.INFORMATION_MESSAGE
+        )
+    }
+}
+
+@Composable
+internal actual fun ShareManager(title: String, videoUrl: String) {
+    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+        Desktop.getDesktop().browse(URI(videoUrl))
     }
 }
