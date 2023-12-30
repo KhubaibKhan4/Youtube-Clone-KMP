@@ -44,6 +44,7 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import kotlinx.serialization.Contextual
+import org.company.app.data.model.user.YouTubeUser
 import org.company.app.theme.AppTheme
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.TopBar

@@ -496,7 +496,7 @@ class ChannelScreen(
                                 youtube?.let { it1 ->
                                     ChannelHome(
                                         youtube = it1,
-                                        modifier = Modifier,
+                                        modifier = Modifier.weight(1f),
                                         title = "Home"
                                     )
                                 }

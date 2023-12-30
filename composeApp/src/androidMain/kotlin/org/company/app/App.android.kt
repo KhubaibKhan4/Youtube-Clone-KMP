@@ -1,33 +1,18 @@
 package org.company.app
 
 import android.app.Application
-import android.app.Application.ActivityLifecycleCallbacks
-import android.content.ContentProvider
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.widget.MediaController
 import android.widget.Toast
-import android.widget.VideoView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.viewinterop.AndroidView
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import kotlinx.coroutines.isActive
-import org.company.app.ui.CustomVideoPlayer
 import org.company.app.ui.YoutubeVideoPlayer
-import kotlin.coroutines.coroutineContext
 
 class AndroidApp : Application() {
     companion object {

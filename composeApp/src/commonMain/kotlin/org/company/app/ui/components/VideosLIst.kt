@@ -672,7 +672,10 @@ fun VideoItemCard(video: Item) {
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                        .clickable {
+                            isShareEnabled = !isShareEnabled
+                        },
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -680,10 +683,7 @@ fun VideoItemCard(video: Item) {
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Share",
-                        modifier = Modifier.weight(1f)
-                            .clickable {
-                                isShareEnabled = !isShareEnabled
-                            },
+                        modifier = Modifier.weight(1f),
                         fontSize = MaterialTheme.typography.bodyMedium.fontSize
                     )
                     if (isShareEnabled){

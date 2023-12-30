@@ -80,6 +80,7 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.company.app.Notify
+import org.company.app.ShareManager
 import org.company.app.VideoPlayer
 import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.comments.Comments
@@ -115,6 +116,7 @@ class DetailScreen(
         var descriptionEnabled by remember { mutableStateOf(false) }
         var displayVideoPlayer by remember { mutableStateOf(false) }
         var isCommentLive by remember { mutableStateOf(false) }
+        var isShareEnabled by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
         val isDark by LocalThemeIsDark.current
 
@@ -365,7 +367,9 @@ class DetailScreen(
                 // Share
                 Card(
                     modifier = Modifier.height(40.dp).padding(4.dp),
-                    onClick = { /* Handle Share click */ },
+                    onClick = {
+                              isShareEnabled = !isShareEnabled
+                    },
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -384,6 +388,9 @@ class DetailScreen(
                             fontSize = 14.sp,
                             color = if (isDark) Color.White else Color.Black
                         )
+                    }
+                    if (isShareEnabled){
+                        ShareManager(title = video?.snippet?.title.toString(), videoUrl = "https://www.youtube.com/watch?v=${video?.id}")
                     }
                 }
 

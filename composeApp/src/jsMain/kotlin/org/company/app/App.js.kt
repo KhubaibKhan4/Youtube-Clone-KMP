@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.browser.document
 import kotlinx.browser.window
+import org.company.app.data.model.user.YouTubeUser
 import org.jetbrains.compose.web.css.Position
 import org.jetbrains.compose.web.css.height
 import org.jetbrains.compose.web.css.left

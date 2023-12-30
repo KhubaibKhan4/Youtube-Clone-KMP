@@ -9,5 +9,5 @@ data class BrandingSettings(
     @SerialName("channel")
     val channel: ChannelX,
     @SerialName("image")
-    val image: Image
+    val image: Image? = null
 )

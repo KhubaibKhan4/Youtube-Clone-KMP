@@ -143,7 +143,7 @@ fun TopBar(modifier: Modifier) {
         state = viewModel.search.collectAsState().value
         when (state) {
             is SearchState.LOADING -> {
-                isLoading = true
+                //isLoading = true
             }
 
             is SearchState.SUCCESS -> {
@@ -212,7 +212,9 @@ fun TopBar(modifier: Modifier) {
                     }
                 )
 
-                IconButton(onClick = {}) {
+                IconButton(onClick = {
+
+                }) {
                     Icon(imageVector = Icons.Default.Mic, contentDescription = null)
                 }
 

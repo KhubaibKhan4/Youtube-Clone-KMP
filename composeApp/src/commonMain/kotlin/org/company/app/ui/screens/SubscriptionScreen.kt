@@ -29,7 +29,7 @@ import org.company.app.ui.components.TopBar
 class SubscriptionScreen : Screen {
     @Composable
     override fun Content() {
-        TopBar(modifier = Modifier.fillMaxWidth().padding(top = 49.dp))
+        TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
         Column(
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 30.dp, start = 16.dp, end = 16.dp),

@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
 import kotlinx.cinterop.CValue
+import org.company.app.data.model.user.YouTubeUser
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
 

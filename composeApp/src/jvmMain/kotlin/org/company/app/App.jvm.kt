@@ -2,6 +2,7 @@ package org.company.app
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import org.company.app.data.model.user.YouTubeUser
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.awt.Desktop
 import java.awt.SystemTray
