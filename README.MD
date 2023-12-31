@@ -19,6 +19,19 @@ YouTube Clone KMP is a cutting-edge project developed using Kotlin Multiplatform
 
 - **Material Design Components:** Leveraging Compose's Material Design components, the UI is not only visually appealing but also follows best practices for a modern and consistent design language.
 
+# Open To Work
+
+I am currently open to new opportunities and collaborations. If you are looking for a passionate developer with expertise in Kotlin Multiplatform, feel free to reach out.
+
+## Contact Information
+
+- **Email:** 18.bscs.803@gmail.com
+- **LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/khubaibkhandev/)
+
+
+Feel free to connect with me to discuss potential projects, job opportunities, or any other collaboration.
+
+
 ## Screen Shots
 <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/1.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/2.png" width="400px" height="800px" />
 <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/3.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/7.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/8.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/9.png" width="400px" height="800px" />  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/10.png" width="400px" height="800px" />  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/11.png" width="400px" height="800px" />  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/12.png" width="400px" height="800px" />  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/13.png" width="400px" height="800px" />  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/14.png" width="400px" height="800px" />  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/15.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/25.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/26.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/27.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/28.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/29.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/35.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/36.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/37.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/38.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/39.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/40.png" width="400px" height="800px" /> <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/46.png" width="400px" height="800px" />
