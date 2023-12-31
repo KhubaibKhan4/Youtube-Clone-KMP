@@ -26,7 +26,7 @@ I am currently open to new opportunities and collaborations. If you are looking 
 ## Contact Information
 
 - **Email:** 18.bscs.803@gmail.com
-- **LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/khubaibkhandev/)
+- **LinkedIn:** [My LinkedIn Profile](https://www.linkedin.com/in/khubaibkhandev/)
 
 
 Feel free to connect with me to discuss potential projects, job opportunities, or any other collaboration.
