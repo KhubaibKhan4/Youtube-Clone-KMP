@@ -66,3 +66,7 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
     val activityViewController = UIActivityViewController(activityItems, null)
     viewController?.presentViewController(activityViewController, true, null)
 }
+@Composable
+internal actual fun ShortsVideoPlayer(url: String?) {
+
+}

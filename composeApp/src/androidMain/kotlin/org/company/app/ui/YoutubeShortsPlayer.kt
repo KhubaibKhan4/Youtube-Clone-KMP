@@ -1,17 +1,17 @@
 package org.company.app.ui
 
-import android.os.Build
-import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -20,9 +20,9 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
-@RequiresApi(Build.VERSION_CODES.S)
+@RequiresApi(31)
 @Composable
-fun YoutubeVideoPlayer(
+fun YoutubeShortsPlayer(
     modifier: Modifier = Modifier,
     youtubeURL: String?,
     isPlaying: (Boolean) -> Unit = {},
@@ -76,15 +76,19 @@ fun YoutubeVideoPlayer(
         }
     }
     val playerBuilder = IFramePlayerOptions.Builder().apply {
-        controls(1)
+        controls(0)
         fullscreen(0)
         autoplay(1)
         modestBranding(0)
+        rel(0)
         ccLoadPolicy(1)
-        rel(1)
+        ivLoadPolicy(1)
     }
     AndroidView(
-        modifier = modifier.background(Color.DarkGray),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(1000.dp)
+            .background(Color.Black),
         factory = {
             playerFragment.apply {
                 enableAutomaticInitialization = false
@@ -125,8 +129,3 @@ fun YoutubeVideoPlayer(
     }
 }
 
-fun splitLinkForVideoId(
-    url: String?
-): String {
-    return (url!!.split("="))[1]
-}

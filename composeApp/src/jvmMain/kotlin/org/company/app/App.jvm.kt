@@ -1,8 +1,18 @@
 package org.company.app
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.company.app.data.model.user.YouTubeUser
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.awt.Desktop
 import java.awt.SystemTray
@@ -46,5 +56,25 @@ internal actual fun Notify(message: String) {
 internal actual fun ShareManager(title: String, videoUrl: String) {
     if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
         Desktop.getDesktop().browse(URI(videoUrl))
+    }
+}
+
+@Composable
+internal actual fun ShortsVideoPlayer(url: String?) {
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Icon(
+                imageVector = Icons.Filled.PlayArrow, contentDescription = "Play",
+                modifier = Modifier.size(65.dp),
+                tint = Color.White
+            )
+        }
     }
 }

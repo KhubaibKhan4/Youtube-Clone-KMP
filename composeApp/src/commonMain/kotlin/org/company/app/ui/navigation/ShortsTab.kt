@@ -1,20 +1,18 @@
 package org.company.app.ui.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MusicVideo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import org.company.app.ui.components.ErrorBox
-import org.company.app.ui.screens.HomeScreen
+import org.company.app.ui.screens.ShortScreen
 
 object ShortsTab : Tab {
     @Composable
     override fun Content() {
-        ErrorBox("Shorts YouTube")
+        Navigator(ShortScreen())
     }
 
     override val options: TabOptions

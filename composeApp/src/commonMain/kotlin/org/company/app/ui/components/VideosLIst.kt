@@ -553,7 +553,9 @@ fun VideoItemCard(video: Item) {
                     contentDescription = null,
                     modifier = Modifier
                         .size(40.dp)
-                        .clip(CircleShape),
+                        .clip(CircleShape)
+                        .clickable {
+                        },
                     contentScale = ContentScale.FillBounds
                 )
 
@@ -686,8 +688,11 @@ fun VideoItemCard(video: Item) {
                         modifier = Modifier.weight(1f),
                         fontSize = MaterialTheme.typography.bodyMedium.fontSize
                     )
-                    if (isShareEnabled){
-                        ShareManager(title = video.snippet?.title.toString(), videoUrl = "https://www.youtube.com/watch?v=${video.id}")
+                    if (isShareEnabled) {
+                        ShareManager(
+                            title = video.snippet?.title.toString(),
+                            videoUrl = "https://www.youtube.com/watch?v=${video.id}"
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(10.dp))

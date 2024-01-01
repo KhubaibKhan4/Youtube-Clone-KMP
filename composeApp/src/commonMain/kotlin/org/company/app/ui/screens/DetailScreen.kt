@@ -97,6 +97,7 @@ import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
 import org.company.app.ui.components.RelevanceList
 import org.company.app.ui.components.formatVideoDuration
+import org.company.app.utils.Constant.VIDEO_URL
 
 class DetailScreen(
     private val video: Item? = null,
@@ -390,7 +391,7 @@ class DetailScreen(
                         )
                     }
                     if (isShareEnabled){
-                        ShareManager(title = video?.snippet?.title.toString(), videoUrl = "https://www.youtube.com/watch?v=${video?.id}")
+                        ShareManager(title = video?.snippet?.title.toString(), videoUrl =VIDEO_URL + video?.id)
                     }
                 }
 

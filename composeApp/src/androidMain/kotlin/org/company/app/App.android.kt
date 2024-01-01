@@ -9,9 +9,16 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
 
 class AndroidApp : Application() {
@@ -79,6 +86,19 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     YoutubeVideoPlayer(youtubeURL = url)
 }
+
+@RequiresApi(Build.VERSION_CODES.S)
+@Composable
+internal actual fun ShortsVideoPlayer(url: String?) {
+    Box(
+        modifier = Modifier.fillMaxWidth()
+            .offset(y= (-100).dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        YoutubeShortsPlayer(youtubeURL = url)
+    }
+}
+
 @Composable
 internal actual fun Notify(message: String) {
     val coroutineContext = LocalContext.current
@@ -86,12 +106,12 @@ internal actual fun Notify(message: String) {
 }
 
 @Composable
-internal actual fun ShareManager(title: String, videoUrl: String){
-   val shareIntent = Intent().apply {
-       action = Intent.ACTION_SEND
-       putExtra(Intent.EXTRA_SUBJECT, title)
-       putExtra(Intent.EXTRA_TEXT, "$title: $videoUrl")
-       type = "text/plain"
-   }
+internal actual fun ShareManager(title: String, videoUrl: String) {
+    val shareIntent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_SUBJECT, title)
+        putExtra(Intent.EXTRA_TEXT, "$title: $videoUrl")
+        type = "text/plain"
+    }
     LocalContext.current.startActivity(Intent.createChooser(shareIntent, "Share Video"))
 }
