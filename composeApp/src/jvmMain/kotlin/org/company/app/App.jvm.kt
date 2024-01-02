@@ -1,5 +1,7 @@
 package org.company.app
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +11,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -61,6 +67,7 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 
 @Composable
 internal actual fun ShortsVideoPlayer(url: String?) {
+    var isPlayed by remember { mutableStateOf(false) }
     Box(
         modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
@@ -72,9 +79,15 @@ internal actual fun ShortsVideoPlayer(url: String?) {
         ) {
             Icon(
                 imageVector = Icons.Filled.PlayArrow, contentDescription = "Play",
-                modifier = Modifier.size(65.dp),
+                modifier = Modifier.size(65.dp)
+                    .clickable {
+                        isPlayed = !isPlayed
+                    },
                 tint = Color.White
             )
+            AnimatedVisibility(isPlayed) {
+                VideoPlayerFFMpeg(modifier = Modifier.fillMaxWidth(), file = url.toString())
+            }
         }
     }
 }

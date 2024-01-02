@@ -5,7 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.MediaController
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -14,10 +16,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import org.company.app.ui.CustomVideoPlayer
 import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
 
@@ -65,27 +75,33 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
         },
         update = {})
 }*/
-//@RequiresApi(Build.VERSION_CODES.S)
-//@Composable
-//internal actual fun VideoPlayer(modifier: Modifier,url: String?, thumbnail:String?){
-//    var isPlaying by remember { mutableStateOf(false) }
-//    CustomVideoPlayer(
-//        modifier = modifier,
-//        videoUrl = url,
-//        thumbnailResId = thumbnail.toString(),
-//        isPlaying = isPlaying,
-//        onClickPlay = {
-//            // Toggle the play state
-//            isPlaying = !isPlaying
-//        }
-//    )
-//}
+/*@RequiresApi(Build.VERSION_CODES.S)
+@Composable
+internal actual fun VideoPlayer(modifier: Modifier,url: String?, thumbnail:String?){
+    var isPlaying by remember { mutableStateOf(false) }
+    CustomVideoPlayer(
+        modifier = modifier,
+        videoUrl = url,
+        thumbnailResId = thumbnail.toString(),
+        isPlaying = isPlaying,
+        onClickPlay = {
+            // Toggle the play state
+            isPlaying = !isPlaying
+        }
+    )
+}*/
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     YoutubeVideoPlayer(youtubeURL = url)
 }
+
+/*@RequiresApi(Build.VERSION_CODES.S)
+@Composable
+internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
+
+}*/
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable

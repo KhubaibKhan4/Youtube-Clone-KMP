@@ -41,8 +41,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.VideoSize
+import androidx.media3.common.util.Log
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
@@ -150,6 +152,10 @@ fun CustomVideoPlayer(
 
                             override fun onIsPlayingChanged(isPlaying: Boolean) {
                                 isVideoLoading = !isPlaying
+                            }
+
+                            override fun onPlayerError(error: PlaybackException) {
+                                Log.e("ExoPlayer", "Error during playback. Video URL: $videoUrl", error)
                             }
                         })
                     }
