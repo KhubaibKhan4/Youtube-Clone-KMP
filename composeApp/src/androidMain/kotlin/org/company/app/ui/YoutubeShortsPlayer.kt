@@ -38,6 +38,7 @@ fun YoutubeShortsPlayer(
         override fun onReady(youTubePlayer: com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer) {
             super.onReady(youTubePlayer)
             player = youTubePlayer
+            youTubePlayer.setLoop(true)
             youTubePlayer.loadVideo(videoId, 0f)
         }
 
@@ -79,10 +80,10 @@ fun YoutubeShortsPlayer(
         controls(0)
         fullscreen(0)
         autoplay(1)
-        modestBranding(0)
+        modestBranding(1)
         rel(0)
-        ccLoadPolicy(1)
-        ivLoadPolicy(1)
+        ccLoadPolicy(0)
+        ivLoadPolicy(0)
     }
     AndroidView(
         modifier = modifier

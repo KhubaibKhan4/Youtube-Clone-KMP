@@ -79,9 +79,9 @@ fun YoutubeVideoPlayer(
         controls(1)
         fullscreen(0)
         autoplay(1)
-        modestBranding(0)
+        modestBranding(1)
         ccLoadPolicy(1)
-        rel(1)
+        rel(0)
     }
     AndroidView(
         modifier = modifier.background(Color.DarkGray),
