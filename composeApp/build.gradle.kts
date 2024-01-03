@@ -63,7 +63,6 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.kamel.image)
-            implementation("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.0-Beta2")
         }
 
         commonTest.dependencies {

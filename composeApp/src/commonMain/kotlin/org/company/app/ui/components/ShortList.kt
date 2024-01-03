@@ -175,7 +175,7 @@ fun ShortItem(
     }
     Box(
         modifier = Modifier.fillMaxWidth().background(color = Color.Black)
-            .padding(top = 10.dp, bottom = 120.dp),
+            .padding(top = 10.dp),
         contentAlignment = Alignment.TopCenter
     ) {
         ShortsVideoPlayer(url = shortsUrl)
