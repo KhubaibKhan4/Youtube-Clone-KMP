@@ -89,6 +89,7 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.vlcj)
             implementation(libs.ffmpeg.platform)
+            implementation(libs.webview)
         }
 
         jsMain.dependencies {

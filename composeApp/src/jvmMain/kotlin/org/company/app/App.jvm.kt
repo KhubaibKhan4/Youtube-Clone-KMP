@@ -5,11 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import io.github.aakira.napier.Napier
+import org.company.app.YoutubeWebView.YoutubeWebViewScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.awt.Desktop
 import java.awt.SystemTray
@@ -35,7 +39,12 @@ internal actual fun openUrl(url: String?) {
 
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
-    VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
+    Napier.d { "Video Url ==== $url $thumbnail" }
+    // https://www.youtube.com/watch?v=K_CbgLpvH9E to "https://www.youtube.com/embed/$videoKey"
+    val videoKey = url!!.substringAfter("v=")
+    val videoEmbedUrl = "https://www.youtube.com/embed/$videoKey"
+    YoutubeWebViewScreen(modifier, videoEmbedUrl)
+    // VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
 }
 
 @OptIn(ExperimentalResourceApi::class)

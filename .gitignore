@@ -1,4 +1,5 @@
-
+composeApp/kcef-bundle
+composeApp/cache
 *.iml
 .gradle
 .idea
