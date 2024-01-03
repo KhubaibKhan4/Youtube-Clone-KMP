@@ -337,7 +337,7 @@ class DetailScreen(
                             imageVector = Icons.Default.ThumbUp,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp).clickable { },
-                            tint = Color.Black
+                            tint =if (isDark) Color.White else Color.Black
                         )
 
                         Text(

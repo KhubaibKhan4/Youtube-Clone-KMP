@@ -27,6 +27,7 @@ koin = "3.5.0"
 gson = "2.10.1"
 kamelImage = "0.9.0"
 size = "0.3.1"
+webview-kmp = "1.8.0"
 
 
 [libraries]
@@ -41,6 +42,7 @@ core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", versio
 ffmpeg-platform = { module = "org.bytedeco.javacpp-presets:ffmpeg-platform", version.ref = "ffmpegPlatform" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
+webview = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "webview-kmp" }
 vlcj = { module = "uk.co.caprica:vlcj", version.ref = "vlcj" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }

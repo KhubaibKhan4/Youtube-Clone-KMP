@@ -35,7 +35,7 @@ internal actual fun openUrl(url: String?) {
 
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
-    VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
+    //VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
 }
 
 @OptIn(ExperimentalResourceApi::class)
