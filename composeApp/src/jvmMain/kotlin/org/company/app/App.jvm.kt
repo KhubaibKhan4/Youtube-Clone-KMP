@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,6 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import io.kamel.core.Resource
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.awt.Desktop
 import java.awt.SystemTray
@@ -36,6 +40,25 @@ internal actual fun openUrl(url: String?) {
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     //VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        val image: Resource<androidx.compose.ui.graphics.painter.Painter> =
+            asyncPainterResource(data = thumbnail.toString())
+        KamelImage(
+            resource = image,
+            modifier = modifier.fillMaxWidth(),
+            contentDescription = null
+        )
+        CircularProgressIndicator()
+    }
+}
+
+private fun openYouTubeVideo(videoUrl: String) {
+    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+        Desktop.getDesktop().browse(URI(videoUrl))
+    }
 }
 
 @OptIn(ExperimentalResourceApi::class)

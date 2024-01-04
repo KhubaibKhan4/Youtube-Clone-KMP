@@ -1,4 +1,4 @@
-package org.company.app.ui.components
+﻿package org.company.app.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
