@@ -56,6 +56,7 @@ import org.company.app.data.model.comments.Item
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ChannelState
 import org.company.app.presentation.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.formatLikes
 
 @Composable
@@ -81,6 +82,7 @@ fun CommentItems(comments: Item) {
     var channelData by remember { mutableStateOf<Channel?>(null) }
     var commentExpanded by remember { mutableStateOf(false) }
     var repliesExpanded by remember { mutableStateOf(false) }
+    var isDark by LocalThemeIsDark.current
 
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(comments.snippet.channelId)
@@ -148,7 +150,7 @@ fun CommentItems(comments: Item) {
                                 imageVector = Icons.Default.PinDrop,
                                 contentDescription = "Pinned Icon",
                                 modifier = Modifier.size(15.dp),
-                                tint = Color.DarkGray
+                                tint =if (isDark) Color.White else Color.DarkGray
                             )
                             Text(
                                 text = "Pinned by ${comments.snippet.topLevelComment.snippet.authorDisplayName}",
@@ -173,7 +175,8 @@ fun CommentItems(comments: Item) {
                         androidx.compose.material.Icon(
                             imageVector = Icons.Default.Verified,
                             contentDescription = null,
-                            modifier = Modifier.size(15.dp).padding(start = 4.dp)
+                            modifier = Modifier.size(15.dp).padding(start = 4.dp),
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     } else {
                         // TODO: NOthing here..

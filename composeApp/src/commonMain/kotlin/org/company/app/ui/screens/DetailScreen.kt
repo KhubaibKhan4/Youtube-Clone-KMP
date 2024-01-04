@@ -483,7 +483,8 @@ class DetailScreen(
                             androidx.compose.material.Icon(
                                 imageVector = Icons.Default.Verified,
                                 contentDescription = null,
-                                modifier = Modifier.padding(start = 4.dp)
+                                modifier = Modifier.padding(start = 4.dp),
+                                tint = if (isDark) Color.White else Color.Black
                             )
                         } else {
                             // TODO: NOthing here..
