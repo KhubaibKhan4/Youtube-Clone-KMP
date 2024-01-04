@@ -1,6 +1,5 @@
 package org.company.app.ui.components
 
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -45,7 +44,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -70,16 +68,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import io.kamel.core.Resource
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -503,23 +497,13 @@ fun VideoItemCard(video: Item) {
     ) {
         Column {
             Box(modifier = Modifier.fillMaxWidth()) {
-                val image: Resource<Painter> =
-                    asyncPainterResource(data = video.snippet?.thumbnails?.high?.url!!)
 
-                KamelImage(
-                    resource = image,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
+                NetworkImage(
+                    modifier = Modifier.fillMaxWidth()
                         .height(200.dp),
-                    onLoading = {
-                        CircularProgressIndicator(it)
-                    },
-                    onFailure = {
-                        Text(text = "Failed to Load Image")
-                    },
-                    animationSpec = tween(),
+                    url = video.snippet?.thumbnails?.high?.url.toString(),
+                    contentDescription = "Image",
+                    contentScale = ContentScale.Crop
                 )
                 // Video Total Time
                 Box(
@@ -546,17 +530,15 @@ fun VideoItemCard(video: Item) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Channel Image
-                val image: Resource<Painter> =
-                    asyncPainterResource(data = video.snippet!!.thumbnails?.high?.url.toString())
-                KamelImage(
-                    resource = image,
+                NetworkImage(
+                    url = video.snippet?.thumbnails?.high?.url.toString(),
                     contentDescription = null,
-                    modifier = Modifier
-                        .size(40.dp)
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.size(40.dp)
                         .clip(CircleShape)
                         .clickable {
-                        },
-                    contentScale = ContentScale.FillBounds
+                            // TODO: OnClick Implementation
+                        }
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))// Video Title and Time in a Box
@@ -565,7 +547,7 @@ fun VideoItemCard(video: Item) {
                         .weight(1f)
                 ) {
                     Text(
-                        text = video.snippet.title.toString(),
+                        text = video.snippet?.title.toString(),
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,
                         fontSize = 12.sp,
@@ -579,7 +561,7 @@ fun VideoItemCard(video: Item) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Text(text = video.snippet.channelTitle.toString(), fontSize = 10.sp)
+                        Text(text = video.snippet?.channelTitle.toString(), fontSize = 10.sp)
                         Text(text = "•")
                         Text(
                             text = "${video.statistics?.viewCount?.let { formatViewCount(it) }} views",
@@ -587,7 +569,7 @@ fun VideoItemCard(video: Item) {
                         )
                         Text(text = "•")
                         Text(
-                            text = getFormattedDate(video.snippet.publishedAt.toString()),
+                            text = getFormattedDate(video.snippet?.publishedAt.toString()),
                             fontSize = 10.sp,
                             maxLines = 1,
                             modifier = Modifier

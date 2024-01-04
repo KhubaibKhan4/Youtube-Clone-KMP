@@ -63,6 +63,7 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.kamel.image)
+            implementation("io.coil-kt.coil3:coil-network:3.0.0-alpha01")
         }
 
         commonTest.dependencies {

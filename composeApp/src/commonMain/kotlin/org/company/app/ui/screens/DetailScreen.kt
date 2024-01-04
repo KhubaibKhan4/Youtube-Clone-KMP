@@ -1,6 +1,5 @@
 package org.company.app.ui.screens
 
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,7 +38,6 @@ import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -62,7 +60,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -72,9 +69,6 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
-import io.kamel.core.Resource
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -95,6 +89,7 @@ import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.CommentsList
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
+import org.company.app.ui.components.NetworkImage
 import org.company.app.ui.components.RelevanceList
 import org.company.app.ui.components.formatVideoDuration
 import org.company.app.utils.Constant.VIDEO_URL
@@ -201,22 +196,13 @@ class DetailScreen(
                     contentAlignment = Alignment.Center
                 ) {
 
-                    val image: Resource<Painter> =
-                        asyncPainterResource(data = if (video?.snippet?.thumbnails?.high?.url.isNullOrBlank()) search?.snippet?.thumbnails?.high?.url.toString() else video?.snippet?.thumbnails?.high?.url.toString())
-                    KamelImage(
-                        resource = image,
+                    val image = if (video?.snippet?.thumbnails?.high?.url.isNullOrBlank()) search?.snippet?.thumbnails?.high?.url.toString() else video?.snippet?.thumbnails?.high?.url.toString()
+                    NetworkImage(
+                        url = image,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize(),
-                        onLoading = {
-                            CircularProgressIndicator(it)
-                        },
-                        onFailure = {
-                            Text(text = "Failed to Load Image")
-                        },
-                        animationSpec = tween()
                     )
-
                     //play icon
                     Box(
                         modifier = Modifier.width(89.dp).height(120.dp),
@@ -533,14 +519,12 @@ class DetailScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    val commentProfile: Resource<Painter> =
-                        asyncPainterResource(data = commentData?.items?.get(0)?.snippet?.channelId.toString())
-                    val demoImage: Resource<Painter> =
-                        asyncPainterResource(data = channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString())
-                    KamelImage(
-                        resource = demoImage,
+
+                    NetworkImage(
+                        url = channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString(),
                         contentDescription = "Comment User Profile",
-                        modifier = Modifier.size(25.dp).clip(shape = CircleShape)
+                        modifier = Modifier.size(25.dp).clip(shape = CircleShape),
+                        contentScale = ContentScale.FillBounds
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     val firstComment =
@@ -636,20 +620,17 @@ class DetailScreen(
                             horizontalArrangement = Arrangement.Start
                         ) {
                             // Channel Image
-                            channelData?.items?.get(0)?.snippet?.thumbnails?.default?.url?.let {
-                                rememberImagePainter(
-                                    it
-                                )
-                            }?.let {
-                                Image(
-                                    painter = it,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(15.dp).clip(CircleShape).clickable {
+                            NetworkImage(
+                                modifier = Modifier
+                                    .size(15.dp)
+                                    .clip(CircleShape)
+                                    .clickable {
                                         navigator?.push(ChannelScreen(channelData!!.items[0]))
                                     },
-                                    contentScale = ContentScale.FillBounds
-                                )
-                            }
+                                url = channelData?.items?.get(0)?.snippet?.thumbnails?.default?.url.toString(),
+                                contentDescription = null,
+                                contentScale = ContentScale.FillBounds
+                            )
                             Spacer(modifier = Modifier.width(6.dp))
                             channelData?.items?.get(0)?.snippet?.title?.let {
                                 Text(
@@ -1015,15 +996,13 @@ class DetailScreen(
                         horizontalArrangement = Arrangement.Start
                     ) {
                         // Own Channel Image
-                        val ownChannelImage: Resource<Painter> =
-                            asyncPainterResource(data = channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString())
-                        KamelImage(
-                            resource = ownChannelImage,
-                            contentDescription = "Channel Image",
-                            contentScale = ContentScale.Crop,
+                        NetworkImage(
                             modifier = Modifier.size(25.dp)
                                 .clip(CircleShape)
-                                .align(alignment = Alignment.CenterVertically)
+                                .align(alignment = Alignment.CenterVertically),
+                            contentDescription = "Channel Image",
+                            contentScale = ContentScale.Crop,
+                            url =  channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString(),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
 

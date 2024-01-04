@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -113,20 +114,13 @@ fun CommentItems(comments: Item) {
             horizontalArrangement = Arrangement.Start
         ) {
             // Channel Image
-            val channelImage: Resource<Painter> =
-                asyncPainterResource(data = comments.snippet.topLevelComment.snippet.authorProfileImageUrl)
-            KamelImage(
-                resource = channelImage,
+            NetworkImage(
                 contentDescription = "Channel Image",
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape),
-                onLoading = {
-                    CircularProgressIndicator(modifier = Modifier.size(35.dp), progress = it)
-                },
-                onFailure = {
-                    Icon(Icons.Outlined.SmsFailed, contentDescription = "Failed to Load Images")
-                }
+                url = comments.snippet.topLevelComment.snippet.authorProfileImageUrl.toString(),
+                contentScale = ContentScale.FillBounds
             )
             Spacer(modifier = Modifier.width(12.dp))
             // Channel Username and Published Time
@@ -135,9 +129,10 @@ fun CommentItems(comments: Item) {
                     .weight(1f)
             ) {
                 val isPinned =
-                    comments.snippet.topLevelComment.snippet.moderationStatus == "likelySpam"
+                    comments.snippet.topLevelComment.snippet.channelId == "likelySpam"
+                val pinned = comments.snippet.topLevelComment.snippet.authorChannelId.value.equals(comments.snippet.channelId)
 
-                AnimatedVisibility(isPinned) {
+                AnimatedVisibility(pinned) {
                     Surface(
                         modifier = Modifier
                             .fillMaxWidth()

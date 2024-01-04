@@ -39,7 +39,6 @@ fun YoutubeShortsPlayer(
             super.onReady(youTubePlayer)
             player = youTubePlayer
             youTubePlayer.setLoop(true)
-
             youTubePlayer.loadVideo(videoId, 0f)
         }
 
