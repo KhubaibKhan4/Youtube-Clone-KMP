@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.filled.UnfoldMoreDouble
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.material3.BottomSheetDefaults
@@ -196,7 +197,8 @@ class DetailScreen(
                     contentAlignment = Alignment.Center
                 ) {
 
-                    val image = if (video?.snippet?.thumbnails?.high?.url.isNullOrBlank()) search?.snippet?.thumbnails?.high?.url.toString() else video?.snippet?.thumbnails?.high?.url.toString()
+                    val image =
+                        if (video?.snippet?.thumbnails?.high?.url.isNullOrBlank()) search?.snippet?.thumbnails?.high?.url.toString() else video?.snippet?.thumbnails?.high?.url.toString()
                     NetworkImage(
                         url = image,
                         contentDescription = null,
@@ -323,7 +325,7 @@ class DetailScreen(
                             imageVector = Icons.Default.ThumbUp,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp).clickable { },
-                            tint =if (isDark) Color.White else Color.Black
+                            tint = if (isDark) Color.White else Color.Black
                         )
 
                         Text(
@@ -355,7 +357,7 @@ class DetailScreen(
                 Card(
                     modifier = Modifier.height(40.dp).padding(4.dp),
                     onClick = {
-                              isShareEnabled = !isShareEnabled
+                        isShareEnabled = !isShareEnabled
                     },
                 ) {
                     Row(
@@ -376,8 +378,11 @@ class DetailScreen(
                             color = if (isDark) Color.White else Color.Black
                         )
                     }
-                    if (isShareEnabled){
-                        ShareManager(title = video?.snippet?.title.toString(), videoUrl =VIDEO_URL + video?.id)
+                    if (isShareEnabled) {
+                        ShareManager(
+                            title = video?.snippet?.title.toString(),
+                            videoUrl = VIDEO_URL + video?.id
+                        )
                     }
                 }
 
@@ -466,9 +471,24 @@ class DetailScreen(
                     val channelTitle =
                         if (video?.snippet?.channelTitle.isNullOrBlank()) search?.snippet?.channelTitle.toString() else video?.snippet?.channelTitle.toString()
 
-                    Text(
-                        text = channelTitle, fontWeight = FontWeight.Bold, fontSize = 16.sp
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Text(
+                            text = channelTitle, fontWeight = FontWeight.Bold, fontSize = 16.sp
+                        )
+                        val isVerified = channelData?.items?.get(0)?.status?.isLinked
+                        if (isVerified == true) {
+                            androidx.compose.material.Icon(
+                                imageVector = Icons.Default.Verified,
+                                contentDescription = null,
+                                modifier = Modifier.padding(start = 4.dp)
+                            )
+                        } else {
+                            // TODO: NOthing here..
+                        }
+                    }
                     Text(
                         text = "${formatSubscribers(channelData?.items?.get(0)?.statistics?.subscriberCount)} Subscribers",
                         fontSize = 14.sp
@@ -1002,7 +1022,7 @@ class DetailScreen(
                                 .align(alignment = Alignment.CenterVertically),
                             contentDescription = "Channel Image",
                             contentScale = ContentScale.Crop,
-                            url =  channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString(),
+                            url = channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString(),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
 

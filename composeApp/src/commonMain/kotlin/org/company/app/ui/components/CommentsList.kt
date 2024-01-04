@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PinDrop
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Comment
 import androidx.compose.material.icons.outlined.SmsFailed
 import androidx.compose.material.icons.outlined.ThumbDown
@@ -157,12 +158,28 @@ fun CommentItems(comments: Item) {
                     }
                 }
 
-                Text(
-                    text = comments.snippet.topLevelComment.snippet.authorDisplayName,
-                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = comments.snippet.topLevelComment.snippet.authorDisplayName,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                    )
+                    val isVerified = channelData?.items?.get(0)?.status?.isLinked == true && channelData?.items?.get(0)?.id.equals(comments.snippet.topLevelComment.snippet.authorChannelId.value)
+                    if (isVerified) {
+                        androidx.compose.material.Icon(
+                            imageVector = Icons.Default.Verified,
+                            contentDescription = null,
+                            modifier = Modifier.size(15.dp).padding(start = 4.dp)
+                        )
+                    } else {
+                        // TODO: NOthing here..
+                    }
+                }
+
                 Text(
                     text = getFormattedDate(comments.snippet.topLevelComment.snippet.publishedAt.toString()),
                     fontSize = MaterialTheme.typography.labelSmall.fontSize,

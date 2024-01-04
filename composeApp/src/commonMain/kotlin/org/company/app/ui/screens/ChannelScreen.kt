@@ -2,8 +2,6 @@ package org.company.app.ui.screens
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,9 +29,9 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -230,7 +228,7 @@ class ChannelScreen(
         //Channel Details
         when (channelDetails) {
             is ChannelState.LOADING -> {
-               // LoadingBox()
+                // LoadingBox()
             }
 
             is ChannelState.SUCCESS -> {
@@ -340,11 +338,27 @@ class ChannelScreen(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // Channel Title
-                Text(
-                    text = channel.snippet?.title.toString(),
-                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                    color = if (isDark) Color.White else Color.Black
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = channel.snippet?.title.toString(),
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
+                    )
+                    val isVerified = channel.status.isLinked
+                    if (isVerified) {
+                        Icon(
+                            imageVector = Icons.Default.Verified,
+                            contentDescription = null,
+                            modifier = Modifier.padding(start = 4.dp)
+                        )
+                    } else {
+                        // TODO: NOthing here..
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -370,7 +384,7 @@ class ChannelScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     // Channel Description
-                    channel.snippet?.localized?.description?.let {
+                    channel.snippet.localized.description.let {
                         Text(
                             text = it,
                             color = if (isDark) Color.White else Color.Black,
@@ -503,7 +517,10 @@ class ChannelScreen(
                             }
                             ownChannelVideo?.let { ChannelVideos(it) }
                             featuresChannels?.let { channel ->
-                                FeaturedChannel(channel, featuredText = "Sub To All Channels for Cookie")
+                                FeaturedChannel(
+                                    channel,
+                                    featuredText = "Sub To All Channels for Cookie"
+                                )
                             }
                         }
 

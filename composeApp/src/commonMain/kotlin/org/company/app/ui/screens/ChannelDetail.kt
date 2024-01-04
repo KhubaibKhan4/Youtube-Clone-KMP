@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.TrendingUp
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import org.company.app.data.model.channel.Item
+import org.company.app.openUrl
 
 class ChannelDetail(
     private val channel: Item
@@ -160,6 +162,17 @@ class ChannelDetail(
                             )
                             println("Social Link: $link")
                         }
+
+                        channel.topicDetails.topicCategories.forEach {
+                            Text(
+                                text = it,
+                                fontSize = MaterialTheme.typography.titleSmall.fontSize,
+                                color = Color.Blue,
+                                modifier = Modifier.clickable {
+                                    openUrl(it)
+                                }
+                            )
+                        }
                     }
                 }
 
@@ -235,7 +248,40 @@ class ChannelDetail(
                     Spacer(modifier = Modifier.height(6.dp))
                 }
 
-
+                Spacer(modifier = Modifier.height(16.dp))
+                //More Info
+                Text(
+                    text = "Verification",
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                // Verification
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 12.dp),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Verified,
+                        contentDescription = "Verified Icon",
+                        modifier = Modifier.size(25.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    val isVerified = channel.status.isLinked
+                    if (isVerified){
+                    Text(text = "Verified")
+                    }else {
+                        Text(text = "UnVerified")
+                    }
+                    Spacer(modifier = Modifier.height(6.dp))
+                }
             }
         }
     }

@@ -41,6 +41,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.ClosedCaption
 import androidx.compose.material.icons.outlined.Description
@@ -381,10 +382,26 @@ fun ShortItem(
                             .clip(shape = CircleShape)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = customName.toString(),
-                        color = Color.White
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = customName.toString(),
+                            color = Color.White
+                        )
+                        val isVerified = channelDetail?.items?.get(0)?.status?.isLinked
+                        if (isVerified == true) {
+                            androidx.compose.material.Icon(
+                                imageVector = Icons.Default.Verified,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(25.dp).padding(start = 4.dp)
+                            )
+                        } else {
+                            // TODO: NOthing here..
+                        }
+                    }
                     Spacer(modifier = Modifier.width(4.dp))
                     Button(
                         onClick = {},
