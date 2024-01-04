@@ -8,6 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -112,7 +114,7 @@ fun ShortList(youtube: Youtube) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ShortItem(
     video: Item
@@ -412,13 +414,15 @@ fun ShortItem(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(0.65f),
-                        text = "${video.snippet?.description}",
-                        color = Color.White,
-                        maxLines = if (expanded) Int.MAX_VALUE else 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                    FlowRow {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(0.65f),
+                            text = "${video.snippet?.description}",
+                            color = Color.White,
+                            maxLines = if (expanded) Int.MAX_VALUE else 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
 
                     AnimatedVisibility((video.snippet?.description?.length ?: 0) > 100) {
                         // Show more button
