@@ -838,7 +838,10 @@ class DetailScreen(
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             OutlinedCard(
-                                onClick = {},
+                                onClick = { channelData?.items?.get(0)?.let {item  ->
+                                        navigator?.push(ChannelScreen(item))
+                                    }
+                                },
                                 shape = CardDefaults.outlinedShape,
                                 enabled = true,
                                 border = BorderStroke(width = 1.dp, color = Color.Black),

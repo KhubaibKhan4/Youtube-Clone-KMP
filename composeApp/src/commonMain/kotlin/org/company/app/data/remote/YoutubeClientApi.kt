@@ -53,7 +53,7 @@ object YoutubeClientApi {
 
     suspend fun getVideoList(userRegion: String): Youtube {
         val url =
-            BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics&chart=mostPopular&regionCode=${userRegion}&maxResults=2000&key=$API_KEY"
+            BASE_URL + "videos?part=snippet,contentDetails,statistics,liveStreamingDetails,player,recordingDetails,id&chart=mostPopular&regionCode=${userRegion}&maxResults=2000&key=$API_KEY"
         return client.get(url).body()
     }
 

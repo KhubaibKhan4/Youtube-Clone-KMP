@@ -17,5 +17,7 @@ data class Item(
     @SerialName("snippet")
     val snippet: Snippet? = null,
     @SerialName("statistics")
-    val statistics: Statistics? = null
+    val statistics: Statistics? = null,
+    @SerialName("player")
+    val player: Player? = null
 )
