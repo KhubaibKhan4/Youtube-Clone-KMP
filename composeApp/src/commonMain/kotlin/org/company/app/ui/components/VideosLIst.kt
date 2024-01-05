@@ -592,7 +592,7 @@ fun VideoItemCard(video: Item) {
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start
+                            horizontalArrangement = Arrangement.Center
                         ) {
                             Text(text = video.snippet?.channelTitle.toString(), fontSize = 10.sp)
                             val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
@@ -601,7 +601,7 @@ fun VideoItemCard(video: Item) {
                                     imageVector = Icons.Default.Verified,
                                     contentDescription = null,
                                     tint = if (isDark) Color.White else Color.Black,
-                                    modifier = Modifier.size(15.dp).padding(start = 4.dp)
+                                    modifier = Modifier.size(15.dp).padding(start = 4.dp, top = 4.dp)
                                 )
                             }
                         }
