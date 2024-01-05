@@ -74,11 +74,11 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     private val _singleVideo = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
     val singleVideo : StateFlow<YoutubeState> = _singleVideo.asStateFlow()
 
-    fun getVideosList() {
+    fun getVideosList(userRegion: String) {
         viewModelScope.launch {
             _videos.value = YoutubeState.LOADING
             try {
-                val response = repository.getVideoList()
+                val response = repository.getVideoList(userRegion)
                 _videos.value = YoutubeState.SUCCESS(response)
             } catch (e: Exception) {
                 val error = e.message.toString()
@@ -130,11 +130,11 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getSearch(query: String) {
+    fun getSearch(query: String, userRegion: String) {
         viewModelScope.launch {
             _search.value = SearchState.LOADING
             try {
-                val response = repository.getSearch(query)
+                val response = repository.getSearch(query, userRegion)
                 _search.value = SearchState.SUCCESS(response)
             } catch (e: Exception) {
                 val error = e.message.toString()

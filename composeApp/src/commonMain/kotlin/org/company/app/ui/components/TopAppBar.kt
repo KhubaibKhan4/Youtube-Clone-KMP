@@ -76,6 +76,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.UserRegion
 import org.company.app.data.model.search.Search
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.SearchState
@@ -204,7 +205,7 @@ fun TopBar(modifier: Modifier) {
                         Text("Search YouTube....")
                     }, trailingIcon = {
                         IconButton(onClick = {
-                            viewModel.getSearch(query)
+                            viewModel.getSearch(query, UserRegion())
 
                         }) {
                             Icon(imageVector = Icons.Default.Search, contentDescription = null)

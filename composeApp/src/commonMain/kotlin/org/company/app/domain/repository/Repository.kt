@@ -10,8 +10,8 @@ import org.company.app.domain.plugin.YoutubePlugin
 
 class Repository : YoutubePlugin {
 
-    override suspend fun getVideoList(): Youtube {
-        return YoutubeClientApi.getVideoList()
+    override suspend fun getVideoList(userRegion: String): Youtube {
+        return YoutubeClientApi.getVideoList(userRegion)
     }
 
     override suspend fun getRelevance(): Youtube {
@@ -26,8 +26,8 @@ class Repository : YoutubePlugin {
         return YoutubeClientApi.getRelevanceVideos()
     }
 
-    override suspend fun getSearch(query: String): Search {
-        return YoutubeClientApi.getSearch(query)
+    override suspend fun getSearch(query: String, userRegion: String): Search {
+        return YoutubeClientApi.getSearch(query,userRegion)
     }
 
     override suspend fun getChannelBranding(channelId: String): Channel {

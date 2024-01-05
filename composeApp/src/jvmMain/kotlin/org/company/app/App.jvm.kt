@@ -29,6 +29,7 @@ import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
 import java.net.URI
+import java.util.Locale
 import javax.swing.JOptionPane
 
 internal actual fun openUrl(url: String?) {
@@ -113,4 +114,8 @@ internal actual fun ShortsVideoPlayer(url: String?) {
             }
         }
     }
+}
+internal actual fun UserRegion():String{
+    val currentLocale: Locale = Locale.getDefault()
+    return currentLocale.country
 }

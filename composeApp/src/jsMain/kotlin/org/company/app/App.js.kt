@@ -42,3 +42,6 @@ internal actual fun ShareManager(title:String, videoUrl: String){
 internal actual fun ShortsVideoPlayer(url: String?) {
 
 }
+internal actual fun UserRegion():String{
+    return js("window.navigator.language.slice(-2)")
+}

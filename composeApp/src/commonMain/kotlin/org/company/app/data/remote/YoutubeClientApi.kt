@@ -51,9 +51,9 @@ object YoutubeClientApi {
         return videoIds.shuffled().firstOrNull()
     }
 
-    suspend fun getVideoList(): Youtube {
+    suspend fun getVideoList(userRegion: String): Youtube {
         val url =
-            BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics&chart=mostPopular&regionCode=us&maxResults=2000&key=$API_KEY"
+            BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics&chart=mostPopular&regionCode=${userRegion}&maxResults=2000&key=$API_KEY"
         return client.get(url).body()
     }
 
@@ -80,9 +80,9 @@ object YoutubeClientApi {
         return client.get(url).body()
     }
 
-    suspend fun getSearch(query: String): Search {
+    suspend fun getSearch(query: String, userRegion: String): Search {
         val url =
-            BASE_URL + "search?part=snippet&q=${query}&type=any&maxResults=200&key=$API_KEY&regionCode=US"
+            BASE_URL + "search?part=snippet&q=${query}&type=any&maxResults=200&key=$API_KEY&regionCode=${userRegion}"
         return client.get(url).body()
     }
 

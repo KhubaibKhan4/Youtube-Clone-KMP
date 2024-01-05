@@ -81,6 +81,7 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.company.app.ShareManager
+import org.company.app.UserRegion
 import org.company.app.data.model.categories.Snippet
 import org.company.app.data.model.categories.VideoCategories
 import org.company.app.data.model.channel.Channel
@@ -114,7 +115,7 @@ fun VideosList(youtube: Youtube) {
     if (isAnyCategorySelected) {
         LaunchedEffect(selectedCategory) {
             selectedCategory?.let { category ->
-                viewModel.getSearch(category)
+                viewModel.getSearch(category, UserRegion())
             }
         }
     }

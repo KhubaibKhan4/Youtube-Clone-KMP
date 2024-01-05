@@ -7,11 +7,11 @@ import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 
 interface YoutubePlugin {
-    suspend fun getVideoList() : Youtube
+    suspend fun getVideoList(userRegion: String) : Youtube
     suspend fun getRelevance(): Youtube
     suspend fun getChannelDetail(channelId: String): Channel
     suspend fun getRelevanceVideos(): Youtube
-    suspend fun getSearch(query: String): Search
+    suspend fun getSearch(query: String, userRegion: String): Search
     suspend fun getChannelBranding(channelId: String): Channel
     suspend fun getPlaylists(channelId: String): Youtube
     suspend fun getChannelSections(channelId: String): Youtube

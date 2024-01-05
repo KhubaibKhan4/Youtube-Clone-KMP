@@ -70,3 +70,6 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 internal actual fun ShortsVideoPlayer(url: String?) {
 
 }
+internal actual fun UserRegion():String{
+    return NsLocale.currentLocale.countryCode ?: "us"
+}

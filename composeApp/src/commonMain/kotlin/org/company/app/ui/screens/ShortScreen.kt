@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
+import org.company.app.UserRegion
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.YoutubeState
@@ -26,7 +27,7 @@ class ShortScreen(
         var shortsData by remember { mutableStateOf<Youtube?>(null) }
 
         LaunchedEffect(Unit) {
-            viewModel.getVideosList()
+            viewModel.getVideosList(UserRegion())
         }
         val state by viewModel.videos.collectAsState()
         when (state) {

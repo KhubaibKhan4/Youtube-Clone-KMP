@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
+import org.company.app.UserRegion
 import org.company.app.domain.repository.Repository
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
@@ -23,7 +24,7 @@ class HomeScreen() : Screen {
         var state by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
 
         LaunchedEffect(Unit) {
-            viewModel.getVideosList()
+            viewModel.getVideosList(UserRegion())
         }
         state = viewModel.videos.collectAsState().value
 

@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
+import java.util.Locale
 
 class AndroidApp : Application() {
     companion object {
@@ -119,4 +120,9 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
         type = "text/plain"
     }
     LocalContext.current.startActivity(Intent.createChooser(shareIntent, "Share Video"))
+}
+
+internal actual fun UserRegion():String{
+    val currentLocale: Locale =  Locale.getDefault()
+    return currentLocale.country
 }
