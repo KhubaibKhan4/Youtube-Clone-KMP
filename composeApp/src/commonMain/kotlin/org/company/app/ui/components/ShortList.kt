@@ -137,7 +137,6 @@ fun ShortItem(
     var isCommentEnabled by remember { mutableStateOf(false) }
     var isMoreVertEnabled by remember { mutableStateOf(false) }
 
-
     LaunchedEffect(Unit) {
         //Channel Details
         viewModel.getVideoComments(video.id.toString(), order = "relevance")
@@ -380,9 +379,19 @@ fun ShortItem(
                         contentDescription = "Channel image",
                         modifier = Modifier.size(40.dp)
                             .clip(shape = CircleShape)
+                            .clickable {
+                                channelDetail?.items?.get(0)?.let {item ->
+                                    navigator?.push(ChannelScreen(channel = item))
+                                }
+                            }
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Row(
+                        modifier = Modifier.clickable {
+                            channelDetail?.items?.get(0)?.let {item ->
+                                navigator?.push(ChannelScreen(channel = item))
+                            }
+                        },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
@@ -392,7 +401,7 @@ fun ShortItem(
                         )
                         val isVerified = channelDetail?.items?.get(0)?.status?.isLinked
                         if (isVerified == true) {
-                            androidx.compose.material.Icon(
+                           Icon(
                                 imageVector = Icons.Default.Verified,
                                 contentDescription = null,
                                 tint = Color.White,

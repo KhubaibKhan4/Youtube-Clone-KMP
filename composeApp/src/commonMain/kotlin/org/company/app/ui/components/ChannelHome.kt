@@ -1,6 +1,7 @@
 package org.company.app.ui.components
 
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -32,6 +32,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +46,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -53,6 +56,10 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.company.app.data.model.videos.Item
 import org.company.app.data.model.videos.Youtube
+import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.YoutubeState
+import org.company.app.presentation.MainViewModel
+import org.company.app.ui.screens.DetailScreen
 
 @Composable
 fun ChannelHome(
@@ -103,6 +110,7 @@ fun ChannelHome(
 @Composable
 fun ChannelHomeItems(videos: Item) {
     var moreVertEnable by remember { mutableStateOf(false) }
+    val navigator = LocalNavigator.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -115,6 +123,9 @@ fun ChannelHomeItems(videos: Item) {
             contentDescription = "Thumbnail",
             modifier = Modifier.width(140.dp)
                 .height(80.dp)
+                .clickable {
+                    navigator?.push(DetailScreen(video = videos))
+                }
                 .clip(
                     shape = RoundedCornerShape(12.dp)
                 ),

@@ -135,7 +135,6 @@ class DetailScreen(
         state = viewModel.channelDetails.collectAsState().value
         stateRelevance = viewModel.relevance.collectAsState().value
         val commentsState by viewModel.videoComments.collectAsState()
-
         when (state) {
             is ChannelState.LOADING -> {
                 LoadingBox()
@@ -245,7 +244,7 @@ class DetailScreen(
                             .clip(RoundedCornerShape(4.dp))
                     ) {
                         Text(
-                            text = video?.contentDetails?.duration?.let { formatVideoDuration(it) }
+                            text = formatVideoDuration(video?.contentDetails?.duration.toString())
                                 ?: "00:00",
                             color = Color.White,
                             fontSize = 10.sp
@@ -292,7 +291,11 @@ class DetailScreen(
             ) {
                 val views = video?.statistics?.viewCount.toString()
                 val pubDate =
-                    if (video?.snippet?.publishedAt.isNullOrBlank()) search?.snippet?.publishedAt.toString() else video?.snippet?.publishedAt.toString()
+                    if (video?.snippet?.publishedAt.isNullOrBlank())
+                        search?.snippet?.publishedAt.toString()
+                    else
+                        video?.snippet?.publishedAt.toString()
+
                 Text(
                     text = "${formatViewCount(views)} views - ${getFormattedDate(pubDate)}",
                     fontSize = 14.sp
@@ -328,8 +331,9 @@ class DetailScreen(
                             tint = if (isDark) Color.White else Color.Black
                         )
 
+                        val videoLikes = video?.statistics?.likeCount.toString()
                         Text(
-                            text = formatLikes(video?.statistics?.likeCount),
+                            text = formatLikes(videoLikes),
                             fontSize = 14.sp,
                             color = if (isDark) Color.White else Color.Black
                         )

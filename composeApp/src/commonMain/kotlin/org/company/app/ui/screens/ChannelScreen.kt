@@ -2,6 +2,7 @@ package org.company.app.ui.screens
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -244,7 +245,7 @@ class ChannelScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 49.dp)
+                .padding(top = 25.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally

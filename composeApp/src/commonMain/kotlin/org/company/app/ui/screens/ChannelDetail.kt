@@ -109,7 +109,7 @@ class ChannelDetail(
                 Spacer(modifier = Modifier.height(8.dp))
                 val description = channel.brandingSettings.channel.description
                 Text(
-                    text = description,
+                    text = description.toString(),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -150,7 +150,7 @@ class ChannelDetail(
                         // Use regular expressions to find social links
                         val socialLinks =
                             Regex("(?i)\\b(?:twitter|instagram|facebook|linkedin|youtube)\\b[\\w/@]+")
-                                .findAll(description)
+                                .findAll(description.toString())
                                 .map { it.value }
                                 .toList()
 
@@ -162,8 +162,34 @@ class ChannelDetail(
                             )
                             println("Social Link: $link")
                         }
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
 
-                        channel.topicDetails.topicCategories.forEach {
+                //Links
+                Text(
+                    text = "Categories",
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        channel.topicDetails?.topicCategories?.forEach {
                             Text(
                                 text = it,
                                 fontSize = MaterialTheme.typography.titleSmall.fontSize,

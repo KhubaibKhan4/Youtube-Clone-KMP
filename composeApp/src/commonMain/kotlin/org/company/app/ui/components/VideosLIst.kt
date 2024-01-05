@@ -29,6 +29,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Audiotrack
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Download
@@ -82,11 +83,13 @@ import kotlinx.datetime.toLocalDateTime
 import org.company.app.ShareManager
 import org.company.app.data.model.categories.Snippet
 import org.company.app.data.model.categories.VideoCategories
+import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Item
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.CategoriesState
+import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.SearchState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -483,7 +486,30 @@ fun CategoryButton(
 @Composable
 fun VideoItemCard(video: Item) {
     val navigator = LocalNavigator.current
+    var isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }
+    val repository = remember { Repository() }
+    val viewModel = remember { MainViewModel(repository) }
+    var channelData by remember { mutableStateOf<Channel?>(null) }
+    LaunchedEffect(Unit) {
+        viewModel.getChannelDetails(video.snippet?.channelId.toString())
+    }
+    val state by viewModel.channelDetails.collectAsState()
+    when (state) {
+        is ChannelState.LOADING -> {
+            LoadingBox()
+        }
+
+        is ChannelState.SUCCESS -> {
+            val data = (state as ChannelState.SUCCESS).channel
+            channelData = data
+        }
+
+        is ChannelState.ERROR -> {
+            val error = (state as ChannelState.ERROR).error
+            ErrorBox(error)
+        }
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -530,8 +556,11 @@ fun VideoItemCard(video: Item) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Channel Image
+                //video.snippet?.thumbnails?.high?.url.toString()
+                val channelImage =
+                    channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString()
                 NetworkImage(
-                    url = video.snippet?.thumbnails?.high?.url.toString(),
+                    url = channelImage,
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier.size(40.dp)
@@ -561,7 +590,21 @@ fun VideoItemCard(video: Item) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Text(text = video.snippet?.channelTitle.toString(), fontSize = 10.sp)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            Text(text = video.snippet?.channelTitle.toString(), fontSize = 10.sp)
+                            val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
+                            if (isVerified) {
+                                Icon(
+                                    imageVector = Icons.Default.Verified,
+                                    contentDescription = null,
+                                    tint = if (isDark) Color.White else Color.Black,
+                                    modifier = Modifier.size(15.dp).padding(start = 4.dp)
+                                )
+                            }
+                        }
                         Text(text = "•")
                         Text(
                             text = "${video.statistics?.viewCount?.let { formatViewCount(it) }} views",

@@ -25,5 +25,5 @@ data class Item(
     @SerialName("status")
     val status: Status,
     @SerialName("topicDetails")
-    val topicDetails: TopicDetails
+    val topicDetails: TopicDetails? = null
 )

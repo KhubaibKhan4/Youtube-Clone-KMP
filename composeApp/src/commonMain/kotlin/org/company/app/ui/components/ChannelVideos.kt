@@ -2,6 +2,7 @@ package org.company.app.ui.components
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,10 +49,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.data.model.search.Search
+import org.company.app.data.model.videos.Youtube
+import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.YoutubeState
+import org.company.app.presentation.MainViewModel
+import org.company.app.ui.screens.DetailScreen
 import kotlin.random.Random
 
 @Composable
@@ -85,6 +94,7 @@ fun ChannelVideos(
 @Composable
 fun ChannelVideosItems(videos: org.company.app.data.model.search.Item) {
     var moreVertEnable by remember { mutableStateOf(false) }
+    val navigator = LocalNavigator.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -103,6 +113,9 @@ fun ChannelVideosItems(videos: org.company.app.data.model.search.Item) {
                 resource = image,
                 contentDescription = "Thumbnail",
                 modifier = Modifier.fillMaxSize()
+                    .clickable {
+                        navigator?.push(DetailScreen(video = null, search = videos))
+                    }
                     .clip(
                         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
                     ),
@@ -124,7 +137,7 @@ fun ChannelVideosItems(videos: org.company.app.data.model.search.Item) {
                     .clip(RoundedCornerShape(4.dp))
             ) {
                 androidx.compose.material3.Text(
-                    text = videos.snippet.publishTime?.let { formatVideoDuration(it) }
+                    text = videos.snippet.publishTime.let { formatVideoDuration(it) }
                         ?: "00:00",
                     color = Color.White,
                     fontSize = 10.sp
