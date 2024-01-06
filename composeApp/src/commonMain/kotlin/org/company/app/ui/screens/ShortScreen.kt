@@ -6,8 +6,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.company.app.UserRegion
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
