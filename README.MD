@@ -1,23 +1,71 @@
 # YouTube Clone Kotlin Mutliplatform
 ## Overview
 
-YouTube Clone KMP is a cutting-edge project developed using Kotlin Multiplatform, enabling the creation of Android, iOS, Web, and Desktop applications with shared code. This project mirrors the functionalities of the official YouTube app, offering a seamless user experience across various platforms. Key features include:
+YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices.
 
-- **Cross-Platform Compatibility:** Utilizing Kotlin Multiplatform, the app extends its reach to Android, iOS, Web, and Desktop platforms, ensuring a consistent experience for users on different devices.
+## Key Features
 
-- **Video Playback:** Users can seamlessly play videos within the application, with support for various video formats and resolutions.
+- **Cross-Platform Compatibility:** Utilizing Kotlin Multiplatform, the app seamlessly extends its reach to Android, iOS, Web, and Desktop platforms, ensuring a consistent user experience.
 
-- **Sharing Options:** Share your favorite videos with friends and family through integrated sharing options, enhancing social connectivity.
+- **Video Playback:** Users can enjoy seamless video playback within the application, supporting various video formats and resolutions for an optimal viewing experience.
 
-- **Download Capability:** Download videos for offline viewing, allowing users to enjoy content without requiring an active internet connection.
+- **Sharing Options:** Enhance social connectivity by sharing favorite videos through integrated sharing options.
 
-- **Playlist Viewing:** Access and view playlists, making it easy for users to organize and navigate through their preferred content seamlessly.
+- **Download Capability:** Download videos for offline viewing, providing users the flexibility to enjoy content without an active internet connection.
 
-- **Comprehensive Search:** A robust search functionality enables users to quickly find specific videos, channels, or playlists, enhancing the overall user experience.
+- **Playlist Viewing:** Access and view playlists effortlessly, allowing users to organize and navigate through their preferred content seamlessly.
+
+- **Comprehensive Search:** A robust search functionality enables users to quickly find specific videos, channels, or playlists, enhancing overall user experience.
 
 - **Responsive UI:** The application provides an intuitive and responsive user interface, ensuring optimal usability across different screen sizes and orientations.
 
-- **Material Design Components:** Leveraging Compose's Material Design components, the UI is not only visually appealing but also follows best practices for a modern and consistent design language.
+- **Material Design Components:** Leveraging Compose's Material Design components, the UI is visually appealing and follows modern design language best practices.
+
+## Additional Features
+
+- **Top Videos:** Explore trending and top-viewed videos for an up-to-date content discovery experience.
+
+- **Shorts Videos:** Discover and enjoy short-form videos with a dedicated Shorts section.
+
+- **Video Details:** View comprehensive details for each video, including total views, likes, comments, and more.
+
+- **Channel Screen:** Explore individual channels with dedicated screens showcasing video content and details.
+
+- **Channel Home:** Access the home screen of each channel to discover their latest uploads and updates.
+
+- **Live Streams:** Engage with live streaming content, adding a dynamic and interactive element to the user experience.
+
+- **Community:** Interact with the community through features such as comments, likes, and replies.
+
+- **Playlists:** Create, organize, and explore playlists to curate personalized content collections.
+
+- **Channel Details Screen:** Dive deeper into channel details, including total views, likes, and a verified channel badge.
+
+- **Share Channel, Videos, and Shorts:** Enhance social sharing by allowing users to share channels, individual videos, and Shorts content.
+
+- **Like and Comment Features:** Engage with videos by liking, commenting, and replying to comments.
+
+- **Download Videos:** Enable users to download videos for offline viewing convenience.
+
+- **Relevance Videos:** Suggest relevant videos based on user preferences and viewing history.
+
+- **Subscriptions:** Keep track of subscriptions and receive updates on new uploads from subscribed channels.
+
+- **Library:** Access a centralized library for quick retrieval of saved and watched content.
+
+- **Shimmer Loading Screen:** Enhance user experience during loading with shimmer effects for smooth transitions.
+
+- **Top Categories:** Explore content categories such as Trending, Music, Live, Gaming, News, Sports, Learning, and more.
+
+- **Navigation Rail for Foldable Devices:** Adapt to foldable devices with a navigation rail for seamless navigation.
+
+- **Desktop and Web Version Support:** Ensure optimal usability and design for desktop and web versions of the application.
+
+## Future Plans
+
+- **TV and Wear OS Versions:** Upcoming support for TV and Wear OS versions to expand the application's compatibility and accessibility.
+
+Feel free to contribute to the project and stay tuned for more exciting updates!
 
 # Open To Work
 
