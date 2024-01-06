@@ -5,7 +5,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
 import kotlinx.cinterop.CValue
-import org.company.app.data.model.user.YouTubeUser
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
 
@@ -15,7 +14,7 @@ internal actual fun openUrl(url: String?) {
 }
 
 @Composable
-internal actual fun VideoPlayer(modifier: Modifier,url: String?,thumbnail:String?){
+internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
 
     val player = remember { AVPlayer(uRL = NSURL.URLWithString(url)!!) }
     val playerLayer = remember { AVPlayerLayer() }
@@ -45,17 +44,24 @@ internal actual fun VideoPlayer(modifier: Modifier,url: String?,thumbnail:String
             player.play()
             avPlayerViewController.player!!.play()
         },
-        modifier = modifier)
+        modifier = modifier
+    )
 }
 
 @Composable
-internal actual fun Notify(message: String){
+internal actual fun Notify(message: String) {
     val alertController = UIAlertController.alertControllerWithTitle(
         title = UIDevice.currentDevice.systemName,
         message = message,
         preferredStyle = UIAlertControllerStyleUIAlertControllerStyleAlert
     )
-    alertController.addAction(UIAlertAction.actionWithTitle("OK", style = UIAlertActionStyleUIAlertActionStyleDefault, handler = null))
+    alertController.addAction(
+        UIAlertAction.actionWithTitle(
+            "OK",
+            style = UIAlertActionStyleUIAlertActionStyleDefault,
+            handler = null
+        )
+    )
     viewController.presentViewController(alertController, animated = true, completion = null)
 }
 
@@ -70,6 +76,6 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 internal actual fun ShortsVideoPlayer(url: String?) {
 
 }
-internal actual fun UserRegion():String{
+internal actual fun UserRegion(): String {
     return NsLocale.currentLocale.countryCode ?: "us"
 }

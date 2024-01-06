@@ -115,7 +115,8 @@ internal actual fun ShortsVideoPlayer(url: String?) {
         }
     }
 }
-internal actual fun UserRegion():String{
+
+internal actual fun UserRegion(): String {
     val currentLocale: Locale = Locale.getDefault()
     return currentLocale.country
 }

@@ -212,9 +212,7 @@ fun TopBar(modifier: Modifier) {
                         }
                     }
                 )
-
                 IconButton(onClick = {
-
                 }) {
                     Icon(imageVector = Icons.Default.Mic, contentDescription = null)
                 }

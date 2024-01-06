@@ -97,8 +97,9 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 @Composable
 internal actual fun ShortsVideoPlayer(url: String?) {
     Box(
-        modifier = Modifier.fillMaxWidth()
-            .offset(y= (-100).dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .offset(y = (-100).dp),
         contentAlignment = Alignment.Center,
     ) {
         YoutubeShortsPlayer(youtubeURL = url)
@@ -122,7 +123,7 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
     LocalContext.current.startActivity(Intent.createChooser(shareIntent, "Share Video"))
 }
 
-internal actual fun UserRegion():String{
-    val currentLocale: Locale =  Locale.getDefault()
+internal actual fun UserRegion(): String {
+    val currentLocale: Locale = Locale.getDefault()
     return currentLocale.country
 }
