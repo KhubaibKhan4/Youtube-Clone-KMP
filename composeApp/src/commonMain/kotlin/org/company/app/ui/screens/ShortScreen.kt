@@ -14,7 +14,7 @@ import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
 import org.company.app.ui.components.ErrorBox
-import org.company.app.ui.components.LoadingBox
+import org.company.app.ui.components.ShimmerEffectShorts
 import org.company.app.ui.components.ShortList
 
 class ShortScreen(
@@ -25,14 +25,23 @@ class ShortScreen(
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
         var shortsData by remember { mutableStateOf<Youtube?>(null) }
-
+        /* UnComment this, If you want to use the Dark Theme
+        When User enter the Shorts Screen
+        var isDark by LocalThemeIsDark.current
+        isDark = isSystemInDarkTheme()
+        isDark = true
+        DisposableEffect(isDark){
+            onDispose {
+                isDark = false
+            }
+        }*/
         LaunchedEffect(Unit) {
             viewModel.getVideosList(UserRegion())
         }
         val state by viewModel.videos.collectAsState()
         when (state) {
             is YoutubeState.LOADING -> {
-                LoadingBox()
+                ShimmerEffectShorts()
             }
 
             is YoutubeState.SUCCESS -> {

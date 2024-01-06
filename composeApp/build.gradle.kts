@@ -63,7 +63,7 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.kamel.image)
-            implementation("io.coil-kt.coil3:coil-network:3.0.0-alpha01")
+            implementation(libs.coil.network)
         }
 
         commonTest.dependencies {
@@ -80,8 +80,8 @@ kotlin {
             implementation(libs.androidx.media3.exoplayer.dash)
             implementation(libs.androidx.media3.ui)
             implementation(libs.core)
-            implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
-            implementation("com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui:12.1.0")
+            implementation(libs.core)
+            implementation(libs.custom.ui)
         }
 
         jvmMain.dependencies {

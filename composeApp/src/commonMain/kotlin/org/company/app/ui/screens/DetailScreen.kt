@@ -92,6 +92,7 @@ import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.LoadingBox
 import org.company.app.ui.components.NetworkImage
 import org.company.app.ui.components.RelevanceList
+import org.company.app.ui.components.ShimmerEffectMain
 import org.company.app.ui.components.formatVideoDuration
 import org.company.app.utils.Constant.VIDEO_URL
 
@@ -137,7 +138,7 @@ class DetailScreen(
         val commentsState by viewModel.videoComments.collectAsState()
         when (state) {
             is ChannelState.LOADING -> {
-                LoadingBox()
+               ShimmerEffectMain()
             }
 
             is ChannelState.SUCCESS -> {

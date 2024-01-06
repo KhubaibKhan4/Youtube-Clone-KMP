@@ -11,10 +11,10 @@ import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.UserRegion
 import org.company.app.domain.repository.Repository
 import org.company.app.ui.components.ErrorBox
-import org.company.app.ui.components.LoadingBox
 import org.company.app.ui.components.VideosList
 import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
+import org.company.app.ui.components.ShimmerEffectMain
 
 class HomeScreen() : Screen {
     @Composable
@@ -30,7 +30,8 @@ class HomeScreen() : Screen {
 
         when (state) {
             is YoutubeState.LOADING -> {
-                LoadingBox()
+                /*LoadingBox()*/
+                ShimmerEffectMain()
             }
 
             is YoutubeState.SUCCESS -> {

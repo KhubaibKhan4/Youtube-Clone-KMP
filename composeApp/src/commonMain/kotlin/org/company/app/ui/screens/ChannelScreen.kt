@@ -74,6 +74,7 @@ import org.company.app.ui.components.ChannelVideos
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.FeaturedChannel
 import org.company.app.ui.components.LoadingBox
+import org.company.app.ui.components.ShimmerEffectChannel
 
 class ChannelScreen(
     private val channel: Item
@@ -130,7 +131,7 @@ class ChannelScreen(
 
         when (state) {
             is YoutubeState.LOADING -> {
-                LoadingBox()
+                ShimmerEffectChannel()
             }
 
             is YoutubeState.SUCCESS -> {
@@ -146,7 +147,7 @@ class ChannelScreen(
         //Channel Sections
         when (channelState) {
             is YoutubeState.LOADING -> {
-                LoadingBox()
+               // LoadingBox()
             }
 
             is YoutubeState.SUCCESS -> {
@@ -162,7 +163,7 @@ class ChannelScreen(
         //Channel LiveStreams
         when (liveStreams) {
             is SearchState.LOADING -> {
-                LoadingBox()
+                //LoadingBox()
             }
 
             is SearchState.SUCCESS -> {
@@ -179,7 +180,7 @@ class ChannelScreen(
         //Channel All Videos
         when (allVideos) {
             is YoutubeState.LOADING -> {
-                LoadingBox()
+                //LoadingBox()
             }
 
             is YoutubeState.SUCCESS -> {
@@ -196,7 +197,7 @@ class ChannelScreen(
         //Channel Community
         when (channelCommunity) {
             is YoutubeState.LOADING -> {
-                LoadingBox()
+                //LoadingBox()
             }
 
             is YoutubeState.SUCCESS -> {
@@ -213,7 +214,7 @@ class ChannelScreen(
         //Own Channel Videos
         when (ownChannelVideos) {
             is SearchState.LOADING -> {
-                LoadingBox()
+                //LoadingBox()
             }
 
             is SearchState.SUCCESS -> {

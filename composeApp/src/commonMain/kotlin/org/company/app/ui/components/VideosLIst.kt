@@ -125,7 +125,7 @@ fun VideosList(youtube: Youtube) {
     val categoriesVideos by viewModel.search.collectAsState()
     when (state) {
         is CategoriesState.LOADING -> {
-            LoadingBox()
+            ShimmerEffectMain()
         }
 
         is CategoriesState.SUCCESS -> {
@@ -143,7 +143,7 @@ fun VideosList(youtube: Youtube) {
     when (categoriesVideos) {
         is SearchState.LOADING -> {
             if (isAnyCategorySelected) {
-                LoadingBox()
+                ShimmerEffectMain()
             }
         }
 
