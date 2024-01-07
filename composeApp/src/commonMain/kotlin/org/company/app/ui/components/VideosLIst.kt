@@ -94,6 +94,7 @@ import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.SearchState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
+import org.company.app.ui.screens.ChannelScreen
 import org.company.app.ui.screens.DetailScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -567,7 +568,8 @@ fun VideoItemCard(video: Item) {
                     modifier = Modifier.size(40.dp)
                         .clip(CircleShape)
                         .clickable {
-                            // TODO: OnClick Implementation
+                            val channelItem = channelData!!.items[0]
+                            navigator?.push(ChannelScreen(channelItem))
                         }
                 )
 

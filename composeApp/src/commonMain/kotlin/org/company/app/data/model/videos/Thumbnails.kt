@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Thumbnails(
     @SerialName("default")
-    val default: Default,
+    val default: Default? = null,
     @SerialName("high")
-    val high: High,
+    val high: High? = null,
     @SerialName("maxres")
     val maxres: Maxres?,
     @SerialName("medium")
