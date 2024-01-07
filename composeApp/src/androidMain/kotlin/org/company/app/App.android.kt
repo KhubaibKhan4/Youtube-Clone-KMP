@@ -1,7 +1,10 @@
 package org.company.app
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -126,4 +129,18 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 internal actual fun UserRegion(): String {
     val currentLocale: Locale = Locale.getDefault()
     return currentLocale.country
+}
+@Composable
+actual fun isConnected(): Boolean{
+    val context = LocalContext.current
+    val connectivityManager =context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    return if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+        val network = connectivityManager.activeNetwork
+        val capabilities = connectivityManager.getNetworkCapabilities(network)
+        capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+    }else {
+        @Suppress("DEPRECATION")
+        val networkInfo = connectivityManager.activeNetworkInfo
+        networkInfo?.isConnected == true
+    }
 }

@@ -28,7 +28,9 @@ import java.awt.Desktop
 import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
+import java.net.HttpURLConnection
 import java.net.URI
+import java.net.URL
 import java.util.Locale
 import javax.swing.JOptionPane
 
@@ -119,4 +121,17 @@ internal actual fun ShortsVideoPlayer(url: String?) {
 internal actual fun UserRegion(): String {
     val currentLocale: Locale = Locale.getDefault()
     return currentLocale.country
+}
+
+@Composable
+internal actual fun isConnected(): Boolean {
+    return try {
+        val url = URL("https://youtube.com")
+        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+        connection.connectTimeout = 30000
+        connection.connect()
+        connection.responseCode == 200
+    } catch (e: Exception) {
+        false
+    }
 }

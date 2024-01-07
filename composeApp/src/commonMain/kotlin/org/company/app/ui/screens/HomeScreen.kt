@@ -6,19 +6,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.company.app.UserRegion
 import org.company.app.domain.repository.Repository
-import org.company.app.ui.components.ErrorBox
-import org.company.app.ui.components.VideosList
 import org.company.app.domain.usecases.YoutubeState
+import org.company.app.isConnected
 import org.company.app.presentation.MainViewModel
+import org.company.app.ui.components.ErrorBox
+import org.company.app.ui.components.NoInternet
 import org.company.app.ui.components.ShimmerEffectMain
+import org.company.app.ui.components.VideosList
 
 class HomeScreen() : Screen {
     @Composable
@@ -44,7 +42,11 @@ class HomeScreen() : Screen {
 
             is YoutubeState.ERROR -> {
                 val error = (state as YoutubeState.ERROR).error
-                ErrorBox(error)
+                if (!isConnected()) {
+                    NoInternet()
+                } else {
+                    ErrorBox(error)
+                }
             }
         }
     }

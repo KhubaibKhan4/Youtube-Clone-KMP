@@ -6,17 +6,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.company.app.UserRegion
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.YoutubeState
+import org.company.app.isConnected
 import org.company.app.presentation.MainViewModel
 import org.company.app.ui.components.ErrorBox
+import org.company.app.ui.components.NoInternet
 import org.company.app.ui.components.ShimmerEffectShorts
 import org.company.app.ui.components.ShortList
 
@@ -54,7 +53,11 @@ class ShortScreen(
 
             is YoutubeState.ERROR -> {
                 val Error = (state as YoutubeState.ERROR).error
-                ErrorBox(Error)
+                if (!isConnected()) {
+                    NoInternet()
+                } else {
+                    ErrorBox(Error)
+                }
             }
         }
 

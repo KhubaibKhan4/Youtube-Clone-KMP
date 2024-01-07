@@ -222,3 +222,5 @@ internal expect fun Notify(message: String)
 
 @Composable
 internal expect fun ShareManager(title: String, videoUrl: String)
+@Composable
+internal expect fun isConnected(): Boolean

@@ -7,6 +7,14 @@ import androidx.compose.ui.interop.UIKitView
 import kotlinx.cinterop.CValue
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
+import platform.Foundation.NSURL
+import platform.Foundation.NSURLRequest
+import platform.Foundation.create
+import platform.Foundation.sendSynchronousRequest
+import platform.Foundation.HTTPURLResponse
+import platform.Foundation.NSError
+import platform.Foundation.NSErrorDomain
+import platform.Foundation.NSURLConnection
 
 internal actual fun openUrl(url: String?) {
     val nsUrl = url?.let { NSURL.URLWithString(it) } ?: return
@@ -78,4 +86,25 @@ internal actual fun ShortsVideoPlayer(url: String?) {
 }
 internal actual fun UserRegion(): String {
     return NsLocale.currentLocale.countryCode ?: "us"
+}
+@Composable
+internal actual fun isConnected(): Boolean{
+    val url = NSURL.URLWithString("https://www.google.com")
+    val request = NSURLRequest.requestWithURL(url)
+
+    val response: AutoreleasingUnsafeMutablePointer<NSURLResponse?> = null
+    val error: AutoreleasingUnsafeMutablePointer<NSError?> = null
+
+    val data = NSURLConnection.sendSynchronousRequest(request, response, error)
+
+    if (data != null && (response != null && response.pointed !is NSHTTPURLResponse)) {
+        return true
+    } else {
+        val nsError = error?.pointed
+        if (nsError != null && nsError.domain == NSErrorDomain.NSURLErrorDomain) {
+            return nsError.code != -1009
+        }
+    }
+
+    return false
 }

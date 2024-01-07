@@ -92,6 +92,7 @@ import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.CategoriesState
 import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.SearchState
+import org.company.app.isConnected
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.ChannelScreen
@@ -136,7 +137,7 @@ fun VideosList(youtube: Youtube) {
 
         is CategoriesState.ERROR -> {
             val error = (state as CategoriesState.ERROR).error
-            ErrorBox(error)
+                ErrorBox(error)
         }
     }
 
@@ -155,7 +156,7 @@ fun VideosList(youtube: Youtube) {
 
         is SearchState.ERROR -> {
             val error = (categoriesVideos as SearchState.ERROR).error
-            ErrorBox(error)
+                ErrorBox(error)
         }
     }
 
@@ -604,7 +605,8 @@ fun VideoItemCard(video: Item) {
                                     imageVector = Icons.Default.Verified,
                                     contentDescription = null,
                                     tint = if (isDark) Color.White else Color.Black,
-                                    modifier = Modifier.size(15.dp).padding(start = 4.dp, top = 4.dp)
+                                    modifier = Modifier.size(15.dp)
+                                        .padding(start = 4.dp, top = 4.dp)
                                 )
                             }
                         }
@@ -796,6 +798,5 @@ fun formatViewCount(viewCount: String): String {
         else -> "${count / 1_000_000_000}B"
     }
 }
-
 
 
