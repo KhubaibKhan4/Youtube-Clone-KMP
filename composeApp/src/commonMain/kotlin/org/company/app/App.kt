@@ -30,7 +30,6 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -44,17 +43,17 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import kotlinx.serialization.Contextual
-import org.company.app.data.model.user.YouTubeUser
+import kotlinx.coroutines.flow.callbackFlow
 import org.company.app.theme.AppTheme
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.ui.components.TopBar
 import org.company.app.ui.navigation.HomeTab
 import org.company.app.ui.navigation.LibraryTab
 import org.company.app.ui.navigation.ShortsTab
 import org.company.app.ui.navigation.SubscriptionsTab
 import org.company.app.ui.navigation.rails.NavigationItem
 import org.company.app.ui.navigation.rails.NavigationSideBar
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -216,7 +215,7 @@ internal expect fun openUrl(url: String?)
 internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)
 @Composable
 internal expect fun ShortsVideoPlayer(url: String?)
-internal expect fun UserRegion():String
+internal expect fun UserRegion(): String
 @Composable
 internal expect fun Notify(message: String)
 

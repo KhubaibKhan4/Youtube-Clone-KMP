@@ -130,15 +130,17 @@ internal actual fun UserRegion(): String {
     val currentLocale: Locale = Locale.getDefault()
     return currentLocale.country
 }
+
 @Composable
-actual fun isConnected(): Boolean{
+actual fun isConnected(): Boolean {
     val context = LocalContext.current
-    val connectivityManager =context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         val network = connectivityManager.activeNetwork
         val capabilities = connectivityManager.getNetworkCapabilities(network)
         capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
-    }else {
+    } else {
         @Suppress("DEPRECATION")
         val networkInfo = connectivityManager.activeNetworkInfo
         networkInfo?.isConnected == true
