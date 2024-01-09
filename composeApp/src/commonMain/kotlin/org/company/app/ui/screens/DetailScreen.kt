@@ -98,7 +98,8 @@ import org.company.app.utils.Constant.VIDEO_URL
 
 class DetailScreen(
     private val video: Item? = null,
-    private val search: org.company.app.data.model.search.Item? = null
+    private val search: org.company.app.data.model.search.Item? = null,
+    private val channelData: org.company.app.data.model.channel.Item? = null
 ) : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -106,11 +107,8 @@ class DetailScreen(
     override fun Content() {
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
-        var state by remember { mutableStateOf<ChannelState>(ChannelState.LOADING) }
         var stateRelevance by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
-        var channelData by remember { mutableStateOf<Channel?>(null) }
         var commentData by remember { mutableStateOf<Comments?>(null) }
-        var videoDetail by remember { mutableStateOf<Youtube?>(null) }
         var descriptionEnabled by remember { mutableStateOf(false) }
         var displayVideoPlayer by remember { mutableStateOf(false) }
         var isCommentLive by remember { mutableStateOf(false) }
@@ -119,12 +117,6 @@ class DetailScreen(
         val isDark by LocalThemeIsDark.current
 
         LaunchedEffect(Unit) {
-            //Channel Details
-            if (video?.snippet?.channelId.isNullOrBlank()) {
-                viewModel.getChannelDetails(search?.snippet?.channelId.toString())
-            } else {
-                viewModel.getChannelDetails(video?.snippet?.channelId.toString())
-            }
             //Video Comments
             if (video?.id.isNullOrBlank()) {
                 viewModel.getVideoComments(search?.id.toString(), order = "relevance")
@@ -133,25 +125,8 @@ class DetailScreen(
             }
             viewModel.getRelevance()
         }
-        state = viewModel.channelDetails.collectAsState().value
         stateRelevance = viewModel.relevance.collectAsState().value
         val commentsState by viewModel.videoComments.collectAsState()
-        when (state) {
-            is ChannelState.LOADING -> {
-               ShimmerEffectMain()
-            }
-
-            is ChannelState.SUCCESS -> {
-                var data = (state as ChannelState.SUCCESS).channel
-                channelData = data
-
-            }
-
-            is ChannelState.ERROR -> {
-                val error = (state as ChannelState.ERROR).error
-                ErrorBox(error)
-            }
-        }
 
         when (commentsState) {
             is CommentsState.LOADING -> {
@@ -454,7 +429,7 @@ class DetailScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Channel Image
-                channelData?.items?.get(0)?.snippet?.thumbnails?.default?.url?.let {
+                channelData?.snippet?.thumbnails?.default?.url?.let {
                     rememberImagePainter(
                         it
                     )
@@ -463,7 +438,7 @@ class DetailScreen(
                         painter = it,
                         contentDescription = null,
                         modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
-                            navigator?.push(ChannelScreen(channelData!!.items[0]))
+                            navigator?.push(ChannelScreen(channelData))
                         },
                         contentScale = ContentScale.FillBounds
                     )
@@ -483,7 +458,7 @@ class DetailScreen(
                         Text(
                             text = channelTitle, fontWeight = FontWeight.Bold, fontSize = 16.sp
                         )
-                        val isVerified = channelData?.items?.get(0)?.status?.isLinked
+                        val isVerified = channelData?.status?.isLinked
                         if (isVerified == true) {
                             androidx.compose.material.Icon(
                                 imageVector = Icons.Default.Verified,
@@ -496,7 +471,7 @@ class DetailScreen(
                         }
                     }
                     Text(
-                        text = "${formatSubscribers(channelData?.items?.get(0)?.statistics?.subscriberCount)} Subscribers",
+                        text = "${formatSubscribers(channelData?.statistics?.subscriberCount)} Subscribers",
                         fontSize = 14.sp
                     )
 
@@ -547,7 +522,7 @@ class DetailScreen(
                 ) {
 
                     NetworkImage(
-                        url = channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString(),
+                        url = channelData?.brandingSettings?.image?.bannerExternalUrl.toString(),
                         contentDescription = "Comment User Profile",
                         modifier = Modifier.size(25.dp).clip(shape = CircleShape),
                         contentScale = ContentScale.FillBounds
@@ -651,14 +626,14 @@ class DetailScreen(
                                     .size(15.dp)
                                     .clip(CircleShape)
                                     .clickable {
-                                        navigator?.push(ChannelScreen(channelData!!.items[0]))
+                                        navigator?.push(ChannelScreen(channelData!!))
                                     },
-                                url = channelData?.items?.get(0)?.snippet?.thumbnails?.default?.url.toString(),
+                                url = channelData?.snippet?.thumbnails?.default?.url.toString(),
                                 contentDescription = null,
                                 contentScale = ContentScale.FillBounds
                             )
                             Spacer(modifier = Modifier.width(6.dp))
-                            channelData?.items?.get(0)?.snippet?.title?.let {
+                            channelData?.snippet?.title?.let {
                                 Text(
                                     text = it,
                                     fontWeight = FontWeight.Bold,
@@ -772,7 +747,7 @@ class DetailScreen(
                             color = DividerDefaults.color
                         )
 
-                        channelData?.items?.get(0)?.snippet?.title?.let {
+                        channelData?.snippet?.title?.let {
                             Text(
                                 text = "More From $it",
                                 fontWeight = FontWeight.Normal,
@@ -793,7 +768,7 @@ class DetailScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             // Channel Image
-                            channelData?.items?.get(0)?.snippet?.thumbnails?.default?.url?.let {
+                            channelData?.snippet?.thumbnails?.default?.url?.let {
                                 rememberImagePainter(
                                     it
                                 )
@@ -802,7 +777,7 @@ class DetailScreen(
                                     painter = it,
                                     contentDescription = null,
                                     modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
-                                        navigator?.push(ChannelScreen(channelData!!.items[0]))
+                                        navigator?.push(ChannelScreen(channelData))
                                     },
                                     contentScale = ContentScale.FillBounds
                                 )
@@ -822,7 +797,7 @@ class DetailScreen(
                                     fontSize = 16.sp
                                 )
                                 Text(
-                                    text = "${formatSubscribers(channelData?.items?.get(0)?.statistics?.subscriberCount)} Subscribers",
+                                    text = "${formatSubscribers(channelData?.statistics?.subscriberCount)} Subscribers",
                                     fontSize = 14.sp
                                 )
 
@@ -839,7 +814,7 @@ class DetailScreen(
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             OutlinedCard(
-                                onClick = { channelData?.items?.get(0)?.let {item  ->
+                                onClick = { channelData?.let {item  ->
                                         navigator?.push(ChannelScreen(item))
                                     }
                                 },
@@ -870,7 +845,7 @@ class DetailScreen(
                             OutlinedCard(
                                 onClick = {
                                     channelData?.let { channel ->
-                                        navigator?.push(ChannelDetail(channel.items[0]))
+                                        navigator?.push(ChannelDetail(channel))
                                     }
                                 },
                                 shape = CardDefaults.outlinedShape,
@@ -1031,7 +1006,7 @@ class DetailScreen(
                                 .align(alignment = Alignment.CenterVertically),
                             contentDescription = "Channel Image",
                             contentScale = ContentScale.Crop,
-                            url = channelData?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString(),
+                            url = channelData?.brandingSettings?.image?.bannerExternalUrl.toString(),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
 

@@ -518,7 +518,7 @@ fun VideoItemCard(video: Item) {
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                navigator?.push(DetailScreen(video))
+                navigator?.push(DetailScreen(video, channelData = channelData?.items?.get(0)))
             },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface

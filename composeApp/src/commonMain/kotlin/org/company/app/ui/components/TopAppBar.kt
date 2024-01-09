@@ -54,6 +54,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.InternalComposeApi
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -77,9 +78,14 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.UserRegion
+import org.company.app.data.model.channel.Channel
+import org.company.app.data.model.channel.Item
 import org.company.app.data.model.search.Search
+import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
+import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.SearchState
+import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.AccountScreen
@@ -128,7 +134,10 @@ fun TopBar(modifier: Modifier) {
                     )
                 }
                 IconButton(
-                    onClick = { isSearchEnabled = !isSearchEnabled }
+                    onClick = {
+                        isSearchEnabled = !isSearchEnabled
+                        query = ""
+                    }
                 ) {
                     Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
                 }
@@ -173,6 +182,7 @@ fun TopBar(modifier: Modifier) {
             ) {
                 IconButton(onClick = {
                     isSearchEnabled = false
+                    query = ""
                 }) {
                     Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
                 }
@@ -194,6 +204,7 @@ fun TopBar(modifier: Modifier) {
                     keyboardActions = KeyboardActions(
                         onDone = {
                             // Handle search or done action
+                            viewModel.getSearch(query, UserRegion())
                         }
                     ),
                     colors = TextFieldDefaults.colors(
@@ -206,7 +217,6 @@ fun TopBar(modifier: Modifier) {
                     }, trailingIcon = {
                         IconButton(onClick = {
                             viewModel.getSearch(query, UserRegion())
-
                         }) {
                             Icon(imageVector = Icons.Default.Search, contentDescription = null)
                         }
@@ -267,122 +277,212 @@ fun SearchVideosList(youtube: Search) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
+    val repository = remember { Repository() }
+    val viewModel = remember { MainViewModel(repository) }
+    var channelDetails by remember { mutableStateOf<Channel?>(null) }
+    var channel by remember { mutableStateOf<Item?>(null) }
+    var singleVideo by remember { mutableStateOf<org.company.app.data.model.videos.Item?>(null) }
+    var videoDetail by remember { mutableStateOf<Youtube?>(null) }
     val navigator = LocalNavigator.current
     var moreVertEnable by remember { mutableStateOf(false) }
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable {
-                navigator?.push(DetailScreen(search = video))
-            },
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
-    ) {
-        Column {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                val image: Resource<Painter> =
-                    asyncPainterResource(data = video.snippet.thumbnails.high.url)
-                KamelImage(
-                    resource = image,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    onLoading = {
-                        CircularProgressIndicator(it)
-                    },
-                    onFailure = {
-                        Text(text = "Failed to Load Image")
-                    },
-                    animationSpec = tween()
-                )
+    LaunchedEffect(Unit) {
+        viewModel.getChannelDetails(video.snippet.channelId)
+        viewModel.getSingleVideo(video.id.videoId.toString())
+    }
+    val state by viewModel.channelDetails.collectAsState()
+    val videoState by viewModel.singleVideo.collectAsState()
+    when (state) {
+        is ChannelState.LOADING -> {
+            // CircularProgressIndicator()
+        }
 
-                // Video Total Time
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(8.dp)
-                        .background(MaterialTheme.colorScheme.primary)
-                        .clip(RoundedCornerShape(4.dp))
-                ) {
-                    /*Text(
-                        text = video.contentDetails?.duration?.let { formatVideoDuration(it) }
-                            ?: "00:00",
-                        color = Color.White,
-                        fontSize = 10.sp
-                    )*/
+        is ChannelState.SUCCESS -> {
+            val data = (state as ChannelState.SUCCESS).channel
+            channelDetails = data
+        }
+
+        is ChannelState.ERROR -> {
+            val error = (state as ChannelState.ERROR).error
+            ErrorBox(error)
+        }
+    }
+    when (videoState) {
+        is YoutubeState.LOADING -> {
+            //CircularProgressIndicator()
+        }
+
+        is YoutubeState.SUCCESS -> {
+            val response = (videoState as YoutubeState.SUCCESS).youtube
+            videoDetail = response
+        }
+
+        is YoutubeState.ERROR -> {
+            val error = (videoState as YoutubeState.ERROR).error
+            ErrorBox(error)
+        }
+    }
+    channelDetails?.items?.let { items ->
+        if (items.isNotEmpty()) {
+            channel = items[0]
+        }
+    }
+
+    videoDetail?.items?.let { items ->
+        if (items.isNotEmpty()) {
+            singleVideo = items[0]
+        }
+    }
+    val image: Resource<Painter> =
+        asyncPainterResource(data = video.snippet.thumbnails.high.url)
+
+
+
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        if (video.snippet.title == channel?.snippet?.title) {
+            channelDetails?.items?.let { items ->
+                if (items.isNotEmpty()) {
+                    val channel = items[0]
+                    SearchChannelItem(channel)
                 }
             }
+        }else {
 
-
-            Row(
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp, top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Channel Image
-                val image: Resource<Painter> =
-                    asyncPainterResource(data = video.snippet.thumbnails.high.url)
-                KamelImage(
-                    resource = image,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.FillBounds
+                    .padding(8.dp)
+                    .clickable {
+                        navigator?.push(DetailScreen(video = singleVideo))
+                    },
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
+            ) {
+                Column {
+                    Box(modifier = Modifier.fillMaxWidth()) {
 
-                Spacer(modifier = Modifier.width(8.dp))
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                ) {
-                    Text(
-                        text = video.snippet.title,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 2,
-                        fontSize = 12.sp,
-                        overflow = TextOverflow.Ellipsis,
-                        lineHeight = 20.sp
-                    )
-                    //Spacer(modifier = Modifier.height(4.dp))
-
-                    // Channel Name, Views, Time
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Text(text = video.snippet.channelTitle, fontSize = 10.sp)
-                        Text(text = "•")
-                        /* Text(
-                             text = "${video.statistics?.viewCount?.let { formatViewCount(it) }} views",
-                             fontSize = 10.sp
-                         )*/
-                        Text(text = "•")
-                        Text(
-                            text = getFormattedDate(video.snippet.publishedAt),
-                            fontSize = 10.sp,
-                            maxLines = 1,
+                        KamelImage(
+                            resource = image,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .widthIn(min = 0.dp)
+                                .fillMaxWidth()
+                                .height(200.dp),
+                            onLoading = {
+                                CircularProgressIndicator(it)
+                            },
+                            onFailure = {
+                                Text(text = "Failed to Load Image")
+                            },
+                            animationSpec = tween()
                         )
-                    }
-                }
-                Spacer(modifier = Modifier.width(8.dp))
 
-                // Vertical Three Dots Icon
-                IconButton(onClick = {
-                    moreVertEnable = !moreVertEnable
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.MoreVert,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
-                    )
+                        // Video Total Time
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(8.dp)
+                                .background(MaterialTheme.colorScheme.primary)
+                                .clip(RoundedCornerShape(4.dp))
+                        ) {
+                            Text(
+                                text = singleVideo?.contentDetails?.duration?.let {
+                                    formatVideoDuration(
+                                        it
+                                    )
+                                }
+                                    ?: "00:00",
+                                color = Color.White,
+                                fontSize = 10.sp
+                            )
+                        }
+                    }
+
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 8.dp, end = 8.dp, top = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Channel Image
+                        val image: Resource<Painter> =
+                            asyncPainterResource(data = channel?.snippet?.thumbnails?.high?.url.toString())
+                        KamelImage(
+                            resource = image,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.FillBounds
+                        )
+
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                        ) {
+                            Text(
+                                text = singleVideo?.snippet?.title.toString(),
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 2,
+                                fontSize = 12.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                lineHeight = 20.sp
+                            )
+                            //Spacer(modifier = Modifier.height(4.dp))
+
+                            // Channel Name, Views, Time
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(text = channel?.snippet?.title.toString(), fontSize = 10.sp)
+                                Text(text = "•")
+                                Text(
+                                    text = "${
+                                        singleVideo?.statistics?.viewCount?.let {
+                                            formatViewCount(
+                                                it
+                                            )
+                                        }
+                                    } views",
+                                    fontSize = 10.sp
+                                )
+                                Text(text = "•")
+                                Text(
+                                    text = "${
+                                        singleVideo?.snippet?.publishedAt?.let {
+                                            getFormattedDateHome(
+                                                it
+                                            )
+                                        }
+                                    }",
+                                    fontSize = 10.sp,
+                                    maxLines = 1,
+                                    modifier = Modifier
+                                        .widthIn(min = 0.dp)
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        // Vertical Three Dots Icon
+                        IconButton(onClick = {
+                            moreVertEnable = !moreVertEnable
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.MoreVert,
+                                contentDescription = null,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
                 }
             }
         }
