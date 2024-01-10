@@ -85,6 +85,7 @@ class ChannelScreen(
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
         var playlists by remember { mutableStateOf<Youtube?>(null) }
+        var multipleVideo by remember { mutableStateOf<Youtube?>(null) }
         var channelSections by remember { mutableStateOf<Youtube?>(null) }
         var channelLiveStream by remember { mutableStateOf<Search?>(null) }
         var channelAllVideos by remember { mutableStateOf<Youtube?>(null) }
@@ -96,7 +97,7 @@ class ChannelScreen(
             viewModel.getPlaylists(channel.id)
             viewModel.getChannelSections(channel.id)
             viewModel.getChannelLiveStreams(channel.id)
-            viewModel.getChannelVideos(channel.contentDetails.relatedPlaylists.uploads.toString())
+            viewModel.getChannelVideos(channel.contentDetails.relatedPlaylists.uploads)
             viewModel.getChannelCommunity(channel.id)
             viewModel.getOwnChannelVideos(channel.id)
 
@@ -106,6 +107,7 @@ class ChannelScreen(
             if (!channelIds.isNullOrEmpty()) {
                 viewModel.getChannelDetails(channelIds.toString())
             }
+            viewModel.getMultipleVideo(playlists?.items?.get(0)?.id.toString())
 
         }
         //Simple Playlist
@@ -129,6 +131,9 @@ class ChannelScreen(
         //Featured Channels
         val channelDetails by viewModel.channelDetails.collectAsState()
 
+        //Multiple Videos
+        val multipleVideos by viewModel.multipleVideos.collectAsState()
+
         when (state) {
             is YoutubeState.LOADING -> {
                 ShimmerEffectChannel()
@@ -141,6 +146,21 @@ class ChannelScreen(
 
             is YoutubeState.ERROR -> {
                 val error = (state as YoutubeState.ERROR).error
+                ErrorBox(error = error)
+            }
+        }
+        when (multipleVideos) {
+            is YoutubeState.LOADING -> {
+                //ShimmerEffectChannel()
+            }
+
+            is YoutubeState.SUCCESS -> {
+                val response = (multipleVideos as YoutubeState.SUCCESS).youtube
+                multipleVideo = response
+            }
+
+            is YoutubeState.ERROR -> {
+                val error = (multipleVideos as YoutubeState.ERROR).error
                 ErrorBox(error = error)
             }
         }
@@ -508,7 +528,9 @@ class ChannelScreen(
                 ) {
                     when (selectedTabIndex) {
                         0 -> {
-
+                           /* multipleVideo?.let {
+                                ChannelHome(it, modifier = Modifier.fillMaxWidth(), title = "Home")
+                            }*/
                             playlists.let { youtube ->
                                 youtube?.let { it1 ->
                                     ChannelHome(

@@ -69,4 +69,8 @@ class Repository : YoutubePlugin {
     override suspend fun getSingleVideoDetail(videoId: String): Youtube {
         return YoutubeClientApi.getSingleVideoDetail(videoId)
     }
+
+    override suspend fun getMultipleVideos(videoId: String): Youtube {
+        return YoutubeClientApi.getMultipleVideos(videoId)
+    }
 }

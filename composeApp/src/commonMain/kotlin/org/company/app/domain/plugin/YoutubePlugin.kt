@@ -22,4 +22,5 @@ interface YoutubePlugin {
     suspend fun getComments(videoId: String, order: String): Comments
     suspend fun getVideoCategories(): VideoCategories
     suspend fun getSingleVideoDetail(videoId: String): Youtube
+    suspend fun getMultipleVideos(videoId: String): Youtube
 }

@@ -356,7 +356,7 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                     .fillMaxWidth()
                     .padding(8.dp)
                     .clickable {
-                        navigator?.push(DetailScreen(video = singleVideo))
+                        navigator?.push(DetailScreen(video = singleVideo, channelData = channel))
                     },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface

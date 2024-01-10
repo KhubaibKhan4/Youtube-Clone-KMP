@@ -77,22 +77,17 @@ import kotlinx.datetime.toLocalDateTime
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.VideoPlayer
-import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.videos.Item
-import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.ChannelState
 import org.company.app.domain.usecases.CommentsState
 import org.company.app.domain.usecases.YoutubeState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.CommentsList
 import org.company.app.ui.components.ErrorBox
-import org.company.app.ui.components.LoadingBox
 import org.company.app.ui.components.NetworkImage
 import org.company.app.ui.components.RelevanceList
-import org.company.app.ui.components.ShimmerEffectMain
 import org.company.app.ui.components.formatVideoDuration
 import org.company.app.utils.Constant.VIDEO_URL
 
@@ -118,11 +113,7 @@ class DetailScreen(
 
         LaunchedEffect(Unit) {
             //Video Comments
-            if (video?.id.isNullOrBlank()) {
-                viewModel.getVideoComments(search?.id.toString(), order = "relevance")
-            } else {
-                viewModel.getVideoComments(video?.id.toString(), order = "relevance")
-            }
+            viewModel.getVideoComments(video?.id.toString(), order = "relevance")
             viewModel.getRelevance()
         }
         stateRelevance = viewModel.relevance.collectAsState().value
@@ -152,28 +143,20 @@ class DetailScreen(
 
             // Thumbnail
             if (displayVideoPlayer) {
-                if (video?.id.isNullOrBlank()) {
-                    VideoPlayer(
-                        modifier = Modifier.fillMaxWidth().height(220.dp),
-                        url = "https://www.youtube.com/watch?v=${search?.id}",
-                        thumbnail = search?.snippet?.thumbnails?.high?.url
-                    )
-                } else {
-                    VideoPlayer(
-                        modifier = Modifier.fillMaxWidth().height(220.dp),
-                        url = "https://www.youtube.com/watch?v=${video?.id}",
-                        thumbnail = video?.snippet?.thumbnails?.high?.url
-                    )
-                }
+                VideoPlayer(
+                    modifier = Modifier.fillMaxWidth().height(220.dp),
+                    url = "https://www.youtube.com/watch?v=${video?.id}",
+                    thumbnail = video?.snippet?.thumbnails?.high?.url
+                )
 
             } else {
                 Box(
-                    modifier = Modifier.fillMaxWidth().height(200.dp),
+                    modifier = Modifier.fillMaxWidth()
+                        .height(200.dp),
                     contentAlignment = Alignment.Center
                 ) {
 
-                    val image =
-                        if (video?.snippet?.thumbnails?.high?.url.isNullOrBlank()) search?.snippet?.thumbnails?.high?.url.toString() else video?.snippet?.thumbnails?.high?.url.toString()
+                    val image = video?.snippet?.thumbnails?.high?.url.toString()
                     NetworkImage(
                         url = image,
                         contentDescription = null,
@@ -235,23 +218,12 @@ class DetailScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (video?.snippet?.title.isNullOrBlank()) {
-
-                    Text(
-                        text = search?.snippet?.title.toString(),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        modifier = Modifier.weight(0.9f)
-                    )
-
-                } else {
-                    Text(
-                        text = video?.snippet?.title.toString(),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        modifier = Modifier.weight(0.9f)
-                    )
-                }
+                Text(
+                    text = video?.snippet?.title.toString(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    modifier = Modifier.weight(0.9f)
+                )
                 Icon(imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp).clickable {
@@ -266,14 +238,10 @@ class DetailScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val views = video?.statistics?.viewCount.toString()
-                val pubDate =
-                    if (video?.snippet?.publishedAt.isNullOrBlank())
-                        search?.snippet?.publishedAt.toString()
-                    else
-                        video?.snippet?.publishedAt.toString()
+                val pubDate = video?.snippet?.publishedAt.toString()
 
                 Text(
-                    text = "${formatViewCount(views)} views - ${getFormattedDate(pubDate)}",
+                    text = "${formatViewCount(views)} views - ${org.company.app.ui.components.getFormattedDate(pubDate)}",
                     fontSize = 14.sp
                 )
             }
@@ -448,8 +416,7 @@ class DetailScreen(
                 Column(
                     modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    val channelTitle =
-                        if (video?.snippet?.channelTitle.isNullOrBlank()) search?.snippet?.channelTitle.toString() else video?.snippet?.channelTitle.toString()
+                    val channelTitle = video?.snippet?.channelTitle.toString()
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -601,8 +568,7 @@ class DetailScreen(
                             color = DividerDefaults.color
                         )
 
-                        val videoTitle =
-                            if (video?.snippet?.title.isNullOrBlank()) search?.snippet?.title.toString() else video?.snippet?.title.toString()
+                        val videoTitle = video?.snippet?.title.toString()
                         Text(
                             text = videoTitle,
                             fontWeight = FontWeight.Bold,
@@ -720,8 +686,7 @@ class DetailScreen(
                             horizontalArrangement = Arrangement.SpaceAround
                         ) {
                             var desc_expanded by remember { mutableStateOf(false) }
-                            val videoDescription =
-                                if (video?.snippet?.description.isNullOrBlank()) search?.snippet?.description.toString() else video?.snippet?.description.toString()
+                            val videoDescription = video?.snippet?.description.toString()
                             Text(
                                 text = videoDescription,
                                 modifier = Modifier.fillMaxWidth().weight(1f)
@@ -788,8 +753,7 @@ class DetailScreen(
                                 modifier = Modifier.weight(1f),
                                 verticalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
-                                val channelTitle =
-                                    if (video?.snippet?.channelTitle.isNullOrBlank()) search?.snippet?.channelTitle.toString() else video?.snippet?.channelTitle.toString()
+                                val channelTitle = video?.snippet?.channelTitle.toString()
 
                                 Text(
                                     text = channelTitle,
@@ -814,7 +778,8 @@ class DetailScreen(
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             OutlinedCard(
-                                onClick = { channelData?.let {item  ->
+                                onClick = {
+                                    channelData?.let { item ->
                                         navigator?.push(ChannelScreen(item))
                                     }
                                 },
@@ -932,11 +897,7 @@ class DetailScreen(
 
                     // Function to fetch comments based on the selected order
                     fun fetchComments(order: String) {
-                        if (video?.id.isNullOrBlank()) {
-                            viewModel.getVideoComments(search?.id.toString(), order)
-                        } else {
-                            viewModel.getVideoComments(video?.id.toString(), order)
-                        }
+                        viewModel.getVideoComments(video?.id.toString(), order)
                     }
 
                     Row(

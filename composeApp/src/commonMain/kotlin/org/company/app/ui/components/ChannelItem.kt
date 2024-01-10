@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,8 +39,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -56,13 +57,13 @@ fun SearchChannelItem(
     channel: Item
 ) {
     val navigator = LocalNavigator.current
-    var isDark by LocalThemeIsDark.current
+    val isDark by LocalThemeIsDark.current
     var isMoreVert by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier.fillMaxWidth()
             .padding(10.dp)
             .clickable {
-                       navigator?.push(ChannelScreen(channel))
+                navigator?.push(ChannelScreen(channel))
             },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
@@ -90,7 +91,7 @@ fun SearchChannelItem(
         Spacer(modifier = Modifier.width(20.dp))
         Column(
             modifier = Modifier
-                .padding(top= 10.dp, bottom = 10.dp),
+                .padding(top = 10.dp, bottom = 10.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -98,7 +99,13 @@ fun SearchChannelItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = channel.snippet.title.toString(), fontSize = 10.sp)
+                Text(
+                    text = channel.snippet.title,
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
                 val isVerified = channel.status?.isLinked == true
                 if (isVerified) {
                     Icon(
@@ -139,7 +146,12 @@ fun SearchChannelItem(
             Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
         }
     }
-    if (isMoreVert){
+    Divider(
+        modifier = Modifier.fillMaxWidth(),
+        thickness = 1.dp,
+        color = Color.LightGray
+    )
+    if (isMoreVert) {
         var isShareEnabled by remember { mutableStateOf(false) }
         ModalBottomSheet(
             onDismissRequest = {
@@ -152,24 +164,27 @@ fun SearchChannelItem(
             contentColor = Color.Black,  // Adjust color as needed
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
-        ){
-            Row (
+        ) {
+            Row(
                 modifier = Modifier.fillMaxWidth()
-                    .padding(start = 12.dp),
+                    .padding(start = 12.dp)
+                    .clickable {
+                        isShareEnabled = !isShareEnabled
+                    },
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.Start
-            ){
+            ) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Share",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                    modifier = Modifier.clickable {
-                       isShareEnabled = !isShareEnabled
-                    }
                 )
-                if (isShareEnabled){
-                    ShareManager(title = channel.snippet.title, videoUrl = "https://youtube.com/${channel.snippet.customUrl}")
+                if (isShareEnabled) {
+                    ShareManager(
+                        title = channel.snippet.title,
+                        videoUrl = "https://youtube.com/${channel.snippet.customUrl}"
+                    )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
             }

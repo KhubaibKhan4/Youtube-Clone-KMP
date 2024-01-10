@@ -138,4 +138,8 @@ object YoutubeClientApi {
         val url = BASE_URL + "videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
         return client.get(url).body()
     }
+    suspend fun getMultipleVideos(videoId: String): Youtube{
+        val url = BASE_URL+"videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
+        return client.get(url).body()
+    }
 }
