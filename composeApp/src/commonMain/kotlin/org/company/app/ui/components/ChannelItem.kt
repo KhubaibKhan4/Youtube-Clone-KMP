@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,12 +39,14 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.ShareManager
 import org.company.app.data.model.channel.Item
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.ChannelScreen
 import org.company.app.ui.screens.formatSubscribers
 
@@ -53,6 +56,7 @@ fun SearchChannelItem(
     channel: Item
 ) {
     val navigator = LocalNavigator.current
+    var isDark by LocalThemeIsDark.current
     var isMoreVert by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier.fillMaxWidth()
@@ -90,11 +94,22 @@ fun SearchChannelItem(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = channel.snippet.title,
-                fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                fontWeight = FontWeight.SemiBold
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(text = channel.snippet.title.toString(), fontSize = 10.sp)
+                val isVerified = channel.status?.isLinked == true
+                if (isVerified) {
+                    Icon(
+                        imageVector = Icons.Default.Verified,
+                        contentDescription = null,
+                        tint = if (isDark) Color.White else Color.Black,
+                        modifier = Modifier.size(15.dp)
+                            .padding(start = 4.dp, top = 4.dp)
+                    )
+                }
+            }
             Text(
                 text = channel.snippet.customUrl,
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,

@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Cast
 import androidx.compose.material.icons.outlined.Download
@@ -53,13 +54,11 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.InternalComposeApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -93,13 +92,12 @@ import org.company.app.ui.screens.DetailScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class, InternalComposeApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun TopBar(modifier: Modifier) {
     var isDark by LocalThemeIsDark.current
     val navigator = LocalNavigator.current
     var isSearchEnabled by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
     var state by remember { mutableStateOf<SearchState>(SearchState.LOADING) }
     var data by remember { mutableStateOf<Search?>(null) }
     var error by remember { mutableStateOf(false) }
@@ -165,8 +163,8 @@ fun TopBar(modifier: Modifier) {
             is SearchState.ERROR -> {
                 isLoading = false
                 error = true
-                val Error = (state as SearchState.ERROR).error
-                errorData = Error
+                val error = (state as SearchState.ERROR).error
+                errorData = error
             }
         }
         Column(
@@ -285,6 +283,7 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
     var videoDetail by remember { mutableStateOf<Youtube?>(null) }
     val navigator = LocalNavigator.current
     var moreVertEnable by remember { mutableStateOf(false) }
+    val isDark by LocalThemeIsDark.current
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet.channelId)
         viewModel.getSingleVideo(video.id.videoId.toString())
@@ -442,7 +441,22 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
-                                Text(text = channel?.snippet?.title.toString(), fontSize = 10.sp)
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Text(text = channel?.snippet?.title.toString(), fontSize = 10.sp)
+                                    val isVerified = channel?.status?.isLinked == true
+                                    if (isVerified) {
+                                        Icon(
+                                            imageVector = Icons.Default.Verified,
+                                            contentDescription = null,
+                                            tint = if (isDark) Color.White else Color.Black,
+                                            modifier = Modifier.size(15.dp)
+                                                .padding(start = 4.dp, top = 4.dp)
+                                        )
+                                    }
+                                }
                                 Text(text = "•")
                                 Text(
                                     text = "${
