@@ -29,5 +29,9 @@ data class Snippet(
     @SerialName("thumbnails")
     val thumbnails: Thumbnails? = null,
     @SerialName("title")
-    val title: String? = null
+    val title: String? = null,
+    @SerialName("position")
+    val position: Int? = null,
+    @SerialName("resourceId")
+    val resourceId: ResourceId? = null,
 )

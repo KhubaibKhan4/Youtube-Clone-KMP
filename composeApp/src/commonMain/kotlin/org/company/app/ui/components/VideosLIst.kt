@@ -75,6 +75,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.seiko.imageloader.rememberImagePainter
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -489,7 +490,7 @@ fun CategoryButton(
 @Composable
 fun VideoItemCard(video: Item) {
     val navigator = LocalNavigator.current
-    var isDark by LocalThemeIsDark.current
+    val isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }
     val repository = remember { Repository() }
     val viewModel = remember { MainViewModel(repository) }

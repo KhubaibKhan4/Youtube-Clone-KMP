@@ -2,7 +2,6 @@ package org.company.app.ui.screens
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -53,6 +52,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.seiko.imageloader.model.ImageRequest
+import com.seiko.imageloader.model.ImageRequestBuilder
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -73,7 +74,6 @@ import org.company.app.ui.components.ChannelPlaylists
 import org.company.app.ui.components.ChannelVideos
 import org.company.app.ui.components.ErrorBox
 import org.company.app.ui.components.FeaturedChannel
-import org.company.app.ui.components.LoadingBox
 import org.company.app.ui.components.ShimmerEffectChannel
 
 class ChannelScreen(
@@ -107,7 +107,9 @@ class ChannelScreen(
             if (!channelIds.isNullOrEmpty()) {
                 viewModel.getChannelDetails(channelIds.toString())
             }
-            viewModel.getMultipleVideo(playlists?.items?.get(0)?.id.toString())
+            channelAllVideos?.items?.forEach {videos ->
+                viewModel.getMultipleVideo(videos.snippet?.resourceId?.videoId.toString())
+            }
 
         }
         //Simple Playlist
@@ -167,7 +169,7 @@ class ChannelScreen(
         //Channel Sections
         when (channelState) {
             is YoutubeState.LOADING -> {
-               // LoadingBox()
+                // LoadingBox()
             }
 
             is YoutubeState.SUCCESS -> {
@@ -528,7 +530,7 @@ class ChannelScreen(
                 ) {
                     when (selectedTabIndex) {
                         0 -> {
-                           /* multipleVideo?.let {
+                         /*   multipleVideo?.let {
                                 ChannelHome(it, modifier = Modifier.fillMaxWidth(), title = "Home")
                             }*/
                             playlists.let { youtube ->
