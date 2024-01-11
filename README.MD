@@ -1,11 +1,11 @@
 # YouTube Clone Kotlin Mutliplatform
 ## Overview
-<a href="https://www.buymeacoffee.com/khubaibkhan"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=khubaibkhan&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff" /></a>
+
 YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices.
 <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/poster.png" />
 
 
-
+<a href="https://www.buymeacoffee.com/khubaibkhan"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=khubaibkhan&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff" /></a>
 🚀 **Key Features:**
 - Cross-Platform Compatibility
 - Video Playback
