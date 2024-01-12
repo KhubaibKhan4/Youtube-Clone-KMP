@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,6 +38,7 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.data.model.videos.Item
 import org.company.app.data.model.videos.Youtube
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.formatLikes
 import org.company.app.ui.screens.formatViewComments
 
@@ -47,9 +49,9 @@ fun ChannelCommunity(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(300.dp),
-        modifier = Modifier.fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+        horizontalArrangement = Arrangement.Center
     ) {
         youtube.items?.let { items ->
             items(items) { videos ->
@@ -62,9 +64,11 @@ fun ChannelCommunity(
 
 @Composable
 fun ChannelCommunityItems(videos: Item, channelImage: String) {
+    val isDark by LocalThemeIsDark.current
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(start = 8.dp, end = 8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -93,13 +97,13 @@ fun ChannelCommunityItems(videos: Item, channelImage: String) {
                 Text(
                     text = videos.snippet?.channelTitle.toString(),
                     fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                    color = Color.Black
+                    color = if (isDark) Color.White else Color.Black
                 )
 
                 Text(
                     text = getFormattedDate(videos.snippet?.publishedAt.toString()),
                     fontSize = MaterialTheme.typography.labelSmall.fontSize,
-                    color = Color.Black
+                    color = if (isDark) Color.White else Color.Black
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -110,7 +114,7 @@ fun ChannelCommunityItems(videos: Item, channelImage: String) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = null,
-                    tint = Color.Black
+                    tint = if (isDark) Color.White else Color.Black
                 )
             }
         }
@@ -121,7 +125,8 @@ fun ChannelCommunityItems(videos: Item, channelImage: String) {
             fontSize = 18.sp,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
+                .padding(top = 16.dp),
+            color =  if (isDark) Color.White else Color.Black
         )
 
         val postImage: Resource<Painter> =
@@ -145,15 +150,18 @@ fun ChannelCommunityItems(videos: Item, channelImage: String) {
                 imageVector = Icons.Default.ThumbUp,
                 contentDescription = "Likes",
                 modifier = Modifier.size(20.dp),
-                tint = Color.Gray
+                tint = if (isDark) Color.White else Color.Gray
             )
-            Text(text = formatLikes(videos.statistics?.likeCount.toString()), color = Color.Gray)
+            Text(
+                text = formatLikes(videos.statistics?.likeCount.toString()),
+                color =if (isDark) Color.White else Color.Gray
+            )
 
             Icon(
                 imageVector = Icons.Default.ThumbDown,
                 contentDescription = "DisLikes",
                 modifier = Modifier.size(20.dp),
-                tint = Color.Gray
+                tint = if (isDark) Color.White else Color.Gray
 
             )
 
@@ -163,17 +171,21 @@ fun ChannelCommunityItems(videos: Item, channelImage: String) {
                 imageVector = Icons.Default.IosShare,
                 contentDescription = "Share",
                 modifier = Modifier.size(20.dp),
-                tint = Color.Gray
+                tint = if (isDark) Color.White else Color.Gray
             )
             Spacer(modifier = Modifier.width(8.dp))
             Icon(
                 imageVector = Icons.Default.Comment,
                 contentDescription = "Comments",
                 modifier = Modifier.size(20.dp),
-                tint = Color.Gray
+                tint = if (isDark) Color.White else Color.Gray
             )
-            Text(text = formatViewComments(videos.statistics?.commentCount), color = Color.Gray)
+            Text(
+                text = formatViewComments(videos.statistics?.commentCount),
+                color = if (isDark) Color.White else Color.Gray
+            )
         }
     }
+    Spacer(modifier = Modifier.width(12.dp))
 }
 

@@ -75,7 +75,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -197,7 +196,10 @@ fun VideosList(youtube: Youtube) {
                 Spacer(modifier = Modifier.height(12.dp))
                 NavigationDrawerItem(
                     label = {
-                        Text(text = "Trending")
+                        Text(
+                            text = "Trending",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                     },
                     onClick = {
                         coroutineScope.launch {
@@ -220,7 +222,10 @@ fun VideosList(youtube: Youtube) {
                 Spacer(modifier = Modifier.height(4.dp))
                 NavigationDrawerItem(
                     label = {
-                        Text(text = "Music")
+                        Text(
+                            text = "Music",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                     },
                     onClick = {
                         coroutineScope.launch {
@@ -233,7 +238,8 @@ fun VideosList(youtube: Youtube) {
                     icon = {
                         Icon(
                             imageVector = Icons.Outlined.Audiotrack,
-                            contentDescription = "Music"
+                            contentDescription = "Music",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 )
@@ -241,7 +247,10 @@ fun VideosList(youtube: Youtube) {
                 Spacer(modifier = Modifier.height(4.dp))
                 NavigationDrawerItem(
                     label = {
-                        Text(text = "Live")
+                        Text(
+                            text = "Live",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                     },
                     onClick = {
                         coroutineScope.launch {
@@ -264,7 +273,10 @@ fun VideosList(youtube: Youtube) {
                 Spacer(modifier = Modifier.height(4.dp))
                 NavigationDrawerItem(
                     label = {
-                        Text(text = "Gaming")
+                        Text(
+                            text = "Gaming",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                     },
                     onClick = {
                         coroutineScope.launch {
@@ -277,7 +289,8 @@ fun VideosList(youtube: Youtube) {
                     icon = {
                         Icon(
                             imageVector = Icons.Outlined.Games,
-                            contentDescription = "Gaming"
+                            contentDescription = "Gaming",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 )
@@ -285,7 +298,10 @@ fun VideosList(youtube: Youtube) {
                 Spacer(modifier = Modifier.height(4.dp))
                 NavigationDrawerItem(
                     label = {
-                        Text(text = "News")
+                        Text(
+                            text = "News",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                     },
                     onClick = {
                         coroutineScope.launch {
@@ -298,7 +314,8 @@ fun VideosList(youtube: Youtube) {
                     icon = {
                         Icon(
                             imageVector = Icons.Outlined.Newspaper,
-                            contentDescription = "News"
+                            contentDescription = "News",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 )
@@ -306,7 +323,10 @@ fun VideosList(youtube: Youtube) {
                 Spacer(modifier = Modifier.height(4.dp))
                 NavigationDrawerItem(
                     label = {
-                        Text(text = "Sports")
+                        Text(
+                            text = "Sports",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                     },
                     onClick = {
                         coroutineScope.launch {
@@ -319,7 +339,8 @@ fun VideosList(youtube: Youtube) {
                     icon = {
                         Icon(
                             imageVector = Icons.Outlined.Sports,
-                            contentDescription = "Sports"
+                            contentDescription = "Sports",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 )
@@ -327,7 +348,10 @@ fun VideosList(youtube: Youtube) {
                 Spacer(modifier = Modifier.height(4.dp))
                 NavigationDrawerItem(
                     label = {
-                        Text(text = "Learning")
+                        Text(
+                            text = "Learning",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                     },
                     onClick = {
                         coroutineScope.launch {
@@ -340,7 +364,8 @@ fun VideosList(youtube: Youtube) {
                     icon = {
                         Icon(
                             imageVector = Icons.Outlined.Lightbulb,
-                            contentDescription = "Learning"
+                            contentDescription = "Learning",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 )
@@ -348,7 +373,10 @@ fun VideosList(youtube: Youtube) {
                 Spacer(modifier = Modifier.height(4.dp))
                 NavigationDrawerItem(
                     label = {
-                        Text(text = "Fashion & Beauty")
+                        Text(
+                            text = "Fashion & Beauty",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                     },
                     onClick = {
                         coroutineScope.launch {
@@ -361,7 +389,8 @@ fun VideosList(youtube: Youtube) {
                     icon = {
                         Icon(
                             imageVector = Icons.Outlined.ShoppingBag,
-                            contentDescription = "Fashion & Beauty"
+                            contentDescription = "Fashion & Beauty",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 )
@@ -471,17 +500,19 @@ fun CategoryButton(
     isSelected: Boolean,
     onCategorySelected: () -> Unit
 ) {
+    val isDark by LocalThemeIsDark.current
     Button(
         onClick = onCategorySelected,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSelected) Color.Gray else Color.LightGray.copy(alpha = 0.55f),
-            contentColor = Color.Black,
+            contentColor =if (isDark) Color.White else Color.Black,
         ),
         shape = RoundedCornerShape(6.dp)
     ) {
         Text(
             text = category.snippet.title.orEmpty(),
-            fontSize = MaterialTheme.typography.bodySmall.fontSize
+            fontSize = MaterialTheme.typography.bodySmall.fontSize,
+            color = if (isDark) Color.White else Color.Black
         )
     }
 }
@@ -546,7 +577,7 @@ fun VideoItemCard(video: Item) {
                     Text(
                         text = video.contentDetails?.duration?.let { formatVideoDuration(it) }
                             ?: "00:00",
-                        color = Color.White,
+                        color = if (isDark) Color.White else Color.Black,
                         fontSize = 10.sp
                     )
                 }
@@ -584,6 +615,7 @@ fun VideoItemCard(video: Item) {
                         text = video.snippet?.title.toString(),
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,
+                        color = if (isDark) Color.White else Color.Black,
                         fontSize = 12.sp,
                         overflow = TextOverflow.Ellipsis,
                         lineHeight = 20.sp // Adjust the lineHeight value as needed
@@ -599,7 +631,11 @@ fun VideoItemCard(video: Item) {
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            Text(text = video.snippet?.channelTitle.toString(), fontSize = 10.sp)
+                            Text(
+                                text = video.snippet?.channelTitle.toString(),
+                                fontSize = 10.sp,
+                                color = if (isDark) Color.White else Color.Black
+                            )
                             val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
                             if (isVerified) {
                                 Icon(
@@ -611,18 +647,20 @@ fun VideoItemCard(video: Item) {
                                 )
                             }
                         }
-                        Text(text = "•")
+                        Text(text = "•", color = if (isDark) Color.White else Color.Black)
                         Text(
                             text = "${video.statistics?.viewCount?.let { formatViewCount(it) }} views",
-                            fontSize = 10.sp
+                            fontSize = 10.sp,
+                            color = if (isDark) Color.White else Color.Black
                         )
-                        Text(text = "•")
+                        Text(text = "•", color = if (isDark) Color.White else Color.Black)
                         Text(
                             text = getFormattedDate(video.snippet?.publishedAt.toString()),
                             fontSize = 10.sp,
                             maxLines = 1,
                             modifier = Modifier
-                                .widthIn(min = 0.dp)
+                                .widthIn(min = 0.dp),
+                            color = if (isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -635,7 +673,8 @@ fun VideoItemCard(video: Item) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = null,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(24.dp),
+                        tint = if (isDark) Color.White else Color.Black
                     )
                 }
             }
@@ -650,7 +689,7 @@ fun VideoItemCard(video: Item) {
             modifier = Modifier.fillMaxWidth(),
             sheetState = androidx.compose.material3.rememberModalBottomSheetState(),
             shape = RoundedCornerShape(4.dp),
-            contentColor = Color.Black,  // Adjust color as needed
+            contentColor = if (isDark) Color.White else Color.Black,  // Adjust color as needed
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
         ) {
@@ -665,12 +704,17 @@ fun VideoItemCard(video: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.WatchLater, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.WatchLater,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Save to Watch later",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -679,27 +723,40 @@ fun VideoItemCard(video: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.PlaylistAdd, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.PlaylistAdd,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Save to playlist",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                        .clickable {
+
+                        },
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Download, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.Download,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Download video",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -712,12 +769,17 @@ fun VideoItemCard(video: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Share, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.Share,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Share",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                     if (isShareEnabled) {
                         ShareManager(
@@ -733,12 +795,17 @@ fun VideoItemCard(video: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Block, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.Block,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Not interested",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
             }

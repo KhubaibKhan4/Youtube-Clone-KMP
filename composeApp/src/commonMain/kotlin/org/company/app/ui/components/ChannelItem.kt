@@ -161,7 +161,7 @@ fun SearchChannelItem(
                 .padding(12.dp),
             sheetState = rememberModalBottomSheetState(),
             shape = RoundedCornerShape(4.dp),
-            contentColor = Color.Black,  // Adjust color as needed
+            contentColor =if (isDark) Color.White else Color.Black,  // Adjust color as needed
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
         ) {
@@ -179,6 +179,7 @@ fun SearchChannelItem(
                     text = "Share",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                    color = if (isDark) Color.White else Color.Black
                 )
                 if (isShareEnabled) {
                     ShareManager(

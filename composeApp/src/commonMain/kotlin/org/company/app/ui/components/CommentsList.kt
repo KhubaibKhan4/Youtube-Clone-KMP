@@ -82,7 +82,7 @@ fun CommentItems(comments: Item) {
     var channelData by remember { mutableStateOf<Channel?>(null) }
     var commentExpanded by remember { mutableStateOf(false) }
     var repliesExpanded by remember { mutableStateOf(false) }
-    var isDark by LocalThemeIsDark.current
+    val isDark by LocalThemeIsDark.current
 
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(comments.snippet.channelId)
@@ -154,7 +154,8 @@ fun CommentItems(comments: Item) {
                             )
                             Text(
                                 text = "Pinned by ${comments.snippet.topLevelComment.snippet.authorDisplayName}",
-                                fontSize = MaterialTheme.typography.labelSmall.fontSize
+                                fontSize = MaterialTheme.typography.labelSmall.fontSize,
+                                color = if (isDark) Color.White else Color.Black
                             )
                         }
                     }
@@ -168,7 +169,7 @@ fun CommentItems(comments: Item) {
                         text = comments.snippet.topLevelComment.snippet.authorDisplayName,
                         fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black,
+                        color =if (isDark) Color.White else Color.Black,
                     )
                     val isVerified = channelData?.items?.get(0)?.status?.isLinked == true && channelData?.items?.get(0)?.id.equals(comments.snippet.topLevelComment.snippet.authorChannelId.value)
                     if (isVerified) {
@@ -179,14 +180,14 @@ fun CommentItems(comments: Item) {
                             tint = if (isDark) Color.White else Color.Black
                         )
                     } else {
-                        // TODO: NOthing here..
+                        // Nothing Here....
                     }
                 }
 
                 Text(
                     text = getFormattedDate(comments.snippet.topLevelComment.snippet.publishedAt.toString()),
                     fontSize = MaterialTheme.typography.labelSmall.fontSize,
-                    color = Color.Gray
+                    color =if (isDark) Color.White else Color.Gray
                 )
             }
 
@@ -200,7 +201,7 @@ fun CommentItems(comments: Item) {
         ) {
             val commentText = comments.snippet.topLevelComment.snippet.textOriginal
             val truncatedComment = buildAnnotatedString {
-                withStyle(style = SpanStyle(color = Color.Black)) {
+                withStyle(style = SpanStyle(color = if (isDark) Color.White else Color.Black)) {
                     if (!commentExpanded && commentText.length > 100) {
                         append(commentText.take(100))
                         append("... ")
@@ -214,7 +215,7 @@ fun CommentItems(comments: Item) {
             Text(
                 text = truncatedComment,
                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                color = Color.Black,
+                color = if (isDark) Color.White else Color.Black,
                 maxLines = if (commentExpanded) Int.MAX_VALUE else 4,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
@@ -229,7 +230,7 @@ fun CommentItems(comments: Item) {
                 Text(
                     text = commentText,
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                    color = Color.Black,
+                    color = if (isDark) Color.White else Color.Black,
                     modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
                 )
             }
@@ -249,13 +250,13 @@ fun CommentItems(comments: Item) {
                     Icon(
                         imageVector = Icons.Outlined.ThumbUp,
                         contentDescription = "Thumb Up",
-                        tint = Color.Gray,
+                        tint =if (isDark) Color.White else Color.Gray,
                         modifier = Modifier.size(18.dp)
                     )
                     Text(
                         text = formatLikes(comments.snippet.topLevelComment.snippet.likeCount.toString()),
                         fontSize = MaterialTheme.typography.labelSmall.fontSize,
-                        color = Color.Gray
+                        color =if (isDark) Color.White else Color.Gray
                     )
                 }
                 Row(
@@ -266,7 +267,7 @@ fun CommentItems(comments: Item) {
                     Icon(
                         imageVector = Icons.Outlined.ThumbDown,
                         contentDescription = "Thumb Down",
-                        tint = Color.Gray,
+                        tint =if (isDark) Color.White else Color.Gray,
                         modifier = Modifier.size(18.dp)
                     )
                 }
@@ -277,7 +278,7 @@ fun CommentItems(comments: Item) {
                     Icon(
                         imageVector = Icons.Outlined.Comment,
                         contentDescription = "Comment",
-                        tint = Color.Gray,
+                        tint =if (isDark) Color.White else Color.Gray,
                         modifier = Modifier.size(18.dp)
                     )
                 }
@@ -285,15 +286,15 @@ fun CommentItems(comments: Item) {
             // Replies
             Text(
                 text = "${comments.snippet.totalReplyCount} replies",
-                color = Color.Blue,
+                color =if (isDark) Color.White else Color.Blue,
                 fontSize = MaterialTheme.typography.labelSmall.fontSize,
                 modifier = Modifier.clickable {
-                    // TODO: OnClick Replies to Display Replies List
+                    //  OnClick Replies to Display Replies List
                     repliesExpanded = !repliesExpanded
                 }
             )
             if (comments.snippet.totalReplyCount == 0) {
-                // TODO:Can't Navigate Because Replies are zero
+                // Can't Navigate Because Replies are zero
             } else {
                 AnimatedVisibility(visible = repliesExpanded) {
                     CommentItemWithReplies(comments)
@@ -306,6 +307,7 @@ fun CommentItems(comments: Item) {
 
 @Composable
 fun CommentItemWithReplies(commentItem: Item) {
+    val isDark by LocalThemeIsDark.current
     var commentExpanded by remember { mutableStateOf(false) }
     LazyColumn(modifier = Modifier.height(500.dp)) {
 
@@ -356,12 +358,12 @@ fun CommentItemWithReplies(commentItem: Item) {
                                 text = reply.snippet.authorDisplayName,
                                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
                                 fontWeight = FontWeight.Bold,
-                                color = Color.Black,
+                                color =if (isDark) Color.White else Color.Black,
                             )
                             Text(
                                 text = getFormattedDate(reply.snippet.publishedAt),
                                 fontSize = MaterialTheme.typography.labelSmall.fontSize,
-                                color = Color.Gray
+                                color = if (isDark) Color.White else Color.Gray
                             )
                         }
 
@@ -375,7 +377,7 @@ fun CommentItemWithReplies(commentItem: Item) {
                     ) {
                         val commentText = reply.snippet.textOriginal
                         val truncatedComment = buildAnnotatedString {
-                            withStyle(style = SpanStyle(color = Color.Black)) {
+                            withStyle(style = SpanStyle(color = if (isDark) Color.White else Color.Black)) {
                                 if (!commentExpanded && commentText.length > 100) {
                                     append(commentText.take(100))
                                     append("... ")
@@ -389,7 +391,7 @@ fun CommentItemWithReplies(commentItem: Item) {
                         Text(
                             text = truncatedComment,
                             fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                            color = Color.Black,
+                            color = if (isDark) Color.White else Color.Black,
                             maxLines = if (commentExpanded) Int.MAX_VALUE else 4,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier
@@ -404,7 +406,7 @@ fun CommentItemWithReplies(commentItem: Item) {
                             Text(
                                 text = commentText,
                                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                                color = Color.Black,
+                                color = if (isDark) Color.White else Color.Black,
                                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
                             )
                         }
@@ -424,13 +426,13 @@ fun CommentItemWithReplies(commentItem: Item) {
                                 Icon(
                                     imageVector = Icons.Outlined.ThumbUp,
                                     contentDescription = "Thumb Up",
-                                    tint = Color.Gray,
+                                    tint =if (isDark) Color.White else Color.Gray,
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Text(
                                     text = formatLikes(reply.snippet.likeCount.toString()),
                                     fontSize = MaterialTheme.typography.labelSmall.fontSize,
-                                    color = Color.Gray
+                                    color =if (isDark) Color.White else Color.Gray
                                 )
                             }
                             Row(
@@ -441,7 +443,7 @@ fun CommentItemWithReplies(commentItem: Item) {
                                 Icon(
                                     imageVector = Icons.Outlined.ThumbDown,
                                     contentDescription = "Thumb Down",
-                                    tint = Color.Gray,
+                                    tint =if (isDark) Color.White else Color.Gray,
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -452,7 +454,7 @@ fun CommentItemWithReplies(commentItem: Item) {
                                 Icon(
                                     imageVector = Icons.Outlined.Comment,
                                     contentDescription = "Comment",
-                                    tint = Color.Gray,
+                                    tint =if (isDark) Color.White else Color.Gray,
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -464,4 +466,3 @@ fun CommentItemWithReplies(commentItem: Item) {
 
     }
 }
-

@@ -32,8 +32,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,19 +50,14 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.company.app.data.model.videos.Item
 import org.company.app.data.model.videos.Youtube
-import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.YoutubeState
-import org.company.app.presentation.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.DetailScreen
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
-import kotlin.time.ExperimentalTime
 
 @Composable
 fun ChannelHome(
@@ -72,6 +65,7 @@ fun ChannelHome(
     modifier: Modifier,
     title: String,
 ) {
+    val isDark by LocalThemeIsDark.current
     var isExpanded by remember { mutableStateOf(false) }
     LazyVerticalGrid(
         columns = GridCells.Adaptive(300.dp),
@@ -82,7 +76,8 @@ fun ChannelHome(
         item {
             Text(
                 text = title,
-                fontSize = MaterialTheme.typography.titleMedium.fontSize
+                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                color = if (isDark) Color.White else Color.Black
             )
         }
         val visibleVideoCount = if (isExpanded) youtube.items?.size ?: 0 else 3
@@ -103,7 +98,8 @@ fun ChannelHome(
                 ) {
                     Icon(
                         imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                        contentDescription = "Expand/Collapse"
+                        contentDescription = "Expand/Collapse",
+                        tint = if (isDark) Color.White else Color.Black
                     )
                 }
             }
@@ -116,6 +112,7 @@ fun ChannelHome(
 fun ChannelHomeItems(videos: Item) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
+    val isDark by LocalThemeIsDark.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -157,7 +154,8 @@ fun ChannelHomeItems(videos: Item) {
                 text = videos.snippet?.title.toString(),
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                color = if (isDark) Color.White else Color.Black
             )
 
             Row(
@@ -169,7 +167,7 @@ fun ChannelHomeItems(videos: Item) {
                 Text(
                     text = getFormattedDateHome(videos.snippet?.publishedAt.toString()),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                    color = Color.LightGray
+                    color = if (isDark) Color.White else Color.LightGray
                 )
 
                 Box(modifier = Modifier.fillMaxWidth()) {
@@ -179,7 +177,11 @@ fun ChannelHomeItems(videos: Item) {
                         },
                         modifier = Modifier.align(alignment = Alignment.TopEnd)
                     ) {
-                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More Vert")
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "More Vert",
+                            tint = if (isDark) Color.White else Color.Black
+                        )
                     }
                 }
 
@@ -192,7 +194,7 @@ fun ChannelHomeItems(videos: Item) {
                     modifier = Modifier.fillMaxWidth(),
                     sheetState = rememberModalBottomSheetState(),
                     shape = RoundedCornerShape(4.dp),
-                    contentColor = Color.Black,  // Adjust color as needed
+                    contentColor = if (isDark) Color.White else Color.Black,  // Adjust color as needed
                     scrimColor = Color.Transparent,
                     tonalElevation = 4.dp,
                 ) {
@@ -209,17 +211,20 @@ fun ChannelHomeItems(videos: Item) {
                         ) {
                             androidx.compose.material3.Icon(
                                 imageVector = Icons.Outlined.PlaylistAdd,
-                                contentDescription = "Time"
+                                contentDescription = "Time",
+                                tint = if (isDark) Color.White else Color.Black
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                             androidx.compose.material3.Text(
                                 text = "Play in next queue",
                                 modifier = Modifier.weight(1f),
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                color = if (isDark) Color.White else Color.Black
                             )
                             androidx.compose.material3.Icon(
                                 imageVector = Icons.Outlined.PlaylistAddCheck,
-                                contentDescription = "Time"
+                                contentDescription = "Time",
+                                tint = if (isDark) Color.White else Color.Black
                             )
                         }
                         Spacer(modifier = Modifier.height(10.dp))
@@ -230,13 +235,15 @@ fun ChannelHomeItems(videos: Item) {
                         ) {
                             androidx.compose.material3.Icon(
                                 imageVector = Icons.Outlined.WatchLater,
-                                contentDescription = "Time"
+                                contentDescription = "Time",
+                                tint = if (isDark) Color.White else Color.Black
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                             androidx.compose.material3.Text(
                                 text = "Save to Watch later",
                                 modifier = Modifier.weight(1f),
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                color = if (isDark) Color.White else Color.Black
                             )
                         }
                         Spacer(modifier = Modifier.height(10.dp))
@@ -247,13 +254,15 @@ fun ChannelHomeItems(videos: Item) {
                         ) {
                             androidx.compose.material3.Icon(
                                 imageVector = Icons.Outlined.PlaylistAdd,
-                                contentDescription = "Time"
+                                contentDescription = "Time",
+                                tint = if (isDark) Color.White else Color.Black
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                             androidx.compose.material3.Text(
                                 text = "Save to playlist",
                                 modifier = Modifier.weight(1f),
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                color = if (isDark) Color.White else Color.Black
                             )
                         }
                         Spacer(modifier = Modifier.height(10.dp))
@@ -265,13 +274,15 @@ fun ChannelHomeItems(videos: Item) {
                         ) {
                             androidx.compose.material3.Icon(
                                 imageVector = Icons.Outlined.Download,
-                                contentDescription = "Time"
+                                contentDescription = "Time",
+                                tint = if (isDark) Color.White else Color.Black
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                             androidx.compose.material3.Text(
                                 text = "Download video",
                                 modifier = Modifier.weight(1f),
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                color = if (isDark) Color.White else Color.Black
                             )
                         }
                         Spacer(modifier = Modifier.height(10.dp))
@@ -283,13 +294,15 @@ fun ChannelHomeItems(videos: Item) {
                         ) {
                             androidx.compose.material3.Icon(
                                 imageVector = Icons.Outlined.Share,
-                                contentDescription = "Time"
+                                contentDescription = "Time",
+                                tint = if (isDark) Color.White else Color.Black
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                             androidx.compose.material3.Text(
                                 text = "Share",
                                 modifier = Modifier.weight(1f),
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                color = if (isDark) Color.White else Color.Black
                             )
                         }
                         Spacer(modifier = Modifier.height(10.dp))
@@ -318,10 +331,12 @@ fun getFormattedDateHome(publishedAt: String): String {
                         val weeks = (days / 7).toInt()
                         "$weeks weeks ago"
                     }
+
                     days < 365 -> {
                         val months = (days / 30).toInt()
                         "$months months ago"
                     }
+
                     else -> {
                         val years = (days / 365).toInt()
                         "$years years ago"

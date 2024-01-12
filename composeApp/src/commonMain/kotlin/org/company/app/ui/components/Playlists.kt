@@ -58,6 +58,7 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.data.model.videos.Item
 import org.company.app.data.model.videos.Youtube
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.DetailScreen
 
 @Composable
@@ -81,6 +82,7 @@ fun PlaylistsVideosList(youtube: Youtube) {
 @Composable
 fun PlaylistsVideoItemCard(video: Item) {
     val navigator = LocalNavigator.current
+    val isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -124,7 +126,7 @@ fun PlaylistsVideoItemCard(video: Item) {
                     Text(
                         text = video.contentDetails?.duration?.let { formatVideoDuration(it) }
                             ?: "00:00",
-                        color = Color.White,
+                        color = if (isDark) Color.White else Color.Black,
                         fontSize = 10.sp
                     )
                 }
@@ -158,6 +160,7 @@ fun PlaylistsVideoItemCard(video: Item) {
                         text = video.snippet.title.toString(),
                         fontWeight = FontWeight.Bold,
                         maxLines = 2,
+                        color = if (isDark) Color.White else Color.Black,
                         fontSize = 12.sp,
                         overflow = TextOverflow.Ellipsis,
                         lineHeight = 20.sp // Adjust the lineHeight value as needed
@@ -169,19 +172,31 @@ fun PlaylistsVideoItemCard(video: Item) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Text(text = video.snippet.channelTitle.toString(), fontSize = 10.sp)
-                        Text(text = "•")
+                        Text(
+                            text = video.snippet.channelTitle.toString(),
+                            fontSize = 10.sp,
+                            color = if (isDark) Color.White else Color.Black
+                        )
+                        Text(
+                            text = "•",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                         Text(
                             text = "${video.statistics?.viewCount?.let { formatViewCount(it) }} views",
-                            fontSize = 10.sp
+                            fontSize = 10.sp,
+                            color = if (isDark) Color.White else Color.Black
                         )
-                        Text(text = "•")
+                        Text(
+                            text = "•",
+                            color = if (isDark) Color.White else Color.Black
+                        )
                         Text(
                             text = getFormattedDate(video.snippet.publishedAt.toString()),
                             fontSize = 10.sp,
                             maxLines = 1,
                             modifier = Modifier
-                                .widthIn(min = 0.dp)
+                                .widthIn(min = 0.dp),
+                            color = if (isDark) Color.White else Color.Black
                         )
                     }
                 }
@@ -194,7 +209,8 @@ fun PlaylistsVideoItemCard(video: Item) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = null,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(24.dp),
+                        tint = if (isDark) Color.White else Color.Black
                     )
                 }
             }
@@ -208,7 +224,7 @@ fun PlaylistsVideoItemCard(video: Item) {
             modifier = Modifier.fillMaxWidth(),
             sheetState = rememberModalBottomSheetState(),
             shape = RoundedCornerShape(4.dp),
-            contentColor = Color.Black,  // Adjust color as needed
+            contentColor =if (isDark) Color.White else Color.Black,  // Adjust color as needed
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
         ) {
@@ -223,12 +239,17 @@ fun PlaylistsVideoItemCard(video: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.WatchLater, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.WatchLater,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Save to Watch later",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -237,12 +258,17 @@ fun PlaylistsVideoItemCard(video: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.PlaylistAdd, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.PlaylistAdd,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Save to playlist",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -252,12 +278,17 @@ fun PlaylistsVideoItemCard(video: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Download, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.Download,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Download video",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -267,12 +298,17 @@ fun PlaylistsVideoItemCard(video: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Share, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.Share,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Share",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -282,12 +318,17 @@ fun PlaylistsVideoItemCard(video: Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Block, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.Block,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Not interested",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color= if (isDark) Color.White else Color.Black
                     )
                 }
             }

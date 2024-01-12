@@ -349,7 +349,7 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                     SearchChannelItem(channel)
                 }
             }
-        }else {
+        } else {
 
             Card(
                 modifier = Modifier
@@ -445,7 +445,10 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center
                                 ) {
-                                    Text(text = channel?.snippet?.title.toString(), fontSize = 10.sp)
+                                    Text(
+                                        text = channel?.snippet?.title.toString(),
+                                        fontSize = 10.sp
+                                    )
                                     val isVerified = channel?.status?.isLinked == true
                                     if (isVerified) {
                                         Icon(
@@ -509,7 +512,7 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
             modifier = Modifier.fillMaxWidth(),
             sheetState = rememberModalBottomSheetState(),
             shape = RoundedCornerShape(4.dp),
-            contentColor = Color.Black,  // Adjust color as needed
+            contentColor = if (isDark) Color.White else Color.Black,  // Adjust color as needed
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
         ) {
@@ -524,12 +527,17 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.WatchLater, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.WatchLater,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Save to Watch later",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -538,12 +546,17 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.PlaylistAdd, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.PlaylistAdd,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Save to playlist",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -553,12 +566,17 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Download, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.Download,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Download video",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -568,12 +586,17 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Share, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.Share,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Share",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
@@ -583,12 +606,17 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Block, contentDescription = "Time")
+                    Icon(
+                        imageVector = Icons.Outlined.Block,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(
                         text = "Not interested",
                         modifier = Modifier.weight(1f),
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
             }

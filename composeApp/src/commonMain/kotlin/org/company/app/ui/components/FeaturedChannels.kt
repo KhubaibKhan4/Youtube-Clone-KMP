@@ -16,6 +16,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +28,7 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.data.model.channel.Channel
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.formatSubscribers
 
 @Composable
@@ -34,6 +36,7 @@ fun FeaturedChannel(
     channel: Channel,
     featuredText: String
 ) {
+    val isDark by LocalThemeIsDark.current
     LazyVerticalGrid(
         columns = GridCells.Adaptive(300.dp)
     ) {
@@ -41,7 +44,8 @@ fun FeaturedChannel(
             Text(
                 text = featuredText,
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                modifier = Modifier.fillMaxWidth().padding(start = 6.dp, end = 4.dp)
+                modifier = Modifier.fillMaxWidth().padding(start = 6.dp, end = 4.dp),
+                color =if (isDark) Color.White else Color.Black
             )
         }
         channel.items.let { youtubeItem ->
@@ -54,6 +58,7 @@ fun FeaturedChannel(
 
 @Composable
 fun FeatureChannelItems(channel: org.company.app.data.model.channel.Item) {
+    val isDark by LocalThemeIsDark.current
     Row(
         modifier = Modifier.fillMaxWidth()
             .padding(16.dp),
@@ -86,19 +91,20 @@ fun FeatureChannelItems(channel: org.company.app.data.model.channel.Item) {
             Text(
                 text = channel.snippet.title.toString(),
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                color = if (isDark) Color.White else Color.Black
             )
             Text(
                 text = formatSubscribers(channel.statistics.subscriberCount) + "." + channel.statistics.videoCount + "videos",
                 fontSize = MaterialTheme.typography.labelSmall.fontSize,
                 fontWeight = FontWeight.Normal,
-                color = Color.DarkGray.copy(alpha = 0.75f)
+                color = if (isDark) Color.White.copy(alpha = 0.75f) else Color.DarkGray.copy(alpha = 0.75f)
             )
             Text(
                 text = "SUBSCRIBE",
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
                 fontWeight = FontWeight.Bold,
-                color = Color.Red
+                color =Color.Red
             )
         }
     }

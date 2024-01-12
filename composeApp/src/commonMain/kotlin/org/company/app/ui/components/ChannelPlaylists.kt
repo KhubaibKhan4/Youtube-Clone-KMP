@@ -13,11 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -56,6 +54,7 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.data.model.videos.Item
 import org.company.app.data.model.videos.Youtube
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.DetailScreen
 import kotlin.random.Random
 
@@ -63,6 +62,7 @@ import kotlin.random.Random
 fun ChannelPlaylists(
     youtube: Youtube,
 ) {
+    val isDark by LocalThemeIsDark.current
     LazyVerticalGrid(
         columns = GridCells.Adaptive(300.dp),
         modifier = Modifier.fillMaxWidth()
@@ -71,12 +71,19 @@ fun ChannelPlaylists(
     ) {
         item {
             Row {
-                Icon(imageVector = Icons.Default.Sort, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Default.Sort, contentDescription = null,
+                    tint = if (isDark) Color.White else Color.Black
+                )
                 Text(
                     text = "Sort by",
-                    fontSize = MaterialTheme.typography.titleMedium.fontSize
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    color = if (isDark) Color.White else Color.Black
                 )
-                Icon(imageVector = Icons.Default.KeyboardArrowDown, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown, contentDescription = null,
+                    tint = if (isDark) Color.White else Color.Black
+                )
             }
         }
         youtube.items?.let { items ->
@@ -92,6 +99,7 @@ fun ChannelPlaylists(
 fun ChannelPlaylistsItems(videos: Item) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
+    val isDark by LocalThemeIsDark.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -147,12 +155,12 @@ fun ChannelPlaylistsItems(videos: Item) {
                     Icon(
                         imageVector = Icons.Default.FeaturedPlayList,
                         contentDescription = "Playlists",
-                        tint = Color.White
+                        tint = if (isDark) Color.White else Color.Black
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = videos.contentDetails?.itemCount.toString(), // You can replace this with the actual count
-                        color = Color.White
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
             }
@@ -171,7 +179,8 @@ fun ChannelPlaylistsItems(videos: Item) {
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth(0.75f)
+                modifier = Modifier.fillMaxWidth(0.75f),
+                color = if (isDark) Color.White else Color.Black
             )
 
             Row(
@@ -183,20 +192,24 @@ fun ChannelPlaylistsItems(videos: Item) {
                 Text(
                     text = videos.snippet?.channelTitle.toString(),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                    color = Color.DarkGray
+                    color =if (isDark) Color.White else Color.DarkGray
                 )
 
                 // More options icon
-               Box(contentAlignment = Alignment.TopEnd){
-                   IconButton(
-                       onClick = {
-                                 moreVertEnable = !moreVertEnable
-                       },
-                       modifier = Modifier.align(alignment = Alignment.TopEnd)
-                   ) {
-                       Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More Vert")
-                   }
-               }
+                Box(contentAlignment = Alignment.TopEnd) {
+                    IconButton(
+                        onClick = {
+                            moreVertEnable = !moreVertEnable
+                        },
+                        modifier = Modifier.align(alignment = Alignment.TopEnd)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "More Vert",
+                            tint = if (isDark) Color.White else Color.Black
+                        )
+                    }
+                }
             }
         }
         if (moreVertEnable) {
@@ -207,7 +220,7 @@ fun ChannelPlaylistsItems(videos: Item) {
                 modifier = Modifier.fillMaxWidth(),
                 sheetState = rememberModalBottomSheetState(),
                 shape = RoundedCornerShape(4.dp),
-                contentColor = Color.Black,  // Adjust color as needed
+                contentColor = if (isDark) Color.White else Color.Black,  // Adjust color as needed
                 scrimColor = Color.Transparent,
                 tonalElevation = 4.dp,
             ) {
@@ -224,17 +237,20 @@ fun ChannelPlaylistsItems(videos: Item) {
                     ) {
                         androidx.compose.material3.Icon(
                             imageVector = Icons.Outlined.PlaylistAdd,
-                            contentDescription = "Time"
+                            contentDescription = "Time",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                         Spacer(modifier = Modifier.width(20.dp))
                         androidx.compose.material3.Text(
                             text = "Play in next queue",
                             modifier = Modifier.weight(1f),
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            color =if (isDark) Color.White else Color.Black
                         )
                         androidx.compose.material3.Icon(
                             imageVector = Icons.Outlined.PlaylistAddCheck,
-                            contentDescription = "Time"
+                            contentDescription = "Time",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
@@ -245,13 +261,15 @@ fun ChannelPlaylistsItems(videos: Item) {
                     ) {
                         androidx.compose.material3.Icon(
                             imageVector = Icons.Outlined.WatchLater,
-                            contentDescription = "Time"
+                            contentDescription = "Time",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                         Spacer(modifier = Modifier.width(20.dp))
                         androidx.compose.material3.Text(
                             text = "Save to Watch later",
                             modifier = Modifier.weight(1f),
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            color = if (isDark) Color.White else Color.Black
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
@@ -262,13 +280,15 @@ fun ChannelPlaylistsItems(videos: Item) {
                     ) {
                         androidx.compose.material3.Icon(
                             imageVector = Icons.Outlined.PlaylistAdd,
-                            contentDescription = "Time"
+                            contentDescription = "Time",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                         Spacer(modifier = Modifier.width(20.dp))
                         androidx.compose.material3.Text(
                             text = "Save to playlist",
                             modifier = Modifier.weight(1f),
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            color = if (isDark) Color.White else Color.Black
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
@@ -280,13 +300,15 @@ fun ChannelPlaylistsItems(videos: Item) {
                     ) {
                         androidx.compose.material3.Icon(
                             imageVector = Icons.Outlined.Download,
-                            contentDescription = "Time"
+                            contentDescription = "Time",
+                            tint = if (isDark) Color.White else Color.Black
                         )
                         Spacer(modifier = Modifier.width(20.dp))
                         androidx.compose.material3.Text(
                             text = "Download video",
                             modifier = Modifier.weight(1f),
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            color = if (isDark) Color.White else Color.Black
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
@@ -298,13 +320,15 @@ fun ChannelPlaylistsItems(videos: Item) {
                     ) {
                         androidx.compose.material3.Icon(
                             imageVector = Icons.Outlined.Share,
-                            contentDescription = "Time"
+                            contentDescription = "Time",
+                            tint= if (isDark) Color.White else Color.Black
                         )
                         Spacer(modifier = Modifier.width(20.dp))
                         androidx.compose.material3.Text(
                             text = "Share",
                             modifier = Modifier.weight(1f),
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            color = if (isDark) Color.White else Color.Black
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
@@ -313,7 +337,8 @@ fun ChannelPlaylistsItems(videos: Item) {
         }
     }
 }
-private fun getRandomColors(): Color{
+
+private fun getRandomColors(): Color {
     val random = Random
     return Color(
         red = random.nextFloat(),
