@@ -52,8 +52,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.model.ImageRequest
-import com.seiko.imageloader.model.ImageRequestBuilder
+import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -107,8 +106,8 @@ class ChannelScreen(
             if (!channelIds.isNullOrEmpty()) {
                 viewModel.getChannelDetails(channelIds.toString())
             }
-            channelAllVideos?.items?.forEach {videos ->
-                viewModel.getMultipleVideo(videos.snippet?.resourceId?.videoId.toString())
+            channelAllVideos?.items?.forEach { channelVideos ->
+               // viewModel.getMultipleVideo(channelVideos.contentDetails)
             }
 
         }
@@ -208,6 +207,7 @@ class ChannelScreen(
             is YoutubeState.SUCCESS -> {
                 val response = (allVideos as YoutubeState.SUCCESS).youtube
                 channelAllVideos = response
+                Napier.d("$channelAllVideos", tag = "ChannelHome")
             }
 
             is YoutubeState.ERROR -> {
@@ -530,9 +530,9 @@ class ChannelScreen(
                 ) {
                     when (selectedTabIndex) {
                         0 -> {
-                         /*   multipleVideo?.let {
-                                ChannelHome(it, modifier = Modifier.fillMaxWidth(), title = "Home")
-                            }*/
+                            /*   multipleVideo?.let {
+                                   ChannelHome(it, modifier = Modifier.fillMaxWidth(), title = "Home")
+                               }*/
                             playlists.let { youtube ->
                                 youtube?.let { it1 ->
                                     ChannelHome(

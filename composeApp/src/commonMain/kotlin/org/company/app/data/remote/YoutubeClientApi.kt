@@ -109,8 +109,7 @@ object YoutubeClientApi {
     }
 
     suspend fun getChannelVideos(playlistID: String): Youtube {
-        val url =
-            BASE_URL + "playlistItems?part=snippet,contentDetails,id,status&&maxResults=50&playlistId=${playlistID}&key=$API_KEY"
+        val url =BASE_URL + "playlistItems?part=snippet,contentDetails,id,status&&maxResults=50&playlistId=${playlistID}&key=$API_KEY"
         return client.get(url).body()
     }
 
