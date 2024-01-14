@@ -49,8 +49,21 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
                 document.body?.appendChild(newContainer)
                 newContainer
             }
-            //videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\"></iframe>"
-            videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" style=\"background-color: black;\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\" modestbranding></iframe>"
+           // videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\"></iframe>"
+           // videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" style=\"background-color: black;\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\" modestbranding></iframe>"
+    videoContainer.innerHTML = """
+    <iframe 
+        width="100%" 
+        height="350" 
+        style="background-color: black;" 
+        src="https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen
+        modestbranding>
+    </iframe>
+"""
 }
 
 @Composable
@@ -84,7 +97,7 @@ internal actual fun ShortsVideoPlayer(url: String?) {
                 document.body?.appendChild(newContainer)
                 newContainer
             }
-            videoContainer.innerHTML = "<iframe width=\"130\" height=\"230\" style=\"background-color: transparent;\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\" modestbranding></iframe>"
+            videoContainer.innerHTML = "<iframe width=\"230\" height=\"430\" style=\"background-color: transparent;\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\" modestbranding></iframe>"
         }
     }
 }
