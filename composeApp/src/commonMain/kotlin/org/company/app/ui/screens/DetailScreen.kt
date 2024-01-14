@@ -134,20 +134,28 @@ class DetailScreen(
                 ErrorBox(error)
             }
         }
-
-        //https://www.youtube.com/watch?v=${video.id}
-        //"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
         Column(
             modifier = Modifier.fillMaxSize().verticalScroll(state = rememberScrollState())
         ) {
 
             // Thumbnail
             if (displayVideoPlayer) {
-                VideoPlayer(
-                    modifier = Modifier.fillMaxWidth().height(220.dp),
-                    url = "https://www.youtube.com/watch?v=${video?.id}",
-                    thumbnail = video?.snippet?.thumbnails?.high?.url
-                )
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    VideoPlayer(
+                        modifier = Modifier.fillMaxWidth().height(220.dp),
+                        url = "https://www.youtube.com/watch?v=${video?.id}",
+                        thumbnail = video?.snippet?.thumbnails?.high?.url
+                    )
+                }
+                IconButton(onClick = {
+                    displayVideoPlayer = false
+                    navigator?.pop()
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowLeft,
+                        contentDescription = null
+                    )
+                }
 
             } else {
                 Box(
@@ -241,7 +249,11 @@ class DetailScreen(
                 val pubDate = video?.snippet?.publishedAt.toString()
 
                 Text(
-                    text = "${formatViewCount(views)} views - ${org.company.app.ui.components.getFormattedDate(pubDate)}",
+                    text = "${formatViewCount(views)} views - ${
+                        org.company.app.ui.components.getFormattedDate(
+                            pubDate
+                        )
+                    }",
                     fontSize = 14.sp
                 )
             }
