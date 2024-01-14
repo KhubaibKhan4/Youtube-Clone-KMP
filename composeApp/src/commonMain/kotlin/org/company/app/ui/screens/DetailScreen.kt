@@ -140,13 +140,11 @@ class DetailScreen(
 
             // Thumbnail
             if (displayVideoPlayer) {
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    VideoPlayer(
-                        modifier = Modifier.fillMaxWidth().height(220.dp),
-                        url = "https://www.youtube.com/watch?v=${video?.id}",
-                        thumbnail = video?.snippet?.thumbnails?.high?.url
-                    )
-                }
+                VideoPlayer(
+                    modifier = Modifier.fillMaxWidth().height(340.dp),
+                    url = "https://www.youtube.com/watch?v=${video?.id}",
+                    thumbnail = video?.snippet?.thumbnails?.high?.url
+                )
                 IconButton(onClick = {
                     displayVideoPlayer = false
                     navigator?.pop()

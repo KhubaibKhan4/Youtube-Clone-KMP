@@ -1,28 +1,8 @@
 package org.company.app
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import io.kamel.core.Resource
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.awt.Desktop
 import java.awt.SystemTray
@@ -43,19 +23,27 @@ internal actual fun openUrl(url: String?) {
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     //VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        val image: Resource<androidx.compose.ui.graphics.painter.Painter> =
-            asyncPainterResource(data = thumbnail.toString())
-        KamelImage(
-            resource = image,
-            modifier = modifier.fillMaxWidth(),
-            contentDescription = null
-        )
-        CircularProgressIndicator()
-    }
+    /* Box(
+         modifier = modifier,
+         contentAlignment = Alignment.Center
+     ) {
+         val image: Resource<androidx.compose.ui.graphics.painter.Painter> =
+             asyncPainterResource(data = thumbnail.toString())
+         KamelImage(
+             resource = image,
+             modifier = modifier.fillMaxWidth(),
+             contentDescription = null
+         )
+         CircularProgressIndicator()
+     }*/
+    val videoId = splitLinkForVideoId(url.toString())
+    DesktopWebView(modifier, "https://www.youtube.com/embed/$videoId")
+}
+
+fun splitLinkForVideoId(
+    url: String?
+): String {
+    return (url!!.split("="))[1]
 }
 
 private fun openYouTubeVideo(videoUrl: String) {
@@ -93,29 +81,11 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 
 @Composable
 internal actual fun ShortsVideoPlayer(url: String?) {
-    var isPlayed by remember { mutableStateOf(false) }
-    Box(
+    val videoId = splitLinkForVideoId(url.toString())
+    DesktopWebView(
         modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = Icons.Filled.PlayArrow, contentDescription = "Play",
-                modifier = Modifier.size(65.dp)
-                    .clickable {
-                        isPlayed = !isPlayed
-                    },
-                tint = Color.White
-            )
-            AnimatedVisibility(isPlayed) {
-                VideoPlayerFFMpeg(modifier = Modifier.fillMaxWidth(), file = url.toString())
-            }
-        }
-    }
+        "https://www.youtube.com/embed/$videoId"
+    )
 }
 
 internal actual fun UserRegion(): String {
