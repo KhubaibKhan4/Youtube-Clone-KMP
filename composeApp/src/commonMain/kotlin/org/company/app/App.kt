@@ -96,7 +96,7 @@ internal fun App() = AppTheme {
         Scaffold(bottomBar = {
             if (!showNavigationRail) {
                 BottomNavigation(
-                    modifier = Modifier.fillMaxWidth().height(69.dp),
+                    modifier = Modifier.fillMaxWidth().navigationBarsPadding().imePadding().height(69.dp),
                     backgroundColor = MaterialTheme.colorScheme.background,
                     contentColor = contentColorFor(Color.Red),
                     elevation = 8.dp
