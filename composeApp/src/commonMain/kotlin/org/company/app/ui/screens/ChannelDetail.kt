@@ -75,7 +75,7 @@ class ChannelDetail(
                         )
                     }
                     Text(
-                        text = channel.snippet?.title.toString(),
+                        text = channel.snippet.title,
                         fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         modifier = Modifier.weight(1f),
                         fontWeight = FontWeight.Bold,
