@@ -6,9 +6,9 @@ import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.data.remote.YoutubeClientApi
-import org.company.app.domain.plugin.YoutubePlugin
+import org.company.app.domain.plugin.YoutubeApi
 
-class Repository : YoutubePlugin {
+class Repository : YoutubeApi {
 
     override suspend fun getVideoList(userRegion: String): Youtube {
         return YoutubeClientApi.getVideoList(userRegion)

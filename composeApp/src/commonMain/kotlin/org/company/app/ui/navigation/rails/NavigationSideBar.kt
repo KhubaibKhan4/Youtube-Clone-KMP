@@ -60,7 +60,7 @@ fun NavigationSideBar(
                                 fontSize = MaterialTheme.typography.bodySmall.fontSize
                             )
                         } else {
-                            // TODO: Nothing to be here
+                            //  Nothing to be here
                         }
 
                     },
