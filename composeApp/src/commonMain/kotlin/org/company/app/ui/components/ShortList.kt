@@ -408,7 +408,7 @@ fun ShortItem(
                                 modifier = Modifier.size(25.dp).padding(start = 4.dp)
                             )
                         } else {
-                            // TODO: NOthing here..
+                            //  Nothing here..
                         }
                     }
                     Spacer(modifier = Modifier.width(4.dp))
@@ -823,7 +823,7 @@ fun ShortItem(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         androidx.compose.material3.Text(
-                            text = formatLikes(video?.statistics?.likeCount),
+                            text = formatLikes(video.statistics?.likeCount),
                             fontWeight = FontWeight.Bold,
                             fontSize = MaterialTheme.typography.titleMedium.fontSize
                         )
@@ -840,7 +840,7 @@ fun ShortItem(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         androidx.compose.material3.Text(
-                            text = org.company.app.ui.screens.formatViewCount(video?.statistics?.viewCount),
+                            text = org.company.app.ui.screens.formatViewCount(video.statistics?.viewCount),
                             fontWeight = FontWeight.Bold,
                             fontSize = MaterialTheme.typography.titleMedium.fontSize
                         )
@@ -856,7 +856,7 @@ fun ShortItem(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        val (formattedMonth, day, year) = getFormattedDateLikeMonthDay(video?.snippet?.publishedAt.toString())
+                        val (formattedMonth, day, year) = getFormattedDateLikeMonthDay(video.snippet?.publishedAt.toString())
 
                         androidx.compose.material3.Text(
                             text = "$formattedMonth $day",

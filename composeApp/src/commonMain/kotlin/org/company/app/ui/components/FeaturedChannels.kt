@@ -48,10 +48,8 @@ fun FeaturedChannel(
                 color =if (isDark) Color.White else Color.Black
             )
         }
-        channel.items.let { youtubeItem ->
-            items(youtubeItem) { items ->
-                FeatureChannelItems(items)
-            }
+        items(channel.items) { items ->
+            FeatureChannelItems(items)
         }
     }
 }
