@@ -143,11 +143,10 @@ class DetailScreen(
                 VideoPlayer(
                     modifier = Modifier.fillMaxWidth().height(340.dp),
                     url = "https://www.youtube.com/watch?v=${video?.id}",
-                    thumbnail = video?.snippet?.thumbnails?.high?.url
+                    thumbnail = video?.snippet?.thumbnails?.high?.url,
                 )
                 IconButton(onClick = {
                     displayVideoPlayer = false
-                    navigator?.pop()
                 }) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowLeft,
@@ -176,7 +175,7 @@ class DetailScreen(
                     ) {
                         IconButton(
                             onClick = {
-                                displayVideoPlayer = !displayVideoPlayer
+                                displayVideoPlayer = true
                             }, modifier = Modifier.align(alignment = Alignment.Center)
                         ) {
                             Icon(
@@ -189,7 +188,10 @@ class DetailScreen(
                     }
 
                     IconButton(
-                        onClick = { navigator?.pop() },
+                        onClick = {
+                            displayVideoPlayer = false
+                            navigator?.pop()
+                                  },
                         modifier = Modifier.padding(top = 8.dp, start = 6.dp)
                             .align(alignment = Alignment.TopStart)
                     ) {

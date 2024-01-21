@@ -20,6 +20,7 @@ import androidx.compose.ui.window.CanvasBasedWindow
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import kotlinx.dom.createElement
 import org.jetbrains.compose.web.css.height
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.width
@@ -37,24 +38,24 @@ internal actual fun openUrl(url: String?) {
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     // Use rememberUpdatedState to capture the latest value of url
-    val videoId = extractVideoId(url.toString())
-    console.log("Before YouTube API is ready $videoId")
+        val videoId = extractVideoId(url.toString())
+        console.log("Before YouTube API is ready $videoId")
 
-    val iframeId = "youtube-iframe-${videoId.hashCode()}"
-    val body = document.body
-            // Assuming you have a div with the id "video-container"
-            val videoContainer = document.getElementById("video-container") ?: run {
-                val newContainer = document.createElement("div")
-                newContainer.id = "video-container"
-                document.body?.appendChild(newContainer)
-                newContainer
-            }
-           // videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\"></iframe>"
-           // videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" style=\"background-color: black;\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\" modestbranding></iframe>"
-    videoContainer.innerHTML = """
+        val iframeId = "youtube-iframe-${videoId.hashCode()}"
+        val body = document.body
+        // Assuming you have a div with the id "video-container"
+        val videoContainer = document.getElementById("video-container") ?: run {
+            val newContainer = document.createElement("div")
+            newContainer.id = "video-container"
+            document.body?.appendChild(newContainer)
+            newContainer
+        }
+        // videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\"></iframe>"
+        // videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" style=\"background-color: black;\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\" modestbranding></iframe>"
+        videoContainer.innerHTML = """
     <iframe 
         width="100%" 
-        height="350" 
+        height="150" 
         style="background-color: black;" 
         src="https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0" 
         title="YouTube video player" 
@@ -64,8 +65,8 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
         modestbranding>
     </iframe>
 """
-}
 
+}
 @Composable
 internal actual fun Notify(message: String) {
     window.alert(message)

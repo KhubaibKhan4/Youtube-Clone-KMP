@@ -86,7 +86,7 @@ internal actual fun VideoPlayer(modifier: Modifier,url: String?, thumbnail:Strin
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
+internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)  {
     YoutubeVideoPlayer(youtubeURL = url)
 }
 

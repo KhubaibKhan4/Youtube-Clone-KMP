@@ -21,7 +21,7 @@ internal actual fun openUrl(url: String?) {
 
 
 @Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
+internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?){
     //VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
     /* Box(
          modifier = modifier,
