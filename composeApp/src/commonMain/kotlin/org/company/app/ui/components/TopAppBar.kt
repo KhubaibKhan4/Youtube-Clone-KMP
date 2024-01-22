@@ -65,6 +65,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -135,12 +137,14 @@ fun TopBar(modifier: Modifier) {
                     onClick = {
                         isSearchEnabled = !isSearchEnabled
                         query = ""
-                    }
+                    },
+                    modifier = Modifier.pointerHoverIcon(icon = PointerIcon.Hand)
                 ) {
                     Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
                 }
                 IconButton(
-                    onClick = { navigator?.push(AccountScreen) }
+                    onClick = { navigator?.push(AccountScreen) },
+                    modifier = Modifier.pointerHoverIcon(icon = PointerIcon.Hand)
                 ) {
                     Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = "Account")
                 }

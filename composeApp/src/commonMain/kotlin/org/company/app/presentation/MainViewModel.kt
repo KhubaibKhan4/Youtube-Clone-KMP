@@ -91,7 +91,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
     //multiple Videos
     var _multipleVideos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
-    private
+        private set
     val multipleVideos: StateFlow<YoutubeState> = _multipleVideos.asStateFlow()
 
     fun getVideosList(userRegion: String) {

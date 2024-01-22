@@ -61,6 +61,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -157,7 +159,7 @@ class DetailScreen(
             } else {
                 Box(
                     modifier = Modifier.fillMaxWidth()
-                        .height(200.dp),
+                        .height(356.dp),
                     contentAlignment = Alignment.Center
                 ) {
 
@@ -176,7 +178,10 @@ class DetailScreen(
                         IconButton(
                             onClick = {
                                 displayVideoPlayer = true
-                            }, modifier = Modifier.align(alignment = Alignment.Center)
+                            },
+                            modifier = Modifier
+                                .pointerHoverIcon(icon = PointerIcon.Hand)
+                                .align(alignment = Alignment.Center)
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.PlayArrow,
@@ -194,6 +199,7 @@ class DetailScreen(
                                   },
                         modifier = Modifier.padding(top = 8.dp, start = 6.dp)
                             .align(alignment = Alignment.TopStart)
+                            .pointerHoverIcon(icon = PointerIcon.Hand)
                     ) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -234,7 +240,8 @@ class DetailScreen(
                 )
                 Icon(imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp).clickable {
+                    modifier = Modifier
+                        .pointerHoverIcon(icon = PointerIcon.Hand).size(24.dp).clickable {
                         descriptionEnabled = true
                     })
             }
@@ -283,7 +290,7 @@ class DetailScreen(
                         Icon(
                             imageVector = Icons.Default.ThumbUp,
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp).clickable { },
+                            modifier = Modifier.size(24.dp) .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
                             tint = if (isDark) Color.White else Color.Black
                         )
 
@@ -307,7 +314,7 @@ class DetailScreen(
                         Icon(
                             imageVector = Icons.Default.ThumbDown,
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp).clickable { },
+                            modifier = Modifier.size(24.dp) .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
                             tint = if (isDark) Color.White else Color.Black
                         )
                     }
@@ -315,7 +322,7 @@ class DetailScreen(
 
                 // Share
                 Card(
-                    modifier = Modifier.height(40.dp).padding(4.dp),
+                    modifier = Modifier.height(40.dp) .pointerHoverIcon(icon = PointerIcon.Hand).padding(4.dp),
                     onClick = {
                         isShareEnabled = !isShareEnabled
                     },
@@ -348,7 +355,7 @@ class DetailScreen(
 
                 // Download
                 Card(
-                    modifier = Modifier.height(40.dp).padding(4.dp),
+                    modifier = Modifier.height(40.dp) .pointerHoverIcon(icon = PointerIcon.Hand).padding(4.dp),
                     onClick = { /* Handle Download click */ },
                 ) {
                     Row(
@@ -373,7 +380,7 @@ class DetailScreen(
 
                 // Save
                 Card(
-                    modifier = Modifier.height(40.dp).padding(4.dp),
+                    modifier = Modifier.height(40.dp) .pointerHoverIcon(icon = PointerIcon.Hand).padding(4.dp),
                     onClick = { /* Handle Save click */ },
                 ) {
                     Row(
@@ -417,7 +424,7 @@ class DetailScreen(
                     Image(
                         painter = it,
                         contentDescription = null,
-                        modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
+                        modifier = Modifier.size(60.dp).clip(CircleShape) .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
                             navigator?.push(ChannelScreen(channelData))
                         },
                         contentScale = ContentScale.FillBounds
@@ -445,8 +452,6 @@ class DetailScreen(
                                 modifier = Modifier.padding(start = 4.dp),
                                 tint = if (isDark) Color.White else Color.Black
                             )
-                        } else {
-                            // TODO: NOthing here..
                         }
                     }
                     Text(
@@ -459,7 +464,7 @@ class DetailScreen(
                     color = Color.Red,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    modifier = Modifier.clickable { /* Handle subscribe click */ })
+                    modifier = Modifier .pointerHoverIcon(icon = PointerIcon.Hand).clickable { /* Handle subscribe click */ })
             }
 
             // Horizontal Divider
@@ -473,6 +478,7 @@ class DetailScreen(
             // Sample Comment
             Column(
                 modifier = Modifier.fillMaxWidth()
+                    .pointerHoverIcon(icon = PointerIcon.Hand)
                     .clickable {
                         isCommentLive = !isCommentLive
                     }

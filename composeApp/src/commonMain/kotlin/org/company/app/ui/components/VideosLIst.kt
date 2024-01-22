@@ -69,6 +69,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -420,7 +422,7 @@ fun VideosList(youtube: Youtube) {
                                 drawerState.open()
                             }
                         },
-                        modifier = Modifier.size(48.dp).clip(shape = RoundedCornerShape(6.dp)),
+                        modifier = Modifier.size(48.dp).pointerHoverIcon(icon = PointerIcon.Hand).clip(shape = RoundedCornerShape(6.dp)),
                         colors = IconButtonDefaults.iconButtonColors(
                             containerColor = Color.LightGray.copy(alpha = 0.55f)
                         ),
@@ -509,7 +511,8 @@ fun CategoryButton(
             containerColor = if (isSelected) Color.Gray else Color.LightGray.copy(alpha = 0.55f),
             contentColor =if (isDark) Color.White else Color.Black,
         ),
-        shape = RoundedCornerShape(6.dp)
+        shape = RoundedCornerShape(6.dp),
+        modifier = Modifier.pointerHoverIcon(icon = PointerIcon.Hand)
     ) {
         Text(
             text = category.snippet.title.orEmpty(),
@@ -551,6 +554,7 @@ fun VideoItemCard(video: Item) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .pointerHoverIcon(icon = PointerIcon.Hand)
             .clickable {
                 navigator?.push(DetailScreen(video, channelData = channelData?.items?.get(0)))
             },

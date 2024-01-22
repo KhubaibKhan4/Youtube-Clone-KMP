@@ -125,9 +125,7 @@ fun ShortItem(
     var commentData by remember { mutableStateOf<Comments?>(null) }
     var channelDetail by remember { mutableStateOf<Channel?>(null) }
     var descriptionEnabled by remember { mutableStateOf(false) }
-    var displayVideoPlayer by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
-    val isDark by LocalThemeIsDark.current
     val shortsUrl = VIDEO_URL + video.id.toString()
     val channelImage = channelDetail?.items?.getOrNull(0)?.snippet?.thumbnails?.high?.url.toString()
     val image: Resource<Painter> = asyncPainterResource(data = channelImage)
