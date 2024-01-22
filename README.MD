@@ -1,22 +1,20 @@
-# YouTube Clone Kotlin Mutliplatform
+# YouTube Clone Kotlin Multiplatform
+![YouTube Clone KMP](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/poster.png)
+
 ## Overview
-
 YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices.
-<img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/poster.png" />
 
+## 🚀 Key Features
+- **Cross-Platform Compatibility**
+- **Video Playback**
+- **Sharing Options**
+- **Download Capability**
+- **Playlist Viewing**
+- **Comprehensive Search**
+- **Responsive UI**
+- **Material Design Components**
 
-
-🚀 **Key Features:**
-- Cross-Platform Compatibility
-- Video Playback
-- Sharing Options
-- Download Capability
-- Playlist Viewing
-- Comprehensive Search
-- Responsive UI
-- Material Design Components
-
-🔥 **Additional Features:**
+## 🔥 Additional Features
 - Top Videos
 - Shorts Videos
 - Video Details
@@ -37,15 +35,15 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - Navigation Rail for Foldable Devices
 - Desktop and Web Version Support
 
-🚀 **Future Plans:**
+## 🚀 Future Plans
 - TV and Wear OS Versions
 
-🌟 **Contributions:**
+## 🌟 Contributions
 Feel free to contribute to the project and stay tuned for more exciting updates!
 
 # Open To Work
 
-🌐 **Tech Stack Highlights:**
+## 🌐 Tech Stack Highlights
 - Clean Architecture with MVVM
 - Kotlin Multiplatform
 - Kotlin Coroutines
@@ -59,9 +57,9 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 - Napier
 - Screen Size
 
+Connect with me to discuss potential projects, job opportunities, or any other collaboration.
+[![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=khubaibkhan&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/khubaibkhan)
 
-Feel free to connect with me to discuss potential projects, job opportunities, or any other collaboration.
-<a href="https://www.buymeacoffee.com/khubaibkhan"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=khubaibkhan&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 
 ## Screen Shots
