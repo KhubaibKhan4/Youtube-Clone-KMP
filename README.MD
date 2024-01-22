@@ -43,19 +43,55 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 
 # Open To Work
 
-## 🌐 Tech Stack Highlights
-- Clean Architecture with MVVM
-- Kotlin Multiplatform
-- Kotlin Coroutines
-- Compose Multiplatform
-- Material3
-- Ktor
-- Datastore
-- Koin
-- Voyager
-- Moko
-- Napier
-- Screen Size
+# Tech Stack Highlights
+
+- **Kotlin Multiplatform**: `1.9.21`
+- **AGP (Android Gradle Plugin)**: `8.2.0`
+- **Compose**: `1.5.11`
+  - `androidx-appcompat`: `1.6.1`
+  - `androidx-activityCompose`: `1.8.2`
+  - `compose-uitooling`: `1.5.4`
+  - `composeImageLoader`: `1.7.1`
+  - `composeIcons`: `1.1.0`
+- **Core Libraries**: `12.1.0`
+- **Kotlinx Libraries**:
+  - `kotlinx-coroutines`: `1.7.3`
+  - `kotlinx-serialization`: `1.6.2`
+  - `kotlinx-datetime`: `0.5.0`
+- **Networking**:
+  - `coilNetwork`: `3.0.0-alpha01`
+  - `ktor`: `2.3.7`
+- **Dependency Injection**:
+  - `koin`: `3.5.0`
+- **UI/UX**:
+  - `compose-uitooling`: `1.5.4`
+  - `composeIcons`: `1.1.0`
+- **Media Handling**:
+  - `media3Ui`: `1.2.0`
+  - `media3ExoplayerDash`: `1.2.0`
+  - `media3Exoplayer`: `1.2.0`
+- **Logging**:
+  - `napier`: `2.6.1`
+- **Database/Storage**:
+  - `libres`: `1.2.2`
+- **Web and Networking**:
+  - `webview-kmp`: `1.8.0`
+- **JSON Parsing**:
+  - `gson`: `2.10.1`
+- **Build Configurations**:
+  - `buildConfig`: `4.1.1`
+- **Cross-Platform Image Loading**:
+  - `composeImageLoader`: `1.7.1`
+- **Size Measurement**:
+  - `size`: `0.3.1`
+- **Voyager Navigation**: `1.0.0`
+- **Other Utilities**:
+  - `moko-mvvm`: `0.16.1`
+  - `vlcj`: `4.7.0`
+  - `ffmpegPlatform`: `4.1-1.4.4`
+  - `kamelImage`: `0.9.0`
+- **JavaFX**: `22-ea+16`
+
 
 Connect with me to discuss potential projects, job opportunities, or any other collaboration.
 
