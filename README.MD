@@ -58,9 +58,15 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 - Screen Size
 
 Connect with me to discuss potential projects, job opportunities, or any other collaboration.
-[![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=khubaibkhan&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/khubaibkhan)
 
+## 🤝 Connect with Me
+Let's chat about potential projects, job opportunities, or any other collaboration! Feel free to connect with me through the following channels:
 
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/your-linkedin-profile)
+[![Twitter](https://img.shields.io/badge/Twitter-Follow-blue?style=for-the-badge&logo=twitter)](https://twitter.com/your-twitter-handle)
+[![Email](https://img.shields.io/badge/Email-Drop%20a%20Message-red?style=for-the-badge&logo=gmail)](mailto:your.email@example.com)
+
+If you find my work helpful, you can support me by [buying me a coffee](https://www.buymeacoffee.com/khubaibkhan).
 
 ## Screen Shots
 
