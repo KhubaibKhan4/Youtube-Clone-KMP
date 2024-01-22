@@ -15,67 +15,83 @@ import org.company.app.domain.usecases.YoutubeState
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
     //Videos
-    private val _videos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    var _videos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+        private set
     val videos: StateFlow<YoutubeState> = _videos.asStateFlow()
 
     //Relevance
-    private val _relevance = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    var _relevance = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+        private set
     val relevance: StateFlow<YoutubeState> = _relevance.asStateFlow()
 
     //Channel Details
-    private val _channel = MutableStateFlow<ChannelState>(ChannelState.LOADING)
+    var _channel = MutableStateFlow<ChannelState>(ChannelState.LOADING)
+        private set
     val channelDetails: StateFlow<ChannelState> = _channel.asStateFlow()
 
     //Channel Details
-    private val _channelBranding = MutableStateFlow<ChannelState>(ChannelState.LOADING)
+    var _channelBranding = MutableStateFlow<ChannelState>(ChannelState.LOADING)
+        private set
     val channelBranding: StateFlow<ChannelState> = _channelBranding.asStateFlow()
 
     //Relevance Videos
-    private val _relevance_videos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    var _relevance_videos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+        private set
     val relevanceVideos: StateFlow<YoutubeState> = _relevance_videos.asStateFlow()
 
     //Search Videos
-    private val _search = MutableStateFlow<SearchState>(SearchState.LOADING)
+     var _search = MutableStateFlow<SearchState>(SearchState.LOADING)
+        private set
     val search: StateFlow<SearchState> = _search.asStateFlow()
 
     //Playlist Videos
-    private val _playlists = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    var _playlists = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+        private set
     val playlists: StateFlow<YoutubeState> = _playlists.asStateFlow()
 
     //Channel Sections
-    private val _channelSections = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    var _channelSections = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+        private set
     val channelSections: StateFlow<YoutubeState> = _channelSections
 
     //Channel LiveStream
-    private val _channelLiveSteam = MutableStateFlow<SearchState>(SearchState.LOADING)
+    var _channelLiveSteam = MutableStateFlow<SearchState>(SearchState.LOADING)
+        private set
     val channelLiveStream: StateFlow<SearchState> = _channelLiveSteam.asStateFlow()
 
     //Channel Videos
-    private val _channelVideos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    var _channelVideos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+        private set
     val channelVideos: StateFlow<YoutubeState> = _channelVideos.asStateFlow()
 
     //Channel Community
-    private val _channelCommunity = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+     var _channelCommunity = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+        private set
     val channelCommunity: StateFlow<YoutubeState> = _channelCommunity.asStateFlow()
 
     //Video Comments
-    private val _videoComments = MutableStateFlow<CommentsState>(CommentsState.LOADING)
+     var _videoComments = MutableStateFlow<CommentsState>(CommentsState.LOADING)
+        private set
     val videoComments: StateFlow<CommentsState> = _videoComments.asStateFlow()
 
     //Channel Own Videos
-    private val _ownChannelVideos = MutableStateFlow<SearchState>(SearchState.LOADING)
+    var _ownChannelVideos = MutableStateFlow<SearchState>(SearchState.LOADING)
+        private set
     val ownChannelVideos: StateFlow<SearchState> = _ownChannelVideos.asStateFlow()
 
     //Video Categories
-    private val _videoCategories = MutableStateFlow<CategoriesState>(CategoriesState.LOADING)
+    var _videoCategories = MutableStateFlow<CategoriesState>(CategoriesState.LOADING)
+        private set
     val videoCategories: StateFlow<CategoriesState> = _videoCategories.asStateFlow()
 
     //Single Video
-    private val _singleVideo = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    var _singleVideo = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+        private set
     val singleVideo: StateFlow<YoutubeState> = _singleVideo.asStateFlow()
 
     //multiple Videos
-    private val _multipleVideos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    var _multipleVideos = MutableStateFlow<YoutubeState>(YoutubeState.LOADING)
+    private
     val multipleVideos: StateFlow<YoutubeState> = _multipleVideos.asStateFlow()
 
     fun getVideosList(userRegion: String) {
