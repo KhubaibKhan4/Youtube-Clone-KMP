@@ -567,7 +567,9 @@ fun VideoItemCard(video: Item) {
 
                 NetworkImage(
                     modifier = Modifier.fillMaxWidth()
-                        .height(200.dp),
+                        .height(200.dp)
+                        .pointerHoverIcon(icon = PointerIcon.Hand)
+                    ,
                     url = video.snippet?.thumbnails?.high?.url.toString(),
                     contentDescription = "Image",
                     contentScale = ContentScale.Crop
@@ -606,6 +608,7 @@ fun VideoItemCard(video: Item) {
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier.size(40.dp)
                         .clip(CircleShape)
+                        .pointerHoverIcon(icon = PointerIcon.Hand)
                         .clickable {
                             val channelItem = channelData!!.items[0]
                             navigator?.push(ChannelScreen(channelItem))
@@ -640,6 +643,8 @@ fun VideoItemCard(video: Item) {
                             Text(
                                 text = video.snippet?.channelTitle.toString(),
                                 fontSize = 10.sp,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
                                 color = if (isDark) Color.White else Color.Black
                             )
                             val isVerified = channelData?.items?.get(0)?.status?.isLinked == true

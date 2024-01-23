@@ -95,7 +95,6 @@ import org.company.app.utils.Constant.VIDEO_URL
 
 class DetailScreen(
     private val video: Item? = null,
-    private val search: org.company.app.data.model.search.Item? = null,
     private val channelData: org.company.app.data.model.channel.Item? = null
 ) : Screen {
 
@@ -114,7 +113,6 @@ class DetailScreen(
         val isDark by LocalThemeIsDark.current
 
         LaunchedEffect(Unit) {
-            //Video Comments
             viewModel.getVideoComments(video?.id.toString(), order = "relevance")
             viewModel.getRelevance()
         }
@@ -140,7 +138,7 @@ class DetailScreen(
             modifier = Modifier.fillMaxSize().verticalScroll(state = rememberScrollState())
         ) {
 
-            // Thumbnail
+
             if (displayVideoPlayer) {
                 VideoPlayer(
                     modifier = Modifier.fillMaxWidth().height(340.dp),
@@ -170,7 +168,7 @@ class DetailScreen(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize(),
                     )
-                    //play icon
+
                     Box(
                         modifier = Modifier.width(89.dp).height(120.dp),
                         contentAlignment = Alignment.Center
@@ -208,7 +206,7 @@ class DetailScreen(
                         )
                     }
 
-                    // Video Total Time
+
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
@@ -226,7 +224,7 @@ class DetailScreen(
                 }
             }
 
-            // Title and Arrow Down Icon
+
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -246,7 +244,7 @@ class DetailScreen(
                     })
             }
 
-            // Views, Date, Likes, Dislikes, Share, Download, Save
+
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -264,7 +262,7 @@ class DetailScreen(
                     fontSize = 14.sp
                 )
             }
-            // Horizontal Divider
+
             Divider(
                 modifier = Modifier.fillMaxWidth().height(1.dp).padding(vertical = 8.dp),
                 thickness = 4.dp,
@@ -276,7 +274,7 @@ class DetailScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
             ) {
-                // Thumbs Up
+
                 Card(
                     modifier = Modifier.height(40.dp).padding(4.dp).background(
                         color = Color.White, shape = RoundedCornerShape(8.dp)
@@ -303,14 +301,14 @@ class DetailScreen(
 
                         Spacer(modifier = Modifier.width(4.dp))
 
-                        // Vertical line
+
                         Box(
                             modifier = Modifier.fillMaxHeight().width(1.dp).background(Color.White)
                         )
 
                         Spacer(modifier = Modifier.width(4.dp))
 
-                        // Thumbs Down
+
                         Icon(
                             imageVector = Icons.Default.ThumbDown,
                             contentDescription = null,
@@ -320,7 +318,7 @@ class DetailScreen(
                     }
                 }
 
-                // Share
+
                 Card(
                     modifier = Modifier.height(40.dp) .pointerHoverIcon(icon = PointerIcon.Hand).padding(4.dp),
                     onClick = {
@@ -353,10 +351,10 @@ class DetailScreen(
                     }
                 }
 
-                // Download
+
                 Card(
                     modifier = Modifier.height(40.dp) .pointerHoverIcon(icon = PointerIcon.Hand).padding(4.dp),
-                    onClick = { /* Handle Download click */ },
+                    onClick = {  },
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -378,10 +376,10 @@ class DetailScreen(
                     }
                 }
 
-                // Save
+
                 Card(
                     modifier = Modifier.height(40.dp) .pointerHoverIcon(icon = PointerIcon.Hand).padding(4.dp),
-                    onClick = { /* Handle Save click */ },
+                    onClick = { },
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -401,21 +399,21 @@ class DetailScreen(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // Horizontal Divider
+
             Divider(
                 modifier = Modifier.fillMaxWidth().height(2.dp),
-                thickness = 1.dp, // Adjust the thickness as needed
-                color = Color.LightGray // Use a different color for better visibility
+                thickness = 1.dp,
+                color = Color.LightGray
             )
 
 
-            // Channel Section
+
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Channel Image
+
                 channelData?.snippet?.thumbnails?.default?.url?.let {
                     rememberImagePainter(
                         it
@@ -431,7 +429,7 @@ class DetailScreen(
                     )
                 }
 
-                // Channel Info
+
                 Column(
                     modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
@@ -464,18 +462,18 @@ class DetailScreen(
                     color = Color.Red,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    modifier = Modifier .pointerHoverIcon(icon = PointerIcon.Hand).clickable { /* Handle subscribe click */ })
+                    modifier = Modifier .pointerHoverIcon(icon = PointerIcon.Hand).clickable {})
             }
 
-            // Horizontal Divider
+
             Divider(
                 modifier = Modifier.fillMaxWidth().height(2.dp),
-                thickness = 1.dp, // Adjust the thickness as needed
-                color = Color.LightGray // Use a different color for better visibility
+                thickness = 1.dp,
+                color = Color.LightGray
             )
 
 
-            // Sample Comment
+
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .pointerHoverIcon(icon = PointerIcon.Hand)
