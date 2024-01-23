@@ -156,6 +156,9 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.company.app.desktopApp"
             packageVersion = "1.0.0"
+            description = "YouTube Clone Using Kotlin Multiplatform"
+            copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
+            outputBaseDir.set(project.buildFile.resolve("Project_Executable"))
         }
     }
 }
