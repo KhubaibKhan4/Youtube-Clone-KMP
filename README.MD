@@ -113,8 +113,7 @@ Let's chat about potential projects, job opportunities, or any other collaborati
 If you find my work helpful, you can support me by [buying me a coffee](https://www.buymeacoffee.com/khubaibkhan).
 
 ## Download Installers
-[![Download APK](https://user-images.githubusercontent.com/114044633/223920025-83687de0-e463-4c5d-8122-e06e4bb7d40c.png)](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/raw/master/screenshots/youtube-clone-kmp.apk)
-
+[<img src="https://user-images.githubusercontent.com/114044633/223920025-83687de0-e463-4c5d-8122-e06e4bb7d40c.png" width="200">](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/raw/master/screenshots/youtube-clone-kmp.apk)
 
 ## Screen Shots
 
