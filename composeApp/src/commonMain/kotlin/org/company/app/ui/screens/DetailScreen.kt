@@ -67,8 +67,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupPositionProvider
+import androidx.compose.ui.window.PopupProperties
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
@@ -95,6 +99,7 @@ import org.company.app.utils.Constant.VIDEO_URL
 
 class DetailScreen(
     private val video: Item? = null,
+    private val search: org.company.app.data.model.search.Item? = null,
     private val channelData: org.company.app.data.model.channel.Item? = null
 ) : Screen {
 
