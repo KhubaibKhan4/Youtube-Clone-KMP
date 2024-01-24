@@ -195,7 +195,8 @@ Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 - to create .apk file for the Andorid. We simply need to 'build > Build Bundles > Build APK'.
 ## Desktop 
 - to create Native Distributable for the Desktop Windows, MacOS, Linux. We need to follow the procedure.
-- 'First of all following inside the 'build.gradle.kts'  'compose.desktop {
+- 'First of all following inside the 'build.gradle.kts'  '
+compose.desktop {
     application {
         mainClass = "MainKt"
 
