@@ -190,3 +190,35 @@ To run the application on iPhone device/simulator:
 ### Browser
 Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 
+# Create Native Distributables
+## Android
+- to create .apk file for the Andorid. We simply need to 'build > Build Bundles > Build APK'.
+## Desktop 
+- to create Native Distributable for the Desktop Windows, MacOS, Linux. We need to follow the procedure.
+- 'First of all following inside the 'build.gradle.kts'  'compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "org.company.app.desktopApp"
+            packageVersion = "1.0.0"
+            description = "YouTube Clone Using Kotlin Multiplatform"
+            copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
+            windows {
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+            }
+            macOS {
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+            }
+            linux {
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+            }
+        }
+    }
+}'
+
+- Now simply run the command 'gradle createDistributable or ./gradlew createDistributable'
+
+## JS 
+- for the Js Web App, we simply need to execute the 'gradle jsBrowserWebpack'
