@@ -46,7 +46,6 @@ custom-ui = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:custom-u
 ffmpeg-platform = { module = "org.bytedeco.javacpp-presets:ffmpeg-platform", version.ref = "ffmpegPlatform" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
-webview = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "webview-kmp" }
 vlcj = { module = "uk.co.caprica:vlcj", version.ref = "vlcj" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }
@@ -68,8 +67,6 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 voyager-tab-navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 screen-size = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "size" }
-javafx = { group = "org.openjfx", name = "javafx", version.ref = "javafx" }
-
 
 
 [plugins]
