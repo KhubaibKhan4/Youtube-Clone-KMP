@@ -158,7 +158,15 @@ compose.desktop {
             packageVersion = "1.0.0"
             description = "YouTube Clone Using Kotlin Multiplatform"
             copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
-            outputBaseDir.set(project.buildFile.resolve("Project_Executable"))
+            windows {
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+            }
+            macOS {
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+            }
+            linux {
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+            }
         }
     }
 }
