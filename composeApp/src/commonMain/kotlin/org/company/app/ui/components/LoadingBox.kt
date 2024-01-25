@@ -16,7 +16,7 @@ fun LoadingBox() {
         contentAlignment = Alignment.Center
     ) {
       CircularProgressIndicator(
-          progress = 0.89f,
+          progress = 0.89f
       )
     }
 }
