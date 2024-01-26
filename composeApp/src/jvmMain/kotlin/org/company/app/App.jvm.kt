@@ -39,7 +39,10 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
     val videoId = splitLinkForVideoId(url.toString())
     DesktopWebView(modifier, "https://www.youtube.com/embed/$videoId")
 }
-
+@Composable
+internal actual fun provideShortCuts(){
+    return
+}
 fun splitLinkForVideoId(
     url: String?
 ): String {

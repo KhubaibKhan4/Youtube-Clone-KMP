@@ -1,8 +1,12 @@
 package org.company.app
 
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
+import android.graphics.drawable.Icon
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -20,6 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.getSystemService
 import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
 import java.util.Locale
@@ -43,6 +49,38 @@ class AppActivity : ComponentActivity() {
         }
     }
 }
+private fun dynamicShortcut(context: Context){
+    val shortcutManager = context.getSystemService<ShortcutManager>() !!
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+        return
+    }
+    if (shortcutManager.isRequestPinShortcutSupported){
+        val pinShortCutInfo = ShortcutInfo.Builder(context,"pin")
+            .setShortLabel("Top Music")
+            .setLongLabel("Top Music Videos from The Trending")
+            .setIcon(Icon.createWithResource(context,R.drawable.music_icon))
+            .setIntent(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://github.com/khubaibkhan4/")
+                )
+            )
+            .build()
+        val pinnedShortCallback = shortcutManager.createShortcutResultIntent(pinShortCutInfo)
+        val successCallback = PendingIntent.getBroadcast(
+            context,
+            0,
+            pinnedShortCallback,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        shortcutManager.requestPinShortcut(pinShortCutInfo,successCallback.intentSender)
+    }
+}
+@Composable
+internal actual fun provideShortCuts(){
+    val context = LocalContext.current
+    dynamicShortcut(context)
+}
 
 internal actual fun openUrl(url: String?) {
     val uri = url?.let { Uri.parse(it) } ?: return
@@ -53,36 +91,6 @@ internal actual fun openUrl(url: String?) {
     }
     AndroidApp.INSTANCE.startActivity(intent)
 }
-/*@Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
-    AndroidView(
-        modifier = modifier,
-        factory = { context ->
-            VideoView(context).apply {
-                setVideoPath(url)
-                val mediaController = MediaController(context)
-                mediaController.setAnchorView(this)
-                setMediaController(mediaController)
-                start()
-            }
-        },
-        update = {})
-}*/
-/*@RequiresApi(Build.VERSION_CODES.S)
-@Composable
-internal actual fun VideoPlayer(modifier: Modifier,url: String?, thumbnail:String?){
-    var isPlaying by remember { mutableStateOf(false) }
-    CustomVideoPlayer(
-        modifier = modifier,
-        videoUrl = url,
-        thumbnailResId = thumbnail.toString(),
-        isPlaying = isPlaying,
-        onClickPlay = {
-            // Toggle the play state
-            isPlaying = !isPlaying
-        }
-    )
-}*/
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
@@ -90,11 +98,6 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
     YoutubeVideoPlayer(youtubeURL = url)
 }
 
-/*@RequiresApi(Build.VERSION_CODES.S)
-@Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
-
-}*/
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable

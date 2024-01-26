@@ -55,6 +55,10 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
         modifier = modifier
     )
 }
+@Composable
+internal actual fun provideShortCuts(){
+    return
+}
 
 @Composable
 internal actual fun Notify(message: String) {

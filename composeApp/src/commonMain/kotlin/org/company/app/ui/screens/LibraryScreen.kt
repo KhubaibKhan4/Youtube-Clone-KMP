@@ -18,6 +18,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,11 +29,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import org.company.app.provideShortCuts
 import org.company.app.ui.components.TopBar
 
 class LibraryScreen: Screen {
     @Composable
     override fun Content() {
+        var isShortEnabled by remember { mutableStateOf(false) }
         TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -67,6 +73,23 @@ class LibraryScreen: Screen {
                 )
             ) {
                 Text(text = "Sign in")
+            }
+
+            Spacer(modifier = Modifier.height(15.dp))
+            TextButton(
+                onClick = {
+                    isShortEnabled  = !isShortEnabled
+                },
+                shape = RoundedCornerShape(24.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Blue,
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = "Add Videos ShortCut")
+            }
+            if (isShortEnabled){
+                provideShortCuts()
             }
         }
     }

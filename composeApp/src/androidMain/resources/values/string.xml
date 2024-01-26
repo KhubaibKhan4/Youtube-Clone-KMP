@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="description">Videos from YouTube Clone</string>
+    <string name="shortcut_label_short">Top Trending Videos</string>
+    <string name="shortcut_label_long">Top Trending Videos from the YouTube Clone KMP</string>
+    <string name="shortcut_disabled_message">Shortcut is displayed</string>
+</resources>

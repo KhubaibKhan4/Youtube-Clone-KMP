@@ -43,6 +43,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -219,9 +220,9 @@ fun RowScope.TabItem(tab: Tab) {
         unselectedContentColor = Color.Black
     )
 }
-
 internal expect fun openUrl(url: String?)
-
+@Composable
+internal expect fun provideShortCuts()
 @Composable
 internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)
 @Composable
