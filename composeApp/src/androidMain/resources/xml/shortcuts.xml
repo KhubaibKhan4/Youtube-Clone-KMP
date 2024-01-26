@@ -9,8 +9,8 @@
         android:shortcutDisabledMessage="@string/shortcut_disabled_message">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="org.company.app"
-            android:targetClass="org.company.app.AppKt" />
+            android:targetPackage="org.company.app.androidApp"
+            android:targetClass="org.company.app.AppActivity" />
         <categories android:name="android.shortcut.conversation" />
         <capability-binding android:key="actions.intent.CREATE_MESSAGE" />
     </shortcut>
