@@ -52,6 +52,43 @@ class AppActivity : ComponentActivity() {
         }
     }
 }
+private fun PinnedShortcut(context: Context){
+    val shortcutManager = context.getSystemService<ShortcutManager>()!!
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+        return
+    }
+    if (shortcutManager.isRequestPinShortcutSupported){
+        val shortcutInfo = ShortcutInfo.Builder(context,"ShortcutPinned")
+            .setIcon(Icon.createWithResource(context,R.drawable.sports))
+            .setShortLabel("Trending Movies")
+            .setLongLabel("Top Trending Movies from YouTube")
+            .setIntent(
+                Intent(Intent.ACTION_VIEW)
+                    .setData(Uri.parse("https://linkedin.com/in/khubaibkhandev/"))
+            )
+            .build()
+        val shortCutCallBack = shortcutManager.createShortcutResultIntent(shortcutInfo)
+        val successCallBack = PendingIntent.getBroadcast(
+            context,
+            0,
+            shortCutCallBack,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        shortcutManager.requestPinShortcut(shortcutInfo, successCallBack.intentSender)
+    }
+}
+private fun DynamicShortCut(context: Context){
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+        return
+    }
+    val shortcutInfoCompact = ShortcutInfoCompat.Builder(context,"Dynamic")
+        .setIcon(IconCompat.createWithResource(context,R.drawable.sports))
+        .setShortLabel("Trending Dramas")
+        .setLongLabel("Top Trending Dramas")
+        .setIntent(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/khubaibkhan4/")))
+        .build()
+    ShortcutManagerCompat.pushDynamicShortcut(context,shortcutInfoCompact)
+}
 private fun topNewsPinnedShortcut(context: Context) {
     val shortcutManager = context.getSystemService<ShortcutManager>()!!
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
