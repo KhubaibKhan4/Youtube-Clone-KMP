@@ -58,16 +58,16 @@ private fun topNewsPinnedShortcut(context: Context) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         return
     }
+    val component = ComponentName("org.company.app.androidApp", "org.company.app.AppActivity")
+    val intent = Intent(context, AndroidApp::class.java).apply {
+        setComponent(component)
+    }
     if (shortcutManager.isRequestPinShortcutSupported) {
         val shortcutInfo = ShortcutInfo.Builder(context, "top_News")
-            .setIcon(Icon.createWithResource(context, R.drawable.music_icon))
+            .setIcon(Icon.createWithResource(context, R.drawable.news_app))
             .setShortLabel("Trending News")
             .setLongLabel("Top Trending News Around the World")
-            .setIntent(
-                Intent(
-                    Intent.ACTION_SEND
-                ).setComponent(ComponentName("org.company.app.androidApp","org.company.app.AppActivity"))
-            )
+            .setIntent(intent)
             .build()
         val pinnedCallBack = shortcutManager.createShortcutResultIntent(shortcutInfo)
         val successCallBack =
@@ -85,7 +85,7 @@ private fun topSportsPinnedShortcut(context: Context) {
         val shortcutInfo = ShortcutInfo.Builder(context, "top_sports")
             .setShortLabel("Trending Sports")
             .setLongLabel("Trending Sports around the World")
-            .setIcon(Icon.createWithResource(context, R.drawable.music_icon))
+            .setIcon(Icon.createWithResource(context, R.drawable.sports))
             .setIntent(
                 Intent(
                     Intent.ACTION_VIEW,
@@ -139,25 +139,51 @@ private fun topTrendingVideosDynamicShortcut(context: Context) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         return
     }
+    val componentName = ComponentName("org.company.app.androidApp", "org.company.app.AppActivity")
+    val intent = Intent(context, AndroidApp::class.java).apply {
+        setComponent(componentName)
+    }
     val shortcut = ShortcutInfoCompat.Builder(context, "topVideos")
-        .setIcon(IconCompat.createWithResource(context, R.drawable.music_icon))
+        .setIcon(IconCompat.createWithResource(context, R.drawable.video))
         .setShortLabel("Top Trending News")
         .setLongLabel("Top Trending Videos From Different Regions")
+        .setIntent(intent)
+        .build()
+    ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
+}
+
+private fun topSportsDynamicShortcut(context: Context){
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+        return
+    }
+    val shortcut = ShortcutInfoCompat.Builder(context,"topSports")
+        .setIcon(IconCompat.createWithResource(context,R.drawable.sports))
+        .setShortLabel("Latest Sports")
+        .setLongLabel("Latest Sports Trending Videos")
         .setIntent(
-          Intent(Intent.ACTION_VIEW)
-              .setPackage("org.company.app.androidApp")
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://linkedin.com/in/71khubaibkhandev/")
+            )
         )
         .build()
     ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
 }
 
+/*
+* Pinned Shortcut creates a new icon.
+* Dynamic Add the shortcut on the launcher by dynamically ( by Button Click ).
+* Static Shortcut is already added from the Manifest File.
+*
+* */
 @Composable
 internal actual fun provideShortCuts() {
     val context = LocalContext.current
-    topTrendingVideosDynamicShortcut(context)
-    topMusicPinnedShortcut(context)
-    topSportsPinnedShortcut(context)
-    topNewsPinnedShortcut(context)
+    topSportsDynamicShortcut(context)
+   // topTrendingVideosDynamicShortcut(context)
+   // topMusicPinnedShortcut(context)
+   // topSportsPinnedShortcut(context)
+   // topNewsPinnedShortcut(context)
 
 }
 
