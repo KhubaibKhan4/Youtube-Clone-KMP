@@ -129,7 +129,7 @@ If you find my work helpful, you can support me by [buying me a coffee](https://
 | ![Screenshot 25](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/40.png) | ![Screenshot 26](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/46.png) | ![Screenshot 27](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/49.png) |
 | ![Screenshot 28](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/50.png) | ![Screenshot 29](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/51.png) | ![Screenshot 30](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/52.png) |
 | ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/53.png) | ![Screenshot 32](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/62.png) | ![Screenshot 33](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/63.png) |
-| ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/65.png) |
+| ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/65.png) | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/69.png) | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/70.png) | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/71.png) |
 
 ## Desktop Screen Shots
 
