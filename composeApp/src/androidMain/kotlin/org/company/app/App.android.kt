@@ -2,6 +2,7 @@ package org.company.app
 
 import android.app.Application
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
@@ -64,9 +65,8 @@ private fun topNewsPinnedShortcut(context: Context) {
             .setLongLabel("Top Trending News Around the World")
             .setIntent(
                 Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://github.com/khubaibkhan4/")
-                )
+                    Intent.ACTION_SEND
+                ).setComponent(ComponentName("org.company.app.androidApp","org.company.app.AppActivity"))
             )
             .build()
         val pinnedCallBack = shortcutManager.createShortcutResultIntent(shortcutInfo)
@@ -144,10 +144,8 @@ private fun topTrendingVideosDynamicShortcut(context: Context) {
         .setShortLabel("Top Trending News")
         .setLongLabel("Top Trending Videos From Different Regions")
         .setIntent(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://github.com/khubaibkhan4/")
-            )
+          Intent(Intent.ACTION_VIEW)
+              .setPackage("org.company.app.androidApp")
         )
         .build()
     ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
