@@ -52,7 +52,6 @@ class AppActivity : ComponentActivity() {
         }
     }
 }
-
 private fun topNewsPinnedShortcut(context: Context) {
     val shortcutManager = context.getSystemService<ShortcutManager>()!!
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
