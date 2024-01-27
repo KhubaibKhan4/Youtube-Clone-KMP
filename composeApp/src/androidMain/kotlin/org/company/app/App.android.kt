@@ -24,8 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.getSystemService
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
 import java.util.Locale
@@ -49,16 +51,71 @@ class AppActivity : ComponentActivity() {
         }
     }
 }
-private fun dynamicShortcut(context: Context){
-    val shortcutManager = context.getSystemService<ShortcutManager>() !!
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+
+private fun topNewsPinnedShortcut(context: Context) {
+    val shortcutManager = context.getSystemService<ShortcutManager>()!!
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         return
     }
-    if (shortcutManager.isRequestPinShortcutSupported){
-        val pinShortCutInfo = ShortcutInfo.Builder(context,"pin")
+    if (shortcutManager.isRequestPinShortcutSupported) {
+        val shortcutInfo = ShortcutInfo.Builder(context, "top_News")
+            .setIcon(Icon.createWithResource(context, R.drawable.music_icon))
+            .setShortLabel("Trending News")
+            .setLongLabel("Top Trending News Around the World")
+            .setIntent(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://github.com/khubaibkhan4/")
+                )
+            )
+            .build()
+        val pinnedCallBack = shortcutManager.createShortcutResultIntent(shortcutInfo)
+        val successCallBack =
+            PendingIntent.getBroadcast(context, 0, pinnedCallBack, PendingIntent.FLAG_IMMUTABLE)
+        shortcutManager.requestPinShortcut(shortcutInfo, successCallBack.intentSender)
+    }
+}
+
+private fun topSportsPinnedShortcut(context: Context) {
+    val shortcutManager = context.getSystemService<ShortcutManager>()!!
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        return
+    }
+    if (shortcutManager.isRequestPinShortcutSupported) {
+        val shortcutInfo = ShortcutInfo.Builder(context, "top_sports")
+            .setShortLabel("Trending Sports")
+            .setLongLabel("Trending Sports around the World")
+            .setIcon(Icon.createWithResource(context, R.drawable.music_icon))
+            .setIntent(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://linkedin.com/in/khubaibkhandev/")
+                )
+            )
+            .build()
+        val pinnedCallBack = shortcutManager.createShortcutResultIntent(shortcutInfo)
+        val successCallBack = PendingIntent.getBroadcast(
+            context,
+            0,
+            pinnedCallBack,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        shortcutManager.requestPinShortcut(shortcutInfo, successCallBack.intentSender)
+    }
+
+}
+
+//PinnedShortcut
+private fun topMusicPinnedShortcut(context: Context) {
+    val shortcutManager = context.getSystemService<ShortcutManager>()!!
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        return
+    }
+    if (shortcutManager.isRequestPinShortcutSupported) {
+        val pinShortCutInfo = ShortcutInfo.Builder(context, "pin")
             .setShortLabel("Top Music")
             .setLongLabel("Top Music Videos from The Trending")
-            .setIcon(Icon.createWithResource(context,R.drawable.music_icon))
+            .setIcon(Icon.createWithResource(context, R.drawable.music_icon))
             .setIntent(
                 Intent(
                     Intent.ACTION_VIEW,
@@ -73,13 +130,37 @@ private fun dynamicShortcut(context: Context){
             pinnedShortCallback,
             PendingIntent.FLAG_IMMUTABLE
         )
-        shortcutManager.requestPinShortcut(pinShortCutInfo,successCallback.intentSender)
+        shortcutManager.requestPinShortcut(pinShortCutInfo, successCallback.intentSender)
     }
 }
+
+//Dynamic Shortcut
+private fun topTrendingVideosDynamicShortcut(context: Context) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        return
+    }
+    val shortcut = ShortcutInfoCompat.Builder(context, "topVideos")
+        .setIcon(IconCompat.createWithResource(context, R.drawable.music_icon))
+        .setShortLabel("Top Trending News")
+        .setLongLabel("Top Trending Videos From Different Regions")
+        .setIntent(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://github.com/khubaibkhan4/")
+            )
+        )
+        .build()
+    ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
+}
+
 @Composable
-internal actual fun provideShortCuts(){
+internal actual fun provideShortCuts() {
     val context = LocalContext.current
-    dynamicShortcut(context)
+    topTrendingVideosDynamicShortcut(context)
+    topMusicPinnedShortcut(context)
+    topSportsPinnedShortcut(context)
+    topNewsPinnedShortcut(context)
+
 }
 
 internal actual fun openUrl(url: String?) {
@@ -94,7 +175,7 @@ internal actual fun openUrl(url: String?) {
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)  {
+internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     YoutubeVideoPlayer(youtubeURL = url)
 }
 
