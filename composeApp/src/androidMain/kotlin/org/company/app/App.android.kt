@@ -216,6 +216,8 @@ private fun topSportsDynamicShortcut(context: Context){
 internal actual fun provideShortCuts() {
     val context = LocalContext.current
     topSportsDynamicShortcut(context)
+
+    //Going to Implement the Tiles & The Widget.
    // topTrendingVideosDynamicShortcut(context)
    // topMusicPinnedShortcut(context)
    // topSportsPinnedShortcut(context)
