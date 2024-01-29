@@ -1,0 +1,26 @@
+CREATE TABLE youtubeEntity(
+ id INTEGER NOT NULL PRIMARY KEY,
+ title TEXT NOT NULL,
+ thumbnail TEXT NOT NULL,
+ views TEXT NOT NULL,
+ channelName TEXT NOT NULL,
+ pubData TEXT NOT NULL,
+ channelImage TEXT NOT NULL
+);
+
+getVideoById:
+SELECT *
+FROM youtubeEntity
+WHERE id = :id;
+
+getAllVideos:
+SELECT * FROM youtubeEntity;
+
+insertVideos:
+INSERT OR REPLACE
+INTO youtubeEntity
+VALUES (?,?,?,?,?,?,?);
+
+deleteVideoById:
+DELETE FROM youtubeEntity
+WHERE id = :id;

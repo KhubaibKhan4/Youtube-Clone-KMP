@@ -193,10 +193,10 @@ buildConfig {
 }
 sqldelight {
     databases {
-        create("MyDatabase") {
+        create("YoutubeDatabase") {
             // Database configuration here.
             // https://cashapp.github.io/sqldelight
-            packageName.set("org.intelli.voice.db")
+            packageName.set("sql-delight.db")
         }
     }
 }
