@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.libres)
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.sqlDelight)
     id ("com.google.osdetector") version "1.7.3"
 }
 
@@ -83,6 +84,7 @@ kotlin {
             implementation(libs.core)
             implementation(libs.core)
             implementation(libs.custom.ui)
+            implementation(libs.sqlDelight.driver.android)
         }
 
         jvmMain.dependencies {
@@ -105,16 +107,19 @@ kotlin {
             implementation("org.openjfx:javafx-swing:19:${fxSuffix}")
             implementation("org.openjfx:javafx-web:19:${fxSuffix}")
             implementation("org.openjfx:javafx-media:19:${fxSuffix}")
+            implementation(libs.sqlDelight.driver.sqlite)
         }
 
         jsMain.dependencies {
             implementation(compose.html.core)
             implementation(compose.html.svg)
             implementation(compose.runtime)
+            implementation(libs.sqlDelight.driver.js)
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            implementation(libs.sqlDelight.driver.native)
         }
 
     }
@@ -185,4 +190,13 @@ tasks.getByPath("jsProcessResources").dependsOn("libresGenerateResources")
 buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+}
+sqldelight {
+    databases {
+        create("MyDatabase") {
+            // Database configuration here.
+            // https://cashapp.github.io/sqldelight
+            packageName.set("org.intelli.voice.db")
+        }
+    }
 }
