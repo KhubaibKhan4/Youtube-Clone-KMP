@@ -54,7 +54,7 @@ import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.comments.Item
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.ChannelState
+import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.formatLikes
@@ -87,19 +87,19 @@ fun CommentItems(comments: Item) {
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(comments.snippet.channelId)
     }
-    val state by viewModel.channelDetails.collectAsState()
+    val state: ResultState<Channel> by viewModel.channelDetails.collectAsState()
     when (state) {
-        is ChannelState.LOADING -> {
+        is ResultState.LOADING -> {
             CircularProgressIndicator()
         }
 
-        is ChannelState.SUCCESS -> {
-            val data = (state as ChannelState.SUCCESS).channel
+        is ResultState.SUCCESS -> {
+            val data = (state as ResultState.SUCCESS).response
             channelData = data
         }
 
-        is ChannelState.ERROR -> {
-            val error = (state as ChannelState.ERROR).error
+        is ResultState.ERROR -> {
+            val error = (state as ResultState.ERROR).error
             ErrorBox(error)
         }
     }

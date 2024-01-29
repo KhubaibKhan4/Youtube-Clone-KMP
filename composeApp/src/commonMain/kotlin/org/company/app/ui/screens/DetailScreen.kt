@@ -67,12 +67,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupPositionProvider
-import androidx.compose.ui.window.PopupProperties
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
@@ -85,9 +81,9 @@ import org.company.app.ShareManager
 import org.company.app.VideoPlayer
 import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.videos.Item
+import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.CommentsState
-import org.company.app.domain.usecases.YoutubeState
+import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.CommentsList
@@ -108,7 +104,7 @@ class DetailScreen(
     override fun Content() {
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
-        var stateRelevance by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
+        var stateRelevance by remember { mutableStateOf<ResultState<Youtube>>(ResultState.LOADING) }
         var commentData by remember { mutableStateOf<Comments?>(null) }
         var descriptionEnabled by remember { mutableStateOf(false) }
         var displayVideoPlayer by remember { mutableStateOf(false) }
@@ -125,17 +121,17 @@ class DetailScreen(
         val commentsState by viewModel.videoComments.collectAsState()
 
         when (commentsState) {
-            is CommentsState.LOADING -> {
+            is ResultState.LOADING -> {
                 //LoadingBox()
             }
 
-            is CommentsState.SUCCESS -> {
-                val data = (commentsState as CommentsState.SUCCESS).comments
+            is ResultState.SUCCESS -> {
+                val data = (commentsState as ResultState.SUCCESS).response
                 commentData = data
             }
 
-            is CommentsState.ERROR -> {
-                val error = (commentsState as CommentsState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (commentsState as ResultState.ERROR).error
                 ErrorBox(error)
             }
         }

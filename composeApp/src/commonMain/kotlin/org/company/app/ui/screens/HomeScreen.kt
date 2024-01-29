@@ -9,8 +9,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.UserRegion
+import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.YoutubeState
+import org.company.app.domain.usecases.ResultState
 import org.company.app.isConnected
 import org.company.app.presentation.MainViewModel
 import org.company.app.ui.components.ErrorBox
@@ -23,25 +24,25 @@ class HomeScreen() : Screen {
     override fun Content() {
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
-        var state by remember { mutableStateOf<YoutubeState>(YoutubeState.LOADING) }
+        var state by remember { mutableStateOf<ResultState<Youtube>>(ResultState.LOADING) }
 
         LaunchedEffect(Unit) {
             viewModel.getVideosList(UserRegion())
         }
         state = viewModel.videos.collectAsState().value
         when (state) {
-            is YoutubeState.LOADING -> {
+            is ResultState.LOADING -> {
                 /*LoadingBox()*/
                 ShimmerEffectMain()
             }
 
-            is YoutubeState.SUCCESS -> {
-                val data = (state as YoutubeState.SUCCESS).youtube
+            is ResultState.SUCCESS -> {
+                val data = (state as ResultState.SUCCESS).response
                 VideosList(data)
             }
 
-            is YoutubeState.ERROR -> {
-                val error = (state as YoutubeState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (state as ResultState.ERROR).error
                 if (!isConnected()) {
                     NoInternet()
                 } else {

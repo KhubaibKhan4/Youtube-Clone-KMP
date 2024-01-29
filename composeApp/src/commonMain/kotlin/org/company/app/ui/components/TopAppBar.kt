@@ -84,9 +84,7 @@ import org.company.app.data.model.channel.Item
 import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.ChannelState
-import org.company.app.domain.usecases.SearchState
-import org.company.app.domain.usecases.YoutubeState
+import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.AccountScreen
@@ -100,7 +98,7 @@ fun TopBar(modifier: Modifier) {
     var isDark by LocalThemeIsDark.current
     val navigator = LocalNavigator.current
     var isSearchEnabled by remember { mutableStateOf(false) }
-    var state by remember { mutableStateOf<SearchState>(SearchState.LOADING) }
+    var state by remember { mutableStateOf<ResultState<Search>>(ResultState.LOADING) }
     var data by remember { mutableStateOf<Search?>(null) }
     var error by remember { mutableStateOf(false) }
     var errorData by remember { mutableStateOf("") }
@@ -154,20 +152,20 @@ fun TopBar(modifier: Modifier) {
     } else {
         state = viewModel.search.collectAsState().value
         when (state) {
-            is SearchState.LOADING -> {
+            is ResultState.LOADING -> {
                 //isLoading = true
             }
 
-            is SearchState.SUCCESS -> {
+            is ResultState.SUCCESS -> {
                 isLoading = false
-                val response = (state as SearchState.SUCCESS).search
+                val response = (state as ResultState.SUCCESS).response
                 data = response
             }
 
-            is SearchState.ERROR -> {
+            is ResultState.ERROR -> {
                 isLoading = false
                 error = true
-                val error = (state as SearchState.ERROR).error
+                val error = (state as ResultState.ERROR).error
                 errorData = error
             }
         }
@@ -295,32 +293,32 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
     val state by viewModel.channelDetails.collectAsState()
     val videoState by viewModel.singleVideo.collectAsState()
     when (state) {
-        is ChannelState.LOADING -> {
+        is ResultState.LOADING -> {
             // CircularProgressIndicator()
         }
 
-        is ChannelState.SUCCESS -> {
-            val data = (state as ChannelState.SUCCESS).channel
+        is ResultState.SUCCESS -> {
+            val data = (state as ResultState.SUCCESS).response
             channelDetails = data
         }
 
-        is ChannelState.ERROR -> {
-            val error = (state as ChannelState.ERROR).error
+        is ResultState.ERROR -> {
+            val error = (state as ResultState.ERROR).error
             ErrorBox(error)
         }
     }
     when (videoState) {
-        is YoutubeState.LOADING -> {
+        is ResultState.LOADING -> {
             //CircularProgressIndicator()
         }
 
-        is YoutubeState.SUCCESS -> {
-            val response = (videoState as YoutubeState.SUCCESS).youtube
+        is ResultState.SUCCESS -> {
+            val response = (videoState as ResultState.SUCCESS).response
             videoDetail = response
         }
 
-        is YoutubeState.ERROR -> {
-            val error = (videoState as YoutubeState.ERROR).error
+        is ResultState.ERROR -> {
+            val error = (videoState as ResultState.ERROR).error
             ErrorBox(error)
         }
     }

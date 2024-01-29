@@ -92,10 +92,8 @@ import org.company.app.data.model.comments.Comments
 import org.company.app.data.model.videos.Item
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.ChannelState
-import org.company.app.domain.usecases.CommentsState
+import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
-import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.ChannelDetail
 import org.company.app.ui.screens.ChannelScreen
 import org.company.app.ui.screens.formatLikes
@@ -143,33 +141,33 @@ fun ShortItem(
     val commentsState by viewModel.videoComments.collectAsState()
     val state by viewModel.channelDetails.collectAsState()
     when (commentsState) {
-        is CommentsState.LOADING -> {
+        is ResultState.LOADING -> {
             //LoadingBox()
         }
 
-        is CommentsState.SUCCESS -> {
-            val data = (commentsState as CommentsState.SUCCESS).comments
+        is ResultState.SUCCESS -> {
+            val data = (commentsState as ResultState.SUCCESS).response
             commentData = data
         }
 
-        is CommentsState.ERROR -> {
-            val error = (commentsState as CommentsState.ERROR).error
+        is ResultState.ERROR -> {
+            val error = (commentsState as ResultState.ERROR).error
             ErrorBox(error)
         }
     }
     when (state) {
-        is ChannelState.LOADING -> {
+        is ResultState.LOADING -> {
             //LoadingBox()
         }
 
-        is ChannelState.SUCCESS -> {
-            val data = (state as ChannelState.SUCCESS).channel
+        is ResultState.SUCCESS -> {
+            val data = (state as ResultState.SUCCESS).response
             channelDetail = data
 
         }
 
-        is ChannelState.ERROR -> {
-            val error = (state as ChannelState.ERROR).error
+        is ResultState.ERROR -> {
+            val error = (state as ResultState.ERROR).error
             ErrorBox(error)
         }
     }

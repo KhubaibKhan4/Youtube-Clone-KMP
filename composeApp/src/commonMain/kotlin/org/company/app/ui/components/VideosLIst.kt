@@ -77,8 +77,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import dev.icerock.moko.mvvm.compose.getViewModel
-import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -93,9 +91,7 @@ import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Item
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.CategoriesState
-import org.company.app.domain.usecases.ChannelState
-import org.company.app.domain.usecases.SearchState
+import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.ChannelScreen
@@ -129,37 +125,37 @@ fun VideosList(youtube: Youtube) {
     val state by viewModel.videoCategories.collectAsState()
     val categoriesVideos by viewModel.search.collectAsState()
     when (state) {
-        is CategoriesState.LOADING -> {
+        is ResultState.LOADING -> {
             // Can add fast animation too.
             ShimmerEffectMain()
         }
 
-        is CategoriesState.SUCCESS -> {
-            val data = (state as CategoriesState.SUCCESS).categories
+        is ResultState.SUCCESS -> {
+            val data = (state as ResultState.SUCCESS).response
             videoCategories = data
         }
 
-        is CategoriesState.ERROR -> {
-            val error = (state as CategoriesState.ERROR).error
+        is ResultState.ERROR -> {
+            val error = (state as ResultState.ERROR).error
             ErrorBox(error)
         }
     }
 
 
     when (categoriesVideos) {
-        is SearchState.LOADING -> {
+        is ResultState.LOADING -> {
             if (isAnyCategorySelected) {
                 ShimmerEffectMain()
             }
         }
 
-        is SearchState.SUCCESS -> {
-            val data = (categoriesVideos as SearchState.SUCCESS).search
+        is ResultState.SUCCESS -> {
+            val data = (categoriesVideos as ResultState.SUCCESS).response
             videosByCategories = data
         }
 
-        is SearchState.ERROR -> {
-            val error = (categoriesVideos as SearchState.ERROR).error
+        is ResultState.ERROR -> {
+            val error = (categoriesVideos as ResultState.ERROR).error
             ErrorBox(error)
         }
     }
@@ -536,17 +532,17 @@ fun VideoItemCard(video: Item) {
     }
     val state by viewModel.channelDetails.collectAsState()
     when (state) {
-        is ChannelState.LOADING -> {
+        is ResultState.LOADING -> {
             LoadingBox()
         }
 
-        is ChannelState.SUCCESS -> {
-            val data = (state as ChannelState.SUCCESS).channel
+        is ResultState.SUCCESS -> {
+            val data = (state as ResultState.SUCCESS).response
             channelData = data
         }
 
-        is ChannelState.ERROR -> {
-            val error = (state as ChannelState.ERROR).error
+        is ResultState.ERROR -> {
+            val error = (state as ResultState.ERROR).error
             ErrorBox(error)
         }
     }

@@ -15,26 +15,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.company.app.Res
 import org.company.app.data.model.videos.Youtube
-import org.company.app.domain.usecases.YoutubeState
+import org.company.app.domain.usecases.ResultState
 
 @Composable
-fun RelevanceList(stateRelevance: YoutubeState) {
+fun RelevanceList(stateRelevance: ResultState<Youtube>) {
     var relevanceData by remember { mutableStateOf<Youtube?>(null) }
 
     when (stateRelevance) {
-        is YoutubeState.LOADING -> {
+        is ResultState.LOADING -> {
             LoadingBox()
         }
 
-        is YoutubeState.SUCCESS -> {
-            val data = (stateRelevance as YoutubeState.SUCCESS).youtube
+        is ResultState.SUCCESS -> {
+            val data = (stateRelevance as ResultState.SUCCESS).response
             relevanceData = data
 
         }
 
-        is YoutubeState.ERROR -> {
-            val error = (stateRelevance as YoutubeState.ERROR).error
+        is ResultState.ERROR -> {
+            val error = (stateRelevance as ResultState.ERROR).error
             ErrorBox(error)
         }
     }

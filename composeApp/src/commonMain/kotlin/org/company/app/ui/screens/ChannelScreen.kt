@@ -61,9 +61,7 @@ import org.company.app.data.model.channel.Item
 import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
-import org.company.app.domain.usecases.ChannelState
-import org.company.app.domain.usecases.SearchState
-import org.company.app.domain.usecases.YoutubeState
+import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.ChannelCommunity
@@ -136,132 +134,132 @@ class ChannelScreen(
         val multipleVideos by viewModel.multipleVideos.collectAsState()
 
         when (state) {
-            is YoutubeState.LOADING -> {
+            is ResultState.LOADING -> {
                 ShimmerEffectChannel()
             }
 
-            is YoutubeState.SUCCESS -> {
-                val response = (state as YoutubeState.SUCCESS).youtube
+            is ResultState.SUCCESS -> {
+                val response = (state as ResultState.SUCCESS).response
                 playlists = response
             }
 
-            is YoutubeState.ERROR -> {
-                val error = (state as YoutubeState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (state as ResultState.ERROR).error
                 ErrorBox(error = error)
             }
         }
         when (multipleVideos) {
-            is YoutubeState.LOADING -> {
+            is ResultState.LOADING -> {
                 //ShimmerEffectChannel()
             }
 
-            is YoutubeState.SUCCESS -> {
-                val response = (multipleVideos as YoutubeState.SUCCESS).youtube
+            is ResultState.SUCCESS -> {
+                val response = (multipleVideos as ResultState.SUCCESS).response
                 multipleVideo = response
             }
 
-            is YoutubeState.ERROR -> {
-                val error = (multipleVideos as YoutubeState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (multipleVideos as ResultState.ERROR).error
                 ErrorBox(error = error)
             }
         }
         //Channel Sections
         when (channelState) {
-            is YoutubeState.LOADING -> {
+            is ResultState.LOADING -> {
                 // LoadingBox()
             }
 
-            is YoutubeState.SUCCESS -> {
-                val response = (channelState as YoutubeState.SUCCESS).youtube
+            is ResultState.SUCCESS -> {
+                val response = (channelState as ResultState.SUCCESS).response
                 channelSections = response
             }
 
-            is YoutubeState.ERROR -> {
-                val error = (channelState as YoutubeState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (channelState as ResultState.ERROR).error
                 ErrorBox(error = error)
             }
         }
         //Channel LiveStreams
         when (liveStreams) {
-            is SearchState.LOADING -> {
+            is ResultState.LOADING -> {
                 //LoadingBox()
             }
 
-            is SearchState.SUCCESS -> {
-                val response = (liveStreams as SearchState.SUCCESS).search
+            is ResultState.SUCCESS -> {
+                val response = (liveStreams as ResultState.SUCCESS).response
                 channelLiveStream = response
             }
 
-            is SearchState.ERROR -> {
-                val error = (liveStreams as SearchState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (liveStreams as ResultState.ERROR).error
                 ErrorBox(error = error)
             }
         }
 
         //Channel All Videos
         when (allVideos) {
-            is YoutubeState.LOADING -> {
+            is ResultState.LOADING -> {
                 //LoadingBox()
             }
 
-            is YoutubeState.SUCCESS -> {
-                val response = (allVideos as YoutubeState.SUCCESS).youtube
+            is ResultState.SUCCESS -> {
+                val response = (allVideos as ResultState.SUCCESS).response
                 channelAllVideos = response
                 Napier.d("$channelAllVideos", tag = "ChannelHome")
             }
 
-            is YoutubeState.ERROR -> {
-                val error = (allVideos as YoutubeState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (allVideos as ResultState.ERROR).error
                 ErrorBox(error = error)
             }
         }
 
         //Channel Community
         when (channelCommunity) {
-            is YoutubeState.LOADING -> {
+            is ResultState.LOADING -> {
                 //LoadingBox()
             }
 
-            is YoutubeState.SUCCESS -> {
-                val response = (channelCommunity as YoutubeState.SUCCESS).youtube
+            is ResultState.SUCCESS -> {
+                val response = (channelCommunity as ResultState.SUCCESS).response
                 channelCommunities = response
             }
 
-            is YoutubeState.ERROR -> {
-                val error = (channelCommunity as YoutubeState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (channelCommunity as ResultState.ERROR).error
                 ErrorBox(error = error)
             }
         }
 
         //Own Channel Videos
         when (ownChannelVideos) {
-            is SearchState.LOADING -> {
+            is ResultState.LOADING -> {
                 //LoadingBox()
             }
 
-            is SearchState.SUCCESS -> {
-                val response = (ownChannelVideos as SearchState.SUCCESS).search
+            is ResultState.SUCCESS -> {
+                val response = (ownChannelVideos as ResultState.SUCCESS).response
                 ownChannelVideo = response
             }
 
-            is SearchState.ERROR -> {
-                val error = (ownChannelVideos as SearchState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (ownChannelVideos as ResultState.ERROR).error
                 ErrorBox(error = error)
             }
         }
         //Channel Details
         when (channelDetails) {
-            is ChannelState.LOADING -> {
+            is ResultState.LOADING -> {
                 // LoadingBox()
             }
 
-            is ChannelState.SUCCESS -> {
-                val response = (channelDetails as ChannelState.SUCCESS).channel
+            is ResultState.SUCCESS -> {
+                val response = (channelDetails as ResultState.SUCCESS).response
                 featuresChannels = response
             }
 
-            is ChannelState.ERROR -> {
-                val error = (channelDetails as ChannelState.ERROR).error
+            is ResultState.ERROR -> {
+                val error = (channelDetails as ResultState.ERROR).error
                 ErrorBox(error = error)
             }
         }
