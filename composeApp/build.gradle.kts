@@ -66,6 +66,7 @@ kotlin {
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.kamel.image)
             implementation(libs.coil.network)
+            implementation(libs.sqlDelight.extension)
         }
 
         commonTest.dependencies {
