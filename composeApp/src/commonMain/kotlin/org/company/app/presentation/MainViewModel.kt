@@ -1,5 +1,7 @@
 package org.company.app.presentation
 
+import YouTube_DB.db.YoutubeDatabase
+import androidx.compose.runtime.Composable
 import app.cash.sqldelight.db.SqlDriver
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +18,6 @@ import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ResultState
-import `sql-delight`.db.YoutubeDatabase
 
 class MainViewModel(
     private val repository: Repository,
@@ -323,24 +324,24 @@ class MainViewModel(
         }
     }
 
-    suspend fun insertVideos(
+     fun insertVideos(
         id: Long? = null,
         title: String,
         channelName: String,
         channelImage: String,
         pubDate: String,
-        views: Int,
-        duration: Int,
+        views: String,
+        duration: String,
     ) {
-        withContext(Dispatchers.Default) {
+        viewModelScope.launch{
             database.youtubeEntityQueries.insertVideos(
                 id,
                 title,
                 channelName,
                 channelImage,
                 pubDate,
-                views.toLong(),
-                duration.toLong(),
+                views,
+                duration,
             )
         }
     }

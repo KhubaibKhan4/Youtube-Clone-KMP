@@ -4,8 +4,8 @@ CREATE TABLE youtubeEntity(
  channelName TEXT NOT NULL,
  channelImage TEXT NOT NULL,
  views TEXT NOT NULL,
- pubDate INTEGER NOT NULL,
- duration INTEGER NOT NULL
+ pubDate TEXT NOT NULL,
+ duration TEXT NOT NULL
 );
 
 getVideoById:

@@ -1,6 +1,6 @@
 package org.company.app.data.local
 
-import `sql-delight`.db.YoutubeDatabase
+import YouTube_DB.db.YoutubeDatabase
 import sqldelight.db.YoutubeEntity
 
 class DataSourceImp(
@@ -30,8 +30,8 @@ class DataSourceImp(
         channelName: String,
         channelImage: String,
         views: String,
-        pubDate: Int,
-        duration: Int
+        pubDate: String,
+        duration: String
     ) {
         return queries.run {
             insertVideo(

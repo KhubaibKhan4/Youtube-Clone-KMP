@@ -197,7 +197,7 @@ sqldelight {
         create("YoutubeDatabase") {
             // Database configuration here.
             // https://cashapp.github.io/sqldelight
-            packageName.set("sql-delight.db")
+            packageName.set("YouTube_DB.db")
         }
     }
 }

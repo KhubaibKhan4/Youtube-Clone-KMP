@@ -1,6 +1,6 @@
 package org.company.app
 
-import android.app.AppComponentFactory
+import YouTube_DB.db.YoutubeDatabase
 import android.app.Application
 import android.app.PendingIntent
 import android.content.ComponentName
@@ -21,7 +21,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.text2.input.rememberTextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,12 +32,9 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import io.ktor.client.engine.callContext
 import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
-import `sql-delight`.db.YoutubeDatabase
 import java.util.Locale
-import kotlin.coroutines.coroutineContext
 
 class AndroidApp : Application() {
     companion object {
@@ -59,14 +55,15 @@ class AppActivity : ComponentActivity() {
         }
     }
 }
-private fun PinnedShortcut(context: Context){
+
+private fun PinnedShortcut(context: Context) {
     val shortcutManager = context.getSystemService<ShortcutManager>()!!
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         return
     }
-    if (shortcutManager.isRequestPinShortcutSupported){
-        val shortcutInfo = ShortcutInfo.Builder(context,"ShortcutPinned")
-            .setIcon(Icon.createWithResource(context,R.drawable.sports))
+    if (shortcutManager.isRequestPinShortcutSupported) {
+        val shortcutInfo = ShortcutInfo.Builder(context, "ShortcutPinned")
+            .setIcon(Icon.createWithResource(context, R.drawable.sports))
             .setShortLabel("Trending Movies")
             .setLongLabel("Top Trending Movies from YouTube")
             .setIntent(
@@ -84,18 +81,20 @@ private fun PinnedShortcut(context: Context){
         shortcutManager.requestPinShortcut(shortcutInfo, successCallBack.intentSender)
     }
 }
-private fun DynamicShortCut(context: Context){
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+
+private fun DynamicShortCut(context: Context) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         return
     }
-    val shortcutInfoCompact = ShortcutInfoCompat.Builder(context,"Dynamic")
-        .setIcon(IconCompat.createWithResource(context,R.drawable.sports))
+    val shortcutInfoCompact = ShortcutInfoCompat.Builder(context, "Dynamic")
+        .setIcon(IconCompat.createWithResource(context, R.drawable.sports))
         .setShortLabel("Trending Dramas")
         .setLongLabel("Top Trending Dramas")
         .setIntent(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/khubaibkhan4/")))
         .build()
-    ShortcutManagerCompat.pushDynamicShortcut(context,shortcutInfoCompact)
+    ShortcutManagerCompat.pushDynamicShortcut(context, shortcutInfoCompact)
 }
+
 private fun topNewsPinnedShortcut(context: Context) {
     val shortcutManager = context.getSystemService<ShortcutManager>()!!
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -195,12 +194,12 @@ private fun topTrendingVideosDynamicShortcut(context: Context) {
     ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
 }
 
-private fun topSportsDynamicShortcut(context: Context){
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+private fun topSportsDynamicShortcut(context: Context) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         return
     }
-    val shortcut = ShortcutInfoCompat.Builder(context,"topSports")
-        .setIcon(IconCompat.createWithResource(context,R.drawable.sports))
+    val shortcut = ShortcutInfoCompat.Builder(context, "topSports")
+        .setIcon(IconCompat.createWithResource(context, R.drawable.sports))
         .setShortLabel("Latest Sports")
         .setLongLabel("Latest Sports Trending Videos")
         .setIntent(
@@ -225,10 +224,10 @@ internal actual fun provideShortCuts() {
     topSportsDynamicShortcut(context)
 
     //Going to Implement the Tiles & The Widget.
-   // topTrendingVideosDynamicShortcut(context)
-   // topMusicPinnedShortcut(context)
-   // topSportsPinnedShortcut(context)
-   // topNewsPinnedShortcut(context)
+    // topTrendingVideosDynamicShortcut(context)
+    // topMusicPinnedShortcut(context)
+    // topSportsPinnedShortcut(context)
+    // topNewsPinnedShortcut(context)
 
 }
 
@@ -300,9 +299,9 @@ actual fun isConnected(): Boolean {
     }
 }
 
-actual class DriverFactory actual constructor(){
-    private var context: Context? = null
+actual class DriverFactory actual constructor() {
+    private var context: Context? = AndroidApp.INSTANCE.applicationContext
     actual fun createDriver(): SqlDriver {
-        return AndroidSqliteDriver(YoutubeDatabase.Schema, context!!,"YouTubeDatabase.db")
+        return AndroidSqliteDriver(YoutubeDatabase.Schema, context!!, "YouTubeDatabase.db")
     }
 }

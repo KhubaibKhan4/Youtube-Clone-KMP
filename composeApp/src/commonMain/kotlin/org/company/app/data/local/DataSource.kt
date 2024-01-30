@@ -6,5 +6,5 @@ interface DataSource {
     suspend fun getVideoById(id: Long): YoutubeEntity?
     fun getAllVideos(): List<YoutubeEntity>
     suspend fun deleteVideoById(id: Long)
-    suspend fun insertVideo(title: String, channelName:String, channelImage: String, views: String, pubDate: Int, duration: Int)
+    suspend fun insertVideo(title: String, channelName:String, channelImage: String, views: String, pubDate: String, duration: String)
 }

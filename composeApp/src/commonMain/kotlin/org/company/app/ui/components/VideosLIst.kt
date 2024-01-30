@@ -530,7 +530,6 @@ fun VideoItemCard(video: Item) {
     var channelData by remember { mutableStateOf<Channel?>(null) }
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
-        println("SQL DELIGHT"+ viewModel.getAllVideos())
     }
     val state by viewModel.channelDetails.collectAsState()
     when (state) {
@@ -548,19 +547,17 @@ fun VideoItemCard(video: Item) {
             ErrorBox(error)
         }
     }
-    LaunchedEffect(Unit) {
-        val duration = formatVideoDuration(video.contentDetails?.duration)
-        val views = org.company.app.ui.screens.formatViewCount(video.statistics?.viewCount)
-        viewModel.insertVideos(
-            id = null,
-            title = video.snippet?.title.toString(),
-            channelName = video.snippet?.channelTitle.toString(),
-            channelImage = channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString(),
-            pubDate = getFormattedDate(video.snippet?.publishedAt.toString()),
-            views = views.substringBefore("M").toInt(),
-            duration = duration.substringAfter(":").toInt(),
-        )
-    }
+    val duration = formatVideoDuration(video.contentDetails?.duration)
+    val views = org.company.app.ui.screens.formatViewCount(video.statistics?.viewCount)
+    viewModel.insertVideos(
+        id = null,
+        title = video.snippet?.title.toString(),
+        channelName = video.snippet?.channelTitle.toString(),
+        channelImage = channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString(),
+        pubDate = getFormattedDate(video.snippet?.publishedAt.toString()),
+        views = views,
+        duration = duration,
+    )
     Card(
         modifier = Modifier
             .fillMaxWidth()

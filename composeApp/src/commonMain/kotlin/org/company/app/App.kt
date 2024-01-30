@@ -1,5 +1,6 @@
 package org.company.app
 
+import YouTube_DB.db.YoutubeDatabase
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -55,7 +56,6 @@ import org.company.app.ui.navigation.ShortsTab
 import org.company.app.ui.navigation.SubscriptionsTab
 import org.company.app.ui.navigation.rails.NavigationItem
 import org.company.app.ui.navigation.rails.NavigationSideBar
-import `sql-delight`.db.YoutubeDatabase
 
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -237,7 +237,6 @@ internal expect fun isConnected(): Boolean
 expect class DriverFactory() {
     fun createDriver(): SqlDriver
 }
-
 fun createDatabase(driverFactory: DriverFactory): YoutubeDatabase {
     val driver = driverFactory.createDriver()
     val database = YoutubeDatabase(driver)
