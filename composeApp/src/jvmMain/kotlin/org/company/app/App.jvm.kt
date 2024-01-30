@@ -3,11 +3,15 @@ package org.company.app
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import `sql-delight`.db.YoutubeDatabase
 import java.awt.Desktop
 import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
+import java.io.File
 import java.net.HttpURLConnection
 import java.net.URI
 import java.net.URL
@@ -106,5 +110,14 @@ internal actual fun isConnected(): Boolean {
         connection.responseCode == 200
     } catch (e: Exception) {
         false
+    }
+}
+actual class DriverFactory actual constructor(){
+    actual fun createDriver(): SqlDriver {
+        val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        if (!File("YouTubeDatabase.db").exists()){
+            YoutubeDatabase.Schema.create(driver)
+        }
+        return driver
     }
 }

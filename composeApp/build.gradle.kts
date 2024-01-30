@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.sqlDelight)
-    id ("com.google.osdetector") version "1.7.3"
+    id("com.google.osdetector") version "1.7.3"
 }
 
 kotlin {

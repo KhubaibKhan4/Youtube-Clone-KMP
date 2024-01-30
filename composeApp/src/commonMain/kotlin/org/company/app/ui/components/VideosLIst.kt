@@ -418,7 +418,8 @@ fun VideosList(youtube: Youtube) {
                                 drawerState.open()
                             }
                         },
-                        modifier = Modifier.size(48.dp).pointerHoverIcon(icon = PointerIcon.Hand).clip(shape = RoundedCornerShape(6.dp)),
+                        modifier = Modifier.size(48.dp).pointerHoverIcon(icon = PointerIcon.Hand)
+                            .clip(shape = RoundedCornerShape(6.dp)),
                         colors = IconButtonDefaults.iconButtonColors(
                             containerColor = Color.LightGray.copy(alpha = 0.55f)
                         ),
@@ -498,14 +499,14 @@ fun VideosList(youtube: Youtube) {
 fun CategoryButton(
     category: org.company.app.data.model.categories.Item,
     isSelected: Boolean,
-    onCategorySelected: () -> Unit
+    onCategorySelected: () -> Unit,
 ) {
     val isDark by LocalThemeIsDark.current
     Button(
         onClick = onCategorySelected,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSelected) Color.Gray else Color.LightGray.copy(alpha = 0.55f),
-            contentColor =if (isDark) Color.White else Color.Black,
+            contentColor = if (isDark) Color.White else Color.Black,
         ),
         shape = RoundedCornerShape(6.dp),
         modifier = Modifier.pointerHoverIcon(icon = PointerIcon.Hand)
@@ -529,6 +530,7 @@ fun VideoItemCard(video: Item) {
     var channelData by remember { mutableStateOf<Channel?>(null) }
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
+        println("SQL DELIGHT"+ viewModel.getAllVideos())
     }
     val state by viewModel.channelDetails.collectAsState()
     when (state) {
@@ -545,6 +547,19 @@ fun VideoItemCard(video: Item) {
             val error = (state as ResultState.ERROR).error
             ErrorBox(error)
         }
+    }
+    LaunchedEffect(Unit) {
+        val duration = formatVideoDuration(video.contentDetails?.duration)
+        val views = org.company.app.ui.screens.formatViewCount(video.statistics?.viewCount)
+        viewModel.insertVideos(
+            id = null,
+            title = video.snippet?.title.toString(),
+            channelName = video.snippet?.channelTitle.toString(),
+            channelImage = channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString(),
+            pubDate = getFormattedDate(video.snippet?.publishedAt.toString()),
+            views = views.substringBefore("M").toInt(),
+            duration = duration.substringAfter(":").toInt(),
+        )
     }
     Card(
         modifier = Modifier
@@ -564,8 +579,7 @@ fun VideoItemCard(video: Item) {
                 NetworkImage(
                     modifier = Modifier.fillMaxWidth()
                         .height(200.dp)
-                        .pointerHoverIcon(icon = PointerIcon.Hand)
-                    ,
+                        .pointerHoverIcon(icon = PointerIcon.Hand),
                     url = video.snippet?.thumbnails?.high?.url.toString(),
                     contentDescription = "Image",
                     contentScale = ContentScale.Crop

@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontVariation.width
 import androidx.compose.ui.window.CanvasBasedWindow
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.await
@@ -31,6 +33,10 @@ import org.jetbrains.compose.web.dom.Text
 import org.jetbrains.compose.web.renderComposableInBody
 import org.w3c.dom.HTMLIFrameElement
 import org.w3c.dom.Node
+import org.w3c.dom.Worker
+import org.w3c.dom.WorkerOptions
+import org.w3c.dom.WorkerType
+import `sql-delight`.db.YoutubeDatabase
 
 internal actual fun openUrl(url: String?) {
     url?.let { window.open(it) }
@@ -130,4 +136,15 @@ internal actual fun isConnected(): Boolean {
         }
     }
     return isConnected
+}
+
+actual class DriverFactory actual constructor(){
+    actual fun createDriver(): SqlDriver {
+        val driver = WebWorkerDriver(
+            Worker(
+                scriptURL = js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)"""),
+            )
+        ).also { YoutubeDatabase.Schema.create(it) }
+        return driver
+    }
 }

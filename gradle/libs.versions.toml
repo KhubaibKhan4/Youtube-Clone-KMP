@@ -60,6 +60,7 @@ composeIcons-featherIcons = { module = "br.com.devsrsouza.compose.icons:feather"
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 com-google-code-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 io-ktor-ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }

@@ -1,5 +1,6 @@
 package org.company.app
 
+import android.app.AppComponentFactory
 import android.app.Application
 import android.app.PendingIntent
 import android.content.ComponentName
@@ -20,6 +21,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.text2.input.rememberTextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,9 +31,14 @@ import androidx.core.content.getSystemService
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import io.ktor.client.engine.callContext
 import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
+import `sql-delight`.db.YoutubeDatabase
 import java.util.Locale
+import kotlin.coroutines.coroutineContext
 
 class AndroidApp : Application() {
     companion object {
@@ -290,5 +297,12 @@ actual fun isConnected(): Boolean {
         @Suppress("DEPRECATION")
         val networkInfo = connectivityManager.activeNetworkInfo
         networkInfo?.isConnected == true
+    }
+}
+
+actual class DriverFactory actual constructor(){
+    private var context: Context? = null
+    actual fun createDriver(): SqlDriver {
+        return AndroidSqliteDriver(YoutubeDatabase.Schema, context!!,"YouTubeDatabase.db")
     }
 }

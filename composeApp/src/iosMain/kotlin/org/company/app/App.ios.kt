@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import kotlinx.cinterop.CValue
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
@@ -15,6 +17,7 @@ import platform.Foundation.HTTPURLResponse
 import platform.Foundation.NSError
 import platform.Foundation.NSErrorDomain
 import platform.Foundation.NSURLConnection
+import `sql-delight`.db.YoutubeDatabase
 
 internal actual fun openUrl(url: String?) {
     val nsUrl = url?.let { NSURL.URLWithString(it) } ?: return
@@ -140,4 +143,10 @@ internal actual fun isConnected(): Boolean{
     }
 
     return false
+}
+
+actual class DriverFactory actual constructor(){
+    actual fun createDriver(): SqlDriver {
+        return NativeSqliteDriver(YoutubeDatabase.Schema,"YouTubeDatabase.db")
+    }
 }

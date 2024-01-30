@@ -1,11 +1,14 @@
 package org.company.app.presentation
 
+import app.cash.sqldelight.db.SqlDriver
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.company.app.Res
+import kotlinx.coroutines.withContext
+import org.company.app.DriverFactory
 import org.company.app.data.model.categories.VideoCategories
 import org.company.app.data.model.channel.Channel
 import org.company.app.data.model.comments.Comments
@@ -13,8 +16,11 @@ import org.company.app.data.model.search.Search
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
 import org.company.app.domain.usecases.ResultState
+import `sql-delight`.db.YoutubeDatabase
 
-class MainViewModel(private val repository: Repository) : ViewModel() {
+class MainViewModel(
+    private val repository: Repository,
+) : ViewModel() {
 
     //Videos
     var _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
@@ -42,7 +48,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val relevanceVideos: StateFlow<ResultState<Youtube>> = _relevance_videos.asStateFlow()
 
     //Search Videos
-     var _search = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
+    var _search = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
         private set
     val search: StateFlow<ResultState<Search>> = _search.asStateFlow()
 
@@ -67,12 +73,12 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val channelVideos: StateFlow<ResultState<Youtube>> = _channelVideos.asStateFlow()
 
     //Channel Community
-     var _channelCommunity = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
+    var _channelCommunity = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
         private set
     val channelCommunity: StateFlow<ResultState<Youtube>> = _channelCommunity.asStateFlow()
 
     //Video Comments
-     var _videoComments = MutableStateFlow<ResultState<Comments>>(ResultState.LOADING)
+    var _videoComments = MutableStateFlow<ResultState<Comments>>(ResultState.LOADING)
         private set
     val videoComments: StateFlow<ResultState<Comments>> = _videoComments.asStateFlow()
 
@@ -296,6 +302,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             }
         }
     }
+
     fun getMultipleVideo(videoId: String) {
         viewModelScope.launch {
             _multipleVideos.value = ResultState.LOADING
@@ -306,6 +313,41 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
                 val error = e.message.toString()
                 _multipleVideos.value = ResultState.ERROR(error)
             }
+        }
+    }
+
+    private val database = YoutubeDatabase(DriverFactory().createDriver())
+    suspend fun getAllVideos() {
+        withContext(Dispatchers.Default) {
+            database.youtubeEntityQueries.getAllVideos()
+        }
+    }
+
+    suspend fun insertVideos(
+        id: Long? = null,
+        title: String,
+        channelName: String,
+        channelImage: String,
+        pubDate: String,
+        views: Int,
+        duration: Int,
+    ) {
+        withContext(Dispatchers.Default) {
+            database.youtubeEntityQueries.insertVideos(
+                id,
+                title,
+                channelName,
+                channelImage,
+                pubDate,
+                views.toLong(),
+                duration.toLong(),
+            )
+        }
+    }
+
+    suspend fun deleteVideoById(id: Long) {
+        withContext(Dispatchers.Default) {
+            database.youtubeEntityQueries.deleteVideoById(id)
         }
     }
 }
