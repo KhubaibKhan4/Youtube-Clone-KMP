@@ -1,12 +1,12 @@
 package org.company.app
 
+import YouTubeDatabase.db.YoutubeDatabase
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import `sql-delight`.db.YoutubeDatabase
 import java.awt.Desktop
 import java.awt.SystemTray
 import java.awt.Toolkit

@@ -1,6 +1,6 @@
 package org.company.app
 
-import YouTube_DB.db.YoutubeDatabase
+import YouTubeDatabase.db.YoutubeDatabase
 import android.app.Application
 import android.app.PendingIntent
 import android.content.ComponentName

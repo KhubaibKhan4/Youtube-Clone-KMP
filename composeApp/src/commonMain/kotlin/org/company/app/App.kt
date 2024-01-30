@@ -1,6 +1,6 @@
 package org.company.app
 
-import YouTube_DB.db.YoutubeDatabase
+import YouTubeDatabase.db.YoutubeDatabase
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
