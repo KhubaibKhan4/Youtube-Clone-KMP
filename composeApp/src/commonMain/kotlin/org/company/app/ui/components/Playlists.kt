@@ -62,7 +62,9 @@ import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.DetailScreen
 
 @Composable
-fun PlaylistsVideosList(youtube: Youtube) {
+fun PlaylistsVideosList(
+    youtube: Youtube
+) {
     Surface(
         color = MaterialTheme.colorScheme.background
     ) {
@@ -115,7 +117,7 @@ fun PlaylistsVideoItemCard(video: Item) {
                     },
                     animationSpec = tween(),
                 )
-                // Video Total Time
+
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
@@ -151,7 +153,7 @@ fun PlaylistsVideoItemCard(video: Item) {
                     contentScale = ContentScale.FillBounds
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))// Video Title and Time in a Box
+                Spacer(modifier = Modifier.width(8.dp))
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -163,7 +165,7 @@ fun PlaylistsVideoItemCard(video: Item) {
                         color = if (isDark) Color.White else Color.Black,
                         fontSize = 12.sp,
                         overflow = TextOverflow.Ellipsis,
-                        lineHeight = 20.sp // Adjust the lineHeight value as needed
+                        lineHeight = 20.sp
                     )
                     //Spacer(modifier = Modifier.height(4.dp))
 
@@ -224,7 +226,7 @@ fun PlaylistsVideoItemCard(video: Item) {
             modifier = Modifier.fillMaxWidth(),
             sheetState = rememberModalBottomSheetState(),
             shape = RoundedCornerShape(4.dp),
-            contentColor =if (isDark) Color.White else Color.Black,  // Adjust color as needed
+            contentColor =if (isDark) Color.White else Color.Black,
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
         ) {

@@ -32,7 +32,7 @@ fun NoInternet() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        var isDark by LocalThemeIsDark.current
+        val isDark by LocalThemeIsDark.current
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
