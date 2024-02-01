@@ -317,7 +317,7 @@ class MainViewModel(
 
     private val database = YoutubeDatabase(DriverFactory().createDriver())
     suspend fun getAllVideos() {
-        withContext(Dispatchers.Default) {
+        viewModelScope.launch {
             database.youtubeEntityQueries.getAllVideos()
         }
     }

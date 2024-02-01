@@ -7,9 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import app.cash.sqldelight.db.SqlDriver
 import cafe.adriel.voyager.core.screen.Screen
-import org.company.app.DriverFactory
 import org.company.app.UserRegion
 import org.company.app.data.model.videos.Youtube
 import org.company.app.domain.repository.Repository
