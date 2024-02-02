@@ -1,6 +1,6 @@
 package org.company.app
 
-import YouTube_DB.db.YoutubeDatabase
+import YouTubeDatabase.db.YoutubeDatabase
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -25,21 +25,17 @@ internal actual fun openUrl(url: String?) {
 
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
-    // Use rememberUpdatedState to capture the latest value of url
     val videoId = extractVideoId(url.toString())
     console.log("Before YouTube API is ready $videoId")
 
     val iframeId = "youtube-iframe-${videoId.hashCode()}"
     val body = document.body
-    // Assuming you have a div with the id "video-container"
     val videoContainer = document.getElementById("video-container") ?: run {
         val newContainer = document.createElement("div")
         newContainer.id = "video-container"
         document.body?.appendChild(newContainer)
         newContainer
     }
-    // videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\"></iframe>"
-    // videoContainer.innerHTML = "<iframe width=\"100%\" height=\"350\" style=\"background-color: black;\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\" modestbranding></iframe>"
     videoContainer.innerHTML = """
     <iframe 
         width="100%" 
@@ -74,7 +70,6 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal actual fun ShortsVideoPlayer(url: String?) {
-    // Use rememberUpdatedState to capture the latest value of url
     val videoId = extractVideoId(url.toString())
     console.log("Before YouTube API is ready $videoId")
 
@@ -85,7 +80,6 @@ internal actual fun ShortsVideoPlayer(url: String?) {
         Column(
             modifier = Modifier.background(color = Color.Black)
         ) {
-            // Assuming you have a div with the id "video-container"
             val videoContainer = document.getElementById("video-container") ?: run {
                 val newContainer = document.createElement("div")
                 newContainer.id = "video-container"
