@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,12 +49,24 @@ fun NoInternet() {
             )
             Spacer(modifier = Modifier.height(14.dp))
             Text(
-                text = "No Internet Connection",
+                text = "Oops, looks like you're not connected to the internet right now.",
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
                 color = if (isDark) Color.White else Color.Black,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
+            Spacer(modifier = Modifier.height(14.dp))
+            Button(
+                onClick = {},
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                colors = ButtonDefaults.buttonColors(containerColor = colors.secondary)
+            ) {
+                Text(
+                    text = "Retry",
+                    color = colors.onSecondary,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }

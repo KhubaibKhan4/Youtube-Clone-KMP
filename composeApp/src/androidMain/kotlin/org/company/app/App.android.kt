@@ -289,19 +289,19 @@ actual fun isConnected(): Boolean {
     val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        val network = connectivityManager.activeNetwork
-        val capabilities = connectivityManager.getNetworkCapabilities(network)
-        capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
-    } else {
-        @Suppress("DEPRECATION")
-        val networkInfo = connectivityManager.activeNetworkInfo
-        networkInfo?.isConnected == true
-    }
+         val network = connectivityManager.activeNetwork
+         val capabilities = connectivityManager.getNetworkCapabilities(network)
+         capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+     } else {
+         @Suppress("DEPRECATION")
+         val networkInfo = connectivityManager.activeNetworkInfo
+         networkInfo?.isConnected == true
+     }
 }
 
 actual class DriverFactory actual constructor() {
-    private var context: Context? = AndroidApp.INSTANCE.applicationContext
+    private var context: Context = AndroidApp.INSTANCE.applicationContext
     actual fun createDriver(): SqlDriver {
-        return AndroidSqliteDriver(YoutubeDatabase.Schema, context!!, "YouTubeDatabase.db")
+        return AndroidSqliteDriver(YoutubeDatabase.Schema, context, "YouTubeDatabase.db")
     }
 }

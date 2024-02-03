@@ -176,7 +176,7 @@ internal fun App() = AppTheme {
 
 @Composable
 fun RowScope.TabItem(tab: Tab) {
-    var isDark by LocalThemeIsDark.current
+    val isDark by LocalThemeIsDark.current
     val tabNavigator = LocalTabNavigator.current
     BottomNavigationItem(
         modifier = Modifier.background(MaterialTheme.colorScheme.surface)
