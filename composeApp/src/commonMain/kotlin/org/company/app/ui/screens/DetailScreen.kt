@@ -1,5 +1,6 @@
 package org.company.app.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +30,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Share
@@ -96,7 +100,7 @@ import org.company.app.utils.Constant.VIDEO_URL
 class DetailScreen(
     private val video: Item? = null,
     private val search: org.company.app.data.model.search.Item? = null,
-    private val channelData: org.company.app.data.model.channel.Item? = null
+    private val channelData: org.company.app.data.model.channel.Item? = null,
 ) : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -110,6 +114,7 @@ class DetailScreen(
         var displayVideoPlayer by remember { mutableStateOf(false) }
         var isCommentLive by remember { mutableStateOf(false) }
         var isShareEnabled by remember { mutableStateOf(false) }
+        var isSubscribed by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
         val isDark by LocalThemeIsDark.current
 
@@ -195,7 +200,7 @@ class DetailScreen(
                         onClick = {
                             displayVideoPlayer = false
                             navigator?.pop()
-                                  },
+                        },
                         modifier = Modifier.padding(top = 8.dp, start = 6.dp)
                             .align(alignment = Alignment.TopStart)
                             .pointerHoverIcon(icon = PointerIcon.Hand)
@@ -241,8 +246,8 @@ class DetailScreen(
                     contentDescription = null,
                     modifier = Modifier
                         .pointerHoverIcon(icon = PointerIcon.Hand).size(24.dp).clickable {
-                        descriptionEnabled = true
-                    })
+                            descriptionEnabled = true
+                        })
             }
 
 
@@ -289,7 +294,8 @@ class DetailScreen(
                         Icon(
                             imageVector = Icons.Default.ThumbUp,
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp) .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
+                            modifier = Modifier.size(24.dp)
+                                .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
                             tint = if (isDark) Color.White else Color.Black
                         )
 
@@ -313,7 +319,8 @@ class DetailScreen(
                         Icon(
                             imageVector = Icons.Default.ThumbDown,
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp) .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
+                            modifier = Modifier.size(24.dp)
+                                .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
                             tint = if (isDark) Color.White else Color.Black
                         )
                     }
@@ -321,7 +328,8 @@ class DetailScreen(
 
 
                 Card(
-                    modifier = Modifier.height(40.dp) .pointerHoverIcon(icon = PointerIcon.Hand).padding(4.dp),
+                    modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
+                        .padding(4.dp),
                     onClick = {
                         isShareEnabled = !isShareEnabled
                     },
@@ -354,8 +362,9 @@ class DetailScreen(
 
 
                 Card(
-                    modifier = Modifier.height(40.dp) .pointerHoverIcon(icon = PointerIcon.Hand).padding(4.dp),
-                    onClick = {  },
+                    modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
+                        .padding(4.dp),
+                    onClick = { },
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -379,7 +388,8 @@ class DetailScreen(
 
 
                 Card(
-                    modifier = Modifier.height(40.dp) .pointerHoverIcon(icon = PointerIcon.Hand).padding(4.dp),
+                    modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
+                        .padding(4.dp),
                     onClick = { },
                 ) {
                     Row(
@@ -410,7 +420,8 @@ class DetailScreen(
 
 
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -423,7 +434,8 @@ class DetailScreen(
                     Image(
                         painter = it,
                         contentDescription = null,
-                        modifier = Modifier.size(60.dp).clip(CircleShape) .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
+                        modifier = Modifier.size(60.dp).clip(CircleShape)
+                            .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
                             navigator?.push(ChannelScreen(channelData))
                         },
                         contentScale = ContentScale.FillBounds
@@ -432,7 +444,11 @@ class DetailScreen(
 
 
                 Column(
-                    modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    verticalArrangement = Arrangement
+                        .spacedBy(4.dp)
                 ) {
                     val channelTitle = video?.snippet?.channelTitle.toString()
 
@@ -441,14 +457,18 @@ class DetailScreen(
                         horizontalArrangement = Arrangement.Start
                     ) {
                         Text(
-                            text = channelTitle, fontWeight = FontWeight.Bold, fontSize = 16.sp
+                            text = channelTitle,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = if (isSubscribed) 12.sp else MaterialTheme.typography.titleSmall.fontSize
+
                         )
                         val isVerified = channelData?.status?.isLinked
                         if (isVerified == true) {
                             androidx.compose.material.Icon(
                                 imageVector = Icons.Default.Verified,
                                 contentDescription = null,
-                                modifier = Modifier.padding(start = 4.dp),
+                                modifier = Modifier.padding(start = 4.dp)
+                                    .size(if (isSubscribed) 15.dp else 25.dp),
                                 tint = if (isDark) Color.White else Color.Black
                             )
                         }
@@ -459,11 +479,53 @@ class DetailScreen(
                     )
 
                 }
-                Text(text = "SUBSCRIBE",
-                    color = Color.Red,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                    modifier = Modifier .pointerHoverIcon(icon = PointerIcon.Hand).clickable {})
+                androidx.compose.animation.AnimatedVisibility (!isSubscribed){
+                    Text(text = "SUBSCRIBE",
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
+                        modifier = Modifier
+                            .pointerHoverIcon(icon = PointerIcon.Hand)
+                            .clickable {
+                                isSubscribed = !isSubscribed
+                            }
+                    )
+                }
+
+                AnimatedVisibility(isSubscribed) {
+                    Card(
+                        modifier = Modifier
+                            .width(145.dp)
+                            .height(35.dp)
+                            .padding(8.dp),
+                        onClick = {
+                            isSubscribed = !isSubscribed
+                        }
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.NotificationsActive,
+                                contentDescription = null,
+                                modifier = Modifier.size(25.dp)
+                            )
+                            Text(
+                                text = "Subscribed",
+                                fontSize = MaterialTheme.typography.titleSmall.fontSize,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Icon(
+                                imageVector = Icons.Filled.KeyboardArrowDown,
+                                contentDescription = null,
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
+                    }
+                }
             }
 
 
