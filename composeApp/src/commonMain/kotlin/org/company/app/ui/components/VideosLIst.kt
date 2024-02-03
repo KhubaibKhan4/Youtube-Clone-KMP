@@ -550,7 +550,6 @@ fun VideoItemCard(video: Item) {
     val duration = formatVideoDuration(video.contentDetails?.duration)
     val views = org.company.app.ui.screens.formatViewCount(video.statistics?.viewCount)
     viewModel.insertVideos(
-        id = null,
         title = video.snippet?.title.toString(),
         channelName = video.snippet?.channelTitle.toString(),
         channelImage = channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString(),
@@ -606,7 +605,6 @@ fun VideoItemCard(video: Item) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Channel Image
-                //video.snippet?.thumbnails?.high?.url.toString()
                 val channelImage =
                     channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString()
                 NetworkImage(
@@ -622,7 +620,7 @@ fun VideoItemCard(video: Item) {
                         }
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))// Video Title and Time in a Box
+                Spacer(modifier = Modifier.width(8.dp))
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -634,9 +632,8 @@ fun VideoItemCard(video: Item) {
                         color = if (isDark) Color.White else Color.Black,
                         fontSize = 12.sp,
                         overflow = TextOverflow.Ellipsis,
-                        lineHeight = 20.sp // Adjust the lineHeight value as needed
+                        lineHeight = 20.sp
                     )
-                    //Spacer(modifier = Modifier.height(4.dp))
 
                     // Channel Name, Views, Time
                     Row(

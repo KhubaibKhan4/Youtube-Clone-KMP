@@ -109,6 +109,7 @@ internal actual fun isConnected(): Boolean {
         connection.connect()
         connection.responseCode == 200
     } catch (e: Exception) {
+        e.printStackTrace()
         false
     }
 }

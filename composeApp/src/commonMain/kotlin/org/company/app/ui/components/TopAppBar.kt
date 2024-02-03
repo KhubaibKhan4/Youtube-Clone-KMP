@@ -436,7 +436,6 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
                                 overflow = TextOverflow.Ellipsis,
                                 lineHeight = 20.sp
                             )
-                            //Spacer(modifier = Modifier.height(4.dp))
 
                             // Channel Name, Views, Time
                             Row(
@@ -514,7 +513,7 @@ fun SearchVideoItemCard(video: org.company.app.data.model.search.Item) {
             modifier = Modifier.fillMaxWidth(),
             sheetState = rememberModalBottomSheetState(),
             shape = RoundedCornerShape(4.dp),
-            contentColor = if (isDark) Color.White else Color.Black,  // Adjust color as needed
+            contentColor = if (isDark) Color.White else Color.Black,
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
         ) {
