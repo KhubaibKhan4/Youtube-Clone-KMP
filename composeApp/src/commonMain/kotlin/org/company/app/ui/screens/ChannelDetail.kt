@@ -38,11 +38,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import org.company.app.data.model.channel.Item
+import org.company.app.domain.model.channel.Item
 import org.company.app.openUrl
 
 class ChannelDetail(
-    private val channel: Item
+    private val channel: org.company.app.domain.model.channel.Item
 ) : Screen {
     @Composable
     override fun Content() {

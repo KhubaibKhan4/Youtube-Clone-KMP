@@ -87,11 +87,7 @@ import io.kamel.image.asyncPainterResource
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.ShortsVideoPlayer
-import org.company.app.data.model.channel.Channel
-import org.company.app.data.model.comments.Comments
-import org.company.app.data.model.videos.Item
-import org.company.app.data.model.videos.Youtube
-import org.company.app.domain.repository.Repository
+import org.company.app.data.repositoryimp.Repository
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.ui.screens.ChannelDetail
@@ -103,7 +99,7 @@ import org.company.app.ui.screens.getFormattedDateLikeMonthDay
 import org.company.app.utils.Constant.VIDEO_URL
 
 @Composable
-fun ShortList(youtube: Youtube) {
+fun ShortList(youtube: org.company.app.domain.model.videos.Youtube) {
     LazyColumn {
         youtube.items?.let { videos ->
             items(videos) { items ->
@@ -116,12 +112,12 @@ fun ShortList(youtube: Youtube) {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ShortItem(
-    video: Item
+    video: org.company.app.domain.model.videos.Item
 ) {
     val repository = remember { Repository() }
     val viewModel = remember { MainViewModel(repository) }
-    var commentData by remember { mutableStateOf<Comments?>(null) }
-    var channelDetail by remember { mutableStateOf<Channel?>(null) }
+    var commentData by remember { mutableStateOf<org.company.app.domain.model.comments.Comments?>(null) }
+    var channelDetail by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
     var descriptionEnabled by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
     val shortsUrl = VIDEO_URL + video.id.toString()

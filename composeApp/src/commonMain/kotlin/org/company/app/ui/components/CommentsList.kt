@@ -50,10 +50,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.model.channel.Channel
-import org.company.app.data.model.comments.Comments
-import org.company.app.data.model.comments.Item
-import org.company.app.domain.repository.Repository
+import org.company.app.data.repositoryimp.Repository
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -61,7 +58,7 @@ import org.company.app.ui.screens.formatLikes
 
 @Composable
 fun CommentsList(
-    comments: Comments,
+    comments: org.company.app.domain.model.comments.Comments,
     modifier: Modifier
 ) {
     LazyColumn(modifier = modifier.fillMaxWidth()) {
@@ -75,11 +72,11 @@ fun CommentsList(
 }
 
 @Composable
-fun CommentItems(comments: Item) {
+fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
     val localNavigator = LocalNavigator.current
     val repository = remember { Repository() }
     val viewModel = remember { MainViewModel(repository) }
-    var channelData by remember { mutableStateOf<Channel?>(null) }
+    var channelData by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
     var commentExpanded by remember { mutableStateOf(false) }
     var repliesExpanded by remember { mutableStateOf(false) }
     val isDark by LocalThemeIsDark.current
@@ -87,7 +84,7 @@ fun CommentItems(comments: Item) {
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(comments.snippet.channelId)
     }
-    val state: ResultState<Channel> by viewModel.channelDetails.collectAsState()
+    val state: ResultState<org.company.app.domain.model.channel.Channel> by viewModel.channelDetails.collectAsState()
     when (state) {
         is ResultState.LOADING -> {
             CircularProgressIndicator()
@@ -306,7 +303,7 @@ fun CommentItems(comments: Item) {
 }
 
 @Composable
-fun CommentItemWithReplies(commentItem: Item) {
+fun CommentItemWithReplies(commentItem: org.company.app.domain.model.comments.Item) {
     val isDark by LocalThemeIsDark.current
     var commentExpanded by remember { mutableStateOf(false) }
     LazyColumn(modifier = Modifier.height(500.dp)) {

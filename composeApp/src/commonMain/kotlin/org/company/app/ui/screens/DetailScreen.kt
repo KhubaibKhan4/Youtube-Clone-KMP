@@ -17,8 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -83,10 +81,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.VideoPlayer
-import org.company.app.data.model.comments.Comments
-import org.company.app.data.model.videos.Item
-import org.company.app.data.model.videos.Youtube
-import org.company.app.domain.repository.Repository
+import org.company.app.data.repositoryimp.Repository
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -98,9 +93,9 @@ import org.company.app.ui.components.formatVideoDuration
 import org.company.app.utils.Constant.VIDEO_URL
 
 class DetailScreen(
-    private val video: Item? = null,
-    private val search: org.company.app.data.model.search.Item? = null,
-    private val channelData: org.company.app.data.model.channel.Item? = null,
+    private val video: org.company.app.domain.model.videos.Item? = null,
+    private val search: org.company.app.domain.model.search.Item? = null,
+    private val channelData: org.company.app.domain.model.channel.Item? = null,
 ) : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -108,8 +103,8 @@ class DetailScreen(
     override fun Content() {
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
-        var stateRelevance by remember { mutableStateOf<ResultState<Youtube>>(ResultState.LOADING) }
-        var commentData by remember { mutableStateOf<Comments?>(null) }
+        var stateRelevance by remember { mutableStateOf<ResultState<org.company.app.domain.model.videos.Youtube>>(ResultState.LOADING) }
+        var commentData by remember { mutableStateOf<org.company.app.domain.model.comments.Comments?>(null) }
         var descriptionEnabled by remember { mutableStateOf(false) }
         var displayVideoPlayer by remember { mutableStateOf(false) }
         var isCommentLive by remember { mutableStateOf(false) }

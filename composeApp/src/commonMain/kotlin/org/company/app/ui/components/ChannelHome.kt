@@ -50,8 +50,8 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import org.company.app.data.model.videos.Item
-import org.company.app.data.model.videos.Youtube
+import org.company.app.domain.model.videos.Item
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.DetailScreen
 import kotlin.time.Duration
@@ -61,7 +61,7 @@ import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun ChannelHome(
-    youtube: Youtube,
+    youtube: org.company.app.domain.model.videos.Youtube,
     modifier: Modifier,
     title: String,
 ) {
@@ -109,7 +109,7 @@ fun ChannelHome(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChannelHomeItems(videos: Item) {
+fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current

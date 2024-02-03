@@ -27,13 +27,13 @@ import androidx.compose.ui.unit.dp
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.model.channel.Channel
+import org.company.app.domain.model.channel.Channel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.formatSubscribers
 
 @Composable
 fun FeaturedChannel(
-    channel: Channel,
+    channel: org.company.app.domain.model.channel.Channel,
     featuredText: String
 ) {
     val isDark by LocalThemeIsDark.current
@@ -55,7 +55,7 @@ fun FeaturedChannel(
 }
 
 @Composable
-fun FeatureChannelItems(channel: org.company.app.data.model.channel.Item) {
+fun FeatureChannelItems(channel: org.company.app.domain.model.channel.Item) {
     val isDark by LocalThemeIsDark.current
     Row(
         modifier = Modifier.fillMaxWidth()

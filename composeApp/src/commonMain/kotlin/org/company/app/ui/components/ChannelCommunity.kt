@@ -36,15 +36,15 @@ import androidx.compose.ui.unit.sp
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.model.videos.Item
-import org.company.app.data.model.videos.Youtube
+import org.company.app.domain.model.videos.Item
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.formatLikes
 import org.company.app.ui.screens.formatViewComments
 
 @Composable
 fun ChannelCommunity(
-    youtube: Youtube,
+    youtube: org.company.app.domain.model.videos.Youtube,
     channelImage: String
 ) {
     LazyVerticalGrid(
@@ -63,7 +63,7 @@ fun ChannelCommunity(
 }
 
 @Composable
-fun ChannelCommunityItems(videos: Item, channelImage: String) {
+fun ChannelCommunityItems(videos: org.company.app.domain.model.videos.Item, channelImage: String) {
     val isDark by LocalThemeIsDark.current
     Column(
         modifier = Modifier

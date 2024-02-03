@@ -56,11 +56,7 @@ import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.model.channel.Channel
-import org.company.app.data.model.channel.Item
-import org.company.app.data.model.search.Search
-import org.company.app.data.model.videos.Youtube
-import org.company.app.domain.repository.Repository
+import org.company.app.data.repositoryimp.Repository
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -74,21 +70,21 @@ import org.company.app.ui.components.FeaturedChannel
 import org.company.app.ui.components.ShimmerEffectChannel
 
 class ChannelScreen(
-    private val channel: Item
+    private val channel: org.company.app.domain.model.channel.Item
 ) : Screen {
     @Composable
     override fun Content() {
         val isDark by LocalThemeIsDark.current
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
-        var playlists by remember { mutableStateOf<Youtube?>(null) }
-        var multipleVideo by remember { mutableStateOf<Youtube?>(null) }
-        var channelSections by remember { mutableStateOf<Youtube?>(null) }
-        var channelLiveStream by remember { mutableStateOf<Search?>(null) }
-        var channelAllVideos by remember { mutableStateOf<Youtube?>(null) }
-        var channelCommunities by remember { mutableStateOf<Youtube?>(null) }
-        var ownChannelVideo by remember { mutableStateOf<Search?>(null) }
-        var featuresChannels by remember { mutableStateOf<Channel?>(null) }
+        var playlists by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
+        var multipleVideo by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
+        var channelSections by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
+        var channelLiveStream by remember { mutableStateOf<org.company.app.domain.model.search.Search?>(null) }
+        var channelAllVideos by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
+        var channelCommunities by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
+        var ownChannelVideo by remember { mutableStateOf<org.company.app.domain.model.search.Search?>(null) }
+        var featuresChannels by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
 
         LaunchedEffect(Unit) {
             viewModel.getPlaylists(channel.id)
@@ -559,7 +555,7 @@ class ChannelScreen(
                         }
 
                         3 -> {
-                            playlists?.let { youtube: Youtube? ->
+                            playlists?.let { youtube: org.company.app.domain.model.videos.Youtube? ->
                                 ChannelPlaylists(youtube!!)
                             }
                         }

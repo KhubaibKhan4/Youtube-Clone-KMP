@@ -46,7 +46,7 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.ShareManager
-import org.company.app.data.model.channel.Item
+import org.company.app.domain.model.channel.Item
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.ChannelScreen
 import org.company.app.ui.screens.formatSubscribers
@@ -54,7 +54,7 @@ import org.company.app.ui.screens.formatSubscribers
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchChannelItem(
-    channel: Item
+    channel: org.company.app.domain.model.channel.Item
 ) {
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current

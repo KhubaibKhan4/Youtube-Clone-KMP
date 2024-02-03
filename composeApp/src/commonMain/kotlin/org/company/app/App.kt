@@ -1,6 +1,5 @@
 package org.company.app
 
-import YouTubeDatabase.db.YoutubeDatabase
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -236,9 +235,4 @@ internal expect fun isConnected(): Boolean
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class DriverFactory() {
     fun createDriver(): SqlDriver
-}
-fun createDatabase(driverFactory: DriverFactory): YoutubeDatabase {
-    val driver = driverFactory.createDriver()
-    val database = YoutubeDatabase(driver)
-    return database
 }

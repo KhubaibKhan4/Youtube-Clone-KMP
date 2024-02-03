@@ -48,14 +48,14 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.model.search.Search
+import org.company.app.domain.model.search.Search
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.DetailScreen
 import kotlin.random.Random
 
 @Composable
 fun ChannelLiveStream(
-    search: Search
+    search: org.company.app.domain.model.search.Search
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(300.dp),
@@ -81,7 +81,7 @@ fun ChannelLiveStream(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChannelLiveStreamItems(videos: org.company.app.data.model.search.Item) {
+fun ChannelLiveStreamItems(videos: org.company.app.domain.model.search.Item) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current

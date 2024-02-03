@@ -2,19 +2,17 @@ package org.company.app.presentation
 
 import YouTubeDatabase.db.YoutubeDatabase
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.company.app.DriverFactory
-import org.company.app.data.model.categories.VideoCategories
-import org.company.app.data.model.channel.Channel
-import org.company.app.data.model.comments.Comments
-import org.company.app.data.model.search.Search
-import org.company.app.data.model.videos.Youtube
-import org.company.app.domain.repository.Repository
+import org.company.app.data.repositoryimp.Repository
+import org.company.app.domain.model.categories.VideoCategories
+import org.company.app.domain.model.channel.Channel
+import org.company.app.domain.model.comments.Comments
+import org.company.app.domain.model.search.Search
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 
 class MainViewModel(
@@ -316,13 +314,17 @@ class MainViewModel(
     }
 
     private val database = YoutubeDatabase(DriverFactory().createDriver())
-    suspend fun getAllVideos() {
+    fun getAllVideos() {
         viewModelScope.launch {
-            database.youtubeEntityQueries.getAllVideos()
+            try {
+                database.youtubeEntityQueries.getAllVideos()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
-     fun insertVideos(
+    fun insertVideos(
         id: Long? = null,
         title: String,
         channelName: String,
@@ -331,22 +333,30 @@ class MainViewModel(
         views: String,
         duration: String,
     ) {
-        viewModelScope.launch{
-            database.youtubeEntityQueries.insertVideos(
-                id,
-                title,
-                channelName,
-                channelImage,
-                pubDate,
-                views,
-                duration,
-            )
+        viewModelScope.launch {
+            try {
+                database.youtubeEntityQueries.insertVideos(
+                    id,
+                    title,
+                    channelName,
+                    channelImage,
+                    pubDate,
+                    views,
+                    duration,
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
-    suspend fun deleteVideoById(id: Long) {
-        withContext(Dispatchers.Default) {
-            database.youtubeEntityQueries.deleteVideoById(id)
+    fun deleteVideoById(id: Long) {
+        viewModelScope.launch {
+            try {
+                database.youtubeEntityQueries.deleteVideoById(id)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }

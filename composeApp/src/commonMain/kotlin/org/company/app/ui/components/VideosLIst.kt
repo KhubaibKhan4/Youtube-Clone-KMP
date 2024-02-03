@@ -84,13 +84,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.company.app.ShareManager
 import org.company.app.UserRegion
-import org.company.app.data.model.categories.Snippet
-import org.company.app.data.model.categories.VideoCategories
-import org.company.app.data.model.channel.Channel
-import org.company.app.data.model.search.Search
-import org.company.app.data.model.videos.Item
-import org.company.app.data.model.videos.Youtube
-import org.company.app.domain.repository.Repository
+import org.company.app.data.repositoryimp.Repository
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -101,11 +95,11 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun VideosList(youtube: Youtube) {
+fun VideosList(youtube: org.company.app.domain.model.videos.Youtube) {
     val repository = remember { Repository() }
     val viewModel = remember { MainViewModel(repository) }
-    var videoCategories by remember { mutableStateOf<VideoCategories?>(null) }
-    var videosByCategories by remember { mutableStateOf<Search?>(null) }
+    var videoCategories by remember { mutableStateOf<org.company.app.domain.model.categories.VideoCategories?>(null) }
+    var videosByCategories by remember { mutableStateOf<org.company.app.domain.model.search.Search?>(null) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }
     var isAnyCategorySelected by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
@@ -433,11 +427,15 @@ fun VideosList(youtube: Youtube) {
 
                     // "All" button
                     CategoryButton(
-                        category = org.company.app.data.model.categories.Item(
+                        category = org.company.app.domain.model.categories.Item(
                             etag = "",
                             id = "all",
                             kind = "",
-                            Snippet(assignable = true, title = "All", channelId = "")
+                            org.company.app.domain.model.categories.Snippet(
+                                assignable = true,
+                                title = "All",
+                                channelId = ""
+                            )
                         ),
                         isSelected = selectedCategory == "all",
                         onCategorySelected = {
@@ -497,7 +495,7 @@ fun VideosList(youtube: Youtube) {
 
 @Composable
 fun CategoryButton(
-    category: org.company.app.data.model.categories.Item,
+    category: org.company.app.domain.model.categories.Item,
     isSelected: Boolean,
     onCategorySelected: () -> Unit,
 ) {
@@ -521,13 +519,13 @@ fun CategoryButton(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VideoItemCard(video: Item) {
+fun VideoItemCard(video: org.company.app.domain.model.videos.Item) {
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }
     val repository = remember { Repository() }
     val viewModel = remember { MainViewModel(repository) }
-    var channelData by remember { mutableStateOf<Channel?>(null) }
+    var channelData by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
     }

@@ -56,14 +56,14 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.model.videos.Item
-import org.company.app.data.model.videos.Youtube
+import org.company.app.domain.model.videos.Item
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.DetailScreen
 
 @Composable
 fun PlaylistsVideosList(
-    youtube: Youtube
+    youtube: org.company.app.domain.model.videos.Youtube
 ) {
     Surface(
         color = MaterialTheme.colorScheme.background
@@ -82,7 +82,7 @@ fun PlaylistsVideosList(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlaylistsVideoItemCard(video: Item) {
+fun PlaylistsVideoItemCard(video: org.company.app.domain.model.videos.Item) {
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }

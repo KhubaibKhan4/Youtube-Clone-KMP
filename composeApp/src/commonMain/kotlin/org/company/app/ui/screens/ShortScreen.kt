@@ -9,8 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.UserRegion
-import org.company.app.data.model.videos.Youtube
-import org.company.app.domain.repository.Repository
+import org.company.app.data.repositoryimp.Repository
 import org.company.app.domain.usecases.ResultState
 import org.company.app.isConnected
 import org.company.app.presentation.MainViewModel
@@ -26,7 +25,7 @@ class ShortScreen(
     override fun Content() {
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
-        var shortsData by remember { mutableStateOf<Youtube?>(null) }
+        var shortsData by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
         /* UnComment this, If you want to use the Dark Theme
         When User enter the Shorts Screen
         var isDark by LocalThemeIsDark.current

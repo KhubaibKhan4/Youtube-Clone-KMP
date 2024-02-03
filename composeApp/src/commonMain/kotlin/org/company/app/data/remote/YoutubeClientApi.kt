@@ -12,11 +12,11 @@ import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import org.company.app.data.model.categories.VideoCategories
-import org.company.app.data.model.channel.Channel
-import org.company.app.data.model.comments.Comments
-import org.company.app.data.model.search.Search
-import org.company.app.data.model.videos.Youtube
+import org.company.app.domain.model.categories.VideoCategories
+import org.company.app.domain.model.channel.Channel
+import org.company.app.domain.model.comments.Comments
+import org.company.app.domain.model.search.Search
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.utils.Constant.API_KEY
 import org.company.app.utils.Constant.BASE_URL
 import org.company.app.utils.Constant.TIMEOUT
@@ -51,93 +51,93 @@ object YoutubeClientApi {
         return videoIds.shuffled().firstOrNull()
     }
 
-    suspend fun getVideoList(userRegion: String): Youtube {
+    suspend fun getVideoList(userRegion: String): org.company.app.domain.model.videos.Youtube {
         val url =
             BASE_URL + "videos?part=snippet,contentDetails,statistics,liveStreamingDetails,player,recordingDetails,id&chart=mostPopular&regionCode=${userRegion}&maxResults=2000&key=$API_KEY"
         return client.get(url).body()
     }
 
-    suspend fun getRelevance(): Youtube {
+    suspend fun getRelevance(): org.company.app.domain.model.videos.Youtube {
         val url =
             BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics,statistics&id=${getRandomVideoIds()}&key=$API_KEY"
         return client.get(url).body()
     }
 
-    suspend fun getChannelDetails(channelId: String): Channel {
+    suspend fun getChannelDetails(channelId: String): org.company.app.domain.model.channel.Channel {
         val url =
             BASE_URL + "channels?part=contentDetails,brandingSettings,contentDetails,contentOwnerDetails,id,localizations,snippet,statistics,status,topicDetails&id=${channelId}&key=${API_KEY}"
         return client.get(url).body()
     }
 
-    suspend fun getChannelBranding(channelId: String): Channel {
+    suspend fun getChannelBranding(channelId: String): org.company.app.domain.model.channel.Channel {
         val url = BASE_URL + "channels?part=brandingSettings&id=$channelId&key=$API_KEY"
         return client.get(url).body()
     }
 
-    suspend fun getRelevanceVideos(): Youtube {
+    suspend fun getRelevanceVideos(): org.company.app.domain.model.videos.Youtube {
         val url =
             BASE_URL + "search?part=snippet&order=date&type=video&videoEmbeddable=true&maxResults=200&key=$API_KEY&regionCode=us"
         return client.get(url).body()
     }
 
-    suspend fun getSearch(query: String, userRegion: String): Search {
+    suspend fun getSearch(query: String, userRegion: String): org.company.app.domain.model.search.Search {
         val url =
             BASE_URL + "search?part=snippet&q=${query}&type=any&maxResults=200&key=$API_KEY&regionCode=${userRegion}"
         return client.get(url).body()
     }
 
-    suspend fun getPlaylists(channelId: String): Youtube {
+    suspend fun getPlaylists(channelId: String): org.company.app.domain.model.videos.Youtube {
         val url =
             BASE_URL + "playlists?part=snippet,contentDetails,localizations,player,status,id&channelId=${channelId}&maxResults=50&key=${API_KEY}"
         return client.get(url).body()
     }
 
-    suspend fun getChannelSections(channelId: String): Youtube {
+    suspend fun getChannelSections(channelId: String): org.company.app.domain.model.videos.Youtube {
         val url =
             BASE_URL + "channelSections?part=snippet,contentDetails&channelId=${channelId}&key=${API_KEY}"
         return client.get(url).body()
     }
 
-    suspend fun getChannelLiveStreams(channelID: String): Search {
+    suspend fun getChannelLiveStreams(channelID: String): org.company.app.domain.model.search.Search {
         val url =
             BASE_URL + "search?part=snippet&eventType=live&type=video&id=${channelID}&maxResults=500&regionCode=us&key=${API_KEY}"
         return client.get(url).body()
     }
 
-    suspend fun getChannelVideos(playlistID: String): Youtube {
+    suspend fun getChannelVideos(playlistID: String): org.company.app.domain.model.videos.Youtube {
         val url =BASE_URL + "playlistItems?part=snippet,contentDetails,id,status&&maxResults=50&playlistId=${playlistID}&key=$API_KEY"
         return client.get(url).body()
     }
 
-    suspend fun getOwnChannelVideos(channelId: String): Search {
+    suspend fun getOwnChannelVideos(channelId: String): org.company.app.domain.model.search.Search {
         val url =
             BASE_URL + "search?key=${API_KEY}&part=snippet&channelId=${channelId}&type=video&maxResults=500"
         return client.get(url).body()
     }
 
-    suspend fun getChannelCommunity(channelId: String): Youtube {
+    suspend fun getChannelCommunity(channelId: String): org.company.app.domain.model.videos.Youtube {
         val url =
             BASE_URL + "activities?part=snippet,contentDetails&channelId=${channelId}&maxResults=500&key=${API_KEY}"
         return client.get(url).body()
     }
 
-    suspend fun getComments(videoId: String, order: String): Comments {
+    suspend fun getComments(videoId: String, order: String): org.company.app.domain.model.comments.Comments {
         val url =
             BASE_URL + "commentThreads?part=snippet,replies&videoId=${videoId}&order=${order}&maxResults=2000&key=${API_KEY}"
         return client.get(url).body()
     }
 
-    suspend fun getVideoCategories(): VideoCategories {
+    suspend fun getVideoCategories(): org.company.app.domain.model.categories.VideoCategories {
         val url =
             BASE_URL + "videoCategories?key=${API_KEY}&part=snippet&maxResults=250&regionCode=us"
         return client.get(url).body()
     }
 
-    suspend fun getSingleVideoDetail(videoId: String): Youtube {
+    suspend fun getSingleVideoDetail(videoId: String): org.company.app.domain.model.videos.Youtube {
         val url = BASE_URL + "videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
         return client.get(url).body()
     }
-    suspend fun getMultipleVideos(videoId: String): Youtube{
+    suspend fun getMultipleVideos(videoId: String): org.company.app.domain.model.videos.Youtube {
         val url = BASE_URL+"videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
         return client.get(url).body()
     }
