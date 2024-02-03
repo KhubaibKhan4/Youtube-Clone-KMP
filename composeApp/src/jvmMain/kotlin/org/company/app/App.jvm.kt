@@ -101,8 +101,8 @@ internal actual fun UserRegion(): String {
 }
 
 @Composable
-internal actual fun isConnected(): Boolean {
-    return try {
+internal actual fun isConnected(retry:()->Unit): Boolean {
+   val isConnect = try {
         val url = URL("https://youtube.com")
         val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
         connection.connectTimeout = 30000
@@ -112,6 +112,10 @@ internal actual fun isConnected(): Boolean {
         e.printStackTrace()
         false
     }
+    if (!isConnect){
+        isConnected(retry)
+    }
+    return isConnect
 }
 actual class DriverFactory actual constructor(){
     actual fun createDriver(): SqlDriver {

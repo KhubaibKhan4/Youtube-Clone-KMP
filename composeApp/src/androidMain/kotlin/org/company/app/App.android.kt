@@ -284,11 +284,11 @@ internal actual fun UserRegion(): String {
 }
 
 @Composable
-actual fun isConnected(): Boolean {
+actual fun isConnected(retry : () -> Unit): Boolean {
     val context = LocalContext.current
     val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
          val network = connectivityManager.activeNetwork
          val capabilities = connectivityManager.getNetworkCapabilities(network)
          capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
@@ -297,6 +297,11 @@ actual fun isConnected(): Boolean {
          val networkInfo = connectivityManager.activeNetworkInfo
          networkInfo?.isConnected == true
      }
+
+//    if (!isConnected){
+//       isConnected(retry)
+//    }
+    return isConnected
 }
 
 actual class DriverFactory actual constructor() {

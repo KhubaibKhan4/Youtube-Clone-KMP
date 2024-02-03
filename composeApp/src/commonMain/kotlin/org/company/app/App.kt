@@ -230,7 +230,7 @@ internal expect fun Notify(message: String)
 internal expect fun ShareManager(title: String, videoUrl: String)
 
 @Composable
-internal expect fun isConnected(): Boolean
+internal expect fun isConnected(retry: () -> Unit): Boolean
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class DriverFactory() {

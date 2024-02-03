@@ -104,15 +104,18 @@ internal actual fun UserRegion(): String {
 }
 
 @Composable
-internal actual fun isConnected(): Boolean {
+internal actual fun isConnected(retry : () -> Unit): Boolean {
     var isConnected by remember { mutableStateOf(false) }
     LaunchedEffect(true) {
-        try {
+        isConnected = try {
             val response = window.fetch("https://youtube.com").await()
-            isConnected = response.status == 200.toShort()
+            response.status == 200.toShort()
         } catch (e: dynamic) {
-            isConnected = false
+            false
         }
+    }
+    if (!isConnected){
+        isConnected(retry)
     }
     return isConnected
 }

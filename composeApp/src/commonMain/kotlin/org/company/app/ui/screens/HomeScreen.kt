@@ -42,7 +42,7 @@ class HomeScreen() : Screen {
 
             is ResultState.ERROR -> {
                 val error = (state as ResultState.ERROR).error
-                if (!isConnected()) {
+                if (!isConnected(retry = {})) {
                     NoInternet()
                 } else {
                     ErrorBox(error)

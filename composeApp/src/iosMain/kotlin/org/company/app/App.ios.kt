@@ -1,5 +1,6 @@
 package org.company.app
 
+import YouTubeDatabase.db.YoutubeDatabase
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -124,7 +125,7 @@ internal actual fun UserRegion(): String {
     return NsLocale.currentLocale.countryCode ?: "us"
 }
 @Composable
-internal actual fun isConnected(): Boolean{
+internal actual fun isConnected(retry: () -> Unit): Boolean{
     val url = NSURL.URLWithString("https://www.google.com")
     val request = NSURLRequest.requestWithURL(url)
 

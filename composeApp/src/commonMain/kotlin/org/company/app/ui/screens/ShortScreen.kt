@@ -52,7 +52,7 @@ class ShortScreen(
 
             is ResultState.ERROR -> {
                 val Error = (state as ResultState.ERROR).error
-                if (!isConnected()) {
+                if (!isConnected(retry = {})) {
                     NoInternet()
                 } else {
                     ErrorBox(Error)
