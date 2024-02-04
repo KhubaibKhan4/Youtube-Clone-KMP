@@ -88,6 +88,8 @@ import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.ShortsVideoPlayer
 import org.company.app.data.repository.Repository
+import org.company.app.domain.model.videos.Item
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.ui.screens.ChannelDetail
@@ -99,7 +101,7 @@ import org.company.app.ui.screens.getFormattedDateLikeMonthDay
 import org.company.app.utils.Constant.VIDEO_URL
 
 @Composable
-fun ShortList(youtube: org.company.app.domain.model.videos.Youtube) {
+fun ShortList(youtube: Youtube) {
     LazyColumn {
         youtube.items?.let { videos ->
             items(videos) { items ->
@@ -112,7 +114,7 @@ fun ShortList(youtube: org.company.app.domain.model.videos.Youtube) {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ShortItem(
-    video: org.company.app.domain.model.videos.Item
+    video: Item
 ) {
     val repository = remember { Repository() }
     val viewModel = remember { MainViewModel(repository) }

@@ -3,6 +3,7 @@ package org.company.app.data.repository
 import org.company.app.data.remote.YoutubeClientApi
 import org.company.app.domain.model.categories.VideoCategories
 import org.company.app.domain.model.channel.Channel
+import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.repository.YoutubeApi
@@ -63,7 +64,7 @@ class Repository : YoutubeApi {
     override suspend fun getComments(
         videoId: String,
         order: String,
-    ): org.company.app.domain.model.comments.Comments {
+    ): Comments {
         return YoutubeClientApi.getComments(videoId, order)
     }
 

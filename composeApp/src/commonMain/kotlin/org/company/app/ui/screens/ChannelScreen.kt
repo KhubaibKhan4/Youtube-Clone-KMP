@@ -57,6 +57,10 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.data.repository.Repository
+import org.company.app.domain.model.channel.Channel
+import org.company.app.domain.model.channel.Item
+import org.company.app.domain.model.search.Search
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -70,21 +74,21 @@ import org.company.app.ui.components.FeaturedChannel
 import org.company.app.ui.components.ShimmerEffectChannel
 
 class ChannelScreen(
-    private val channel: org.company.app.domain.model.channel.Item
+    private val channel: Item,
 ) : Screen {
     @Composable
     override fun Content() {
         val isDark by LocalThemeIsDark.current
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
-        var playlists by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
-        var multipleVideo by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
-        var channelSections by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
-        var channelLiveStream by remember { mutableStateOf<org.company.app.domain.model.search.Search?>(null) }
-        var channelAllVideos by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
-        var channelCommunities by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
-        var ownChannelVideo by remember { mutableStateOf<org.company.app.domain.model.search.Search?>(null) }
-        var featuresChannels by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
+        var playlists by remember { mutableStateOf<Youtube?>(null) }
+        var multipleVideo by remember { mutableStateOf<Youtube?>(null) }
+        var channelSections by remember { mutableStateOf<Youtube?>(null) }
+        var channelLiveStream by remember { mutableStateOf<Search?>(null) }
+        var channelAllVideos by remember { mutableStateOf<Youtube?>(null) }
+        var channelCommunities by remember { mutableStateOf<Youtube?>(null) }
+        var ownChannelVideo by remember { mutableStateOf<Search?>(null) }
+        var featuresChannels by remember { mutableStateOf<Channel?>(null) }
 
         LaunchedEffect(Unit) {
             viewModel.getPlaylists(channel.id)
@@ -101,7 +105,7 @@ class ChannelScreen(
                 viewModel.getChannelDetails(channelIds.toString())
             }
             channelAllVideos?.items?.forEach { channelVideos ->
-               // viewModel.getMultipleVideo(channelVideos.contentDetails)
+                // viewModel.getMultipleVideo(channelVideos.contentDetails)
             }
 
         }
@@ -289,7 +293,7 @@ class ChannelScreen(
 
                 // Title
                 Text(
-                    text = channel.snippet?.title.toString(),
+                    text = channel.snippet.title.toString(),
                     fontSize = MaterialTheme.typography.titleSmall.fontSize,
                     color = if (isDark) Color.White else Color.Black
                 )
@@ -319,7 +323,7 @@ class ChannelScreen(
 
             // Channel Poster Image
             val poster: Resource<Painter> =
-                asyncPainterResource(channel.brandingSettings?.image?.bannerExternalUrl.toString())
+                asyncPainterResource(channel.brandingSettings.image?.bannerExternalUrl.toString())
             KamelImage(
                 resource = poster,
                 contentDescription = null,
@@ -345,7 +349,7 @@ class ChannelScreen(
             ) {
                 // Channel Image
                 val image: Resource<Painter> =
-                    asyncPainterResource(data = channel.snippet?.thumbnails?.default?.url.toString())
+                    asyncPainterResource(data = channel.snippet.thumbnails.default?.url.toString())
                 KamelImage(
                     resource = image,
                     contentDescription = null,
@@ -362,7 +366,7 @@ class ChannelScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = channel.snippet?.title.toString(),
+                        text = channel.snippet.title.toString(),
                         fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         color = if (isDark) Color.White else Color.Black
                     )
@@ -383,9 +387,9 @@ class ChannelScreen(
 
                 // Channel Subscribers and Videos
                 Text(
-                    text = "${channel.snippet?.customUrl} • ${formatSubscribers(channel.statistics?.subscriberCount)} Subscribers • ${
+                    text = "${channel.snippet.customUrl} • ${formatSubscribers(channel.statistics.subscriberCount)} Subscribers • ${
                         formatLikes(
-                            channel.statistics?.videoCount
+                            channel.statistics.videoCount
                         )
                     } videos",
                     modifier = Modifier.fillMaxWidth().wrapContentHeight()
@@ -410,7 +414,8 @@ class ChannelScreen(
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
                             fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            textAlign = TextAlign.Center
                         )
                     }
 
@@ -525,8 +530,8 @@ class ChannelScreen(
                     when (selectedTabIndex) {
                         0 -> {
                             /*   multipleVideo?.let {
-                                   ChannelHome(it, modifier = Modifier.fillMaxWidth(), title = "Home")
-                               }*/
+                               ChannelHome(it, modifier = Modifier.fillMaxWidth(), title = "Home")
+                           }*/
                             playlists.let { youtube ->
                                 youtube?.let { it1 ->
                                     ChannelHome(
@@ -555,7 +560,7 @@ class ChannelScreen(
                         }
 
                         3 -> {
-                            playlists?.let { youtube: org.company.app.domain.model.videos.Youtube? ->
+                            playlists?.let { youtube: Youtube? ->
                                 ChannelPlaylists(youtube!!)
                             }
                         }
@@ -564,7 +569,7 @@ class ChannelScreen(
                             channelCommunities?.let { youtube ->
                                 ChannelCommunity(
                                     youtube,
-                                    channel.brandingSettings?.image?.bannerExternalUrl.toString()
+                                    channel.brandingSettings.image?.bannerExternalUrl.toString()
                                 )
                             }
                         }
@@ -572,6 +577,5 @@ class ChannelScreen(
                 }
             }
         }
-
     }
 }
