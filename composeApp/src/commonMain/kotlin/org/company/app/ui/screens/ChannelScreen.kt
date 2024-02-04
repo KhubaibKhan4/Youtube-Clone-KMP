@@ -56,7 +56,7 @@ import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.repositoryimp.Repository
+import org.company.app.data.repository.Repository
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark

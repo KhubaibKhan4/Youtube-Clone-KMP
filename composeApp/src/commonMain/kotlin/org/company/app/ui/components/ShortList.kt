@@ -87,7 +87,7 @@ import io.kamel.image.asyncPainterResource
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.ShortsVideoPlayer
-import org.company.app.data.repositoryimp.Repository
+import org.company.app.data.repository.Repository
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.ui.screens.ChannelDetail

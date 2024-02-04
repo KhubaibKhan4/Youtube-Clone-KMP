@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.UserRegion
-import org.company.app.data.repositoryimp.Repository
+import org.company.app.data.repository.Repository
 import org.company.app.domain.usecases.ResultState
 import org.company.app.isConnected
 import org.company.app.presentation.MainViewModel

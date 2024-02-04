@@ -1,4 +1,4 @@
-package org.company.app.data.repositoryimp
+package org.company.app.data.repository
 
 import org.company.app.data.remote.YoutubeClientApi
 import org.company.app.domain.model.categories.VideoCategories
