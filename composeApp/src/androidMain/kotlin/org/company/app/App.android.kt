@@ -23,10 +23,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import org.company.app.shortcuts.TopTrending
 import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
-import org.company.app.widget.dynamicShortcut
-import org.company.app.widget.pinnedShortCut
+import org.company.app.shortcuts.dynamicShortcut
+import org.company.app.shortcuts.latestVideos
+import org.company.app.shortcuts.pinnedShortCut
 import java.util.Locale
 
 class AndroidApp : Application() {
@@ -55,7 +57,8 @@ internal actual fun provideShortCuts() {
     val context = LocalContext.current
     pinnedShortCut(context)
     dynamicShortcut(context)
-
+    latestVideos(context)
+    TopTrending(context)
 }
 
 internal actual fun openUrl(url: String?) {

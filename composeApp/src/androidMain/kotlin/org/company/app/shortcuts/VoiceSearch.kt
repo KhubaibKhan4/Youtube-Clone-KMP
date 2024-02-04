@@ -1,4 +1,4 @@
-package org.company.app.widget
+package org.company.app.shortcuts
 
 import android.app.PendingIntent
 import android.content.Context
