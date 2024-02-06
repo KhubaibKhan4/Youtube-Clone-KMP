@@ -26,20 +26,6 @@ internal actual fun openUrl(url: String?) {
 
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?){
-    //VideoPlayerFFMpeg(modifier = modifier, file = url.toString())
-    /* Box(
-         modifier = modifier,
-         contentAlignment = Alignment.Center
-     ) {
-         val image: Resource<androidx.compose.ui.graphics.painter.Painter> =
-             asyncPainterResource(data = thumbnail.toString())
-         KamelImage(
-             resource = image,
-             modifier = modifier.fillMaxWidth(),
-             contentDescription = null
-         )
-         CircularProgressIndicator()
-     }*/
     val videoId = splitLinkForVideoId(url.toString())
     DesktopWebView(modifier, "https://www.youtube.com/embed/$videoId")
 }
