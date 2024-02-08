@@ -103,8 +103,16 @@ class DetailScreen(
     override fun Content() {
         val repository = remember { Repository() }
         val viewModel = remember { MainViewModel(repository) }
-        var stateRelevance by remember { mutableStateOf<ResultState<org.company.app.domain.model.videos.Youtube>>(ResultState.LOADING) }
-        var commentData by remember { mutableStateOf<org.company.app.domain.model.comments.Comments?>(null) }
+        var stateRelevance by remember {
+            mutableStateOf<ResultState<org.company.app.domain.model.videos.Youtube>>(
+                ResultState.LOADING
+            )
+        }
+        var commentData by remember {
+            mutableStateOf<org.company.app.domain.model.comments.Comments?>(
+                null
+            )
+        }
         var descriptionEnabled by remember { mutableStateOf(false) }
         var displayVideoPlayer by remember { mutableStateOf(false) }
         var isCommentLive by remember { mutableStateOf(false) }
@@ -431,8 +439,8 @@ class DetailScreen(
                         contentDescription = null,
                         modifier = Modifier.size(60.dp).clip(CircleShape)
                             .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
-                            navigator?.push(ChannelScreen(channelData))
-                        },
+                                navigator?.push(ChannelScreen(channelData))
+                            },
                         contentScale = ContentScale.FillBounds
                     )
                 }
@@ -474,7 +482,7 @@ class DetailScreen(
                     )
 
                 }
-                androidx.compose.animation.AnimatedVisibility (!isSubscribed){
+                androidx.compose.animation.AnimatedVisibility(!isSubscribed) {
                     Text(text = "SUBSCRIBE",
                         color = Color.Red,
                         fontWeight = FontWeight.Bold,
