@@ -3,7 +3,7 @@
 coilNetwork = "3.0.0-alpha01"
 core = "12.1.0"
 ffmpegPlatform = "4.1-1.4.4"
-kotlin = "1.9.21"
+kotlin = "1.9.22"
 agp = "8.2.2"
 compose = "1.5.12"
 androidx-appcompat = "1.6.1"
