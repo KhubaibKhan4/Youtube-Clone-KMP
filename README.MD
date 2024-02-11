@@ -11,6 +11,12 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - **Download Capability**
 - **Playlist Viewing**
 - **Comprehensive Search**
+- **Video Detail**
+- **Trending Videos**
+- **Subscribe Channels**
+- **View Verified Channel Badges**
+- **Offiline Video Support**
+- **Smooth Interation **
 - **Responsive UI**
 - **Material Design Components**
 
@@ -45,12 +51,12 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 
 # Tech Stack Highlights
 
-- **Kotlin Multiplatform**: `1.9.21`
-- **AGP (Android Gradle Plugin)**: `8.2.0`
-- **Compose**: `1.5.11`
+- **Kotlin Multiplatform**: `1.9.22`
+- **AGP (Android Gradle Plugin)**: `8.2.2`
+- **Compose**: `1.5.12`
   - `androidx-appcompat`: `1.6.1`
   - `androidx-activityCompose`: `1.8.2`
-  - `compose-uitooling`: `1.5.4`
+  - `compose-uitooling`: `1.6.1`
   - `composeImageLoader`: `1.7.1`
   - `composeIcons`: `1.1.0`
 - **Core Libraries**: `12.1.0`
