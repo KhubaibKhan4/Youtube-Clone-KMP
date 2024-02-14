@@ -90,6 +90,7 @@ import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.ChannelScreen
 import org.company.app.ui.screens.DetailScreen
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -182,7 +183,7 @@ fun VideosList(youtube: org.company.app.domain.model.videos.Youtube) {
                 horizontalAlignment = Alignment.Start
             ) {
                 Image(
-                    painterResource(if (isDark) "youtube_logo_dark.webp" else "youtube_logo_light.webp"),
+                    painterResource(if (isDark) DrawableResource("youtube_logo_dark.webp") else DrawableResource("youtube_logo_light.webp")),
                     contentDescription = null,
                     modifier = Modifier.size(120.dp),
                 )
@@ -205,7 +206,7 @@ fun VideosList(youtube: org.company.app.domain.model.videos.Youtube) {
                     selected = false,
                     icon = {
                         Icon(
-                            painterResource("trending.png"),
+                            painterResource(DrawableResource("trending.png")),
                             contentDescription = "Trending",
                             modifier = Modifier.size(25.dp),
                             tint = if (isDark) Color.White else Color.Black
@@ -256,7 +257,7 @@ fun VideosList(youtube: org.company.app.domain.model.videos.Youtube) {
                     selected = false,
                     icon = {
                         Icon(
-                            painterResource("livestream_icon.png"),
+                            painterResource(DrawableResource("livestream_icon.png")),
                             contentDescription = "Live",
                             modifier = Modifier.size(25.dp),
                             tint = if (isDark) Color.White else Color.Black
@@ -419,7 +420,7 @@ fun VideosList(youtube: org.company.app.domain.model.videos.Youtube) {
                         ),
                     ) {
                         Icon(
-                            painter = painterResource("compass_icon.xml"),
+                            painter = painterResource(DrawableResource("compass_icon.xml")),
                             contentDescription = "Compass Icon",
                             tint = MaterialTheme.colorScheme.primary
                         )

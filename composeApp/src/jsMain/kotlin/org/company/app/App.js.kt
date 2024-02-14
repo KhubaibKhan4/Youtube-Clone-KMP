@@ -18,6 +18,7 @@ import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import org.w3c.dom.Worker
 
 internal actual fun openUrl(url: String?) {
     url?.let { window.open(it) }
@@ -122,8 +123,7 @@ internal actual fun isConnected(retry : () -> Unit): Boolean {
 
 actual class DriverFactory actual constructor() {
     actual fun createDriver(): SqlDriver {
-        val workerScriptUrl =
-            js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)""")
+        val workerScriptUrl = js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)""")
         val driver = WebWorkerDriver(workerScriptUrl).also { YoutubeDatabase.Schema.create(it) }
         return driver
     }

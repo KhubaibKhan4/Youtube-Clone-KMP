@@ -39,6 +39,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.company.app.theme.LocalThemeIsDark
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -77,7 +78,7 @@ object AccountScreen : Tab {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painterResource("do_more_with_youtube.webp"),
+                    painterResource(DrawableResource("do_more_with_youtube.webp")),
                     contentDescription = null,
                     modifier = Modifier.size(165.dp)
                 )
@@ -164,7 +165,7 @@ object AccountScreen : Tab {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Image(
-                        painterResource("youtube_music.png"), contentDescription = null,
+                        painterResource(DrawableResource("youtube_music.png")), contentDescription = null,
                         modifier = Modifier.size(30.dp)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
@@ -177,7 +178,7 @@ object AccountScreen : Tab {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Image(
-                        painterResource("youtube_kids.png"), contentDescription = null,
+                        painterResource(DrawableResource("youtube_kids.png")), contentDescription = null,
                         modifier = Modifier.size(40.dp)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
