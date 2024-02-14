@@ -85,7 +85,6 @@ import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.AccountScreen
 import org.company.app.ui.screens.DetailScreen
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -107,7 +106,7 @@ fun TopBar(modifier: Modifier) {
         TopAppBar(
             title = {
                 Image(
-                    painterResource(if (isDark) DrawableResource("youtube_logo_dark.webp") else DrawableResource("youtube_logo_light.webp")),
+                    painterResource(if (isDark) "youtube_logo_dark.webp" else "youtube_logo_light.webp"),
                     contentDescription = null,
                     modifier = Modifier.size(120.dp),
                 )
