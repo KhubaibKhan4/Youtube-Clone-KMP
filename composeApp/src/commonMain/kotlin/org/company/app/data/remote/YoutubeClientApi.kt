@@ -141,4 +141,8 @@ object YoutubeClientApi {
         val url = BASE_URL+"videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
         return client.get(url).body()
     }
+    suspend fun getChannelSearch(channelID: String, query: String): Search {
+        val url = BASE_URL+"search?part=snippet&channelId=${channelID}&q=${query}&key=$API_KEY"
+        return client.get(url).body()
+    }
 }

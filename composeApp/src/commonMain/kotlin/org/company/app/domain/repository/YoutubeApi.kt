@@ -23,4 +23,5 @@ interface YoutubeApi {
     suspend fun getVideoCategories(): VideoCategories
     suspend fun getSingleVideoDetail(videoId: String): Youtube
     suspend fun getMultipleVideos(videoId: String): Youtube
+    suspend fun getChannelSearch(channelID: String, query: String): Search
 }

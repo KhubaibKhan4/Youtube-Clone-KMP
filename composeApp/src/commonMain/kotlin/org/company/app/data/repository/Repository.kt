@@ -25,7 +25,6 @@ class Repository : YoutubeApi {
     override suspend fun getRelevanceVideos(): Youtube {
         return YoutubeClientApi.getRelevanceVideos()
     }
-
     override suspend fun getSearch(
         query: String,
         userRegion: String,
@@ -78,5 +77,9 @@ class Repository : YoutubeApi {
 
     override suspend fun getMultipleVideos(videoId: String): Youtube {
         return YoutubeClientApi.getMultipleVideos(videoId)
+    }
+
+    override suspend fun getChannelSearch(channelID: String, query: String): Search {
+        return YoutubeClientApi.getChannelSearch(channelID,query)
     }
 }

@@ -48,6 +48,9 @@ class MainViewModel(
     var _search = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
         private set
     val search: StateFlow<ResultState<Search>> = _search.asStateFlow()
+    var _channelSearch = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
+        private set
+    val channelSearch: StateFlow<ResultState<Search>> = _channelSearch.asStateFlow()
 
     //Playlist Videos
     var _playlists = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
@@ -309,6 +312,19 @@ class MainViewModel(
             } catch (e: Exception) {
                 val error = e.message.toString()
                 _multipleVideos.value = ResultState.ERROR(error)
+            }
+        }
+    }
+    fun getChannelSearch(channelID: String,query: String) {
+        viewModelScope.launch {
+            _channelSearch.value = ResultState.LOADING
+            try {
+                val response = repository.getChannelSearch(channelID,query)
+                _channelSearch.value = ResultState.SUCCESS(response)
+                println("Channel Search $response")
+            } catch (e: Exception) {
+                val error = e.message.toString()
+                _channelSearch.value = ResultState.ERROR(error)
             }
         }
     }
