@@ -56,7 +56,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 - **Compose**: `1.5.12`
   - `androidx-appcompat`: `1.6.1`
   - `androidx-activityCompose`: `1.8.2`
-  - `compose-uitooling`: `1.6.1`
+  - `compose-uitooling`: `1.6.2`
   - `composeImageLoader`: `1.7.1`
   - `composeIcons`: `1.1.0`
 - **Core Libraries**: `12.1.0`
@@ -66,7 +66,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `kotlinx-datetime`: `0.5.0`
 - **Networking**:
   - `coilNetwork`: `3.0.0-alpha01`
-  - `ktor`: `2.3.7`
+  - `ktor`: `2.3.8`
 - **Dependency Injection**:
   - `koin`: `3.5.0`
 - **UI/UX**:
@@ -95,7 +95,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `moko-mvvm`: `0.16.1`
   - `vlcj`: `4.7.0`
   - `ffmpegPlatform`: `4.1-1.4.4`
-  - `kamelImage`: `0.9.0`
+  - `kamelImage`: `0.9.2`
 - **JavaFX**: `22-ea+16`
 
 📝 Getting Started
