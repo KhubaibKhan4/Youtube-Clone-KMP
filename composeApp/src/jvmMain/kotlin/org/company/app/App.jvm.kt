@@ -80,7 +80,7 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 internal actual fun ShortsVideoPlayer(url: String?) {
     DesktopWebView(
         modifier = Modifier.width(640.dp).height(360.dp),
-        url = "\"https://www.youtube.com/embed/$url/"
+        url = "https://www.youtube.com/embed/$url/"
     )
 }
 
