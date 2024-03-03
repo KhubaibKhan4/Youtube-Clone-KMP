@@ -31,7 +31,6 @@ fun DesktopWebView(
 }
 
 private fun JFXPanel.buildWebView(url: String) {
-
     Platform.runLater {
         val webView = WebView()
         val webEngine = webView.engine

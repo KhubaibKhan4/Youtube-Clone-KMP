@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
-import io.github.aakira.napier.Napier
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.awt.Desktop
 import java.awt.SystemTray
@@ -80,14 +79,16 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 @Composable
 internal actual fun ShortsVideoPlayer(url: String?) {
     val videoId = splitLinkForShotsVideoId(url)
-        DesktopWebView(
-            modifier = Modifier.width(640.dp).height(360.dp),
-            url = "https://www.youtube.com/embed/$videoId",
-        )
+    DesktopWebView(
+        modifier = Modifier.width(640.dp).height(360.dp),
+        url = "https://www.youtube.com/embed/${videoId}"
+    )
 }
+
 fun splitLinkForShotsVideoId(url: String?): String {
     return url!!.split("v=").get(1)
 }
+
 internal actual fun UserRegion(): String {
     val currentLocale: Locale = Locale.getDefault()
     return currentLocale.country

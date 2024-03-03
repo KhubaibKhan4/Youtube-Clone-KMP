@@ -125,7 +125,7 @@ fun ShortItem(
     var channelDetail by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
     var descriptionEnabled by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
-    val shortsUrl = VIDEO_URL + video.id.toString()
+    val shortsUrl = VIDEO_URL+video.id.toString()
     val channelImage = channelDetail?.items?.getOrNull(0)?.snippet?.thumbnails?.high?.url.toString()
     val image: Resource<Painter> = asyncPainterResource(data = channelImage)
     val customName = channelDetail?.items?.getOrNull(0)?.snippet?.customUrl
