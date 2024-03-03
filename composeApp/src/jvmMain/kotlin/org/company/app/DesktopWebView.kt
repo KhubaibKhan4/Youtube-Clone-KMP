@@ -9,7 +9,6 @@ import javafx.application.Platform
 import javafx.embed.swing.JFXPanel
 import javafx.scene.Scene
 import javafx.scene.web.WebView
-import kotlinx.coroutines.delay
 import javax.swing.JPanel
 
 @Composable
@@ -58,7 +57,7 @@ private fun JFXPanel.buildWebView(url: String) {
         // Enable full-screen mode support
         webEngine.executeScript("document.webkitExitFullscreen = function() {};")
         // Load the YouTube video using the embed URL
-        webEngine.load(url)
+        webEngine.load("https://www.youtube.com/embed/$url/")
         val scene = Scene(webView)
         setScene(scene)
     }
