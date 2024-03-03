@@ -57,7 +57,7 @@ private fun JFXPanel.buildWebView(url: String) {
         // Enable full-screen mode support
         webEngine.executeScript("document.webkitExitFullscreen = function() {};")
         // Load the YouTube video using the embed URL
-        webEngine.load("https://www.youtube.com/embed/$url/")
+        webEngine.load(url)
         val scene = Scene(webView)
         setScene(scene)
     }
