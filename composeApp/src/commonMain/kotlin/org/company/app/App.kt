@@ -49,12 +49,12 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import org.company.app.theme.AppTheme
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.ui.navigation.HomeTab
-import org.company.app.ui.navigation.LibraryTab
-import org.company.app.ui.navigation.ShortsTab
-import org.company.app.ui.navigation.SubscriptionsTab
-import org.company.app.ui.navigation.rails.NavigationItem
-import org.company.app.ui.navigation.rails.NavigationSideBar
+import org.company.app.ui.navigation.tabs.home.HomeTab
+import org.company.app.ui.navigation.tabs.library.LibraryTab
+import org.company.app.ui.navigation.tabs.shorts.ShortsTab
+import org.company.app.ui.navigation.tabs.subscriptions.SubscriptionsTab
+import org.company.app.ui.navigation.rails.items.NavigationItem
+import org.company.app.ui.navigation.rails.ui.NavigationSideBar
 
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
