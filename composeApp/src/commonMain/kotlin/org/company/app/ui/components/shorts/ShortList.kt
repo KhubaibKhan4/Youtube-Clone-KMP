@@ -101,7 +101,6 @@ import org.company.app.ui.screens.detail.formatLikes
 import org.company.app.ui.screens.detail.formatSubscribers
 import org.company.app.ui.screens.detail.formatViewComments
 import org.company.app.ui.screens.detail.getFormattedDateLikeMonthDay
-import org.company.app.utils.Constant.VIDEO_URL
 
 @Composable
 fun ShortList(youtube: Youtube) {
@@ -125,7 +124,7 @@ fun ShortItem(
     var channelDetail by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
     var descriptionEnabled by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
-    val shortsUrl = VIDEO_URL+video.id.toString()
+    val shortsUrl = video.id.toString()
     val channelImage = channelDetail?.items?.getOrNull(0)?.snippet?.thumbnails?.high?.url.toString()
     val image: Resource<Painter> = asyncPainterResource(data = channelImage)
     val customName = channelDetail?.items?.getOrNull(0)?.snippet?.customUrl
@@ -175,7 +174,7 @@ fun ShortItem(
     Box(
         modifier = Modifier.fillMaxWidth().background(color = Color.Black)
             .padding(top = 10.dp),
-        contentAlignment = Alignment.TopCenter
+        contentAlignment = Alignment.Center
     ) {
         ShortsVideoPlayer(url = shortsUrl)
         Napier.d(message = "Video ID: ${video.id}", tag = "SHORTS")

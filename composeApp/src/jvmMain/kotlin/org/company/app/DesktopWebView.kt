@@ -9,6 +9,7 @@ import javafx.application.Platform
 import javafx.embed.swing.JFXPanel
 import javafx.scene.Scene
 import javafx.scene.web.WebView
+import kotlinx.coroutines.delay
 import javax.swing.JPanel
 
 @Composable
@@ -34,7 +35,6 @@ private fun JFXPanel.buildWebView(url: String) {
     Platform.runLater {
         val webView = WebView()
         val webEngine = webView.engine
-
 
         // Set the user agent to simulate a browser for YouTube
         webEngine.userAgent =
