@@ -81,7 +81,7 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 internal actual fun ShortsVideoPlayer(url: String?) {
     val videoId = splitLinkForShotsVideoId(url)
         DesktopWebView(
-            modifier = Modifier.width(370.dp).height(370.dp),
+            modifier = Modifier.width(640.dp).height(360.dp),
             url = "https://www.youtube.com/embed/$videoId",
         )
 }
