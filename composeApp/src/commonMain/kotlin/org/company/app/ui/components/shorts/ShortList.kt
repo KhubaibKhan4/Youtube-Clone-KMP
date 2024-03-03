@@ -81,6 +81,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
+import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -177,6 +178,7 @@ fun ShortItem(
         contentAlignment = Alignment.TopCenter
     ) {
         ShortsVideoPlayer(url = shortsUrl)
+        Napier.d(message = "Video ID: ${video.id}", tag = "SHORTS")
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
