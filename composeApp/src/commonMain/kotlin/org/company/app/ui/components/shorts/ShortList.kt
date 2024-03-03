@@ -85,6 +85,7 @@ import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import io.ktor.util.Platform
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.ShortsVideoPlayer

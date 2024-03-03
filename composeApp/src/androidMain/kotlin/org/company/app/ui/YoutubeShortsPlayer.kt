@@ -27,11 +27,10 @@ fun YoutubeShortsPlayer(
     youtubeURL: String?,
     isPlaying: (Boolean) -> Unit = {},
     isLoading: (Boolean) -> Unit = {},
-    onVideoEnded: () -> Unit = {}
+    onVideoEnded: () -> Unit = {},
 ) {
     val mContext = LocalContext.current
     val mLifeCycleOwner = LocalLifecycleOwner.current
-    val videoId = splitLinkForVideoId(youtubeURL)
     var player: com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer? = null
     val playerFragment = YouTubePlayerView(mContext)
     val playerStateListener = object : AbstractYouTubePlayerListener() {
@@ -39,12 +38,12 @@ fun YoutubeShortsPlayer(
             super.onReady(youTubePlayer)
             player = youTubePlayer
             youTubePlayer.setLoop(true)
-            youTubePlayer.loadVideo(videoId, 0f)
+            youTubePlayer.loadVideo("$youtubeURL", 0f)
         }
 
         override fun onStateChange(
             youTubePlayer: com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer,
-            state: PlayerConstants.PlayerState
+            state: PlayerConstants.PlayerState,
         ) {
             super.onStateChange(youTubePlayer, state)
             when (state) {
@@ -70,7 +69,7 @@ fun YoutubeShortsPlayer(
 
         override fun onError(
             youTubePlayer: com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer,
-            error: PlayerConstants.PlayerError
+            error: PlayerConstants.PlayerError,
         ) {
             super.onError(youTubePlayer, error)
             println("iFramePlayer Error Reason = $error")
