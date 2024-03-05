@@ -8,17 +8,27 @@ import androidx.compose.ui.interop.UIKitView
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import kotlinx.cinterop.CValue
-import platform.Foundation.NSURL
-import platform.UIKit.UIApplication
-import platform.Foundation.NSURL
-import platform.Foundation.NSURLRequest
-import platform.Foundation.create
-import platform.Foundation.sendSynchronousRequest
-import platform.Foundation.HTTPURLResponse
+import platform.Foundation.*
 import platform.Foundation.NSError
 import platform.Foundation.NSErrorDomain
+import platform.Foundation.NSHTTPURLResponse
+import platform.Foundation.NSURL
 import platform.Foundation.NSURLConnection
-import `sql-delight`.db.YoutubeDatabase
+import platform.Foundation.NSURLRequest
+import platform.Foundation.sendSynchronousRequest
+import platform.QuartzCore.CATransaction
+import platform.QuartzCore.kCATransactionDisableActions
+import platform.UIKit.*
+import platform.UIKit.UIActivityViewController
+import platform.UIKit.UIAlertAction
+import platform.UIKit.UIAlertController
+import platform.UIKit.UIApplication
+import platform.UIKit.UIDevice
+import platform.UIKit.UIView
+import platform.UIKit.keyWindow
+import platform.UIKit.rootViewController
+import platform.coregraphics.CGRect
+import platform.darwin.*
 
 internal actual fun openUrl(url: String?) {
     val nsUrl = url?.let { NSURL.URLWithString(it) } ?: return
