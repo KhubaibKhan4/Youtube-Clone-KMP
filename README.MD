@@ -62,7 +62,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 - **Core Libraries**: `12.1.0`
 - **Kotlinx Libraries**:
   - `kotlinx-coroutines`: `1.7.3`
-  - `kotlinx-serialization`: `1.6.2`
+  - `kotlinx-serialization`: `1.6.3`
   - `kotlinx-datetime`: `0.5.0`
 - **Networking**:
   - `coilNetwork`: `3.0.0-alpha01`
