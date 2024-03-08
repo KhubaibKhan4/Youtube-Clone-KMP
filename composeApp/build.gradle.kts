@@ -67,8 +67,8 @@ kotlin {
             implementation(libs.kamel.image)
             implementation(libs.coil.network)
             implementation(libs.sqlDelight.extension)
-            implementation("app.cash.paging:paging-compose-common:3.3.0-alpha02-0.4.0")
-            implementation("app.cash.paging:paging-common:3.3.0-alpha02-0.4.0")
+            implementation(libs.paging.compose.common)
+            implementation(libs.paging.common)
         }
 
         commonTest.dependencies {

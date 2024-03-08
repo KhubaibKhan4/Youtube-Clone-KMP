@@ -18,7 +18,6 @@ import org.company.app.domain.usecases.ResultState
 class MainViewModel(
     private val repository: Repository,
 ) : ViewModel() {
-
     //Videos
     var _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
         private set
