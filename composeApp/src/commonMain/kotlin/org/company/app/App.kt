@@ -55,13 +55,17 @@ import org.company.app.ui.navigation.tabs.shorts.ShortsTab
 import org.company.app.ui.navigation.tabs.subscriptions.SubscriptionsTab
 import org.company.app.ui.navigation.rails.items.NavigationItem
 import org.company.app.ui.navigation.rails.ui.NavigationSideBar
+import org.koin.compose.KoinContext
 
+
+@Composable
+internal fun App() = AppTheme {
+  AppContent()
+}
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-internal fun App() = AppTheme {
-
-
+fun AppContent() {
     val items = listOf(
         NavigationItem(
             title = "Home",
@@ -171,7 +175,6 @@ internal fun App() = AppTheme {
         }
 
     }
-
 }
 
 @Composable

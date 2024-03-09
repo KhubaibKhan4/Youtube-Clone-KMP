@@ -3,12 +3,17 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import org.company.app.App
+import org.company.app.di.appModule
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.koin.core.context.startKoin
 import java.awt.Dimension
 
 @OptIn(ExperimentalResourceApi::class)
 fun main() = application {
+    startKoin {
+        modules(appModule)
+    }
     Window(
         title = "Youtube Clone",
         icon = painterResource("youtube_music.png"),

@@ -23,12 +23,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import org.company.app.di.appModule
 import org.company.app.shortcuts.TopTrending
 import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
 import org.company.app.shortcuts.dynamicShortcut
 import org.company.app.shortcuts.latestVideos
 import org.company.app.shortcuts.pinnedShortCut
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import java.util.Locale
 
 class AndroidApp : Application() {
@@ -39,9 +43,13 @@ class AndroidApp : Application() {
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
+        startKoin {
+            androidContext(this@AndroidApp)
+            androidLogger()
+            modules(appModule)
+        }
     }
 }
-
 class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
