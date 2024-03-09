@@ -50,19 +50,23 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.data.repository.Repository
+import org.company.app.Notify
+import org.company.app.domain.model.channel.Channel
+import org.company.app.domain.model.comments.Comments
+import org.company.app.domain.model.comments.Item
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.ui.components.custom_image.NetworkImage
 import org.company.app.ui.components.common.ErrorBox
+import org.company.app.ui.components.custom_image.NetworkImage
 import org.company.app.ui.components.video_list.getFormattedDate
 import org.company.app.ui.screens.detail.formatLikes
+import org.koin.compose.koinInject
 
 @Composable
 fun CommentsList(
-    comments: org.company.app.domain.model.comments.Comments,
-    modifier: Modifier
+    comments: Comments,
+    modifier: Modifier,
 ) {
     LazyColumn(modifier = modifier.fillMaxWidth()) {
         comments.items?.let { items ->
@@ -75,11 +79,9 @@ fun CommentsList(
 }
 
 @Composable
-fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
+fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewModel>()) {
     val localNavigator = LocalNavigator.current
-    val repository = remember { Repository() }
-    val viewModel = remember { MainViewModel(repository) }
-    var channelData by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
+    var channelData by remember { mutableStateOf<Channel?>(null) }
     var commentExpanded by remember { mutableStateOf(false) }
     var repliesExpanded by remember { mutableStateOf(false) }
     val isDark by LocalThemeIsDark.current
@@ -87,7 +89,7 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(comments.snippet.channelId)
     }
-    val state: ResultState<org.company.app.domain.model.channel.Channel> by viewModel.channelDetails.collectAsState()
+    val state by viewModel.channelDetails.collectAsState()
     when (state) {
         is ResultState.LOADING -> {
             CircularProgressIndicator()
@@ -122,7 +124,7 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape),
-                url = comments.snippet.topLevelComment.snippet.authorProfileImageUrl.toString(),
+                url = comments.snippet.topLevelComment.snippet.authorProfileImageUrl,
                 contentScale = ContentScale.FillBounds
             )
             Spacer(modifier = Modifier.width(12.dp))
@@ -133,7 +135,8 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
             ) {
                 val isPinned =
                     comments.snippet.topLevelComment.snippet.channelId == "likelySpam"
-                val pinned = comments.snippet.topLevelComment.snippet.authorChannelId.value.equals(comments.snippet.channelId)
+                val pinned =
+                    comments.snippet.topLevelComment.snippet.authorChannelId.value.equals(comments.snippet.channelId)
 
                 AnimatedVisibility(pinned) {
                     Surface(
@@ -150,7 +153,7 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
                                 imageVector = Icons.Default.PinDrop,
                                 contentDescription = "Pinned Icon",
                                 modifier = Modifier.size(15.dp),
-                                tint =if (isDark) Color.White else Color.DarkGray
+                                tint = if (isDark) Color.White else Color.DarkGray
                             )
                             Text(
                                 text = "Pinned by ${comments.snippet.topLevelComment.snippet.authorDisplayName}",
@@ -169,9 +172,12 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
                         text = comments.snippet.topLevelComment.snippet.authorDisplayName,
                         fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         fontWeight = FontWeight.Bold,
-                        color =if (isDark) Color.White else Color.Black,
+                        color = if (isDark) Color.White else Color.Black,
                     )
-                    val isVerified = channelData?.items?.get(0)?.status?.isLinked == true && channelData?.items?.get(0)?.id.equals(comments.snippet.topLevelComment.snippet.authorChannelId.value)
+                    val isVerified =
+                        channelData?.items?.get(0)?.status?.isLinked == true && channelData?.items?.get(
+                            0
+                        )?.id.equals(comments.snippet.topLevelComment.snippet.authorChannelId.value)
                     if (isVerified) {
                         androidx.compose.material.Icon(
                             imageVector = Icons.Default.Verified,
@@ -185,9 +191,9 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
                 }
 
                 Text(
-                    text = getFormattedDate(comments.snippet.topLevelComment.snippet.publishedAt.toString()),
+                    text = getFormattedDate(comments.snippet.topLevelComment.snippet.publishedAt),
                     fontSize = MaterialTheme.typography.labelSmall.fontSize,
-                    color =if (isDark) Color.White else Color.Gray
+                    color = if (isDark) Color.White else Color.Gray
                 )
             }
 
@@ -250,13 +256,13 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
                     Icon(
                         imageVector = Icons.Outlined.ThumbUp,
                         contentDescription = "Thumb Up",
-                        tint =if (isDark) Color.White else Color.Gray,
+                        tint = if (isDark) Color.White else Color.Gray,
                         modifier = Modifier.size(18.dp)
                     )
                     Text(
                         text = formatLikes(comments.snippet.topLevelComment.snippet.likeCount.toString()),
                         fontSize = MaterialTheme.typography.labelSmall.fontSize,
-                        color =if (isDark) Color.White else Color.Gray
+                        color = if (isDark) Color.White else Color.Gray
                     )
                 }
                 Row(
@@ -267,7 +273,7 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
                     Icon(
                         imageVector = Icons.Outlined.ThumbDown,
                         contentDescription = "Thumb Down",
-                        tint =if (isDark) Color.White else Color.Gray,
+                        tint = if (isDark) Color.White else Color.Gray,
                         modifier = Modifier.size(18.dp)
                     )
                 }
@@ -278,7 +284,7 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
                     Icon(
                         imageVector = Icons.Outlined.Comment,
                         contentDescription = "Comment",
-                        tint =if (isDark) Color.White else Color.Gray,
+                        tint = if (isDark) Color.White else Color.Gray,
                         modifier = Modifier.size(18.dp)
                     )
                 }
@@ -286,7 +292,7 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
             // Replies
             Text(
                 text = "${comments.snippet.totalReplyCount} replies",
-                color =if (isDark) Color.White else Color.Blue,
+                color = if (isDark) Color.White else Color.Blue,
                 fontSize = MaterialTheme.typography.labelSmall.fontSize,
                 modifier = Modifier.clickable {
                     //  OnClick Replies to Display Replies List
@@ -294,7 +300,7 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
                 }
             )
             if (comments.snippet.totalReplyCount == 0) {
-                // Can't Navigate Because Replies are zero
+               Notify("No Replies Found...")
             } else {
                 AnimatedVisibility(visible = repliesExpanded) {
                     CommentItemWithReplies(comments)
@@ -306,7 +312,7 @@ fun CommentItems(comments: org.company.app.domain.model.comments.Item) {
 }
 
 @Composable
-fun CommentItemWithReplies(commentItem: org.company.app.domain.model.comments.Item) {
+fun CommentItemWithReplies(commentItem: Item) {
     val isDark by LocalThemeIsDark.current
     var commentExpanded by remember { mutableStateOf(false) }
     LazyColumn(modifier = Modifier.height(500.dp)) {
@@ -358,7 +364,7 @@ fun CommentItemWithReplies(commentItem: org.company.app.domain.model.comments.It
                                 text = reply.snippet.authorDisplayName,
                                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
                                 fontWeight = FontWeight.Bold,
-                                color =if (isDark) Color.White else Color.Black,
+                                color = if (isDark) Color.White else Color.Black,
                             )
                             Text(
                                 text = getFormattedDate(reply.snippet.publishedAt),
@@ -426,13 +432,13 @@ fun CommentItemWithReplies(commentItem: org.company.app.domain.model.comments.It
                                 Icon(
                                     imageVector = Icons.Outlined.ThumbUp,
                                     contentDescription = "Thumb Up",
-                                    tint =if (isDark) Color.White else Color.Gray,
+                                    tint = if (isDark) Color.White else Color.Gray,
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Text(
                                     text = formatLikes(reply.snippet.likeCount.toString()),
                                     fontSize = MaterialTheme.typography.labelSmall.fontSize,
-                                    color =if (isDark) Color.White else Color.Gray
+                                    color = if (isDark) Color.White else Color.Gray
                                 )
                             }
                             Row(
@@ -443,7 +449,7 @@ fun CommentItemWithReplies(commentItem: org.company.app.domain.model.comments.It
                                 Icon(
                                     imageVector = Icons.Outlined.ThumbDown,
                                     contentDescription = "Thumb Down",
-                                    tint =if (isDark) Color.White else Color.Gray,
+                                    tint = if (isDark) Color.White else Color.Gray,
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -454,7 +460,7 @@ fun CommentItemWithReplies(commentItem: org.company.app.domain.model.comments.It
                                 Icon(
                                     imageVector = Icons.Outlined.Comment,
                                     contentDescription = "Comment",
-                                    tint =if (isDark) Color.White else Color.Gray,
+                                    tint = if (isDark) Color.White else Color.Gray,
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
