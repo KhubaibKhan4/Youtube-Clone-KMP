@@ -3,3 +3,8 @@ import org.company.app.App
 import platform.UIKit.UIViewController
 
 fun MainViewController(): UIViewController = ComposeUIViewController { App() }
+fun initKoin(){
+    startKoin {
+        modules(appModule)
+    }
+}
