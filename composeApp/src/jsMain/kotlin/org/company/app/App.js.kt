@@ -123,7 +123,7 @@ internal actual fun isConnected(retry : () -> Unit): Boolean {
 
 actual class DriverFactory actual constructor() {
     actual fun createDriver(): SqlDriver {
-        val workerScriptUrl = js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)""")
+        val workerScriptUrl = js("import.meta.url.replace('kotlin', 'node_modules/@cashapp/sqldelight-sqljs-worker/sqljs.worker.js')")
         val driver = WebWorkerDriver(workerScriptUrl).also { YoutubeDatabase.Schema.create(it) }
         return driver
     }
