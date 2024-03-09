@@ -85,11 +85,11 @@ import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import io.ktor.util.Platform
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.ShortsVideoPlayer
-import org.company.app.data.repository.Repository
+import org.company.app.domain.model.channel.Channel
+import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
@@ -102,6 +102,7 @@ import org.company.app.ui.screens.detail.formatLikes
 import org.company.app.ui.screens.detail.formatSubscribers
 import org.company.app.ui.screens.detail.formatViewComments
 import org.company.app.ui.screens.detail.getFormattedDateLikeMonthDay
+import org.koin.compose.koinInject
 
 @Composable
 fun ShortList(youtube: Youtube) {
@@ -117,12 +118,11 @@ fun ShortList(youtube: Youtube) {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ShortItem(
-    video: Item
+    video: Item,
+    viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
-    val repository = remember { Repository() }
-    val viewModel = remember { MainViewModel(repository) }
-    var commentData by remember { mutableStateOf<org.company.app.domain.model.comments.Comments?>(null) }
-    var channelDetail by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
+    var commentData by remember { mutableStateOf<Comments?>(null) }
+    var channelDetail by remember { mutableStateOf<Channel?>(null) }
     var descriptionEnabled by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
     val shortsUrl = video.id.toString()
@@ -378,7 +378,7 @@ fun ShortItem(
                         modifier = Modifier.size(40.dp)
                             .clip(shape = CircleShape)
                             .clickable {
-                                channelDetail?.items?.get(0)?.let {item ->
+                                channelDetail?.items?.get(0)?.let { item ->
                                     navigator?.push(ChannelScreen(channel = item))
                                 }
                             }
@@ -386,7 +386,7 @@ fun ShortItem(
                     Spacer(modifier = Modifier.width(4.dp))
                     Row(
                         modifier = Modifier.clickable {
-                            channelDetail?.items?.get(0)?.let {item ->
+                            channelDetail?.items?.get(0)?.let { item ->
                                 navigator?.push(ChannelScreen(channel = item))
                             }
                         },
@@ -399,7 +399,7 @@ fun ShortItem(
                         )
                         val isVerified = channelDetail?.items?.get(0)?.status?.isLinked
                         if (isVerified == true) {
-                           Icon(
+                            Icon(
                                 imageVector = Icons.Default.Verified,
                                 contentDescription = null,
                                 tint = Color.White,
