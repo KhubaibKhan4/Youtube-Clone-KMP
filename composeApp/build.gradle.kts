@@ -60,7 +60,9 @@ kotlin {
             implementation(libs.composeIcons.featherIcons)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
-            implementation(libs.koin.core)
+            implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.1"))
+            implementation("io.insert-koin:koin-core")
+            implementation("io.insert-koin:koin-compose")
             implementation(libs.com.google.code.gson)
             implementation(libs.ktor.client.logging)
             implementation(libs.io.ktor.ktor.client.serialization)
@@ -88,6 +90,9 @@ kotlin {
             implementation(libs.core)
             implementation(libs.custom.ui)
             implementation(libs.sqlDelight.driver.android)
+            implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.1"))
+            implementation("io.insert-koin:koin-core")
+            implementation("io.insert-koin:koin-android")
         }
 
         jvmMain.dependencies {
