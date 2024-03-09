@@ -50,6 +50,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.domain.model.search.Item
+import org.company.app.domain.model.search.Search
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.video_list.formatVideoDuration
 import org.company.app.ui.screens.detail.DetailScreen
@@ -57,7 +59,7 @@ import kotlin.random.Random
 
 @Composable
 fun ChannelVideos(
-    search: org.company.app.domain.model.search.Search
+    search: Search
 ) {
     val isDark by LocalThemeIsDark.current
     Column(
@@ -88,7 +90,7 @@ fun ChannelVideos(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChannelVideosItems(videos: org.company.app.domain.model.search.Item) {
+fun ChannelVideosItems(videos: Item) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current

@@ -56,6 +56,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.domain.model.videos.Item
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.video_list.formatVideoDuration
 import org.company.app.ui.components.video_list.formatViewCount
@@ -64,7 +66,7 @@ import org.company.app.ui.screens.detail.DetailScreen
 
 @Composable
 fun PlaylistsVideosList(
-    youtube: org.company.app.domain.model.videos.Youtube
+    youtube: Youtube,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.background
@@ -83,7 +85,7 @@ fun PlaylistsVideosList(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlaylistsVideoItemCard(video: org.company.app.domain.model.videos.Item) {
+fun PlaylistsVideoItemCard(video: Item) {
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }
@@ -227,7 +229,7 @@ fun PlaylistsVideoItemCard(video: org.company.app.domain.model.videos.Item) {
             modifier = Modifier.fillMaxWidth(),
             sheetState = rememberModalBottomSheetState(),
             shape = RoundedCornerShape(4.dp),
-            contentColor =if (isDark) Color.White else Color.Black,
+            contentColor = if (isDark) Color.White else Color.Black,
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
         ) {
@@ -331,7 +333,7 @@ fun PlaylistsVideoItemCard(video: org.company.app.domain.model.videos.Item) {
                         text = "Not interested",
                         modifier = Modifier.weight(1f),
                         fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                        color= if (isDark) Color.White else Color.Black
+                        color = if (isDark) Color.White else Color.Black
                     )
                 }
             }

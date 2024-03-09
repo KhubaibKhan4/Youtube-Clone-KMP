@@ -52,13 +52,14 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.screens.detail.DetailScreen
 import kotlin.random.Random
 
 @Composable
 fun ChannelPlaylists(
-    youtube: org.company.app.domain.model.videos.Youtube,
+    youtube: Youtube,
 ) {
     val isDark by LocalThemeIsDark.current
     LazyVerticalGrid(
