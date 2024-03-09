@@ -314,11 +314,12 @@ class MainViewModel(
             }
         }
     }
-    fun getChannelSearch(channelID: String,query: String) {
+
+    fun getChannelSearch(channelID: String, query: String) {
         viewModelScope.launch {
             _channelSearch.value = ResultState.LOADING
             try {
-                val response = repository.getChannelSearch(channelID,query)
+                val response = repository.getChannelSearch(channelID, query)
                 _channelSearch.value = ResultState.SUCCESS(response)
                 println("Channel Search $response")
             } catch (e: Exception) {
