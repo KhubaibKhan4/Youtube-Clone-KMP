@@ -80,6 +80,7 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.UserRegion
 import org.company.app.data.repository.Repository
+import org.company.app.domain.model.search.Search
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -92,21 +93,23 @@ import org.company.app.ui.screens.account.AccountScreen
 import org.company.app.ui.screens.detail.DetailScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
-fun TopBar(modifier: Modifier) {
+fun TopBar(
+    modifier: Modifier,
+    viewModel: MainViewModel = koinInject<MainViewModel>(),
+) {
     var isDark by LocalThemeIsDark.current
     val navigator = LocalNavigator.current
     var isSearchEnabled by remember { mutableStateOf(false) }
-    var state by remember { mutableStateOf<ResultState<org.company.app.domain.model.search.Search>>(ResultState.LOADING) }
-    var data by remember { mutableStateOf<org.company.app.domain.model.search.Search?>(null) }
+    var state by remember { mutableStateOf<ResultState<Search>>(ResultState.LOADING) }
+    var data by remember { mutableStateOf<Search?>(null) }
     var error by remember { mutableStateOf(false) }
     var errorData by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
     var query by remember { mutableStateOf("") }
-    val repository = remember { Repository() }
-    val viewModel = remember { MainViewModel(repository) }
     if (!isSearchEnabled) {
         TopAppBar(
             title = {
@@ -259,7 +262,7 @@ fun TopBar(modifier: Modifier) {
 }
 
 @Composable
-fun SearchVideosList(youtube: org.company.app.domain.model.search.Search) {
+fun SearchVideosList(youtube: Search) {
     Surface(
         color = MaterialTheme.colorScheme.background
     ) {
@@ -280,7 +283,11 @@ fun SearchVideosList(youtube: org.company.app.domain.model.search.Search) {
 fun SearchVideoItemCard(video: org.company.app.domain.model.search.Item) {
     val repository = remember { Repository() }
     val viewModel = remember { MainViewModel(repository) }
-    var channelDetails by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
+    var channelDetails by remember {
+        mutableStateOf<org.company.app.domain.model.channel.Channel?>(
+            null
+        )
+    }
     var channel by remember { mutableStateOf<org.company.app.domain.model.channel.Item?>(null) }
     var singleVideo by remember { mutableStateOf<org.company.app.domain.model.videos.Item?>(null) }
     var videoDetail by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }

@@ -19,9 +19,7 @@ import org.company.app.ui.components.shimmer.ShimmerEffectShorts
 import org.company.app.ui.components.shorts.ShortList
 import org.koin.compose.koinInject
 
-class ShortScreen(
-
-) : Screen {
+class ShortScreen() : Screen {
     @Composable
     override fun Content() {
         ShortContent()
