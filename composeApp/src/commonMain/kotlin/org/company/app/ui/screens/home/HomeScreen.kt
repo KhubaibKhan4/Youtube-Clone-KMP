@@ -30,11 +30,7 @@ class HomeScreen() : Screen {
 fun HomeContent(
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
-    var state by remember {
-        mutableStateOf<ResultState<Youtube>>(
-            ResultState.LOADING
-        )
-    }
+    var state by remember { mutableStateOf<ResultState<Youtube>>(ResultState.LOADING) }
 
     LaunchedEffect(Unit) {
         viewModel.getVideosList(UserRegion())

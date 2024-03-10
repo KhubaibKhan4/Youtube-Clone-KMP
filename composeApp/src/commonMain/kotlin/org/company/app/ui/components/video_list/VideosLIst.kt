@@ -41,6 +41,7 @@ import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.ShoppingBag
 import androidx.compose.material.icons.outlined.Sports
 import androidx.compose.material.icons.outlined.WatchLater
+import androidx.compose.material.rememberDrawerState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -87,6 +88,10 @@ import org.company.app.UserRegion
 import org.company.app.data.repository.Repository
 import org.company.app.domain.model.categories.Item
 import org.company.app.domain.model.categories.Snippet
+import org.company.app.domain.model.categories.VideoCategories
+import org.company.app.domain.model.channel.Channel
+import org.company.app.domain.model.search.Search
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -100,14 +105,16 @@ import org.company.app.ui.screens.channel_screen.ChannelScreen
 import org.company.app.ui.screens.detail.DetailScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun VideosList(youtube: org.company.app.domain.model.videos.Youtube) {
-    val repository = remember { Repository() }
-    val viewModel = remember { MainViewModel(repository) }
-    var videoCategories by remember { mutableStateOf<org.company.app.domain.model.categories.VideoCategories?>(null) }
-    var videosByCategories by remember { mutableStateOf<org.company.app.domain.model.search.Search?>(null) }
+fun VideosList(
+    youtube: Youtube,
+    viewModel: MainViewModel = koinInject<MainViewModel>(),
+) {
+    var videoCategories by remember { mutableStateOf<VideoCategories?>(null) }
+    var videosByCategories by remember { mutableStateOf<Search?>(null) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }
     var isAnyCategorySelected by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
@@ -166,7 +173,7 @@ fun VideosList(youtube: org.company.app.domain.model.videos.Youtube) {
     val showRails = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
 
     val drawerState =
-        androidx.compose.material.rememberDrawerState(initialValue = androidx.compose.material.DrawerValue.Closed)
+        rememberDrawerState(initialValue = androidx.compose.material.DrawerValue.Closed)
 
     val isDark = LocalThemeIsDark.current.value
     if (showRails) {
@@ -503,7 +510,7 @@ fun VideosList(youtube: org.company.app.domain.model.videos.Youtube) {
 
 @Composable
 fun CategoryButton(
-    category: org.company.app.domain.model.categories.Item,
+    category: Item,
     isSelected: Boolean,
     onCategorySelected: () -> Unit,
 ) {
@@ -527,13 +534,14 @@ fun CategoryButton(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VideoItemCard(video: org.company.app.domain.model.videos.Item) {
+fun VideoItemCard(
+    video: org.company.app.domain.model.videos.Item,
+    viewModel: MainViewModel = koinInject<MainViewModel>(),
+) {
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }
-    val repository = remember { Repository() }
-    val viewModel = remember { MainViewModel(repository) }
-    var channelData by remember { mutableStateOf<org.company.app.domain.model.channel.Channel?>(null) }
+    var channelData by remember { mutableStateOf<Channel?>(null) }
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
     }
