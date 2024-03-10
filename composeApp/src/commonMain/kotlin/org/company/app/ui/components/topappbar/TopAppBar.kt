@@ -280,9 +280,10 @@ fun SearchVideosList(youtube: Search) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchVideoItemCard(video: org.company.app.domain.model.search.Item) {
-    val repository = remember { Repository() }
-    val viewModel = remember { MainViewModel(repository) }
+fun SearchVideoItemCard(
+    video: org.company.app.domain.model.search.Item,
+    viewModel: MainViewModel = koinInject<MainViewModel>(),
+) {
     var channelDetails by remember {
         mutableStateOf<org.company.app.domain.model.channel.Channel?>(
             null

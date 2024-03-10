@@ -108,16 +108,8 @@ fun DetailContent(
     channelData: org.company.app.domain.model.channel.Item?,
     viewModel: MainViewModel = koinInject<MainViewModel>()
 ) {
-    var stateRelevance by remember {
-        mutableStateOf<ResultState<Youtube>>(
-            ResultState.LOADING
-        )
-    }
-    var commentData by remember {
-        mutableStateOf<Comments?>(
-            null
-        )
-    }
+    var stateRelevance by remember { mutableStateOf<ResultState<Youtube>>(ResultState.LOADING) }
+    var commentData by remember {mutableStateOf<Comments?>(null) }
     var descriptionEnabled by remember { mutableStateOf(false) }
     var displayVideoPlayer by remember { mutableStateOf(false) }
     var isCommentLive by remember { mutableStateOf(false) }
