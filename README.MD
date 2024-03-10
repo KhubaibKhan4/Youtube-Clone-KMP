@@ -16,7 +16,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - **Subscribe Channels**
 - **View Verified Channel Badges**
 - **Offiline Video Support**
-- **Smooth Interation **
+- **Smooth Interation**
 - **Responsive UI**
 - **Material Design Components**
 
@@ -70,12 +70,12 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 - **Dependency Injection**:
   - `koin`: `3.5.1`
 - **UI/UX**:
-  - `compose-uitooling`: `1.5.4`
+  - `compose-uitooling`: `1.6.3`
   - `composeIcons`: `1.1.0`
 - **Media Handling**:
-  - `media3Ui`: `1.2.0`
-  - `media3ExoplayerDash`: `1.2.0`
-  - `media3Exoplayer`: `1.2.0`
+  - `media3Ui`: `1.3.0`
+  - `media3ExoplayerDash`: `1.3.0`
+  - `media3Exoplayer`: `1.3.0`
 - **Logging**:
   - `napier`: `2.6.1`
 - **Database/Storage**:
