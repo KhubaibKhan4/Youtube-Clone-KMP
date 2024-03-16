@@ -9,7 +9,7 @@ data class Youtube(
     @SerialName("etag")
     val etag: String? = null,
     @SerialName("items")
-    val items: List<org.company.app.domain.model.videos.Item>?,
+    val items: List<Item>?,
     @SerialName("kind")
     val kind: String? = null,
     @SerialName("nextPageToken")
@@ -17,5 +17,5 @@ data class Youtube(
     @SerialName("regionCode")
     val regionCode: String? = null,
     @SerialName("pageInfo")
-    val pageInfo: org.company.app.domain.model.videos.PageInfo? = null,
+    val pageInfo: PageInfo? = null,
 )

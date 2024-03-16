@@ -86,6 +86,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.company.app.ShareManager
 import org.company.app.UserRegion
 import org.company.app.data.repository.Repository
+import org.company.app.ui.screens.detail.formatViewCount as FormateView
 import org.company.app.domain.model.categories.Item
 import org.company.app.domain.model.categories.Snippet
 import org.company.app.domain.model.categories.VideoCategories
@@ -562,7 +563,7 @@ fun VideoItemCard(
         }
     }
     val duration = formatVideoDuration(video.contentDetails?.duration)
-    val views = org.company.app.ui.screens.detail.formatViewCount(video.statistics?.viewCount)
+    val views = FormateView(video.statistics?.viewCount)
     viewModel.insertVideos(
         title = video.snippet?.title.toString(),
         channelName = video.snippet?.channelTitle.toString(),
@@ -718,7 +719,7 @@ fun VideoItemCard(
             modifier = Modifier.fillMaxWidth(),
             sheetState = androidx.compose.material3.rememberModalBottomSheetState(),
             shape = RoundedCornerShape(4.dp),
-            contentColor = if (isDark) Color.White else Color.Black,  // Adjust color as needed
+            contentColor = if (isDark) Color.White else Color.Black,
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
         ) {

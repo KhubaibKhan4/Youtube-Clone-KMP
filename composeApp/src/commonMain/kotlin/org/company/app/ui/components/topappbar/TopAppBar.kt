@@ -2,6 +2,8 @@ package org.company.app.ui.components.topappbar
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import org.company.app.domain.model.channel.Item as ChannelItem
+import org.company.app.domain.model.videos.Item as YouTubeItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -81,6 +83,7 @@ import io.kamel.image.asyncPainterResource
 import org.company.app.UserRegion
 import org.company.app.data.repository.Repository
 import org.company.app.domain.model.search.Search
+import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -289,9 +292,9 @@ fun SearchVideoItemCard(
             null
         )
     }
-    var channel by remember { mutableStateOf<org.company.app.domain.model.channel.Item?>(null) }
-    var singleVideo by remember { mutableStateOf<org.company.app.domain.model.videos.Item?>(null) }
-    var videoDetail by remember { mutableStateOf<org.company.app.domain.model.videos.Youtube?>(null) }
+    var channel by remember { mutableStateOf<ChannelItem?>(null) }
+    var singleVideo by remember { mutableStateOf<YouTubeItem?>(null) }
+    var videoDetail by remember { mutableStateOf<Youtube?>(null) }
     val navigator = LocalNavigator.current
     var moreVertEnable by remember { mutableStateOf(false) }
     val isDark by LocalThemeIsDark.current

@@ -14,7 +14,6 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.koin.compose.koinInject
 
 class MainViewModel(
     private val repository: Repository,
