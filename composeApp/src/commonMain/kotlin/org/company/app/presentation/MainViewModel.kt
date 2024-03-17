@@ -17,6 +17,7 @@ import org.company.app.domain.usecases.ResultState
 
 class MainViewModel(
     private val repository: Repository,
+    private val database: YoutubeDatabase
 ) : ViewModel() {
     //Videos
     var _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
@@ -329,7 +330,6 @@ class MainViewModel(
         }
     }
 
-    private val database = YoutubeDatabase(DriverFactory().createDriver())
     fun getAllVideos() {
         viewModelScope.launch {
             try {
