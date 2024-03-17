@@ -299,7 +299,7 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                     repliesExpanded = !repliesExpanded
                 }
             )
-            if (comments.snippet.totalReplyCount == 0) {
+            if (comments.snippet.totalReplyCount == 0 && repliesExpanded) {
                Notify("No Replies Found...")
             } else {
                 AnimatedVisibility(visible = repliesExpanded) {
