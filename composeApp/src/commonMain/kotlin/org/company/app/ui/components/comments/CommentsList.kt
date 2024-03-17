@@ -109,7 +109,9 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
     ) {
         Row(
             modifier = Modifier

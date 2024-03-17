@@ -94,6 +94,7 @@ import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.comments.CommentsList
 import org.company.app.ui.components.common.ErrorBox
 import org.company.app.ui.screens.channel_detail.ChannelDetail
@@ -466,6 +467,7 @@ fun ShortItem(
         }
     }
     if (isCommentEnabled) {
+        val isDark by LocalThemeIsDark.current
         if (video.statistics?.commentCount.isNullOrBlank()) {
             Notify(message = "No Comments Found...")
         }
@@ -542,7 +544,7 @@ fun ShortItem(
                         ) {
                             androidx.compose.material3.Text(
                                 text = title,
-                                color = if (selectedButton == title) Color.White else Color.Black
+                                color = if (selectedButton == title) if(isDark) Color.White else Color.White else if(isDark) Color.White else Color.Black
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                         }
