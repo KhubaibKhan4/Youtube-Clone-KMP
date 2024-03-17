@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -107,7 +108,11 @@ import org.koin.compose.koinInject
 
 @Composable
 fun ShortList(youtube: Youtube) {
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         youtube.items?.let { videos ->
             items(videos) { items ->
                 ShortItem(items)
@@ -174,9 +179,10 @@ fun ShortItem(
         }
     }
     Box(
-        modifier = Modifier.fillMaxWidth().background(color = Color.Black)
+        modifier = Modifier.fillMaxSize()
+            .background(color = Color.Black)
             .padding(top = 10.dp),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.TopCenter
     ) {
         ShortsVideoPlayer(url = shortsUrl)
         Napier.d(message = "Video ID: ${video.id}", tag = "SHORTS")
@@ -544,7 +550,7 @@ fun ShortItem(
                         ) {
                             androidx.compose.material3.Text(
                                 text = title,
-                                color = if (selectedButton == title) if(isDark) Color.White else Color.White else if(isDark) Color.White else Color.Black
+                                color = if (selectedButton == title) if (isDark) Color.White else Color.White else if (isDark) Color.White else Color.Black
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                         }
