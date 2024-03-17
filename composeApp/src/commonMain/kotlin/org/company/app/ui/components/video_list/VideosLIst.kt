@@ -86,6 +86,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.company.app.ShareManager
 import org.company.app.UserRegion
 import org.company.app.data.repository.Repository
+import org.company.app.domain.model.videos.Item as VideoItem
 import org.company.app.ui.screens.detail.formatViewCount as FormateView
 import org.company.app.domain.model.categories.Item
 import org.company.app.domain.model.categories.Snippet
@@ -536,7 +537,7 @@ fun CategoryButton(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VideoItemCard(
-    video: org.company.app.domain.model.videos.Item,
+    video: VideoItem,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     val navigator = LocalNavigator.current
