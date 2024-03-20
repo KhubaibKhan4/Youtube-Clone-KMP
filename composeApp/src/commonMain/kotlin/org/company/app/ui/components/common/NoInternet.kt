@@ -23,7 +23,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import org.company.app.Res
 import org.company.app.theme.LocalThemeIsDark
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -41,7 +43,7 @@ fun NoInternet() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource("no_internet.webp"),
+                painter = painterResource(DrawableResource("no_internet.webp")),
                 contentDescription = "No Internet",
                 modifier = Modifier.size(300.dp),
                 contentScale = ContentScale.FillBounds
