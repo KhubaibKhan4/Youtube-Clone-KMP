@@ -4,7 +4,6 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import org.company.app.App
 import org.company.app.di.appModule
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
@@ -17,7 +16,7 @@ fun main() = application {
     }
     Window(
         title = "Youtube Clone",
-        icon = painterResource(DrawableResource("youtube_music.png")),
+        icon = painterResource("youtube_music.png"),
         state = rememberWindowState(width = 1280.dp, height = 720.dp),
         onCloseRequest = ::exitApplication,
     ) {

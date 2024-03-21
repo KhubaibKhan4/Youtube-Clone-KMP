@@ -93,7 +93,6 @@ import org.company.app.ui.components.video_list.formatVideoDuration
 import org.company.app.ui.components.video_list.formatViewCount
 import org.company.app.ui.screens.account.AccountScreen
 import org.company.app.ui.screens.detail.DetailScreen
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
@@ -117,7 +116,7 @@ fun TopBar(
         TopAppBar(
             title = {
                 Image(
-                    painterResource(if (isDark) DrawableResource("youtube_logo_dark.webp") else DrawableResource("youtube_logo_light.webp")),
+                    painterResource(if (isDark) "youtube_logo_dark.webp" else "youtube_logo_light.webp"),
                     contentDescription = null,
                     modifier = Modifier.size(120.dp),
                 )
