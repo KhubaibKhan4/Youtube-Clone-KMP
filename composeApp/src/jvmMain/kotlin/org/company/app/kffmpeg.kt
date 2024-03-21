@@ -64,7 +64,7 @@ class KAVFormatContext {
 
     fun openInput(filePath: String) {
         if (avformat.avformat_open_input(fmtCtx, filePath, null, null) < 0)
-            throw IllegalStateException("Open file $filePath failed!")
+            throw IllegalStateException("Open files $filePath failed!")
         if (avformat.avformat_find_stream_info(fmtCtx, null as PointerPointer<*>?) < 0)
             throw IllegalStateException("Unable to open stream_info!")
     }
