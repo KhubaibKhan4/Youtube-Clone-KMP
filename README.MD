@@ -51,9 +51,9 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 
 # Tech Stack Highlights
 
-- **Kotlin Multiplatform**: `1.9.22`
+- **Kotlin Multiplatform**: `1.9.23`
 - **AGP (Android Gradle Plugin)**: `8.2.2`
-- **Compose**: `1.5.12`
+- **Compose**: `1.6.1`
   - `androidx-appcompat`: `1.6.1`
   - `androidx-activityCompose`: `1.8.2`
   - `compose-uitooling`: `1.6.2`
@@ -61,7 +61,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `composeIcons`: `1.1.0`
 - **Core Libraries**: `12.1.0`
 - **Kotlinx Libraries**:
-  - `kotlinx-coroutines`: `1.7.3`
+  - `kotlinx-coroutines`: `1.8.0`
   - `kotlinx-serialization`: `1.6.3`
   - `kotlinx-datetime`: `0.5.0`
 - **Networking**:
