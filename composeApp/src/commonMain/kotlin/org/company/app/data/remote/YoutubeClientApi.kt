@@ -1,5 +1,6 @@
 package org.company.app.data.remote
 
+import Youtube_Clone.composeApp.BuildConfig.API_KEY
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -17,7 +18,6 @@ import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
-import org.company.app.utils.Constant.API_KEY
 import org.company.app.utils.Constant.BASE_URL
 import org.company.app.utils.Constant.TIMEOUT
 
@@ -36,7 +36,7 @@ object YoutubeClientApi {
             level = LogLevel.ALL
             logger = object : Logger {
                 override fun log(message: String) {
-                    Napier.log(priority = io.github.aakira.napier.LogLevel.DEBUG, tag = "LOGS",message = message)
+                    Napier.log(priority = io.github.aakira.napier.LogLevel.DEBUG, tag = "LOGS", message = message)
                 }
 
             }
@@ -64,7 +64,7 @@ object YoutubeClientApi {
 
     suspend fun getRelevance(): Youtube {
         val url =
-            BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics,statistics&id=${getRandomVideoIds()}&key=$API_KEY"
+            BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics,statistics&id=${getRandomVideoIds()}&key=$"
         return client.get(url).body()
     }
 
@@ -110,7 +110,8 @@ object YoutubeClientApi {
     }
 
     suspend fun getChannelVideos(playlistID: String): Youtube {
-        val url =BASE_URL + "playlistItems?part=snippet,contentDetails,id,status&&maxResults=50&playlistId=${playlistID}&key=$API_KEY"
+        val url =
+            BASE_URL + "playlistItems?part=snippet,contentDetails,id,status&&maxResults=50&playlistId=${playlistID}&key=$API_KEY"
         return client.get(url).body()
     }
 
@@ -139,15 +140,19 @@ object YoutubeClientApi {
     }
 
     suspend fun getSingleVideoDetail(videoId: String): Youtube {
-        val url = BASE_URL + "videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
+        val url =
+            BASE_URL + "videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
         return client.get(url).body()
     }
+
     suspend fun getMultipleVideos(videoId: String): Youtube {
-        val url = BASE_URL+"videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
+        val url =
+            BASE_URL + "videos?part=snippet,contentDetails,statistics&id=${videoId}&key=$API_KEY"
         return client.get(url).body()
     }
+
     suspend fun getChannelSearch(channelID: String, query: String): Search {
-        val url = BASE_URL+"search?part=snippet&channelId=${channelID}&q=${query}&key=$API_KEY"
+        val url = BASE_URL + "search?part=snippet&channelId=${channelID}&q=${query}&key=$API_KEY"
         return client.get(url).body()
     }
 }

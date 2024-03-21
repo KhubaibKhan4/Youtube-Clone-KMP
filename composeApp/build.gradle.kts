@@ -1,4 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -197,6 +199,10 @@ tasks.getByPath("jvmSourcesJar").dependsOn("libresGenerateResources")
 tasks.getByPath("jsProcessResources").dependsOn("libresGenerateResources")
 
 buildConfig {
+    val properties = Properties().apply {
+        load(FileInputStream("local.properties"))
+    }
+    buildConfigField("String","API_KEY",properties.getProperty("API_KEY"))
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
 }
