@@ -6,23 +6,17 @@ import sqldelight.db.YoutubeEntity
 class DataSourceImp(
     db: YoutubeDatabase
 ) : DataSource {
-    private val queries = db
+    private val queries = db.youtubeEntityQueries
     override suspend fun getVideoById(id: Long): YoutubeEntity? {
-        return queries.run {
-            getVideoById(id)
-        }
+        return queries.getVideoById(id).executeAsOneOrNull()
     }
 
     override fun getAllVideos(): List<YoutubeEntity> {
-        return queries.run {
-            getAllVideos()
-        }
+        return queries.getAllVideos().executeAsList()
     }
 
     override suspend fun deleteVideoById(id: Long) {
-        return queries.run {
-            deleteVideoById(id)
-        }
+        return queries.deleteVideoById(id)
     }
 
     override suspend fun insertVideo(
@@ -33,15 +27,6 @@ class DataSourceImp(
         pubDate: String,
         duration: String
     ) {
-        return queries.run {
-            insertVideo(
-                title = title,
-                channelName = channelName,
-                channelImage = channelImage,
-                views = views,
-                pubDate = pubDate,
-                duration = duration
-            )
-        }
+        return queries.insertVideos(id = null, title, channelName, channelImage, views, pubDate, duration)
     }
 }
