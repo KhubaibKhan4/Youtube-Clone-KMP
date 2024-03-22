@@ -104,8 +104,8 @@ class MainViewModel(
         private set
     val multipleVideos: StateFlow<ResultState<Youtube>> = _multipleVideos.asStateFlow()
 
-    private val _localVideos = MutableStateFlow<ResultState<Query<YoutubeEntity>>>(ResultState.LOADING)
-    val localVideos: StateFlow<ResultState<Query<YoutubeEntity>>> = _localVideos.asStateFlow()
+    private val _localVideos = MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
+    val localVideos: StateFlow<ResultState<List<YoutubeEntity>>> = _localVideos.asStateFlow()
 
     fun getVideosList(userRegion: String) {
         viewModelScope.launch {
@@ -340,7 +340,7 @@ class MainViewModel(
         viewModelScope.launch {
             _localVideos.value = ResultState.LOADING
             try {
-              val response =  database.youtubeEntityQueries.getAllVideos()
+              val response =  database.youtubeEntityQueries.getAllVideos().executeAsList()
                 _localVideos.value = ResultState.SUCCESS(response)
             } catch (e: Exception) {
                 _localVideos.value = ResultState.ERROR(e.toString())
@@ -359,15 +359,7 @@ class MainViewModel(
     ) {
         viewModelScope.launch {
             try {
-                database.youtubeEntityQueries.insertVideos(
-                    id,
-                    title,
-                    channelName,
-                    channelImage,
-                    pubDate,
-                    views,
-                    duration,
-                )
+                database.youtubeEntityQueries.insertVideos(id, title, channelName, channelImage, views, pubDate, duration)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
