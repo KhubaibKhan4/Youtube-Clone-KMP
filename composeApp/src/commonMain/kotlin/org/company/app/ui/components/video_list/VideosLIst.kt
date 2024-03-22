@@ -93,12 +93,10 @@ import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.company.app.isConnected
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.common.ErrorBox
 import org.company.app.ui.components.common.LoadingBox
-import org.company.app.ui.components.common.NoInternet
 import org.company.app.ui.components.custom_image.NetworkImage
 import org.company.app.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.ui.components.topappbar.SearchVideoItemCard
@@ -485,29 +483,25 @@ fun VideosList(
                     }
 
                 }
-                if (isConnected(retry = {})) {
-                    if (!isAnyCategorySelected) {
-                        // LazyVerticalGrid of videos
-                        LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                            youtube.items?.let { items ->
-                                items(items) { videos ->
-                                    VideoItemCard(videos)
-                                }
-                            }
-                        }
-
-                    } else {
-                        // LazyVerticalGrid of videos
-                        LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                            videosByCategories?.items?.let { items ->
-                                items(items) { videos ->
-                                    SearchVideoItemCard(videos)
-                                }
+                if (!isAnyCategorySelected) {
+                    // LazyVerticalGrid of videos
+                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                        youtube.items?.let { items ->
+                            items(items) { videos ->
+                                VideoItemCard(videos)
                             }
                         }
                     }
-                }else{
-                    NoInternet()
+
+                } else {
+                    // LazyVerticalGrid of videos
+                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                        videosByCategories?.items?.let { items ->
+                            items(items) { videos ->
+                                SearchVideoItemCard(videos)
+                            }
+                        }
+                    }
                 }
             }
         }
