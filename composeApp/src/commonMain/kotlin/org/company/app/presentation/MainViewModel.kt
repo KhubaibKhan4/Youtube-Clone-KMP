@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.company.app.DriverFactory
 import org.company.app.data.repository.Repository
 import org.company.app.domain.model.categories.VideoCategories
 import org.company.app.domain.model.channel.Channel

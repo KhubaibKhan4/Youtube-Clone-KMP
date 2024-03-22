@@ -631,7 +631,7 @@ fun VideoItemCard(
                         .clip(CircleShape)
                         .pointerHoverIcon(icon = PointerIcon.Hand)
                         .clickable {
-                            val channelItem = channelData!!.items[0]
+                            val channelItem = channelData?.items?.firstOrNull()!!
                             navigator?.push(ChannelScreen(channelItem))
                         }
                 )
