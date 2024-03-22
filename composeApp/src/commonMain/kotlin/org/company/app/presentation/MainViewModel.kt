@@ -1,6 +1,8 @@
 package org.company.app.presentation
 
 import YouTubeDatabase.db.YoutubeDatabase
+import androidx.compose.runtime.collectAsState
+import app.cash.sqldelight.Query
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +15,7 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
+import sqldelight.db.YoutubeEntity
 
 class MainViewModel(
     private val repository: Repository,
@@ -100,6 +103,9 @@ class MainViewModel(
     var _multipleVideos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
         private set
     val multipleVideos: StateFlow<ResultState<Youtube>> = _multipleVideos.asStateFlow()
+
+    private val _localVideos = MutableStateFlow<ResultState<Query<YoutubeEntity>>>(ResultState.LOADING)
+    val localVideos: StateFlow<ResultState<Query<YoutubeEntity>>> = _localVideos.asStateFlow()
 
     fun getVideosList(userRegion: String) {
         viewModelScope.launch {
@@ -329,12 +335,15 @@ class MainViewModel(
         }
     }
 
+
     fun getAllVideos() {
         viewModelScope.launch {
+            _localVideos.value = ResultState.LOADING
             try {
-                database.youtubeEntityQueries.getAllVideos()
+              val response =  database.youtubeEntityQueries.getAllVideos()
+                _localVideos.value = ResultState.SUCCESS(response)
             } catch (e: Exception) {
-                e.printStackTrace()
+                _localVideos.value = ResultState.ERROR(e.toString())
             }
         }
     }

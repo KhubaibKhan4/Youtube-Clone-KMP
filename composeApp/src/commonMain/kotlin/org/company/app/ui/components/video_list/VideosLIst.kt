@@ -86,8 +86,6 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.company.app.ShareManager
 import org.company.app.UserRegion
-import org.company.app.domain.model.videos.Item as VideoItem
-import org.company.app.ui.screens.detail.formatViewCount as FormateView
 import org.company.app.domain.model.categories.Item
 import org.company.app.domain.model.categories.Snippet
 import org.company.app.domain.model.categories.VideoCategories
@@ -95,10 +93,12 @@ import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
+import org.company.app.isConnected
 import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.common.ErrorBox
 import org.company.app.ui.components.common.LoadingBox
+import org.company.app.ui.components.common.NoInternet
 import org.company.app.ui.components.custom_image.NetworkImage
 import org.company.app.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.ui.components.topappbar.SearchVideoItemCard
@@ -108,6 +108,8 @@ import org.company.app.ui.screens.detail.DetailScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
+import org.company.app.domain.model.videos.Item as VideoItem
+import org.company.app.ui.screens.detail.formatViewCount as FormateView
 
 @OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -483,26 +485,29 @@ fun VideosList(
                     }
 
                 }
+                if (isConnected(retry = {})) {
+                    if (!isAnyCategorySelected) {
+                        // LazyVerticalGrid of videos
+                        LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                            youtube.items?.let { items ->
+                                items(items) { videos ->
+                                    VideoItemCard(videos)
+                                }
+                            }
+                        }
 
-                if (!isAnyCategorySelected) {
-                    // LazyVerticalGrid of videos
-                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                        youtube.items?.let { items ->
-                            items(items) { videos ->
-                                VideoItemCard(videos)
+                    } else {
+                        // LazyVerticalGrid of videos
+                        LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                            videosByCategories?.items?.let { items ->
+                                items(items) { videos ->
+                                    SearchVideoItemCard(videos)
+                                }
                             }
                         }
                     }
-
-                } else {
-                    // LazyVerticalGrid of videos
-                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                        videosByCategories?.items?.let { items ->
-                            items(items) { videos ->
-                                SearchVideoItemCard(videos)
-                            }
-                        }
-                    }
+                }else{
+                    NoInternet()
                 }
             }
         }
@@ -652,7 +657,8 @@ fun VideoItemCard(
                     )
 
                     // Channel Name, Views, Time
-                    Row(modifier = Modifier.width(IntrinsicSize.Max),
+                    Row(
+                        modifier = Modifier.width(IntrinsicSize.Max),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
