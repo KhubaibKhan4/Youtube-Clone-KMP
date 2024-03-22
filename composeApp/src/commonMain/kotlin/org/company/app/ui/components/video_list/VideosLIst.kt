@@ -7,6 +7,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -651,7 +652,7 @@ fun VideoItemCard(
                     )
 
                     // Channel Name, Views, Time
-                    Row(
+                    Row(modifier = Modifier.width(IntrinsicSize.Max),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
@@ -664,7 +665,8 @@ fun VideoItemCard(
                                 fontSize = 10.sp,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
-                                color = if (isDark) Color.White else Color.Black
+                                modifier = Modifier.width(IntrinsicSize.Min),
+                                color = if (isDark) Color.White else Color.Black,
                             )
                             val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
                             if (isVerified) {
