@@ -13,8 +13,7 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import sqldelight.db.YoutubeEntity
-
+import `sql-delight`.db.YoutubeDB
 class MainViewModel(
     private val repository: Repository,
     private val database: YoutubeDatabase,
@@ -103,8 +102,8 @@ class MainViewModel(
     val multipleVideos: StateFlow<ResultState<Youtube>> = _multipleVideos.asStateFlow()
 
     private val _localVideos =
-        MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
-    val localVideos: StateFlow<ResultState<List<YoutubeEntity>>> = _localVideos.asStateFlow()
+        MutableStateFlow<ResultState<List<YoutubeDB>>>(ResultState.LOADING)
+    val localVideos: StateFlow<ResultState<List<YoutubeDB>>> = _localVideos.asStateFlow()
 
     fun getVideosList(userRegion: String) {
         viewModelScope.launch {

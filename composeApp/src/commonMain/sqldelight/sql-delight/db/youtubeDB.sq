@@ -1,4 +1,4 @@
-CREATE TABLE youtubeEntity(
+CREATE TABLE youtubeDB(
  id INTEGER NOT NULL PRIMARY KEY,
  title TEXT NOT NULL,
  videoThumbnail TEXT NOT NULL,
