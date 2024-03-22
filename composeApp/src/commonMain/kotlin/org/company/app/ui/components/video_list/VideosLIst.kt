@@ -545,6 +545,23 @@ fun VideoItemCard(
     var channelData by remember { mutableStateOf<Channel?>(null) }
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
+
+        //Offline Data
+        val title = video.snippet?.title.toString()
+        val channelTitle = video.snippet?.channelTitle.toString()
+        val channelImage = video.snippet?.thumbnails?.high?.url.toString()
+        val publishData = getFormattedDate(video.snippet?.publishedAt.toString())
+        val views = FormateView(video.statistics?.viewCount)
+        val duration = formatVideoDuration(video.contentDetails?.duration.toString())
+        viewModel.insertVideos(
+            id = null,
+            title = title,
+            channelName = channelTitle,
+            channelImage = channelImage,
+            pubDate = publishData,
+            views = views,
+            duration = duration
+        )
     }
     val state by viewModel.channelDetails.collectAsState()
     when (state) {

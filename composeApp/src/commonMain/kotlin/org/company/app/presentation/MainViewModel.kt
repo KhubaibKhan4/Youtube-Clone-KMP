@@ -1,8 +1,6 @@
 package org.company.app.presentation
 
 import YouTubeDatabase.db.YoutubeDatabase
-import androidx.compose.runtime.collectAsState
-import app.cash.sqldelight.Query
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +17,7 @@ import sqldelight.db.YoutubeEntity
 
 class MainViewModel(
     private val repository: Repository,
-    private val database: YoutubeDatabase
+    private val database: YoutubeDatabase,
 ) : ViewModel() {
     //Videos
     var _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
@@ -104,7 +102,8 @@ class MainViewModel(
         private set
     val multipleVideos: StateFlow<ResultState<Youtube>> = _multipleVideos.asStateFlow()
 
-    private val _localVideos = MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
+    private val _localVideos =
+        MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
     val localVideos: StateFlow<ResultState<List<YoutubeEntity>>> = _localVideos.asStateFlow()
 
     fun getVideosList(userRegion: String) {
@@ -340,7 +339,7 @@ class MainViewModel(
         viewModelScope.launch {
             _localVideos.value = ResultState.LOADING
             try {
-              val response =  database.youtubeEntityQueries.getAllVideos().executeAsList()
+                val response = database.youtubeEntityQueries.getAllVideos().executeAsList()
                 _localVideos.value = ResultState.SUCCESS(response)
             } catch (e: Exception) {
                 _localVideos.value = ResultState.ERROR(e.toString())
@@ -359,7 +358,19 @@ class MainViewModel(
     ) {
         viewModelScope.launch {
             try {
-                database.youtubeEntityQueries.insertVideos(id, title, channelName, channelImage, views, pubDate, duration)
+                val exitingVideo =
+                    database.youtubeEntityQueries.getVideoByTitle(title).executeAsOneOrNull()
+                if (exitingVideo == null) {
+                    database.youtubeEntityQueries.insertVideos(
+                        id,
+                        title,
+                        channelName,
+                        channelImage,
+                        views,
+                        pubDate,
+                        duration
+                    )
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

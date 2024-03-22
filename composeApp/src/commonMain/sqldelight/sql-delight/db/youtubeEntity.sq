@@ -15,6 +15,10 @@ WHERE id = :id;
 getAllVideos:
 SELECT * FROM youtubeEntity;
 
+getVideoByTitle:
+SELECT * FROM youtubeEntity
+WHERE title = :title;
+
 deleteVideoById:
 DELETE FROM youtubeEntity
 WHERE id = :id;
