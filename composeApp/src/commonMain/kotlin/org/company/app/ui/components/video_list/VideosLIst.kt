@@ -593,8 +593,6 @@ fun VideoItemCard(
             ErrorBox(error)
         }
     }
-    val duration = formatVideoDuration(video.contentDetails?.duration)
-    val views = FormateView(video.statistics?.viewCount)
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -644,7 +642,7 @@ fun VideoItemCard(
             ) {
                 // Channel Image
                 val channelImage =
-                    channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString()
+                    channelData?.items?.first()?.snippet?.thumbnails?.high?.url.toString()
                 NetworkImage(
                     url = channelImage,
                     contentDescription = null,

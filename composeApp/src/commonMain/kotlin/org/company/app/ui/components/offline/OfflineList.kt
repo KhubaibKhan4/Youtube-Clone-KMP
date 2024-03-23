@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -152,6 +153,15 @@ fun OfflineVideoCard(
                                 modifier = Modifier.width(IntrinsicSize.Min),
                                 color = if (isDark) Color.White else Color.Black,
                             )
+                            if (youtubeEntity.isVerified.toInt() == 1){
+                                Icon(
+                                    imageVector = Icons.Default.Verified,
+                                    contentDescription = null,
+                                    tint = if (isDark) Color.White else Color.Black,
+                                    modifier = Modifier.size(15.dp)
+                                        .padding(start = 4.dp, top = 4.dp)
+                                )
+                            }
                         }
                         Text(text = "•", color = if (isDark) Color.White else Color.Black)
                         Text(
