@@ -173,25 +173,25 @@ If you find my work helpful, you can support me by [buying me a coffee](https://
 | ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/68.png) |
 
 ## Before running!
- - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
- - install JDK 17 on your machine
- - add `local.properties` file to the project root and set a path to Android SDK there
+- check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
+- install JDK 17 on your machine
+- add `local.properties` file to the project root and set a path to Android SDK there
 
 ### Android
-To run the application on android device/emulator:  
- - open project in Android Studio and run imported android run configuration
+To run the application on android device/emulator:
+- open project in Android Studio and run imported android run configuration
 
 To build the application bundle:
- - run `./gradlew :composeApp:assembleDebug`
- - find `.apk` file in `composeApp/build/outputs/apk/debug/composeApp-debug.apk`
+- run `./gradlew :composeApp:assembleDebug`
+- find `.apk` file in `composeApp/build/outputs/apk/debug/composeApp-debug.apk`
 
 ### Desktop
 Run the desktop application: `./gradlew :composeApp:run`
 
 ### iOS
 To run the application on iPhone device/simulator:
- - Open `iosApp/iosApp.xcproject` in Xcode and run standard configuration
- - Or use [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile) for Android Studio
+- Open `iosApp/iosApp.xcproject` in Xcode and run standard configuration
+- Or use [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile) for Android Studio
 
 ### Browser
 Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
@@ -199,9 +199,10 @@ Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 # Create Native Distributables
 ## Android
 - to create .apk file for the Andorid. We simply need to 'build > Build Bundles > Build APK'.
-## Desktop 
-- to create Native Distributable for the Desktop Windows, MacOS, Linux. We need to follow the procedure.
-- 'First of all following inside the 'build.gradle.kts'  '
+## Desktop
+- - Simply run the command 'gradle createDistributable or ./gradlew createDistributable'
+- to create Native Distributable for the Desktop Windows, MacOS, Linux, configure the target formats in the 'build.gradle.kts':
+```kotlin
 compose.desktop {
     application {
         mainClass = "MainKt"
@@ -223,9 +224,8 @@ compose.desktop {
             }
         }
     }
-}'
+}
+```
 
-- Now simply run the command 'gradle createDistributable or ./gradlew createDistributable'
-
-## JS 
+## JS
 - for the Js Web App, we simply need to execute the 'gradle jsBrowserWebpack'
