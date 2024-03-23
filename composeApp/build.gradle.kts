@@ -174,15 +174,15 @@ compose.desktop {
             packageVersion = "1.0.0"
             description = "YouTube Clone Using Kotlin Multiplatform"
             copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
-            val icon = layout.buildDirectory.file("processedResources/jvm/main/youtube_music.png")
+            val basePath = "processedResources/jvm/main/youtube_music"
             windows {
-                iconFile.set(icon)
+                iconFile.set(layout.buildDirectory.file("$basePath.ico"))
             }
             macOS {
-                iconFile.set(icon)
+                iconFile.set(layout.buildDirectory.file("$basePath.icns"))
             }
             linux {
-                iconFile.set(icon)
+                iconFile.set(layout.buildDirectory.file("$basePath.png"))
             }
         }
     }
