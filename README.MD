@@ -206,26 +206,27 @@ Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
   ```kotlin
   compose.desktop {
     application {
-      mainClass = "MainKt"
-  
-      nativeDistributions {
-        targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-        packageName = "org.company.app.desktopApp"
-        packageVersion = "1.0.0"
-        description = "YouTube Clone Using Kotlin Multiplatform"
-        copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
-        windows {
-          iconFile.set(project.file("composeApp/src/commonMain/resources/youtube_music.png"))
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "org.company.app.desktopApp"
+            packageVersion = "1.0.0"
+            description = "YouTube Clone Using Kotlin Multiplatform"
+            copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
+            val basePath = "processedResources/jvm/main/youtube_music"
+            windows {
+                iconFile.set(layout.buildDirectory.file("$basePath.ico"))
+            }
+            macOS {
+                iconFile.set(layout.buildDirectory.file("$basePath.icns"))
+            }
+            linux {
+                iconFile.set(layout.buildDirectory.file("$basePath.png"))
+            }
         }
-        macOS {
-          iconFile.set(project.file("composeApp/src/commonMain/resources/youtube_music.png"))
-        }
-        linux {
-          iconFile.set(project.file("composeApp/src/commonMain/resources/youtube_music.png"))
-        }
-      }
     }
-  }
+}
   ```
 
 ## JS
