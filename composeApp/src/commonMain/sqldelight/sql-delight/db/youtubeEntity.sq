@@ -3,7 +3,7 @@ CREATE TABLE youtubeEntity(
  title TEXT NOT NULL,
  videoThumbnail TEXT NOT NULL,
  videoDesc TEXT NOT NULL ,
- isVerified INTEGER NOT NULL,
+ isVerified INTEGER  NOT NULL,
  channelSubs TEXT NOT NULL,
  likes TEXT NOT NULL ,
  channelName TEXT NOT NULL,

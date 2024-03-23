@@ -13,7 +13,8 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import `sql-delight`.db.YoutubeDB
+import sqldelight.db.YoutubeEntity
+
 class MainViewModel(
     private val repository: Repository,
     private val database: YoutubeDatabase,
@@ -102,8 +103,8 @@ class MainViewModel(
     val multipleVideos: StateFlow<ResultState<Youtube>> = _multipleVideos.asStateFlow()
 
     private val _localVideos =
-        MutableStateFlow<ResultState<List<YoutubeDB>>>(ResultState.LOADING)
-    val localVideos: StateFlow<ResultState<List<YoutubeDB>>> = _localVideos.asStateFlow()
+        MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
+    val localVideos: StateFlow<ResultState<List<YoutubeEntity>>> = _localVideos.asStateFlow()
 
     fun getVideosList(userRegion: String) {
         viewModelScope.launch {
@@ -347,12 +348,17 @@ class MainViewModel(
     }
 
     fun insertVideos(
-        id: Long? = null,
+        id: Long?,
         title: String,
+        videoThumbnail: String,
+        videoDesc: String,
+        isVerified: Long,
+        channelSubs: String,
+        likes: String,
         channelName: String,
         channelImage: String,
-        pubDate: String,
         views: String,
+        pubDate: String,
         duration: String,
     ) {
         viewModelScope.launch {
@@ -363,6 +369,11 @@ class MainViewModel(
                     database.youtubeEntityQueries.insertVideos(
                         id,
                         title,
+                        videoThumbnail,
+                        videoDesc,
+                        isVerified,
+                        channelSubs,
+                        likes,
                         channelName,
                         channelImage,
                         views,

@@ -103,6 +103,8 @@ import org.company.app.ui.components.topappbar.SearchVideoItemCard
 import org.company.app.ui.components.topappbar.TopBar
 import org.company.app.ui.screens.channel_screen.ChannelScreen
 import org.company.app.ui.screens.detail.DetailScreen
+import org.company.app.ui.screens.detail.formatLikes
+import org.company.app.ui.screens.detail.formatSubscribers
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
@@ -553,9 +555,21 @@ fun VideoItemCard(
         val publishData = getFormattedDate(video.snippet?.publishedAt.toString())
         val views = FormateView(video.statistics?.viewCount)
         val duration = formatVideoDuration(video.contentDetails?.duration.toString())
+        val videoThumbnail = video.snippet?.thumbnails?.default?.url.toString()
+        val videoDesc = video.snippet?.description.toString()
+        val likes = formatLikes(video.statistics?.likeCount)
+        val channelSubs =
+            formatSubscribers(channelData?.items?.first()?.statistics?.subscriberCount)
+        val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
+
         viewModel.insertVideos(
             id = null,
             title = title,
+            videoThumbnail = videoThumbnail,
+            videoDesc = videoDesc,
+            isVerified = if (isVerified) 1 else 0,
+            channelSubs = channelSubs,
+            likes = likes,
             channelName = channelTitle,
             channelImage = channelImage,
             pubDate = publishData,
@@ -581,14 +595,6 @@ fun VideoItemCard(
     }
     val duration = formatVideoDuration(video.contentDetails?.duration)
     val views = FormateView(video.statistics?.viewCount)
-    viewModel.insertVideos(
-        title = video.snippet?.title.toString(),
-        channelName = video.snippet?.channelTitle.toString(),
-        channelImage = channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString(),
-        pubDate = getFormattedDate(video.snippet?.publishedAt.toString()),
-        views = views,
-        duration = duration,
-    )
     Card(
         modifier = Modifier
             .fillMaxWidth()
