@@ -642,7 +642,7 @@ fun VideoItemCard(
             ) {
                 // Channel Image
                 val channelImage =
-                    channelData?.items?.first()?.snippet?.thumbnails?.high?.url.toString()
+                    channelData?.items?.getOrNull(0)?.snippet?.thumbnails?.high?.url.toString()
                 NetworkImage(
                     url = channelImage,
                     contentDescription = null,
@@ -651,7 +651,7 @@ fun VideoItemCard(
                         .clip(CircleShape)
                         .pointerHoverIcon(icon = PointerIcon.Hand)
                         .clickable {
-                            val channelItem = channelData?.items?.firstOrNull()!!
+                            val channelItem = channelData?.items?.get(0)!!
                             navigator?.push(ChannelScreen(channelItem))
                         }
                 )

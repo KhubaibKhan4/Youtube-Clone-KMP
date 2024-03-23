@@ -29,7 +29,7 @@ fun HomeContent(
 ) {
     LaunchedEffect(Unit) {
         viewModel.getVideosList(UserRegion())
-        viewModel.getAllVideos()
+        //viewModel.getAllVideos()
     }
     if (isConnected(retry = {})) {
         val state by viewModel.videos.collectAsState()
