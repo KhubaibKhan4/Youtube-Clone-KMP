@@ -175,13 +175,13 @@ compose.desktop {
             description = "YouTube Clone Using Kotlin Multiplatform"
             copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
             windows {
-                iconFile.set(project.file("composeApp/src/commonMain/composeResources/youtube_music.png"))
+                iconFile.set(project.file("composeApp/src/commonMain/resources/youtube_music.png"))
             }
             macOS {
-                iconFile.set(project.file("composeApp/src/commonMain/composeResources/"))
+                iconFile.set(project.file("composeApp/src/commonMain/resources/youtube_music.png"))
             }
             linux {
-                iconFile.set(project.file("composeApp/src/commonMain/composeResources/"))
+                iconFile.set(project.file("composeApp/src/commonMain/resources/youtube_music.png"))
             }
         }
     }

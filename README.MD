@@ -102,7 +102,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 To use the app, follow these steps:
 
 1. Create [YouTube API V3 credentials](https://developers.google.com/youtube/v3/getting-started).
-2. Add the credentials to `local.properties` like  `API_KEY =  Your_API_KEY_VALUE`.
+2. Add the credentials to `local.properties` like  `API_KEY = "Your_API_KEY_VALUE"`.
 
 Feel free to reach out if you have any questions or need further assistance!
 
@@ -203,30 +203,30 @@ Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 - Run the command './gradlew packageDistributionForCurrentOS'
 - Alternatively run './gradlew createDistributable' for all distributions
 - You can configure the target formats in the 'build.gradle.kts':
-```kotlin
-compose.desktop {
+  ```kotlin
+  compose.desktop {
     application {
-        mainClass = "MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "org.company.app.desktopApp"
-            packageVersion = "1.0.0"
-            description = "YouTube Clone Using Kotlin Multiplatform"
-            copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
-            windows {
-                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
-            }
-            macOS {
-                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
-            }
-            linux {
-                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
-            }
+      mainClass = "MainKt"
+  
+      nativeDistributions {
+        targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+        packageName = "org.company.app.desktopApp"
+        packageVersion = "1.0.0"
+        description = "YouTube Clone Using Kotlin Multiplatform"
+        copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
+        windows {
+          iconFile.set(project.file("composeApp/src/commonMain/resources/youtube_music.png"))
         }
+        macOS {
+          iconFile.set(project.file("composeApp/src/commonMain/resources/youtube_music.png"))
+        }
+        linux {
+          iconFile.set(project.file("composeApp/src/commonMain/resources/youtube_music.png"))
+        }
+      }
     }
-}
-```
+  }
+  ```
 
 ## JS
 - for the Js Web App, we simply need to execute the 'gradle jsBrowserWebpack'
