@@ -365,7 +365,7 @@ class MainViewModel(
             try {
                 val exitingVideo =
                     database.youtubeEntityQueries.getVideoByTitle(title).executeAsOneOrNull()
-                if (exitingVideo == null) {
+                if (exitingVideo == null || exitingVideo.id == null && !exitingVideo.title.contains(title)) {
                     database.youtubeEntityQueries.insertVideos(
                         id,
                         title,
