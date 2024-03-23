@@ -200,8 +200,9 @@ Run the browser application: `./gradlew :composeApp:jsBrowserDevelopmentRun`
 ## Android
 - to create .apk file for the Andorid. We simply need to 'build > Build Bundles > Build APK'.
 ## Desktop
-- - Simply run the command 'gradle createDistributable or ./gradlew createDistributable'
-- to create Native Distributable for the Desktop Windows, MacOS, Linux, configure the target formats in the 'build.gradle.kts':
+- Run the command './gradlew packageDistributionForCurrentOS'
+- Alternatively run './gradlew createDistributable' for all distributions
+- You can configure the target formats in the 'build.gradle.kts':
 ```kotlin
 compose.desktop {
     application {
