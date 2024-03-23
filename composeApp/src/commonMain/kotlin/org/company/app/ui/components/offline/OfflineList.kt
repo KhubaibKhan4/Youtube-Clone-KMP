@@ -81,7 +81,7 @@ fun OfflineVideoCard(
                     modifier = Modifier.fillMaxWidth()
                         .height(200.dp)
                         .pointerHoverIcon(icon = PointerIcon.Hand),
-                    url = youtubeEntity.channelImage,
+                    url = youtubeEntity.videoThumbnail,
                     contentDescription = "Image",
                     contentScale = ContentScale.Crop
                 )
@@ -94,8 +94,7 @@ fun OfflineVideoCard(
                         .clip(RoundedCornerShape(4.dp))
                 ) {
                     Text(
-                        text = formatVideoDuration(youtubeEntity.duration)
-                            ?: "00:00",
+                        text = youtubeEntity.duration,
                         color = if (isDark) Color.White else Color.Black,
                         fontSize = 10.sp
                     )
@@ -162,7 +161,7 @@ fun OfflineVideoCard(
                         )
                         Text(text = "•", color = if (isDark) Color.White else Color.Black)
                         Text(
-                            text = getFormattedDate(youtubeEntity.pubDate),
+                            text = youtubeEntity.pubDate,
                             fontSize = 10.sp,
                             maxLines = 1,
                             modifier = Modifier
