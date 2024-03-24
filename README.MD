@@ -102,7 +102,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 To use the app, follow these steps:
 
 1. Create YouTube API V3 credentials.
-2. Add the credentials to `local.properties` like  `BASE_URL =  Your_API_VALUE`.
+2. Add the credentials to `local.properties` like  `API_KEY =  Your_API_VALUE`.
 
 Feel free to reach out if you have any questions or need further assistance!
 
