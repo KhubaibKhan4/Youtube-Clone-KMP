@@ -178,10 +178,10 @@ compose.desktop {
                 iconFile.set(project.file("composeApp/src/commonMain/composeResources/youtube_music.png"))
             }
             macOS {
-                iconFile.set(project.file("composeApp/src/commonMain/composeResources/"))
+                iconFile.set(project.file("composeApp/src/commonMain/composeResources/youtube_music.png"))
             }
             linux {
-                iconFile.set(project.file("composeApp/src/commonMain/composeResources/"))
+                iconFile.set(project.file("composeApp/src/commonMain/composeResources/youtube_music.png"))
             }
         }
     }
