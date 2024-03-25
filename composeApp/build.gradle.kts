@@ -191,9 +191,6 @@ compose.experimental {
     web.application {}
 }
 
-libres {
-    // https://github.com/Skeptick/libres#setup
-}
 tasks.getByPath("jvmProcessResources").dependsOn("libresGenerateResources")
 tasks.getByPath("jvmSourcesJar").dependsOn("libresGenerateResources")
 tasks.getByPath("jsProcessResources").dependsOn("libresGenerateResources")
