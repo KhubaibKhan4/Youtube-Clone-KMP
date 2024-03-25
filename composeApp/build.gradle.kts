@@ -203,8 +203,6 @@ buildConfig {
         load(FileInputStream("local.properties"))
     }
     buildConfigField("String","API_KEY",properties.getProperty("API_KEY"))
-    // BuildConfig configuration here.
-    // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
 }
 sqldelight {
     databases {
