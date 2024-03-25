@@ -196,10 +196,11 @@ tasks.getByPath("jvmSourcesJar").dependsOn("libresGenerateResources")
 tasks.getByPath("jsProcessResources").dependsOn("libresGenerateResources")
 
 buildConfig {
-    val properties = Properties().apply {
-        load(FileInputStream("local.properties"))
-    }
-    buildConfigField("String","API_KEY",properties.getProperty("API_KEY"))
+    val propertiesFile = rootProject.file("local.properties")
+    val properties = Properties()
+    properties.load(FileInputStream(propertiesFile))
+    val apiKey = properties.getProperty("API_KEY")
+    buildConfigField("String","API_KEY","\"$apiKey\"")
 }
 sqldelight {
     databases {
