@@ -69,7 +69,6 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.kamel.image)
-            implementation(libs.coil.network)
             implementation(libs.sqlDelight.extension)
             implementation(libs.paging.compose.common)
             implementation(libs.paging.common)
