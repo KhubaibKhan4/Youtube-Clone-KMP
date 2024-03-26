@@ -1,6 +1,6 @@
 package org.company.app.data.local
 
-import YouTubeDatabase.db.YoutubeDatabase
+import com.youtube.clone.db.YoutubeDatabase
 import sqldelight.db.YoutubeEntity
 
 class DataSourceImp(

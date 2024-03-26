@@ -205,7 +205,7 @@ buildConfig {
 sqldelight {
     databases {
         create("YoutubeDatabase") {
-            packageName.set("YouTubeDatabase.db")
+            packageName.set("com.youtube.clone.db")
         }
     }
 }

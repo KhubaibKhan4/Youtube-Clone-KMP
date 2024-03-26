@@ -1,6 +1,6 @@
 package org.company.app.presentation
 
-import YouTubeDatabase.db.YoutubeDatabase
+import com.youtube.clone.db.YoutubeDatabase
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

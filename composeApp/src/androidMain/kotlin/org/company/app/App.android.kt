@@ -1,6 +1,5 @@
 package org.company.app
 
-import YouTubeDatabase.db.YoutubeDatabase
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -23,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import com.youtube.clone.db.YoutubeDatabase
 import org.company.app.di.appModule
 import org.company.app.shortcuts.TopTrending
 import org.company.app.ui.YoutubeShortsPlayer

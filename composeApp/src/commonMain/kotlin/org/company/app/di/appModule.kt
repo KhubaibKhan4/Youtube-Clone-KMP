@@ -1,6 +1,6 @@
 package org.company.app.di
 
-import YouTubeDatabase.db.YoutubeDatabase
+import com.youtube.clone.db.YoutubeDatabase
 import org.company.app.DriverFactory
 import org.company.app.data.repository.Repository
 import org.company.app.presentation.MainViewModel
