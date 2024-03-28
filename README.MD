@@ -66,7 +66,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `kotlinx-datetime`: `0.5.0`
 - **Networking**:
   - `coilNetwork`: `3.0.0-alpha01`
-  - `ktor`: `2.3.8`
+  - `ktor`: `2.3.9`
 - **Dependency Injection**:
   - `koin`: `3.5.1`
 - **UI/UX**:
@@ -95,7 +95,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `moko-mvvm`: `0.16.1`
   - `vlcj`: `4.7.0`
   - `ffmpegPlatform`: `4.1-1.4.4`
-  - `kamelImage`: `0.9.2`
+  - `kamelImage`: `0.9.3`
 - **JavaFX**: `22-ea+16`
 
 📝 Getting Started
