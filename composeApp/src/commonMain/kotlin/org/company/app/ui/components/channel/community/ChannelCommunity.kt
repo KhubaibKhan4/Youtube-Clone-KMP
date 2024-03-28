@@ -17,6 +17,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Comment
 import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.IosShare
 import androidx.compose.material.icons.filled.MoreVert
@@ -176,7 +177,7 @@ fun ChannelCommunityItems(videos: Item, channelImage: String) {
             )
             Spacer(modifier = Modifier.width(8.dp))
             Icon(
-                imageVector = Icons.Default.Comment,
+                imageVector = Icons.AutoMirrored.Filled.Comment,
                 contentDescription = "Comments",
                 modifier = Modifier.size(20.dp),
                 tint = if (isDark) Color.White else Color.Gray

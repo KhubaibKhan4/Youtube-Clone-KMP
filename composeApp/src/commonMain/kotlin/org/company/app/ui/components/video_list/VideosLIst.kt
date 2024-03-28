@@ -29,6 +29,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Audiotrack
@@ -105,9 +106,16 @@ import org.company.app.ui.screens.channel_screen.ChannelScreen
 import org.company.app.ui.screens.detail.DetailScreen
 import org.company.app.ui.screens.detail.formatLikes
 import org.company.app.ui.screens.detail.formatSubscribers
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
+import youtube_clone.composeapp.generated.resources.Res
+import youtube_clone.composeapp.generated.resources.compass_icon
+import youtube_clone.composeapp.generated.resources.livestream_icon
+import youtube_clone.composeapp.generated.resources.trending
+import youtube_clone.composeapp.generated.resources.youtube_logo_dark
+import youtube_clone.composeapp.generated.resources.youtube_logo_light
 import org.company.app.domain.model.videos.Item as VideoItem
 import org.company.app.ui.screens.detail.formatViewCount as FormateView
 
@@ -201,7 +209,7 @@ fun VideosList(
                 horizontalAlignment = Alignment.Start
             ) {
                 Image(
-                    painterResource(if (isDark) "youtube_logo_dark.webp" else "youtube_logo_light.webp"),
+                    painterResource(if (isDark) Res.drawable.youtube_logo_dark else Res.drawable.youtube_logo_light),
                     contentDescription = null,
                     modifier = Modifier.size(120.dp),
                 )
@@ -224,7 +232,7 @@ fun VideosList(
                     selected = false,
                     icon = {
                         Icon(
-                            painterResource("trending.png"),
+                            painterResource(Res.drawable.trending),
                             contentDescription = "Trending",
                             modifier = Modifier.size(25.dp),
                             tint = if (isDark) Color.White else Color.Black
@@ -275,7 +283,7 @@ fun VideosList(
                     selected = false,
                     icon = {
                         Icon(
-                            painterResource("livestream_icon.png"),
+                            painterResource(Res.drawable.livestream_icon),
                             contentDescription = "Live",
                             modifier = Modifier.size(25.dp),
                             tint = if (isDark) Color.White else Color.Black
@@ -438,7 +446,7 @@ fun VideosList(
                         ),
                     ) {
                         Icon(
-                            painter = painterResource("compass_icon.xml"),
+                            painter = painterResource(Res.drawable.compass_icon),
                             contentDescription = "Compass Icon",
                             tint = MaterialTheme.colorScheme.primary
                         )
@@ -777,7 +785,7 @@ fun VideoItemCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.PlaylistAdd,
+                        imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
                         contentDescription = "Time",
                         tint = if (isDark) Color.White else Color.Black
                     )

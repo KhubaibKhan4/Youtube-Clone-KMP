@@ -1,6 +1,5 @@
 package org.company.app
 
-import YouTubeDatabase.db.YoutubeDatabase
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -15,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.CanvasBasedWindow
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.worker.WebWorkerDriver
+import com.youtube.clone.db.YoutubeDatabase
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.await

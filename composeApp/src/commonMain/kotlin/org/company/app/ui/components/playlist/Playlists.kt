@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Download
@@ -113,7 +114,9 @@ fun PlaylistsVideoItemCard(video: Item) {
                         .fillMaxWidth()
                         .height(200.dp),
                     onLoading = {
-                        CircularProgressIndicator(it)
+                        CircularProgressIndicator(
+                            progress = { it },
+                        )
                     },
                     onFailure = {
                         Text(text = "Failed to Load Image")
@@ -264,7 +267,7 @@ fun PlaylistsVideoItemCard(video: Item) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.PlaylistAdd,
+                        imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
                         contentDescription = "Time",
                         tint = if (isDark) Color.White else Color.Black
                     )

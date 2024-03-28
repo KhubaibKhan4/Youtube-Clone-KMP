@@ -7,6 +7,8 @@ import org.company.app.di.appModule
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
+import youtube_clone.composeapp.generated.resources.Res
+import youtube_clone.composeapp.generated.resources.youtube_music
 import java.awt.Dimension
 
 @OptIn(ExperimentalResourceApi::class)
@@ -16,7 +18,7 @@ fun main() = application {
     }
     Window(
         title = "Youtube Clone",
-        icon = painterResource("youtube_music.png"),
+        icon = painterResource(Res.drawable.youtube_music),
         state = rememberWindowState(width = 1280.dp, height = 720.dp),
         onCloseRequest = ::exitApplication,
     ) {

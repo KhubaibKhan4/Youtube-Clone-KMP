@@ -25,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material.ModalBottomSheetDefaults
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -45,6 +46,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -155,7 +157,7 @@ fun DetailContent(
                 displayVideoPlayer = false
             }) {
                 Icon(
-                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                     contentDescription = null
                 )
             }
@@ -206,7 +208,7 @@ fun DetailContent(
                         .pointerHoverIcon(icon = PointerIcon.Hand)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.KeyboardArrowLeft,
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                         contentDescription = "Arrow Back",
                         tint = Color.White
                     )
@@ -269,7 +271,7 @@ fun DetailContent(
             )
         }
 
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.fillMaxWidth().height(1.dp).padding(vertical = 8.dp),
             thickness = 4.dp,
             color = Color.DarkGray
@@ -411,7 +413,7 @@ fun DetailContent(
         Spacer(modifier = Modifier.height(6.dp))
 
 
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.fillMaxWidth().height(2.dp),
             thickness = 1.dp,
             color = Color.LightGray
@@ -529,7 +531,7 @@ fun DetailContent(
         }
 
 
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.fillMaxWidth().height(2.dp),
             thickness = 1.dp,
             color = Color.LightGray
@@ -588,7 +590,7 @@ fun DetailContent(
 
 
         // Horizontal Divider
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.fillMaxWidth().height(2.dp),
             thickness = 1.dp,
             color = Color.LightGray
@@ -641,7 +643,7 @@ fun DetailContent(
                         }
                     }
 
-                    Divider(
+                    HorizontalDivider(
                         modifier = Modifier.fillMaxWidth().padding(2.dp),
                         thickness = 2.dp,
                         color = DividerDefaults.color
@@ -754,7 +756,7 @@ fun DetailContent(
                         }
                     }
 
-                    Divider(
+                    HorizontalDivider(
                         modifier = Modifier.fillMaxWidth().padding(8.dp),
                         thickness = 2.dp,
                         color = DividerDefaults.color
@@ -785,7 +787,7 @@ fun DetailContent(
                     }
 
 
-                    Divider(
+                    HorizontalDivider(
                         modifier = Modifier.fillMaxWidth(),
                         thickness = 8.dp,
                         color = DividerDefaults.color
@@ -963,7 +965,7 @@ fun DetailContent(
                         )
                     }
                 }
-                Divider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
+                HorizontalDivider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
 
                 Spacer(modifier = Modifier.height(14.dp))
 
@@ -1023,7 +1025,7 @@ fun DetailContent(
                     )
                 }
 
-                Divider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
+                HorizontalDivider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
 
                 // Comments Lists
                 commentData?.let { comments ->

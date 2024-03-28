@@ -2,8 +2,6 @@ package org.company.app.ui.components.topappbar
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import org.company.app.domain.model.channel.Item as ChannelItem
-import org.company.app.domain.model.videos.Item as YouTubeItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +25,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Mic
@@ -45,6 +45,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -93,9 +94,15 @@ import org.company.app.ui.components.video_list.formatVideoDuration
 import org.company.app.ui.components.video_list.formatViewCount
 import org.company.app.ui.screens.account.AccountScreen
 import org.company.app.ui.screens.detail.DetailScreen
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
+import youtube_clone.composeapp.generated.resources.Res
+import youtube_clone.composeapp.generated.resources.youtube_logo_dark
+import youtube_clone.composeapp.generated.resources.youtube_logo_light
+import org.company.app.domain.model.channel.Item as ChannelItem
+import org.company.app.domain.model.videos.Item as YouTubeItem
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
@@ -116,7 +123,7 @@ fun TopBar(
         TopAppBar(
             title = {
                 Image(
-                    painterResource(if (isDark) "youtube_logo_dark.webp" else "youtube_logo_light.webp"),
+                    painterResource(if (isDark) Res.drawable.youtube_logo_dark else Res.drawable.youtube_logo_light),
                     contentDescription = null,
                     modifier = Modifier.size(120.dp),
                 )
@@ -190,7 +197,7 @@ fun TopBar(
                     isSearchEnabled = false
                     query = ""
                 }) {
-                    Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
+                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
                 }
 
                 TextField(
@@ -235,7 +242,7 @@ fun TopBar(
 
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = 1.dp, color = Color.LightGray
             )
@@ -386,7 +393,9 @@ fun SearchVideoItemCard(
                                 .fillMaxWidth()
                                 .height(200.dp),
                             onLoading = {
-                                CircularProgressIndicator(it)
+                                CircularProgressIndicator(
+                                    progress = { it },
+                                )
                             },
                             onFailure = {
                                 Text(text = "Failed to Load Image")
@@ -559,7 +568,7 @@ fun SearchVideoItemCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.PlaylistAdd,
+                        imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
                         contentDescription = "Time",
                         tint = if (isDark) Color.White else Color.Black
                     )

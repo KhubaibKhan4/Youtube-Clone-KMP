@@ -21,6 +21,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.FeaturedPlayList
+import androidx.compose.material.icons.automirrored.filled.Sort
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAddCheck
 import androidx.compose.material.icons.filled.FeaturedPlayList
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.MoreVert
@@ -71,7 +75,7 @@ fun ChannelPlaylists(
         item {
             Row {
                 Icon(
-                    imageVector = Icons.Default.Sort, contentDescription = null,
+                    imageVector = Icons.AutoMirrored.Filled.Sort, contentDescription = null,
                     tint = if (isDark) Color.White else Color.Black
                 )
                 Text(
@@ -129,7 +133,9 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
                     Text("Failed to Load Image")
                 },
                 onLoading = {
-                    CircularProgressIndicator(progress = it)
+                    CircularProgressIndicator(
+                        progress = { it },
+                    )
                 },
                 animationSpec = tween()
             )
@@ -152,7 +158,7 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Default.FeaturedPlayList,
+                        imageVector = Icons.AutoMirrored.Filled.FeaturedPlayList,
                         contentDescription = "Playlists",
                         tint = if (isDark) Color.White else Color.Black
                     )
@@ -235,7 +241,7 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         androidx.compose.material3.Icon(
-                            imageVector = Icons.Outlined.PlaylistAdd,
+                            imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
                             contentDescription = "Time",
                             tint = if (isDark) Color.White else Color.Black
                         )
@@ -247,7 +253,7 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
                             color =if (isDark) Color.White else Color.Black
                         )
                         androidx.compose.material3.Icon(
-                            imageVector = Icons.Outlined.PlaylistAddCheck,
+                            imageVector = Icons.AutoMirrored.Outlined.PlaylistAddCheck,
                             contentDescription = "Time",
                             tint = if (isDark) Color.White else Color.Black
                         )
@@ -278,7 +284,7 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         androidx.compose.material3.Icon(
-                            imageVector = Icons.Outlined.PlaylistAdd,
+                            imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
                             contentDescription = "Time",
                             tint = if (isDark) Color.White else Color.Black
                         )

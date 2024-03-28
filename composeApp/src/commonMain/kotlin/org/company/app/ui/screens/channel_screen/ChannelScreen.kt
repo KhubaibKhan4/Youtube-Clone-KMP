@@ -32,6 +32,9 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -42,6 +45,7 @@ import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -328,7 +332,7 @@ fun ChannelContent(
                     isSearchEnabled = false
                     query = ""
                 }) {
-                    Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
+                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
                 }
 
                 TextField(
@@ -374,7 +378,7 @@ fun ChannelContent(
 
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = 1.dp, color = Color.LightGray
             )
@@ -428,7 +432,7 @@ fun ChannelContent(
                     navigator?.pop()
                 }) {
                     Icon(
-                        imageVector = Icons.Default.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Arrow Back",
                         tint = if (isDark) Color.White else Color.Black
                     )
@@ -478,7 +482,9 @@ fun ChannelContent(
                     .clip(shape = RoundedCornerShape(14.dp)),
                 contentScale = ContentScale.Crop,
                 onLoading = {
-                    CircularProgressIndicator(it)
+                    CircularProgressIndicator(
+                        progress = { it },
+                    )
                 },
                 onFailure = {
                     Text(text = "Failed to Load Image")
@@ -567,7 +573,7 @@ fun ChannelContent(
                         navigator?.push(ChannelDetail(channel = channel))
                     }) {
                         Icon(
-                            imageVector = Icons.Default.KeyboardArrowRight,
+                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                             contentDescription = null,
                             tint = if (isDark) Color.White else Color.Black
                         )

@@ -34,6 +34,8 @@ import androidx.compose.material.ModalBottomSheetDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Comment
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAddCheck
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.MoreVert
@@ -57,6 +59,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedCard
@@ -291,7 +294,7 @@ fun ShortItem(
                         isCommentEnabled = !isCommentEnabled
                     }) {
                         Icon(
-                            imageVector = Icons.Filled.Comment, contentDescription = "Comments",
+                            imageVector = Icons.AutoMirrored.Filled.Comment, contentDescription = "Comments",
                             tint = Color.White
                         )
                     }
@@ -515,7 +518,7 @@ fun ShortItem(
                         )
                     }
                 }
-                Divider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
+                HorizontalDivider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
 
                 Spacer(modifier = Modifier.height(14.dp))
 
@@ -575,7 +578,7 @@ fun ShortItem(
                     )
                 }
 
-                Divider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
+                HorizontalDivider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
 
                 // Comments Lists
                 commentData?.let { comments ->
@@ -664,7 +667,7 @@ fun ShortItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                Icon(imageVector = Icons.Outlined.PlaylistAddCheck, contentDescription = "Save")
+                Icon(imageVector = Icons.AutoMirrored.Outlined.PlaylistAddCheck, contentDescription = "Save")
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = "Save to playlist",
@@ -762,7 +765,7 @@ fun ShortItem(
                     }
                 }
 
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier.fillMaxWidth().padding(2.dp),
                     thickness = 2.dp,
                     color = DividerDefaults.color
@@ -878,7 +881,7 @@ fun ShortItem(
                     }
                 }
 
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier.fillMaxWidth().padding(8.dp),
                     thickness = 2.dp,
                     color = DividerDefaults.color
@@ -909,7 +912,7 @@ fun ShortItem(
                 }
 
 
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier.fillMaxWidth(),
                     thickness = 8.dp,
                     color = DividerDefaults.color

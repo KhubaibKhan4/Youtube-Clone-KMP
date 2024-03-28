@@ -73,7 +73,10 @@ fun FeatureChannelItems(channel: org.company.app.domain.model.channel.Item) {
                 Text(text = "Failed to Load Image")
             },
             onLoading = {
-                CircularProgressIndicator(progress = it, modifier = Modifier.size(200.dp))
+                CircularProgressIndicator(
+                    progress = { it },
+                    modifier = Modifier.size(200.dp),
+                )
             },
             animationSpec = tween()
         )

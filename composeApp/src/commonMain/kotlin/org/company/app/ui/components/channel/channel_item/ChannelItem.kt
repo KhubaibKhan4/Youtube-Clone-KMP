@@ -20,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -81,7 +82,9 @@ fun SearchChannelItem(
                 .size(75.dp)
                 .clip(shape = CircleShape),
             onLoading = {
-                CircularProgressIndicator(it)
+                CircularProgressIndicator(
+                    progress = { it },
+                )
             },
             onFailure = {
                 Text(text = "Failed to Load Image")
@@ -146,7 +149,7 @@ fun SearchChannelItem(
             Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
         }
     }
-    Divider(
+    HorizontalDivider(
         modifier = Modifier.fillMaxWidth(),
         thickness = 1.dp,
         color = Color.LightGray

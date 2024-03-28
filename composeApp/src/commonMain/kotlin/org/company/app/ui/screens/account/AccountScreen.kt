@@ -15,12 +15,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.HelpCenter
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.HelpCenter
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,8 +41,13 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.company.app.theme.LocalThemeIsDark
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import youtube_clone.composeapp.generated.resources.Res
+import youtube_clone.composeapp.generated.resources.do_more_with_youtube
+import youtube_clone.composeapp.generated.resources.youtube_kids
+import youtube_clone.composeapp.generated.resources.youtube_music
 
 object AccountScreen : Tab {
     @OptIn(ExperimentalResourceApi::class)
@@ -77,7 +84,7 @@ object AccountScreen : Tab {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painterResource("do_more_with_youtube.webp"),
+                    painterResource(Res.drawable.do_more_with_youtube),
                     contentDescription = null,
                     modifier = Modifier.size(165.dp)
                 )
@@ -113,7 +120,7 @@ object AccountScreen : Tab {
                 }
             }
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = DividerDefaults.Thickness,
                 color = Color.LightGray
@@ -140,13 +147,13 @@ object AccountScreen : Tab {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Icon(imageVector = Icons.Outlined.HelpCenter, contentDescription = null)
+                    Icon(imageVector = Icons.AutoMirrored.Outlined.HelpCenter, contentDescription = null)
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(text = "Help & feedback")
                 }
             }
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = DividerDefaults.Thickness,
                 color = Color.LightGray
@@ -164,7 +171,7 @@ object AccountScreen : Tab {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Image(
-                        painterResource("youtube_music.png"), contentDescription = null,
+                        painterResource(Res.drawable.youtube_music), contentDescription = null,
                         modifier = Modifier.size(30.dp)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
@@ -177,7 +184,7 @@ object AccountScreen : Tab {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Image(
-                        painterResource("youtube_kids.png"), contentDescription = null,
+                        painterResource(Res.drawable.youtube_kids), contentDescription = null,
                         modifier = Modifier.size(40.dp)
                     )
                     Spacer(modifier = Modifier.width(12.dp))

@@ -20,6 +20,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAddCheck
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.PlaylistAdd
@@ -99,7 +101,7 @@ fun ChannelLiveStreamItems(videos: Item) {
             contentAlignment = Alignment.BottomEnd
         ) {
             val image: Resource<Painter> =
-                asyncPainterResource(data = videos.snippet?.thumbnails?.high?.url.toString())
+                asyncPainterResource(data = videos.snippet.thumbnails.high.url)
             KamelImage(
                 resource = image,
                 contentDescription = "Thumbnail",
@@ -116,7 +118,9 @@ fun ChannelLiveStreamItems(videos: Item) {
                     Text("Failed to Load Image")
                 },
                 onLoading = {
-                    CircularProgressIndicator(progress = it)
+                    CircularProgressIndicator(
+                        progress = { it },
+                    )
                 },
                 animationSpec = tween()
             )
@@ -192,7 +196,7 @@ fun ChannelLiveStreamItems(videos: Item) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         androidx.compose.material3.Icon(
-                            imageVector = Icons.Outlined.PlaylistAdd,
+                            imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
                             contentDescription = "Time",
                             tint = if (isDark) Color.White else Color.Black
                         )
@@ -204,7 +208,7 @@ fun ChannelLiveStreamItems(videos: Item) {
                             color = if (isDark) Color.White else Color.Black
                         )
                         androidx.compose.material3.Icon(
-                            imageVector = Icons.Outlined.PlaylistAddCheck,
+                            imageVector = Icons.AutoMirrored.Outlined.PlaylistAddCheck,
                             contentDescription = "Time",
                             tint = if (isDark) Color.White else Color.Black
                         )
@@ -235,7 +239,7 @@ fun ChannelLiveStreamItems(videos: Item) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         androidx.compose.material3.Icon(
-                            imageVector = Icons.Outlined.PlaylistAdd,
+                            imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
                             contentDescription = "Time",
                             tint = if (isDark) Color.White else Color.Black
                         )

@@ -18,6 +18,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
+import androidx.compose.material.icons.automirrored.outlined.PlaylistAddCheck
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.MoreVert
@@ -135,7 +137,9 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
                 Text("Failed to Load Image")
             },
             onLoading = {
-                CircularProgressIndicator(progress = it)
+                CircularProgressIndicator(
+                    progress = { it },
+                )
             },
             animationSpec = tween()
         )
@@ -208,7 +212,7 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             androidx.compose.material3.Icon(
-                                imageVector = Icons.Outlined.PlaylistAdd,
+                                imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
                                 contentDescription = "Time",
                                 tint = if (isDark) Color.White else Color.Black
                             )
@@ -220,7 +224,7 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
                                 color = if (isDark) Color.White else Color.Black
                             )
                             androidx.compose.material3.Icon(
-                                imageVector = Icons.Outlined.PlaylistAddCheck,
+                                imageVector = Icons.AutoMirrored.Outlined.PlaylistAddCheck,
                                 contentDescription = "Time",
                                 tint = if (isDark) Color.White else Color.Black
                             )
@@ -251,7 +255,7 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             androidx.compose.material3.Icon(
-                                imageVector = Icons.Outlined.PlaylistAdd,
+                                imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
                                 contentDescription = "Time",
                                 tint = if (isDark) Color.White else Color.Black
                             )

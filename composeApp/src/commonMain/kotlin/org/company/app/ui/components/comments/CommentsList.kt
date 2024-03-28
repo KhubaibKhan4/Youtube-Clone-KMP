@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Comment
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Comment
@@ -284,7 +285,7 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.Comment,
+                        imageVector = Icons.AutoMirrored.Outlined.Comment,
                         contentDescription = "Comment",
                         tint = if (isDark) Color.White else Color.Gray,
                         modifier = Modifier.size(18.dp)
@@ -344,8 +345,10 @@ fun CommentItemWithReplies(commentItem: Item) {
                                 .clip(CircleShape),
                             onLoading = {
                                 CircularProgressIndicator(
+                                    progress = {
+                                        it
+                                    },
                                     modifier = Modifier.size(35.dp),
-                                    progress = it
                                 )
                             },
                             onFailure = {
@@ -460,7 +463,7 @@ fun CommentItemWithReplies(commentItem: Item) {
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
                                 Icon(
-                                    imageVector = Icons.Outlined.Comment,
+                                    imageVector = Icons.AutoMirrored.Outlined.Comment,
                                     contentDescription = "Comment",
                                     tint = if (isDark) Color.White else Color.Gray,
                                     modifier = Modifier.size(18.dp)

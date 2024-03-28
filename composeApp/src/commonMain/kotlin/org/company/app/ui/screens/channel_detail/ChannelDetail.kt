@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.Cast
 import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -70,7 +72,7 @@ class ChannelDetail(
                         navigator?.pop()
                     }) {
                         Icon(
-                            imageVector = Icons.Default.KeyboardArrowLeft,
+                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                             contentDescription = null
                         )
                     }
@@ -266,7 +268,7 @@ class ChannelDetail(
                     horizontalArrangement = Arrangement.Start
                 ) {
                     Icon(
-                        imageVector = Icons.Default.TrendingUp, contentDescription = "View Icon",
+                        imageVector = Icons.AutoMirrored.Filled.TrendingUp, contentDescription = "View Icon",
                         modifier = Modifier.size(25.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
