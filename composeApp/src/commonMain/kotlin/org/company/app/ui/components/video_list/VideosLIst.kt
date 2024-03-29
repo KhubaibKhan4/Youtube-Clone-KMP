@@ -1,6 +1,8 @@
 package org.company.app.ui.components.video_list
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,8 +27,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -131,7 +134,7 @@ fun VideosList(
     var selectedCategory by remember { mutableStateOf<String?>(null) }
     var isAnyCategorySelected by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
-    val lazyListState = rememberLazyListState()
+    val lazyListState = rememberLazyGridState()
     val showButton = lazyListState.firstVisibleItemIndex > 0
 
     LaunchedEffect(Unit) {
@@ -498,23 +501,45 @@ fun VideosList(
                 }
                 if (!isAnyCategorySelected) {
                     // LazyVerticalGrid of videos
-                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                        youtube.items?.let { items ->
-                            items(items) { videos ->
-                                VideoItemCard(videos)
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        LazyVerticalGrid(
+                            modifier = Modifier.fillMaxSize(),
+                            state = lazyListState,
+                            columns = GridCells.Adaptive(300.dp)
+                        ) {
+                            youtube.items?.let { items ->
+                                items(items) { videos ->
+                                    VideoItemCard(videos)
+                                }
+                            }
+                        }
+
+                        Column(
+                            modifier = Modifier.align(Alignment.BottomEnd)
+                        ) {
+                            AnimatedVisibility(
+                                visible = lazyListState.firstVisibleItemIndex > 0,
+                                enter = fadeIn(),
+                                exit = fadeOut(),
+                                modifier = Modifier
+                                    .padding(16.dp)
+                            ) {
+                                Button(
+                                    onClick = { coroutineScope.launch { lazyListState.scrollToItem(0) } },
+                                    modifier = Modifier.size(55.dp)
+                                        .clip(CircleShape)
+                                        .background(Color.White)
+                                ) {
+                                    Icon(
+                                        Icons.Default.KeyboardArrowUp,
+                                        contentDescription = null,
+                                        tint = Color.White
+                                    )
+                                }
                             }
                         }
                     }
-                    AnimatedVisibility(showButton) {
-                        Button(
-                            onClick = {},
-                            modifier = Modifier.size(55.dp)
-                                .clip(CircleShape)
-                                .background(Color.White)
-                        ) {
-                            Icon(Icons.Default.KeyboardArrowUp, contentDescription = null)
-                        }
-                    }
+
 
                 } else {
                     // LazyVerticalGrid of videos
