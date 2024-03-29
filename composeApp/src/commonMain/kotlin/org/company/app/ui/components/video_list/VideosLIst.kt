@@ -36,7 +36,6 @@ import androidx.compose.material.ModalDrawer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
 import androidx.compose.material.icons.filled.ArrowUpward
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Audiotrack
@@ -537,7 +536,7 @@ fun VideosList(
                                         .clip(CircleShape),
                                     colors = ButtonColors(
                                         containerColor = if (isDark) Color.Black else Color.White,
-                                        contentColor = if(isDark) Color.White else Color.Black,
+                                        contentColor = if (isDark) Color.White else Color.Black,
                                         disabledContainerColor = Color.Transparent,
                                         disabledContentColor = Color.Transparent
                                     )
@@ -555,10 +554,43 @@ fun VideosList(
 
                 } else {
                     // LazyVerticalGrid of videos
-                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                        videosByCategories?.items?.let { items ->
-                            items(items) { videos ->
-                                SearchVideoItemCard(videos)
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                            videosByCategories?.items?.let { items ->
+                                items(items) { videos ->
+                                    SearchVideoItemCard(videos)
+                                }
+                            }
+                        }
+                        Column(
+                            modifier = Modifier.align(Alignment.BottomEnd)
+                        ) {
+                            AnimatedVisibility(
+                                visible = showButton,
+                                enter = fadeIn(),
+                                exit = fadeOut(),
+                                modifier = Modifier
+                                    .padding(16.dp)
+                            ) {
+                                Button(
+                                    onClick = { coroutineScope.launch { lazyListState.scrollToItem(0) } },
+                                    modifier = Modifier.size(55.dp)
+                                        .clip(CircleShape),
+                                    colors = ButtonColors(
+                                        containerColor = if (isDark) Color.Black else Color.White,
+                                        contentColor = if (isDark) Color.White else Color.Black,
+                                        disabledContainerColor = Color.Transparent,
+                                        disabledContentColor = Color.Transparent
+                                    )
+                                ) {
+                                    Icon(
+                                        Icons.Default.ArrowUpward,
+                                        contentDescription = null,
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                }
                             }
                         }
                     }
