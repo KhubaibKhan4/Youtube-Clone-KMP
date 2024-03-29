@@ -35,6 +35,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
+import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Verified
@@ -50,6 +51,7 @@ import androidx.compose.material.icons.outlined.Sports
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -68,6 +70,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -135,7 +138,11 @@ fun VideosList(
     var isAnyCategorySelected by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyGridState()
-    val showButton = lazyListState.firstVisibleItemIndex > 0
+    val showButton by remember {
+        derivedStateOf {
+            lazyListState.firstVisibleItemIndex > 0
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.getVideoCategories()
@@ -518,7 +525,7 @@ fun VideosList(
                             modifier = Modifier.align(Alignment.BottomEnd)
                         ) {
                             AnimatedVisibility(
-                                visible = lazyListState.firstVisibleItemIndex > 0,
+                                visible = showButton,
                                 enter = fadeIn(),
                                 exit = fadeOut(),
                                 modifier = Modifier
@@ -527,13 +534,18 @@ fun VideosList(
                                 Button(
                                     onClick = { coroutineScope.launch { lazyListState.scrollToItem(0) } },
                                     modifier = Modifier.size(55.dp)
-                                        .clip(CircleShape)
-                                        .background(Color.White)
+                                        .clip(CircleShape),
+                                    colors = ButtonColors(
+                                        containerColor = if (isDark) Color.Black else Color.White,
+                                        contentColor = if(isDark) Color.White else Color.Black,
+                                        disabledContainerColor = Color.Transparent,
+                                        disabledContentColor = Color.Transparent
+                                    )
                                 ) {
                                     Icon(
-                                        Icons.Default.KeyboardArrowUp,
+                                        Icons.Default.ArrowUpward,
                                         contentDescription = null,
-                                        tint = Color.White
+                                        modifier = Modifier.fillMaxWidth()
                                     )
                                 }
                             }
