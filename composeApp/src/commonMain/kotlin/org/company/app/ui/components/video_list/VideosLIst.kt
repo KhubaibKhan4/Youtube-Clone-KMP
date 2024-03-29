@@ -3,6 +3,7 @@ package org.company.app.ui.components.video_list
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -539,6 +540,10 @@ fun VideosList(
                                         contentColor = if (isDark) Color.White else Color.Black,
                                         disabledContainerColor = Color.Transparent,
                                         disabledContentColor = Color.Transparent
+                                    ),
+                                    border = BorderStroke(
+                                        width = 1.dp,
+                                        color = if (isDark) Color.White else Color.Black
                                     )
                                 ) {
                                     Icon(
@@ -583,6 +588,10 @@ fun VideosList(
                                         contentColor = if (isDark) Color.White else Color.Black,
                                         disabledContainerColor = Color.Transparent,
                                         disabledContentColor = Color.Transparent
+                                    ),
+                                    border = BorderStroke(
+                                        width = 1.dp,
+                                        color = if (isDark) Color.White else Color.Black
                                     )
                                 ) {
                                     Icon(
