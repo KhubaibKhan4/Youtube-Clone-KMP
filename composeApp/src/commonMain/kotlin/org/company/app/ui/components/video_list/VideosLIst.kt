@@ -1,5 +1,6 @@
 package org.company.app.ui.components.video_list
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,12 +25,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Audiotrack
@@ -38,7 +41,6 @@ import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Games
 import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material.icons.outlined.Newspaper
-import androidx.compose.material.icons.outlined.PlaylistAdd
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.ShoppingBag
 import androidx.compose.material.icons.outlined.Sports
@@ -106,7 +108,6 @@ import org.company.app.ui.screens.channel_screen.ChannelScreen
 import org.company.app.ui.screens.detail.DetailScreen
 import org.company.app.ui.screens.detail.formatLikes
 import org.company.app.ui.screens.detail.formatSubscribers
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
@@ -130,6 +131,8 @@ fun VideosList(
     var selectedCategory by remember { mutableStateOf<String?>(null) }
     var isAnyCategorySelected by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+    val lazyListState = rememberLazyListState()
+    val showButton = lazyListState.firstVisibleItemIndex > 0
 
     LaunchedEffect(Unit) {
         viewModel.getVideoCategories()
@@ -500,6 +503,16 @@ fun VideosList(
                             items(items) { videos ->
                                 VideoItemCard(videos)
                             }
+                        }
+                    }
+                    AnimatedVisibility(showButton) {
+                        Button(
+                            onClick = {},
+                            modifier = Modifier.size(55.dp)
+                                .clip(CircleShape)
+                                .background(Color.White)
+                        ) {
+                            Icon(Icons.Default.KeyboardArrowUp, contentDescription = null)
                         }
                     }
 
