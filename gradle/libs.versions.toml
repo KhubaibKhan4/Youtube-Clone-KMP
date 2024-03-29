@@ -2,6 +2,7 @@
 
 core = "12.1.0"
 ffmpegPlatform = "4.1-1.4.4"
+kotestProperty = "5.3.1"
 kotlin = "1.9.23"
 agp = "8.2.2"
 compose = "1.6.1"
@@ -44,7 +45,10 @@ compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "
 core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "core" }
 custom-ui = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui", version.ref = "core" }
 ffmpeg-platform = { module = "org.bytedeco.javacpp-presets:ffmpeg-platform", version.ref = "ffmpegPlatform" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotestProperty" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingCommon" }
 paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingComposeCommon" }
