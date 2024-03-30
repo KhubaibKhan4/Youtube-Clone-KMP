@@ -155,7 +155,7 @@ fun ChannelVideosItems(videos: Item) {
         ) {
             // Video Title
             Text(
-                text = videos.snippet?.title.toString(),
+                text = videos.snippet.title,
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -200,7 +200,7 @@ fun ChannelVideosItems(videos: Item) {
                 modifier = Modifier.fillMaxWidth(),
                 sheetState = rememberModalBottomSheetState(),
                 shape = RoundedCornerShape(4.dp),
-                contentColor = if (isDark) Color.White else Color.Black,  // Adjust color as needed
+                contentColor = if (isDark) Color.White else Color.Black,
                 scrimColor = Color.Transparent,
                 tonalElevation = 4.dp,
             ) {

@@ -627,7 +627,7 @@ fun CategoryButton(
         modifier = Modifier.pointerHoverIcon(icon = PointerIcon.Hand)
     ) {
         Text(
-            text = category.snippet.title.orEmpty(),
+            text = category.snippet.title,
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
             color = if (isDark) Color.White else Color.Black
         )
