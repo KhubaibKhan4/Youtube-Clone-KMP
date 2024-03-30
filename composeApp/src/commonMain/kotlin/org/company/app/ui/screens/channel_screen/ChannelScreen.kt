@@ -500,7 +500,7 @@ fun ChannelContent(
             ) {
                 // Channel Image
                 val image: Resource<Painter> =
-                    asyncPainterResource(data = channel.snippet.thumbnails.default?.url.toString())
+                    asyncPainterResource(data = channel.snippet.thumbnails.default.url)
                 KamelImage(
                     resource = image,
                     contentDescription = null,

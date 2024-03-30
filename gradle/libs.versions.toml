@@ -30,7 +30,6 @@ koin = "3.5.3"
 gson = "2.10.1"
 kamelImage = "0.9.3"
 size = "0.3.1"
-webview-kmp = "1.8.0"
 sqlDelight = "2.0.1"
 
 
