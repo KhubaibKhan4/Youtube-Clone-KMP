@@ -181,15 +181,13 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                         channelData?.items?.get(0)?.status?.isLinked == true && channelData?.items?.get(
                             0
                         )?.id.equals(comments.snippet.topLevelComment.snippet.authorChannelId.value)
-                    if (isVerified) {
+                    AnimatedVisibility (isVerified) {
                         androidx.compose.material.Icon(
                             imageVector = Icons.Default.Verified,
                             contentDescription = null,
                             modifier = Modifier.size(15.dp).padding(start = 4.dp),
                             tint = if (isDark) Color.White else Color.Black
                         )
-                    } else {
-                        // Nothing Here....
                     }
                 }
 
