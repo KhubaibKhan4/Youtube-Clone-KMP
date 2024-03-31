@@ -1,5 +1,6 @@
 package org.company.app.ui.components.channel.channel_item
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -109,8 +110,8 @@ fun SearchChannelItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                val isVerified = channel.status?.isLinked == true
-                if (isVerified) {
+                val isVerified = channel.status.isLinked == true
+                AnimatedVisibility (isVerified) {
                     Icon(
                         imageVector = Icons.Default.Verified,
                         contentDescription = null,
