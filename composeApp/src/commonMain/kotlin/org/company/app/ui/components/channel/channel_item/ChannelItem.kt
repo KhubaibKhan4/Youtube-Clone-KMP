@@ -165,7 +165,7 @@ fun SearchChannelItem(
                 .padding(12.dp),
             sheetState = rememberModalBottomSheetState(),
             shape = RoundedCornerShape(4.dp),
-            contentColor =if (isDark) Color.White else Color.Black,  // Adjust color as needed
+            contentColor =if (isDark) Color.White else Color.Black,
             scrimColor = Color.Transparent,
             tonalElevation = 4.dp,
         ) {

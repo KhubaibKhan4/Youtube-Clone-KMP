@@ -164,7 +164,7 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = videos.contentDetails?.itemCount.toString(), // You can replace this with the actual count
+                        text = videos.contentDetails?.itemCount.toString(),
                         color = if (isDark) Color.White else Color.Black
                     )
                 }
