@@ -114,6 +114,7 @@ import org.company.app.ui.screens.channel_screen.ChannelScreen
 import org.company.app.ui.screens.detail.DetailScreen
 import org.company.app.ui.screens.detail.formatLikes
 import org.company.app.ui.screens.detail.formatSubscribers
+import org.company.app.utils.formatViewCount
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
@@ -739,9 +740,8 @@ fun VideoItemCard(
                     .padding(start = 8.dp, end = 8.dp, top = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Channel Image
                 val channelImage =
-                    channelData?.items?.getOrNull(0)?.snippet?.thumbnails?.high?.url.toString()
+                    channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString()
                 NetworkImage(
                     url = channelImage,
                     contentDescription = null,
@@ -1007,16 +1007,6 @@ fun getFormattedDate(publishedAt: String): String {
     }
 }
 
-@Composable
-fun formatViewCount(viewCount: String): String {
-    val count = viewCount.toLong()
 
-    return when {
-        count < 1_000 -> "$count"
-        count < 1_000_000 -> "${count / 1_000}k"
-        count < 1_000_000_000 -> "${count / 1_000_000}M"
-        else -> "${count / 1_000_000_000}B"
-    }
-}
 
 

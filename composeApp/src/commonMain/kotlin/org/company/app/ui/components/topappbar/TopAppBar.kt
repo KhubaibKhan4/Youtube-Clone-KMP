@@ -91,10 +91,9 @@ import org.company.app.ui.components.channel.channel_item.SearchChannelItem
 import org.company.app.ui.components.channel.home.getFormattedDateHome
 import org.company.app.ui.components.common.ErrorBox
 import org.company.app.ui.components.video_list.formatVideoDuration
-import org.company.app.ui.components.video_list.formatViewCount
 import org.company.app.ui.screens.account.AccountScreen
 import org.company.app.ui.screens.detail.DetailScreen
-import org.jetbrains.compose.resources.DrawableResource
+import org.company.app.utils.formatViewCount
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
