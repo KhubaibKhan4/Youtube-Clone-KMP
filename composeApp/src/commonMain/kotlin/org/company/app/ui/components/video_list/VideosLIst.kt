@@ -114,6 +114,7 @@ import org.company.app.ui.screens.channel_screen.ChannelScreen
 import org.company.app.ui.screens.detail.DetailScreen
 import org.company.app.ui.screens.detail.formatLikes
 import org.company.app.ui.screens.detail.formatSubscribers
+import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -962,25 +963,6 @@ fun VideoItemCard(
                 }
             }
         }
-    }
-}
-
-fun formatVideoDuration(duration: String?): String {
-    if (duration == null) return "00:00"
-
-    val regex = Regex("PT(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+)S)?")
-    val matchResult = regex.find(duration)
-
-    val hours = matchResult?.groups?.get(1)?.value?.toIntOrNull() ?: 0
-    val minutes = matchResult?.groups?.get(2)?.value?.toIntOrNull() ?: 0
-    val seconds = matchResult?.groups?.get(3)?.value?.toIntOrNull() ?: 0
-
-    return buildString {
-        if (hours > 0) {
-            append("${if (hours < 10) "0" else ""}$hours:")
-        }
-        append("${if (minutes < 10) "0" else ""}$minutes:")
-        append("${if (seconds < 10) "0" else ""}$seconds")
     }
 }
 

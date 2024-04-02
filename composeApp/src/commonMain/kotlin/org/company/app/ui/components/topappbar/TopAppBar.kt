@@ -28,7 +28,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
@@ -37,13 +36,11 @@ import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Cast
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.PlaylistAdd
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -90,9 +87,9 @@ import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.channel.channel_item.SearchChannelItem
 import org.company.app.ui.components.channel.home.getFormattedDateHome
 import org.company.app.ui.components.common.ErrorBox
-import org.company.app.ui.components.video_list.formatVideoDuration
 import org.company.app.ui.screens.account.AccountScreen
 import org.company.app.ui.screens.detail.DetailScreen
+import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -196,7 +193,10 @@ fun TopBar(
                     isSearchEnabled = false
                     query = ""
                 }) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                        contentDescription = null
+                    )
                 }
 
                 TextField(

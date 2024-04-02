@@ -46,8 +46,6 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.custom_image.NetworkImage
-import org.company.app.ui.components.video_list.formatVideoDuration
-import org.company.app.ui.components.video_list.getFormattedDate
 import sqldelight.db.YoutubeEntity
 
 @Composable
@@ -153,7 +151,7 @@ fun OfflineVideoCard(
                                 modifier = Modifier.width(IntrinsicSize.Min),
                                 color = if (isDark) Color.White else Color.Black,
                             )
-                            if (youtubeEntity.isVerified.toInt() == 1){
+                            if (youtubeEntity.isVerified.toInt() == 1) {
                                 Icon(
                                     imageVector = Icons.Default.Verified,
                                     contentDescription = null,

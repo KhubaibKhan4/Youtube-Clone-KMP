@@ -53,8 +53,8 @@ import io.kamel.image.asyncPainterResource
 import org.company.app.domain.model.search.Item
 import org.company.app.domain.model.search.Search
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.ui.components.video_list.formatVideoDuration
 import org.company.app.ui.screens.detail.DetailScreen
+import org.company.app.utils.formatVideoDuration
 import kotlin.random.Random
 
 @Composable

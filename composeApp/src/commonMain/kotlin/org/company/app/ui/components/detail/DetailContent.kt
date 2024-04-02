@@ -90,7 +90,6 @@ import org.company.app.ui.components.comments.CommentsList
 import org.company.app.ui.components.common.ErrorBox
 import org.company.app.ui.components.custom_image.NetworkImage
 import org.company.app.ui.components.relevance.RelevanceList
-import org.company.app.ui.components.video_list.formatVideoDuration
 import org.company.app.ui.components.video_list.getFormattedDate
 import org.company.app.ui.screens.channel_detail.ChannelDetail
 import org.company.app.ui.screens.channel_screen.ChannelScreen
@@ -100,6 +99,7 @@ import org.company.app.ui.screens.detail.formatViewComments
 import org.company.app.ui.screens.detail.formatViewCount
 import org.company.app.ui.screens.detail.getFormattedDateLikeMonthDay
 import org.company.app.utils.Constant
+import org.company.app.utils.formatVideoDuration
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)

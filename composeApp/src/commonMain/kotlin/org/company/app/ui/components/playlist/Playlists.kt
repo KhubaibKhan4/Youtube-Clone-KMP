@@ -24,7 +24,6 @@ import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Download
-import androidx.compose.material.icons.outlined.PlaylistAdd
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.Card
@@ -60,9 +59,9 @@ import io.kamel.image.asyncPainterResource
 import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.ui.components.video_list.formatVideoDuration
 import org.company.app.ui.components.video_list.getFormattedDate
 import org.company.app.ui.screens.detail.DetailScreen
+import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
 
 @Composable
