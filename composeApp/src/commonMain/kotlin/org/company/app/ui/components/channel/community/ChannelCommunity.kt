@@ -40,9 +40,9 @@ import io.kamel.image.asyncPainterResource
 import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.ui.components.video_list.getFormattedDate
 import org.company.app.ui.screens.detail.formatLikes
 import org.company.app.ui.screens.detail.formatViewComments
+import org.company.app.utils.getFormattedDate
 
 @Composable
 fun ChannelCommunity(

@@ -89,10 +89,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.company.app.ShareManager
 import org.company.app.UserRegion
 import org.company.app.domain.model.categories.Item
@@ -116,6 +112,7 @@ import org.company.app.ui.screens.detail.formatLikes
 import org.company.app.ui.screens.detail.formatSubscribers
 import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
+import org.company.app.utils.getFormattedDate
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
@@ -967,27 +964,7 @@ fun VideoItemCard(
 }
 
 
-fun getFormattedDate(publishedAt: String): String {
-    return try {
-        val instant = Instant.parse(publishedAt)
-        val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-        val currentInstant = Instant.fromEpochMilliseconds(Clock.System.now().toEpochMilliseconds())
 
-        val seconds = currentInstant.epochSeconds - instant.epochSeconds
-        val minutes = seconds / 60
-        val hours = minutes / 60
-        val days = hours / 24
-
-        when {
-            seconds < 60 -> "$seconds seconds ago"
-            minutes < 60 -> "$minutes minutes ago"
-            hours < 24 -> "$hours hours ago"
-            else -> "$days days ago"
-        }
-    } catch (e: Throwable) {
-        "Unknown date"
-    }
-}
 
 
 

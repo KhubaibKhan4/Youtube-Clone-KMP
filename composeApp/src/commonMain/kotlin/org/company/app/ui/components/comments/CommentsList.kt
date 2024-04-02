@@ -60,8 +60,8 @@ import org.company.app.presentation.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.common.ErrorBox
 import org.company.app.ui.components.custom_image.NetworkImage
-import org.company.app.ui.components.video_list.getFormattedDate
 import org.company.app.ui.screens.detail.formatLikes
+import org.company.app.utils.getFormattedDate
 import org.koin.compose.koinInject
 
 @Composable
