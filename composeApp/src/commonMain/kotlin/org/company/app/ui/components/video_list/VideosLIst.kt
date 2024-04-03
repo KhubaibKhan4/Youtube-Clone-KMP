@@ -815,8 +815,6 @@ fun VideoItemCard(
                     }
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-
-                // Vertical Three Dots Icon
                 IconButton(onClick = {
                     moreVertEnable = !moreVertEnable
                 }) {
