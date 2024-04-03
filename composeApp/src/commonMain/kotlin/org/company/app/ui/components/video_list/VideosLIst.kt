@@ -725,7 +725,7 @@ fun VideoItemCard(
                     Text(
                         text = video.contentDetails?.duration?.let { formatVideoDuration(it) }
                             ?: "00:00",
-                        color = if (isDark) Color.White else Color.Black,
+                        color = Color.White,
                         fontSize = 10.sp
                     )
                 }
@@ -739,7 +739,7 @@ fun VideoItemCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val channelImage =
-                    channelData?.items?.get(0)?.snippet?.thumbnails?.high?.url.toString()
+                    channelData?.items?.get(0)?.snippet?.thumbnails?.default?.url.toString()
                 NetworkImage(
                     url = channelImage,
                     contentDescription = null,

@@ -74,7 +74,7 @@ object YoutubeClientApi {
 
     suspend fun getChannelDetails(channelId: String): Channel {
         val url =
-            "https://www.googleapis.com/youtube/v3/channels?part=contentDetails,brandingSettings,contentDetails,contentOwnerDetails,id,localizations,snippet,statistics,status,topicDetails&id=UC_x5XG1OV2P6uZZ5FSM9Ttw&key=${BuildConfig.API_KEY}"
+            "https://www.googleapis.com/youtube/v3/channels?part=contentDetails,brandingSettings,contentDetails,contentOwnerDetails,id,localizations,snippet,statistics,status,topicDetails&id=$channelId&key=${BuildConfig.API_KEY}"
         return client.get(url).body()
     }
 
