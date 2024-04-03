@@ -799,7 +799,7 @@ fun ShortItem(
                             painter = it,
                             contentDescription = null,
                             modifier = Modifier.size(15.dp).clip(CircleShape).clickable {
-                                navigator?.push(ChannelScreen(channelDetail!!.items[0]))
+                                navigator?.push(ChannelScreen(channelDetail?.items!![0]))
                             },
                             contentScale = ContentScale.FillBounds
                         )
@@ -948,7 +948,7 @@ fun ShortItem(
                             painter = it,
                             contentDescription = null,
                             modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
-                                navigator?.push(ChannelScreen(channelDetail!!.items[0]))
+                                navigator?.push(ChannelScreen(channelDetail?.items!![0]))
                             },
                             contentScale = ContentScale.FillBounds
                         )
@@ -1012,7 +1012,7 @@ fun ShortItem(
                     OutlinedCard(
                         onClick = {
                             channelDetail?.let { channel ->
-                                navigator?.push(ChannelDetail(channel.items[0]))
+                                navigator?.push(ChannelDetail(channel.items!![0]))
                             }
                         },
                         shape = CardDefaults.outlinedShape,

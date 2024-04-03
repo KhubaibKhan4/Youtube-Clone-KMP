@@ -645,6 +645,7 @@ fun VideoItemCard(
     var channelData by remember { mutableStateOf<Channel?>(null) }
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
+        viewModel.getChanelBranding(video.snippet?.channelId.toString())
 
         //Offline Data
         val title = video.snippet?.title.toString()

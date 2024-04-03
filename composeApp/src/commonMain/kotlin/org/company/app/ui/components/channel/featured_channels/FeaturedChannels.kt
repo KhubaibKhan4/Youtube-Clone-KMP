@@ -47,8 +47,10 @@ fun FeaturedChannel(
                 color =if (isDark) Color.White else Color.Black
             )
         }
-        items(channel.items) { items ->
-            FeatureChannelItems(items)
+        channel.items?.let {items->
+            items(items) { item ->
+                FeatureChannelItems(item)
+            }
         }
     }
 }

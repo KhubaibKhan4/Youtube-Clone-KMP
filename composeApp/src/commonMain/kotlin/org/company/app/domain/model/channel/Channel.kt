@@ -9,9 +9,9 @@ data class Channel(
     @SerialName("etag")
     val etag: String,
     @SerialName("items")
-    val items: List<org.company.app.domain.model.channel.Item>,
+    val items: List<Item>?,
     @SerialName("kind")
     val kind: String,
     @SerialName("pageInfo")
-    val pageInfo: org.company.app.domain.model.channel.PageInfo
+    val pageInfo: PageInfo
 )
