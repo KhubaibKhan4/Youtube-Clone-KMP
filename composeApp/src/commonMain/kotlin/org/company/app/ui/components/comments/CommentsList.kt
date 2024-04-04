@@ -218,7 +218,6 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                     }
                 }
             }
-            // Comment Text
             Text(
                 text = truncatedComment,
                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
@@ -232,7 +231,6 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                     }
             )
 
-            // Full Comment (AnimatedVisibility)
             AnimatedVisibility(visible = commentExpanded) {
                 Text(
                     text = commentText,
@@ -242,7 +240,6 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                 )
             }
 
-            // Like, Dislike, Comment Icons
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -290,7 +287,6 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                     )
                 }
             }
-            // Replies
             Text(
                 text = "${comments.snippet.totalReplyCount} replies",
                 color = if (isDark) Color.White else Color.Blue,
@@ -332,7 +328,6 @@ fun CommentItemWithReplies(commentItem: Item) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start
                     ) {
-                        // Channel Image
                         val channelImage: Resource<Painter> =
                             asyncPainterResource(data = reply.snippet.authorProfileImageUrl)
                         KamelImage(
@@ -357,7 +352,6 @@ fun CommentItemWithReplies(commentItem: Item) {
                             }
                         )
                         Spacer(modifier = Modifier.width(12.dp))
-                        // Channel Username and Published Time
                         Column(
                             modifier = Modifier
                                 .weight(1f)
@@ -396,7 +390,6 @@ fun CommentItemWithReplies(commentItem: Item) {
                                 }
                             }
                         }
-                        // Comment Text
                         Text(
                             text = truncatedComment,
                             fontSize = MaterialTheme.typography.bodySmall.fontSize,
@@ -410,7 +403,6 @@ fun CommentItemWithReplies(commentItem: Item) {
                                 }
                         )
 
-                        // Full Comment (AnimatedVisibility)
                         AnimatedVisibility(visible = commentExpanded) {
                             Text(
                                 text = commentText,
@@ -420,7 +412,6 @@ fun CommentItemWithReplies(commentItem: Item) {
                             )
                         }
 
-                        // Like, Dislike, Comment Icons
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
