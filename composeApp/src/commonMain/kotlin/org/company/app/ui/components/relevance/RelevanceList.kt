@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.company.app.ui.components.video_list.VideoItemCard
 import org.company.app.ui.components.common.ErrorBox
 import org.company.app.ui.components.common.LoadingBox
+import org.company.app.ui.components.video_list.VideoItemCard
 
 @Composable
 fun RelevanceList(stateRelevance: ResultState<Youtube>) {
@@ -47,8 +47,11 @@ fun RelevanceList(stateRelevance: ResultState<Youtube>) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            LazyVerticalGrid(columns = GridCells.Adaptive(300.dp), modifier = Modifier.height(700.dp)) {
-                relevanceData?.items?.let {items ->
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(300.dp),
+                modifier = Modifier.height(700.dp)
+            ) {
+                relevanceData?.items?.let { items ->
                     items(items) { videos ->
                         VideoItemCard(videos)
                     }

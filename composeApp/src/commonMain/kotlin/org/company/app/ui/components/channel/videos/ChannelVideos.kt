@@ -107,7 +107,7 @@ fun ChannelVideosItems(videos: Item) {
             contentAlignment = Alignment.BottomEnd
         ) {
             val image: Resource<Painter> =
-                asyncPainterResource(data = videos.snippet?.thumbnails?.high?.url.toString())
+                asyncPainterResource(data = videos.snippet.thumbnails.high.url)
             KamelImage(
                 resource = image,
                 contentDescription = "Thumbnail",
@@ -138,8 +138,7 @@ fun ChannelVideosItems(videos: Item) {
                     .clip(RoundedCornerShape(4.dp))
             ) {
                 androidx.compose.material3.Text(
-                    text = videos.snippet.publishTime.let { formatVideoDuration(it) }
-                        ?: "00:00",
+                    text = videos.snippet.publishTime.let { formatVideoDuration(it) },
                     color = if (isDark) Color.White else Color.Black,
                     fontSize = 10.sp
                 )
@@ -170,7 +169,7 @@ fun ChannelVideosItems(videos: Item) {
             ) {
                 // Playlist Title
                 Text(
-                    text = videos.snippet?.title.toString(),
+                    text = videos.snippet.title,
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     color = if (isDark) Color.White else Color.DarkGray,
                     modifier = Modifier.weight(1f)
