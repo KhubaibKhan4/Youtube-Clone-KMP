@@ -68,7 +68,7 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `coilNetwork`: `3.0.0-alpha01`
   - `ktor`: `2.3.9`
 - **Dependency Injection**:
-  - `koin`: `3.5.1`
+  - `koin`: `3.5.4`
 - **UI/UX**:
   - `compose-uitooling`: `1.6.3`
   - `composeIcons`: `1.1.0`
