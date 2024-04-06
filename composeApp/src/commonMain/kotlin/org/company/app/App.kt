@@ -57,6 +57,7 @@ import org.company.app.ui.navigation.tabs.library.LibraryTab
 import org.company.app.ui.navigation.tabs.shorts.ShortsTab
 import org.company.app.ui.navigation.tabs.subscriptions.SubscriptionsTab
 import org.koin.core.annotation.Single
+import org.koin.core.annotation.Singleton
 
 
 @Composable
@@ -219,10 +220,10 @@ internal expect fun openUrl(url: String?)
 
 @Composable
 internal expect fun provideShortCuts()
-
+@Singleton
 @Composable
 internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)
-
+@Singleton
 @Composable
 internal expect fun ShortsVideoPlayer(url: String?)
 internal expect fun UserRegion(): String
@@ -236,7 +237,7 @@ internal expect fun ShareManager(title: String, videoUrl: String)
 @Composable
 internal expect fun isConnected(retry: () -> Unit): Boolean
 
-@Single
+@Singleton
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class DriverFactory() {
     fun createDriver(): SqlDriver
