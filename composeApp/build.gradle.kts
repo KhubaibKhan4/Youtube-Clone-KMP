@@ -206,7 +206,7 @@ buildConfig {
     val properties = Properties()
     properties.load(FileInputStream(propertiesFile))
     val apiKey = properties.getProperty("API_KEY")
-    buildConfigField("String","API_KEY","\"$apiKey\"")
+    buildConfigField("API_KEY", apiKey)
 }
 sqldelight {
     databases {
