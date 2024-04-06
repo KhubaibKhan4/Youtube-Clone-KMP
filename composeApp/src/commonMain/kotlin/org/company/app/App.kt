@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -220,10 +219,10 @@ internal expect fun openUrl(url: String?)
 
 @Composable
 internal expect fun provideShortCuts()
-@Singleton
+@Single
 @Composable
 internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)
-@Singleton
+@Single
 @Composable
 internal expect fun ShortsVideoPlayer(url: String?)
 internal expect fun UserRegion(): String
@@ -237,7 +236,7 @@ internal expect fun ShareManager(title: String, videoUrl: String)
 @Composable
 internal expect fun isConnected(retry: () -> Unit): Boolean
 
-@Singleton
+@Single
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class DriverFactory() {
     fun createDriver(): SqlDriver

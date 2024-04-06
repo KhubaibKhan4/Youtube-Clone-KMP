@@ -20,7 +20,9 @@ import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.utils.Constant.BASE_URL
 import org.company.app.utils.Constant.TIMEOUT
+import org.koin.core.annotation.Single
 
+@Single
 object YoutubeClientApi {
     @OptIn(ExperimentalSerializationApi::class)
     private val client = HttpClient {
@@ -73,7 +75,8 @@ object YoutubeClientApi {
     }
 
     suspend fun getChannelDetails(channelId: String): Channel {
-        val url = BASE_URL+"channels?part=contentDetails,brandingSettings,contentDetails,contentOwnerDetails,id,localizations,snippet,statistics,status,topicDetails&id=$channelId&key=${API_KEY}"
+        val url =
+            BASE_URL + "channels?part=contentDetails,brandingSettings,contentDetails,contentOwnerDetails,id,localizations,snippet,statistics,status,topicDetails&id=$channelId&key=${API_KEY}"
         return client.get(url).body()
     }
 
