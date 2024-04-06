@@ -273,8 +273,8 @@ fun DetailContent(
 
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth().height(1.dp).padding(vertical = 8.dp),
-            thickness = 4.dp,
-            color = Color.DarkGray
+            thickness = 1.dp,
+            color = Color.LightGray
         )
 
         Row(
