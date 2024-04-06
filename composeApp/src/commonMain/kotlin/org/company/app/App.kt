@@ -56,6 +56,7 @@ import org.company.app.ui.navigation.tabs.home.HomeTab
 import org.company.app.ui.navigation.tabs.library.LibraryTab
 import org.company.app.ui.navigation.tabs.shorts.ShortsTab
 import org.company.app.ui.navigation.tabs.subscriptions.SubscriptionsTab
+import org.koin.core.annotation.Single
 
 
 @Composable
@@ -235,6 +236,7 @@ internal expect fun ShareManager(title: String, videoUrl: String)
 @Composable
 internal expect fun isConnected(retry: () -> Unit): Boolean
 
+@Single
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class DriverFactory() {
     fun createDriver(): SqlDriver
