@@ -643,22 +643,22 @@ fun VideoItemCard(
     val isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }
     var channelData by remember { mutableStateOf<Channel?>(null) }
+
+    val title = video.snippet?.title.toString()
+    val channelTitle = video.snippet?.channelTitle.toString()
+    val channelImage = video.snippet?.thumbnails?.high?.url.toString()
+    val publishData = getFormattedDate(video.snippet?.publishedAt.toString())
+    val views = FormateView(video.statistics?.viewCount)
+    val duration = formatVideoDuration(video.contentDetails?.duration.toString())
+    val videoThumbnail = video.snippet?.thumbnails?.default?.url.toString()
+    val videoDesc = video.snippet?.description.toString()
+    val likes = formatLikes(video.statistics?.likeCount)
+    val channelSubs =
+        formatSubscribers(channelData?.items?.first()?.statistics?.subscriberCount)
+    val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
+
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
-
-        //Offline Data
-        val title = video.snippet?.title.toString()
-        val channelTitle = video.snippet?.channelTitle.toString()
-        val channelImage = video.snippet?.thumbnails?.high?.url.toString()
-        val publishData = getFormattedDate(video.snippet?.publishedAt.toString())
-        val views = FormateView(video.statistics?.viewCount)
-        val duration = formatVideoDuration(video.contentDetails?.duration.toString())
-        val videoThumbnail = video.snippet?.thumbnails?.default?.url.toString()
-        val videoDesc = video.snippet?.description.toString()
-        val likes = formatLikes(video.statistics?.likeCount)
-        val channelSubs =
-            formatSubscribers(channelData?.items?.first()?.statistics?.subscriberCount)
-        val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
 
         viewModel.insertVideos(
             id = null,
@@ -675,7 +675,7 @@ fun VideoItemCard(
             duration = duration
         )
     }
-    val state by viewModel.channelBranding.collectAsState()
+    val state by viewModel.channelDetails.collectAsState()
     when (state) {
         is ResultState.LOADING -> {
             LoadingBox()
