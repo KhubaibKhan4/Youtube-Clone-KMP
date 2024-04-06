@@ -7,7 +7,9 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.repository.YoutubeApi
+import org.koin.core.annotation.Single
 
+@Single
 class Repository : YoutubeApi {
 
     override suspend fun getVideoList(userRegion: String): Youtube {
@@ -25,6 +27,7 @@ class Repository : YoutubeApi {
     override suspend fun getRelevanceVideos(): Youtube {
         return YoutubeClientApi.getRelevanceVideos()
     }
+
     override suspend fun getSearch(
         query: String,
         userRegion: String,
@@ -80,6 +83,6 @@ class Repository : YoutubeApi {
     }
 
     override suspend fun getChannelSearch(channelID: String, query: String): Search {
-        return YoutubeClientApi.getChannelSearch(channelID,query)
+        return YoutubeClientApi.getChannelSearch(channelID, query)
     }
 }

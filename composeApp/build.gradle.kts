@@ -66,6 +66,7 @@ kotlin {
             implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.4"))
             implementation("io.insert-koin:koin-core")
             implementation("io.insert-koin:koin-compose")
+            implementation("io.insert-koin:koin-annotations:1.3.1")
             implementation(libs.com.google.code.gson)
             implementation(libs.ktor.client.logging)
             implementation(libs.io.ktor.ktor.client.serialization)
@@ -101,6 +102,7 @@ kotlin {
             implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.4"))
             implementation("io.insert-koin:koin-core")
             implementation("io.insert-koin:koin-android")
+            implementation("io.insert-koin:koin-annotations:1.3.1")
         }
 
         jvmMain.dependencies {
