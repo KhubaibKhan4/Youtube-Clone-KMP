@@ -19,77 +19,59 @@ class MainViewModel(
     private val repository: Repository,
     private val database: YoutubeDatabase,
 ) : ViewModel() {
-    var _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
-        private set
+   private val _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val videos: StateFlow<ResultState<Youtube>> = _videos.asStateFlow()
 
-    var _relevance = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
-        private set
+    private val _relevance = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val relevance: StateFlow<ResultState<Youtube>> = _relevance.asStateFlow()
 
 
-    var _channel = MutableStateFlow<ResultState<Channel>>(ResultState.LOADING)
-        private set
+    private val _channel = MutableStateFlow<ResultState<Channel>>(ResultState.LOADING)
     val channelDetails: StateFlow<ResultState<Channel>> = _channel.asStateFlow()
 
-    var _channelBranding = MutableStateFlow<ResultState<Channel>>(ResultState.LOADING)
-        private set
+    private val _channelBranding = MutableStateFlow<ResultState<Channel>>(ResultState.LOADING)
     val channelBranding: StateFlow<ResultState<Channel>> = _channelBranding.asStateFlow()
 
-    var _relevance_videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
-        private set
+    private val _relevance_videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val relevanceVideos: StateFlow<ResultState<Youtube>> = _relevance_videos.asStateFlow()
 
-    var _search = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
-        private set
+    private val _search = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
     val search: StateFlow<ResultState<Search>> = _search.asStateFlow()
-    var _channelSearch = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
-        private set
+    private val _channelSearch = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
     val channelSearch: StateFlow<ResultState<Search>> = _channelSearch.asStateFlow()
 
-    var _playlists = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
-        private set
+    private val _playlists = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val playlists: StateFlow<ResultState<Youtube>> = _playlists.asStateFlow()
 
-    var _channelSections = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
-        private set
+    private val _channelSections = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val channelSections: StateFlow<ResultState<Youtube>> = _channelSections
 
-    var _channelLiveSteam = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
-        private set
+    private val _channelLiveSteam = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
     val channelLiveStream: StateFlow<ResultState<Search>> = _channelLiveSteam.asStateFlow()
 
-    var _channelVideos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
-        private set
+    private val _channelVideos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val channelVideos: StateFlow<ResultState<Youtube>> = _channelVideos.asStateFlow()
 
-    var _channelCommunity = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
-        private set
+    private val _channelCommunity = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val channelCommunity: StateFlow<ResultState<Youtube>> = _channelCommunity.asStateFlow()
 
-    var _videoComments = MutableStateFlow<ResultState<Comments>>(ResultState.LOADING)
-        private set
+    private val _videoComments = MutableStateFlow<ResultState<Comments>>(ResultState.LOADING)
     val videoComments: StateFlow<ResultState<Comments>> = _videoComments.asStateFlow()
 
-    var _ownChannelVideos = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
-        private set
+    private val _ownChannelVideos = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
     val ownChannelVideos: StateFlow<ResultState<Search>> = _ownChannelVideos.asStateFlow()
 
-    var _videoCategories = MutableStateFlow<ResultState<VideoCategories>>(ResultState.LOADING)
-        private set
+    private val _videoCategories = MutableStateFlow<ResultState<VideoCategories>>(ResultState.LOADING)
     val videoCategories: StateFlow<ResultState<VideoCategories>> = _videoCategories.asStateFlow()
 
 
-    var _singleVideo = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
-        private set
+    private val _singleVideo = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val singleVideo: StateFlow<ResultState<Youtube>> = _singleVideo.asStateFlow()
 
-    var _multipleVideos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
-        private set
+    private val _multipleVideos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val multipleVideos: StateFlow<ResultState<Youtube>> = _multipleVideos.asStateFlow()
 
-    private val _localVideos =
-        MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
+    private val _localVideos = MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
     val localVideos: StateFlow<ResultState<List<YoutubeEntity>>> = _localVideos.asStateFlow()
 
     fun getVideosList(userRegion: String) {
