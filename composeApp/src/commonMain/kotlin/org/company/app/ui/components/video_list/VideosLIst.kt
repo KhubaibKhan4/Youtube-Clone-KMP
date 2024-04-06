@@ -645,7 +645,6 @@ fun VideoItemCard(
     var channelData by remember { mutableStateOf<Channel?>(null) }
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
-        viewModel.getChanelBranding(video.snippet?.channelId.toString())
 
         //Offline Data
         val title = video.snippet?.title.toString()
@@ -676,15 +675,14 @@ fun VideoItemCard(
             duration = duration
         )
     }
-    val state by viewModel.channelDetails.collectAsState()
+    val state by viewModel.channelBranding.collectAsState()
     when (state) {
         is ResultState.LOADING -> {
             LoadingBox()
         }
 
         is ResultState.SUCCESS -> {
-            val data = (state as ResultState.SUCCESS).response
-            channelData = data
+            channelData= (state as ResultState.SUCCESS).response
         }
 
         is ResultState.ERROR -> {
@@ -739,20 +737,21 @@ fun VideoItemCard(
                     .padding(start = 8.dp, end = 8.dp, top = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val channelImage =
-                    channelData?.items?.get(0)?.snippet?.thumbnails?.default?.url.toString()
-                NetworkImage(
-                    url = channelImage,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.size(40.dp)
-                        .clip(CircleShape)
-                        .pointerHoverIcon(icon = PointerIcon.Hand)
-                        .clickable {
-                            val channelItem = channelData?.items?.get(0)!!
-                            navigator?.push(ChannelScreen(channelItem))
-                        }
-                )
+                channelData?.let {
+                    NetworkImage(
+                        url = it.items?.first()?.snippet?.thumbnails?.high?.url ?: "",
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier.size(40.dp)
+                            .clip(CircleShape)
+                            .pointerHoverIcon(icon = PointerIcon.Hand)
+                            .clickable {
+                                val channelItem = channelData?.items?.get(0)!!
+                                navigator?.push(ChannelScreen(channelItem))
+                            }
+                    )
+                }
+
 
                 Spacer(modifier = Modifier.width(8.dp))
                 Column(
