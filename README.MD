@@ -53,10 +53,10 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 
 - **Kotlin Multiplatform**: `1.9.23`
 - **AGP (Android Gradle Plugin)**: `8.2.2`
-- **Compose**: `1.6.1`
+- **Compose**: `1.6.2`
   - `androidx-appcompat`: `1.6.1`
   - `androidx-activityCompose`: `1.8.2`
-  - `compose-uitooling`: `1.6.2`
+  - `compose-uitooling`: `1.6.5`
   - `composeImageLoader`: `1.7.1`
   - `composeIcons`: `1.1.0`
 - **Core Libraries**: `12.1.0`
@@ -73,21 +73,21 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `compose-uitooling`: `1.6.3`
   - `composeIcons`: `1.1.0`
 - **Media Handling**:
-  - `media3Ui`: `1.3.0`
-  - `media3ExoplayerDash`: `1.3.0`
-  - `media3Exoplayer`: `1.3.0`
+  - `media3Ui`: `1.3.1`
+  - `media3ExoplayerDash`: `1.3.1`
+  - `media3Exoplayer`: `1.3.1`
 - **Logging**:
   - `napier`: `2.6.1`
 - **Database/Storage**:
-  - `libres`: `1.2.2`
+  - `sql-delight`: `2.0.1`
 - **Web and Networking**:
   - `webview-kmp`: `1.8.0`
 - **JSON Parsing**:
-  - `gson`: `2.10.1`
+  - `json`: `1.6.3`
 - **Build Configurations**:
   - `buildConfig`: `4.1.1`
 - **Cross-Platform Image Loading**:
-  - `composeImageLoader`: `1.7.1`
+  - `kamelImage`: `0.9.4`
 - **Size Measurement**:
   - `size`: `0.3.1`
 - **Voyager Navigation**: `1.0.0`
@@ -95,7 +95,6 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `moko-mvvm`: `0.16.1`
   - `vlcj`: `4.7.0`
   - `ffmpegPlatform`: `4.1-1.4.4`
-  - `kamelImage`: `0.9.3`
 - **JavaFX**: `22-ea+16`
 
 📝 Getting Started
@@ -229,3 +228,50 @@ compose.desktop {
 
 ## JS 
 - for the Js Web App, we simply need to execute the 'gradle jsBrowserWebpack'
+
+## Contribution Guidelines
+We welcome contributions to the YouTube Clone project! To contribute, please follow these guidelines:
+
+- **Reporting Bugs**: If you encounter a bug, please open an issue and provide detailed information about the bug, including steps to reproduce it.
+- **Suggesting Features**: We encourage you to suggest new features or improvements by opening an issue and describing your idea.
+- **Submitting Pull Requests**: If you'd like to contribute code, please fork the repository, create a new branch for your changes, and submit a pull request with a clear description of the changes.
+
+## Code of Conduct
+We expect all contributors and users of the YouTube Clone project to adhere to our code of conduct. Please review the [Code of Conduct](CODE_OF_CONDUCT.md) for details on expected behavior and reporting procedures.
+
+## Project Roadmap
+Here's a brief overview of our project roadmap:
+
+- **Upcoming Features**: We're planning to add support for TV and Wear OS versions in future releases.
+- **Milestones**: We'll be releasing updates regularly to introduce new features and enhancements. Stay tuned for announcements about upcoming releases.
+
+## Community Resources
+Join our community to connect with other users and contributors:
+
+- **Documentation**: Find more information and resources in our [documentation](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/wiki).
+- **Forums**: Ask questions and discuss ideas in our [community forums](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/discussions).
+- **Chat**: Join our community chat on [Slack](https://join.slack.com/t/kotlinmultipl-gr51340/shared_invite/zt-2go24sz06-_lyxM2arRifMqwAPN2EzoA) to chat with other users and contributors.
+
+## Acknowledgments
+We'd like to thank the following individuals and organizations for their contributions to the YouTube Clone project:
+
+- No Contributor Yet.
+
+
+## FAQs
+Here are some frequently asked questions about the YouTube Clone project:
+
+1. **How do I run the application on Android?**
+   - Follow the instructions in the README to set up your development environment and run the app on an Android device or emulator.
+
+2. **Can I contribute to the project if I'm new to Kotlin Multiplatform?**
+   - Yes! We welcome contributions from developers of all skill levels. Check out our Contribution Guidelines for more information on how to get started.
+
+## Performance & Optimization Tips
+To optimize performance in the YouTube Clone project, consider the following tips:
+
+- **Lazy Loading**: Implement lazy loading for images and videos to reduce initial load times.
+- **Cache Optimization**: Use caching strategies to minimize network requests and improve data loading performance.
+- **Code Profiling**: Profile your code to identify and optimize performance bottlenecks.
+- **Resource Management**: Ensure efficient use of system resources, such as memory and CPU, to improve overall performance.
+
