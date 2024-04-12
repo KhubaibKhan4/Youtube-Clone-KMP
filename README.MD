@@ -255,7 +255,7 @@ Join our community to connect with other users and contributors:
 ## Acknowledgments
 We'd like to thank the following individuals and organizations for their contributions to the YouTube Clone project:
 
-- [List of contributors or organizations]
+- No Contributor Yet.
 
 ## FAQs
 Here are some frequently asked questions about the YouTube Clone project:
