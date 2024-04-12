@@ -53,10 +53,10 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
 
 - **Kotlin Multiplatform**: `1.9.23`
 - **AGP (Android Gradle Plugin)**: `8.2.2`
-- **Compose**: `1.6.1`
+- **Compose**: `1.6.2`
   - `androidx-appcompat`: `1.6.1`
   - `androidx-activityCompose`: `1.8.2`
-  - `compose-uitooling`: `1.6.2`
+  - `compose-uitooling`: `1.6.5`
   - `composeImageLoader`: `1.7.1`
   - `composeIcons`: `1.1.0`
 - **Core Libraries**: `12.1.0`
@@ -73,21 +73,21 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `compose-uitooling`: `1.6.3`
   - `composeIcons`: `1.1.0`
 - **Media Handling**:
-  - `media3Ui`: `1.3.0`
-  - `media3ExoplayerDash`: `1.3.0`
-  - `media3Exoplayer`: `1.3.0`
+  - `media3Ui`: `1.3.1`
+  - `media3ExoplayerDash`: `1.3.1`
+  - `media3Exoplayer`: `1.3.1`
 - **Logging**:
   - `napier`: `2.6.1`
 - **Database/Storage**:
-  - `libres`: `1.2.2`
+  - `sql-delight`: `2.0.1`
 - **Web and Networking**:
   - `webview-kmp`: `1.8.0`
 - **JSON Parsing**:
-  - `gson`: `2.10.1`
+  - `json`: `1.6.3`
 - **Build Configurations**:
   - `buildConfig`: `4.1.1`
 - **Cross-Platform Image Loading**:
-  - `composeImageLoader`: `1.7.1`
+  - `kamelImage`: `0.9.4`
 - **Size Measurement**:
   - `size`: `0.3.1`
 - **Voyager Navigation**: `1.0.0`
@@ -95,7 +95,6 @@ Feel free to contribute to the project and stay tuned for more exciting updates!
   - `moko-mvvm`: `0.16.1`
   - `vlcj`: `4.7.0`
   - `ffmpegPlatform`: `4.1-1.4.4`
-  - `kamelImage`: `0.9.3`
 - **JavaFX**: `22-ea+16`
 
 📝 Getting Started
