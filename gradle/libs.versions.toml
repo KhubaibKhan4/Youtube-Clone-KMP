@@ -28,7 +28,7 @@ kotlinx-serialization = "1.6.3"
 kotlinx-datetime = "0.5.0"
 koin = "3.5.4"
 gson = "2.10.1"
-kamelImage = "0.9.3"
+kamelImage = "0.9.4"
 size = "0.3.1"
 sqlDelight = "2.0.1"
 
