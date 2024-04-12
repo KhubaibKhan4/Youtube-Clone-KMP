@@ -255,7 +255,7 @@ Join our community to connect with other users and contributors:
 ## Acknowledgments
 We'd like to thank the following individuals and organizations for their contributions to the YouTube Clone project:
 
-- No Contributor Yet.[<img src="https://github.com/{{ KhubaibKhan4 }}.png" width="60px;"/><br /><sub><ahref="https://github.com/{{ contributor }}">{{ contributor }}</a></sub>](https://github.com/{{ contributor }}/{{ repository }}
+- No Contributor Yet.
 
 
 ## FAQs
