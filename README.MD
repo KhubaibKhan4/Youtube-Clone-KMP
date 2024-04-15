@@ -2,7 +2,7 @@
 ![YouTube Clone KMP](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/poster.png)
 
 ## Overview
-YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices.
+YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices. A Better Version of Original App (A Bold Claim).
 
 ## 🚀 Key Features
 - **Cross-Platform Compatibility**
@@ -15,6 +15,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - **Trending Videos**
 - **Subscribe Channels**
 - **View Verified Channel Badges**
+- **Quick & Responsive Search for Videos & Channels**
 - **Offiline Video Support**
 - **Smooth Interation**
 - **Responsive UI**
@@ -45,9 +46,10 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - TV and Wear OS Versions
 
 ## 🌟 Contributions
-Feel free to contribute to the project and stay tuned for more exciting updates!
+If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
 
 # Open To Work
+Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm here for you. I'm open to work, available for Freelance or Remote Work Opportunities. Feel free to reach me out on Email.
 
 # Tech Stack Highlights
 
@@ -115,7 +117,8 @@ Let's chat about potential projects, job opportunities, or any other collaborati
 [![Twitter](https://img.shields.io/badge/Twitter-Follow-blue?style=for-the-badge&logo=twitter)](https://twitter.com/codespacepro)
 [![Email](https://img.shields.io/badge/Email-Drop%20a%20Message-red?style=for-the-badge&logo=gmail)](mailto:18.bscs.803@gmail.com)
 
-If you find my work helpful, you can support me by <a href="https://www.buymeacoffee.com/khubaibkhan"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=khubaibkhan&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
+If you find my work helpful, you can support me by
+<a href="https://www.buymeacoffee.com/khubaibkhan"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=khubaibkhan&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 ## Download Installers
 [<img src="https://user-images.githubusercontent.com/114044633/223920025-83687de0-e463-4c5d-8122-e06e4bb7d40c.png" width="200">](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/raw/master/screenshots/youtube-clone-kmp.apk)
@@ -175,6 +178,8 @@ If you find my work helpful, you can support me by <a href="https://www.buymeaco
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
  - install JDK 17 on your machine
  - add `local.properties` file to the project root and set a path to Android SDK there
+ - Make sure to Complete the Installation of Compose Multiplatform Before using this Project.
+ - Official Setup Guide: [![Official KMP Setup Guide]](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-setup.html)
 
 ### Android
 To run the application on android device/emulator:  
