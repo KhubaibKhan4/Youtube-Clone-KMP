@@ -2,7 +2,7 @@
 ![YouTube Clone KMP](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/poster.png)
 
 ## Overview
-YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices. A Better Version of Original App (A Bold Claim).
+YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices. A Better Version of Original App (A Big Bold Claim).
 
 ## 🚀 Key Features
 - **Cross-Platform Compatibility**
