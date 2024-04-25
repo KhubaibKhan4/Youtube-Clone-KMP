@@ -99,26 +99,44 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `ffmpegPlatform`: `4.1-1.4.4`
 - **JavaFX**: `22-ea+16`
 
-📝 Getting Started
+## Getting Started
+
 To use the app, follow these steps:
 
-1. Create YouTube API V3 credentials.
-2. Add the credentials to `local.properties` like  `API_KEY =  Your_API_VALUE`.
+1. **Create YouTube API V3 credentials:**
+   - Navigate to the [Google Cloud Console](https://console.cloud.google.com/).
+   - Create a new project or select an existing one.
+   - Enable the YouTube Data API v3 for your project.
+   - Generate an API key for your project.
+
+2. **Add the credentials to `local.properties`:**
+   - Open the `local.properties` file in your project.
+   - Add the following line: `API_KEY=Your_API_VALUE`, replacing `Your_API_VALUE` with the API key generated in step 1.
+
+3. **Ensure API Key Security:**
+   - Restrict your API key to prevent unauthorized usage.
+   - Configure API key restrictions based on IP addresses, referrers, or Android app signatures to enhance security.
+
+4. **Integrate API Key into the App:**
+   - Use the `BuildConfig.API_KEY` variable in your code to access the API key securely.
+   - Ensure that the API key is not hard-coded or exposed directly in your source code.
+
+5. **Start Using the App:**
+   - Build and run your app to start utilizing the YouTube Data API functionalities.
+   - Implement features such as video search, playback, playlists, and more using the API key.
 
 Feel free to reach out if you have any questions or need further assistance!
 
-
-Connect with me to discuss potential projects, job opportunities, or any other collaboration.
-
 ## 🤝 Connect with Me
+
 Let's chat about potential projects, job opportunities, or any other collaboration! Feel free to connect with me through the following channels:
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/khubaibkhandev)
 [![Twitter](https://img.shields.io/badge/Twitter-Follow-blue?style=for-the-badge&logo=twitter)](https://twitter.com/codespacepro)
 [![Email](https://img.shields.io/badge/Email-Drop%20a%20Message-red?style=for-the-badge&logo=gmail)](mailto:18.bscs.803@gmail.com)
 
-If you find my work helpful, you can support me by
-<a href="https://www.buymeacoffee.com/khubaibkhan"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=khubaibkhan&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
+If you find my work helpful, you can support me by [![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=khubaibkhan&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/khubaibkhan)
+
 
 ## Download Installers
 [<img src="https://user-images.githubusercontent.com/114044633/223920025-83687de0-e463-4c5d-8122-e06e4bb7d40c.png" width="200">](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/raw/master/screenshots/youtube-clone-kmp.apk)
