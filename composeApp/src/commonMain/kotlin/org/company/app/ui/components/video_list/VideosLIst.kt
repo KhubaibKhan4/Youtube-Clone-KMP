@@ -524,7 +524,7 @@ fun VideosList(
                             ) {
                                 Button(
                                     onClick = { coroutineScope.launch { lazyListState.scrollToItem(0) } },
-                                    modifier = Modifier.size(55.dp)
+                                    modifier = Modifier.size(60.dp)
                                         .clip(CircleShape),
                                     colors = ButtonColors(
                                         containerColor = if (isDark) Color.Black else Color.White,
@@ -540,7 +540,7 @@ fun VideosList(
                                     Icon(
                                         Icons.Default.ArrowUpward,
                                         contentDescription = null,
-                                        modifier = Modifier.fillMaxWidth()
+                                        modifier = Modifier.size(40.dp)
                                     )
                                 }
                             }
@@ -571,7 +571,7 @@ fun VideosList(
                             ) {
                                 Button(
                                     onClick = { coroutineScope.launch { lazyListState.scrollToItem(0) } },
-                                    modifier = Modifier.size(55.dp)
+                                    modifier = Modifier.size(60.dp)
                                         .clip(CircleShape),
                                     colors = ButtonColors(
                                         containerColor = if (isDark) Color.Black else Color.White,
@@ -587,7 +587,7 @@ fun VideosList(
                                     Icon(
                                         Icons.Default.ArrowUpward,
                                         contentDescription = null,
-                                        modifier = Modifier.fillMaxWidth()
+                                        modifier = Modifier.size(50.dp)
                                     )
                                 }
                             }
@@ -675,7 +675,8 @@ fun VideoItemCard(
 
         is ResultState.SUCCESS -> {
             val channelResponse = (state as ResultState.SUCCESS).response
-            val matchingChannel = channelResponse.items?.firstOrNull { it.id == video.snippet?.channelId }
+            val matchingChannel =
+                channelResponse.items?.firstOrNull { it.id == video.snippet?.channelId }
             matchingChannel?.let {
                 channelData = Channel(
                     etag = "",
@@ -740,20 +741,20 @@ fun VideoItemCard(
                     .padding(start = 8.dp, end = 8.dp, top = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                channelData?.let {
-                    NetworkImage(
-                        url = it.items?.first()?.snippet?.thumbnails?.high?.url ?: videoThumbnail,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier.size(40.dp)
-                            .clip(CircleShape)
-                            .pointerHoverIcon(icon = PointerIcon.Hand)
-                            .clickable {
-                                val channelItem = channelData?.items?.get(0)!!
-                                navigator?.push(ChannelScreen(channelItem))
-                            }
-                    )
-                }
+
+                NetworkImage(
+                    url = channelData?.items?.first()?.snippet?.thumbnails?.high?.url
+                        ?: videoThumbnail,
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.size(40.dp)
+                        .clip(CircleShape)
+                        .pointerHoverIcon(icon = PointerIcon.Hand)
+                        .clickable {
+                            val channelItem = channelData?.items?.get(0)!!
+                            navigator?.push(ChannelScreen(channelItem))
+                        }
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Column(
                     modifier = Modifier
