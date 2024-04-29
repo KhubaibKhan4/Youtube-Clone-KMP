@@ -523,7 +523,7 @@ fun VideosList(
                                     .padding(16.dp)
                             ) {
                                 Button(
-                                    onClick = { coroutineScope.launch { lazyListState.scrollToItem(0) } },
+                                    onClick = { coroutineScope.launch { lazyListState.animateScrollToItem(0) } },
                                     modifier = Modifier.size(60.dp)
                                         .clip(CircleShape),
                                     colors = ButtonColors(
@@ -570,7 +570,7 @@ fun VideosList(
                                     .padding(16.dp)
                             ) {
                                 Button(
-                                    onClick = { coroutineScope.launch { lazyListState.scrollToItem(0) } },
+                                    onClick = { coroutineScope.launch { lazyListState.animateScrollToItem(0) } },
                                     modifier = Modifier.size(60.dp)
                                         .clip(CircleShape),
                                     colors = ButtonColors(
@@ -670,7 +670,7 @@ fun VideoItemCard(
     val state by viewModel.channelDetails.collectAsState()
     when (state) {
         is ResultState.LOADING -> {
-            LoadingBox()
+           // LoadingBox()
         }
 
         is ResultState.SUCCESS -> {
