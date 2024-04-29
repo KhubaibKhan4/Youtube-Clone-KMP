@@ -1,6 +1,5 @@
 package org.company.app.data.remote
 
-import Youtube_Clone.composeApp.BuildConfig.API_KEY
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.HttpTimeout
@@ -17,11 +16,10 @@ import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
+import org.company.app.utils.Constant.API_KEY
 import org.company.app.utils.Constant.BASE_URL
 import org.company.app.utils.Constant.TIMEOUT
-import org.koin.core.annotation.Single
 
-@Single
 object YoutubeClientApi {
     @OptIn(ExperimentalSerializationApi::class)
     private val client = HttpClient {

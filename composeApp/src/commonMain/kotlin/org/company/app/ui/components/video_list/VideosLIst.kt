@@ -95,6 +95,7 @@ import org.company.app.domain.model.categories.Item
 import org.company.app.domain.model.categories.Snippet
 import org.company.app.domain.model.categories.VideoCategories
 import org.company.app.domain.model.channel.Channel
+import org.company.app.domain.model.channel.PageInfo
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
@@ -137,12 +138,7 @@ fun VideosList(
     var isAnyCategorySelected by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyGridState()
-    val showButton by remember {
-        derivedStateOf {
-            lazyListState.firstVisibleItemIndex > 0
-        }
-    }
-
+    val showButton by remember { derivedStateOf { lazyListState.firstVisibleItemIndex > 0 } }
     LaunchedEffect(Unit) {
         viewModel.getVideoCategories()
     }
@@ -154,12 +150,10 @@ fun VideosList(
         }
     }
 
-    // Get Video Categories
     val state by viewModel.videoCategories.collectAsState()
     val categoriesVideos by viewModel.search.collectAsState()
     when (state) {
         is ResultState.LOADING -> {
-            // Can add fast animation too.
             ShimmerEffectMain()
         }
 
@@ -173,7 +167,6 @@ fun VideosList(
             ErrorBox(error)
         }
     }
-
 
     when (categoriesVideos) {
         is ResultState.LOADING -> {
@@ -506,7 +499,6 @@ fun VideosList(
 
                 }
                 if (!isAnyCategorySelected) {
-                    // LazyVerticalGrid of videos
                     Box(modifier = Modifier.fillMaxSize()) {
                         LazyVerticalGrid(
                             modifier = Modifier.fillMaxSize(),
@@ -557,7 +549,6 @@ fun VideosList(
 
 
                 } else {
-                    // LazyVerticalGrid of videos
                     Box(
                         modifier = Modifier.fillMaxSize(),
                     ) {
@@ -656,23 +647,24 @@ fun VideoItemCard(
     val channelSubs =
         formatSubscribers(channelData?.items?.first()?.statistics?.subscriberCount)
     val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
-
     LaunchedEffect(Unit) {
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
+    }
 
+    LaunchedEffect(video) {
         viewModel.insertVideos(
             id = null,
             title = title,
             videoThumbnail = videoThumbnail,
             videoDesc = videoDesc,
-            isVerified = if (isVerified) 1 else 0,
-            channelSubs = channelSubs,
             likes = likes,
             channelName = channelTitle,
             channelImage = channelImage,
             pubDate = publishData,
             views = views,
-            duration = duration
+            duration = duration,
+            isVerified = if (isVerified) 1 else 0,
+            channelSubs = channelSubs
         )
     }
     val state by viewModel.channelDetails.collectAsState()
@@ -682,7 +674,19 @@ fun VideoItemCard(
         }
 
         is ResultState.SUCCESS -> {
-            channelData= (state as ResultState.SUCCESS).response
+            val channelResponse = (state as ResultState.SUCCESS).response
+            val matchingChannel = channelResponse.items?.firstOrNull { it.id == video.snippet?.channelId }
+            matchingChannel?.let {
+                channelData = Channel(
+                    etag = "",
+                    items = listOf(it),
+                    kind = "",
+                    pageInfo = PageInfo(
+                        resultsPerPage = 0,
+                        totalResults = 0
+                    )
+                )
+            }
         }
 
         is ResultState.ERROR -> {
@@ -713,7 +717,6 @@ fun VideoItemCard(
                     contentDescription = "Image",
                     contentScale = ContentScale.Crop
                 )
-                // Video Total Time
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
@@ -739,7 +742,7 @@ fun VideoItemCard(
             ) {
                 channelData?.let {
                     NetworkImage(
-                        url = it.items?.first()?.snippet?.thumbnails?.high?.url ?: "",
+                        url = it.items?.first()?.snippet?.thumbnails?.high?.url ?: videoThumbnail,
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier.size(40.dp)
@@ -751,8 +754,6 @@ fun VideoItemCard(
                             }
                     )
                 }
-
-
                 Spacer(modifier = Modifier.width(8.dp))
                 Column(
                     modifier = Modifier
@@ -768,7 +769,6 @@ fun VideoItemCard(
                         lineHeight = 20.sp
                     )
 
-                    // Channel Name, Views, Time
                     Row(
                         modifier = Modifier.width(IntrinsicSize.Max),
                         verticalAlignment = Alignment.CenterVertically,
@@ -786,7 +786,6 @@ fun VideoItemCard(
                                 modifier = Modifier.width(IntrinsicSize.Min),
                                 color = if (isDark) Color.White else Color.Black,
                             )
-                            val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
                             if (isVerified) {
                                 Icon(
                                     imageVector = Icons.Default.Verified,
@@ -960,10 +959,3 @@ fun VideoItemCard(
         }
     }
 }
-
-
-
-
-
-
-
