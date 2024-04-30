@@ -88,7 +88,7 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
-internal actual fun ShortsVideoPlayer(url: String?) {
+internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
     Box(
         modifier = Modifier
             .fillMaxWidth()

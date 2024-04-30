@@ -1,13 +1,19 @@
 package org.company.app
 
-import YouTubeDatabase.db.YoutubeDatabase
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import com.youtube.clone.db.YoutubeDatabase
 import kotlinx.cinterop.CValue
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.AVFoundation.AVPlayer
+import platform.AVFoundation.AVPlayerLayer
+import platform.AVFoundation.play
+import platform.AVKit.AVPlayerViewController
+import platform.CoreGraphics.CGRect
 import platform.Foundation.*
 import platform.Foundation.NSError
 import platform.Foundation.NSErrorDomain
@@ -25,9 +31,6 @@ import platform.UIKit.UIAlertController
 import platform.UIKit.UIApplication
 import platform.UIKit.UIDevice
 import platform.UIKit.UIView
-import platform.UIKit.keyWindow
-import platform.UIKit.rootViewController
-import platform.coregraphics.CGRect
 import platform.darwin.*
 
 internal actual fun openUrl(url: String?) {
@@ -35,23 +38,21 @@ internal actual fun openUrl(url: String?) {
     UIApplication.sharedApplication.openURL(nsUrl)
 }
 
+@OptIn(ExperimentalForeignApi::class)
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
 
-    val player = remember { AVPlayer(uRL = NSURL.URLWithString(url)!!) }
+    val player = remember { NSURL.URLWithString(url.toString())?.let { AVPlayer(uRL = it) } }
     val playerLayer = remember { AVPlayerLayer() }
     val avPlayerViewController = remember { AVPlayerViewController() }
     avPlayerViewController.player = player
     avPlayerViewController.showsPlaybackControls = true
 
     playerLayer.player = player
-    // Use a UIKitView to integrate with your existing UIKit views
     UIKitView(
         factory = {
-            // Create a UIView to hold the AVPlayerLayer
             val playerContainer = UIView()
             playerContainer.addSubview(avPlayerViewController.view)
-            // Return the playerContainer as the root UIView
             playerContainer
         },
         onResize = { view: UIView, rect: CValue<CGRect> ->
@@ -63,7 +64,7 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
             CATransaction.commit()
         },
         update = { view ->
-            player.play()
+            player!!.play()
             avPlayerViewController.player!!.play()
         },
         modifier = modifier
@@ -76,19 +77,20 @@ internal actual fun provideShortCuts(){
 
 @Composable
 internal actual fun Notify(message: String) {
+    val viewController = UIApplication.sharedApplication.keyWindow?.rootViewController?.modalViewController
     val alertController = UIAlertController.alertControllerWithTitle(
         title = UIDevice.currentDevice.systemName,
         message = message,
-        preferredStyle = UIAlertControllerStyleUIAlertControllerStyleAlert
+        preferredStyle = UIAlertControllerStyle.MAX_VALUE
     )
     alertController.addAction(
         UIAlertAction.actionWithTitle(
             "OK",
-            style = UIAlertActionStyleUIAlertActionStyleDefault,
+            style = UIAlertControllerStyle.MAX_VALUE,
             handler = null
         )
     )
-    viewController.presentViewController(alertController, animated = true, completion = null)
+    viewController?.presentViewController(alertController, animated = true, completion = null)
 }
 
 @Composable
@@ -98,22 +100,20 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
     val activityViewController = UIActivityViewController(activityItems, null)
     viewController?.presentViewController(activityViewController, true, null)
 }
+@OptIn(ExperimentalForeignApi::class)
 @Composable
-internal actual fun ShortsVideoPlayer(url: String?) {
-    val player = remember { AVPlayer(uRL = NSURL.URLWithString(url)!!) }
+internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
+    val player = remember { AVPlayer(uRL = url?.let { NSURL.URLWithString(it) }!!) }
     val playerLayer = remember { AVPlayerLayer() }
     val avPlayerViewController = remember { AVPlayerViewController() }
     avPlayerViewController.player = player
     avPlayerViewController.showsPlaybackControls = true
 
     playerLayer.player = player
-    // Use a UIKitView to integrate with your existing UIKit views
     UIKitView(
         factory = {
-            // Create a UIView to hold the AVPlayerLayer
             val playerContainer = UIView()
             playerContainer.addSubview(avPlayerViewController.view)
-            // Return the playerContainer as the root UIView
             playerContainer
         },
         onResize = { view: UIView, rect: CValue<CGRect> ->
@@ -132,28 +132,35 @@ internal actual fun ShortsVideoPlayer(url: String?) {
     )
 }
 internal actual fun UserRegion(): String {
-    return NsLocale.currentLocale.countryCode ?: "us"
+    return NSLocale.currentLocale.countryCode ?: "us"
 }
+
 @Composable
 internal actual fun isConnected(retry: () -> Unit): Boolean{
-    val url = NSURL.URLWithString("https://www.google.com")
-    val request = NSURLRequest.requestWithURL(url)
-
-    val response: AutoreleasingUnsafeMutablePointer<NSURLResponse?> = null
-    val error: AutoreleasingUnsafeMutablePointer<NSError?> = null
-
-    val data = NSURLConnection.sendSynchronousRequest(request, response, error)
-
-    if (data != null && (response != null && response.pointed !is NSHTTPURLResponse)) {
-        return true
-    } else {
-        val nsError = error?.pointed
-        if (nsError != null && nsError.domain == NSErrorDomain.NSURLErrorDomain) {
-            return nsError.code != -1009
+    val urlString = "https://www.google.com"
+    val url = NSURL(string = urlString)
+    val session = NSURLSession.sessionWithConfiguration(
+        NSURLSessionConfiguration.defaultSessionConfiguration(),
+        delegate = null,
+        delegateQueue = NSOperationQueue.mainQueue()
+    )
+    val task = session.dataTaskWithURL(url) { data, response, error ->
+        val httpResponse = response as? NSHTTPURLResponse
+        if (httpResponse != null && httpResponse.statusCode.toInt() == 200 && error == null) {
+            retry.invoke()
+        } else {
+            val errorMessage = if (error != null) {
+                "Error: ${error.localizedDescription}"
+            } else {
+                "HTTP Status Code: ${httpResponse?.statusCode?.toInt()}"
+            }
+            println("Connection failed: $errorMessage")
         }
     }
 
-    return false
+    task.resume()
+
+    return true
 }
 
 actual class DriverFactory actual constructor(){

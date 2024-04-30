@@ -70,7 +70,7 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-internal actual fun ShortsVideoPlayer(url: String?) {
+internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
     val videoId = extractVideoId(url.toString())
     console.log("Before YouTube API is ready $videoId")
 

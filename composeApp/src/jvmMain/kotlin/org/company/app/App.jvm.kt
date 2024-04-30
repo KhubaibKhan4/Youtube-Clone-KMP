@@ -77,7 +77,7 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 }
 
 @Composable
-internal actual fun ShortsVideoPlayer(url: String?) {
+internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
     DesktopWebView(
         modifier = Modifier.width(640.dp).height(360.dp),
         url = "https://www.youtube.com/embed/$url/"
