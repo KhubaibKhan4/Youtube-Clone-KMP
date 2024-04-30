@@ -5,7 +5,7 @@
 YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices. A Better Version of Original App (A Big Bold Claim).
 
 ## 🚀 Key Features
-- **Cross-Platform Compatibility**
+- **Cross-Platform Compatibility (Android, iOS, Web & Desktop Applications)**
 - **Video Playback**
 - **Sharing Options**
 - **Download Capability**
@@ -17,7 +17,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - **View Verified Channel Badges**
 - **Quick & Responsive Search for Videos & Channels**
 - **Offline Video Support**
-- **Smooth Interation**
+- **Smooth Interaction**
 - **Responsive UI**
 - **Material Design Components**
 
@@ -109,8 +109,8 @@ To use the app, follow these steps:
    - Enable the YouTube Data API v3 for your project.
    - Generate an API key for your project.
 
-2. **Add the credentials to `local.properties`:**
-   - Open the `local.properties` file in your project.
+2. **Add the credentials to `composeApp/src/kotlin/com/company/app/utils/`:**
+   - Open the `Constant.kt` file in your project.
    - Add the following line: `API_KEY=Your_API_VALUE`, replacing `Your_API_VALUE` with the API key generated in step 1.
 
 3. **Ensure API Key Security:**
@@ -118,7 +118,7 @@ To use the app, follow these steps:
    - Configure API key restrictions based on IP addresses, referrers, or Android app signatures to enhance security.
 
 4. **Integrate API Key into the App:**
-   - Use the `BuildConfig.API_KEY` variable in your code to access the API key securely.
+   - Use the `BuildConfig.API_KEY` variable in your code to access the API key securely. (Removed for Now, due to some bugs)
    - Ensure that the API key is not hard-coded or exposed directly in your source code.
 
 5. **Start Using the App:**
