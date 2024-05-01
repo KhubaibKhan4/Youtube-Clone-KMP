@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Comment
+import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.Pin
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.SmsFailed
@@ -92,7 +94,7 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
     val state by viewModel.channelDetails.collectAsState()
     when (state) {
         is ResultState.LOADING -> {
-            CircularProgressIndicator()
+            //CircularProgressIndicator()
         }
 
         is ResultState.SUCCESS -> {
@@ -120,7 +122,6 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            // Channel Image
             NetworkImage(
                 contentDescription = "Channel Image",
                 modifier = Modifier
@@ -130,7 +131,6 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                 contentScale = ContentScale.FillBounds
             )
             Spacer(modifier = Modifier.width(12.dp))
-            // Channel Username and Published Time
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -181,7 +181,7 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                             0
                         )?.id.equals(comments.snippet.topLevelComment.snippet.authorChannelId.value)
                     AnimatedVisibility (isVerified) {
-                        androidx.compose.material.Icon(
+                       Icon(
                             imageVector = Icons.Default.Verified,
                             contentDescription = null,
                             modifier = Modifier.size(15.dp).padding(start = 4.dp),
@@ -291,7 +291,6 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                 color = if (isDark) Color.White else Color.Blue,
                 fontSize = MaterialTheme.typography.labelSmall.fontSize,
                 modifier = Modifier.clickable {
-                    //  OnClick Replies to Display Replies List
                     repliesExpanded = !repliesExpanded
                 }
             )
@@ -335,14 +334,6 @@ fun CommentItemWithReplies(commentItem: Item) {
                             modifier = Modifier
                                 .size(40.dp)
                                 .clip(CircleShape),
-                            onLoading = {
-                                CircularProgressIndicator(
-                                    progress = {
-                                        it
-                                    },
-                                    modifier = Modifier.size(35.dp),
-                                )
-                            },
                             onFailure = {
                                 Icon(
                                     Icons.Outlined.SmsFailed,
