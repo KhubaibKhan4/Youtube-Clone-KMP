@@ -99,10 +99,9 @@ import org.company.app.domain.model.channel.PageInfo
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.company.app.presentation.MainViewModel
+import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.common.ErrorBox
-import org.company.app.ui.components.common.LoadingBox
 import org.company.app.ui.components.custom_image.NetworkImage
 import org.company.app.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.ui.components.topappbar.SearchVideoItemCard

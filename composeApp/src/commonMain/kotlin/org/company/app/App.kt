@@ -219,7 +219,6 @@ internal expect fun openUrl(url: String?)
 
 @Composable
 internal expect fun provideShortCuts()
-@Single
 @Composable
 internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)
 @Single
@@ -236,7 +235,6 @@ internal expect fun ShareManager(title: String, videoUrl: String)
 @Composable
 internal expect fun isConnected(retry: () -> Unit): Boolean
 
-@Single
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class DriverFactory() {
     fun createDriver(): SqlDriver

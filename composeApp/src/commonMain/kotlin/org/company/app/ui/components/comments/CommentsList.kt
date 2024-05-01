@@ -19,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Comment
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.filled.Verified
-import androidx.compose.material.icons.outlined.Comment
 import androidx.compose.material.icons.outlined.SmsFailed
 import androidx.compose.material.icons.outlined.ThumbDown
 import androidx.compose.material.icons.outlined.ThumbUp
@@ -56,7 +55,7 @@ import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.comments.Item
 import org.company.app.domain.usecases.ResultState
-import org.company.app.presentation.MainViewModel
+import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.common.ErrorBox
 import org.company.app.ui.components.custom_image.NetworkImage

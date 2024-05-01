@@ -1,4 +1,4 @@
-package org.company.app.presentation
+package org.company.app.presentation.viewmodel
 
 import com.youtube.clone.db.YoutubeDatabase
 import dev.icerock.moko.mvvm.viewmodel.ViewModel

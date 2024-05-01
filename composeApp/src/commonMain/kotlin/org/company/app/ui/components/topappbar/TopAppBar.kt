@@ -82,7 +82,7 @@ import org.company.app.UserRegion
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.company.app.presentation.MainViewModel
+import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.ui.components.channel.channel_item.SearchChannelItem
 import org.company.app.ui.components.channel.home.getFormattedDateHome
