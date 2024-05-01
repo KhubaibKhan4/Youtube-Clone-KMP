@@ -1,6 +1,8 @@
 ﻿package org.company.app.ui.components.custom_image
 
+import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,12 +26,13 @@ fun NetworkImage(
         contentDescription = contentDescription,
         modifier = modifier,
         contentScale = contentScale,
-        onLoading = {
-            LoadingBox()
-        },
         onFailure = {
             Text("Failed to Load Image")
         },
-        animationSpec = tween(),
+        animationSpec = tween(
+            durationMillis = 500,
+            delayMillis = 100,
+            easing = EaseInOutSine
+        ),
     )
 }
