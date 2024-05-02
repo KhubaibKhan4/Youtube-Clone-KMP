@@ -6,11 +6,9 @@ import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
-import org.company.app.domain.repository.YoutubeApi
-import org.koin.core.annotation.Single
+import org.company.app.domain.repository.YouTubeService
 
-@Single
-class Repository : YoutubeApi {
+class YouTubeServiceImpl : YouTubeService {
 
     override suspend fun getVideoList(userRegion: String): Youtube {
         return YoutubeClientApi.getVideoList(userRegion)

@@ -427,7 +427,6 @@ fun VideosList(
             Column {
                 TopBar(modifier = Modifier.fillMaxWidth())
 
-                // Buttons section (Compass icon and "All" button)
                 Row(
                     modifier = Modifier
                         .horizontalScroll(state = rememberScrollState())
@@ -436,7 +435,7 @@ fun VideosList(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // Compass icon button
+
                     IconButton(
                         onClick = {
                             coroutineScope.launch {
@@ -456,7 +455,6 @@ fun VideosList(
                         )
                     }
 
-                    // "All" button
                     CategoryButton(
                         category = Item(
                             etag = "",
@@ -474,7 +472,6 @@ fun VideosList(
                             isAnyCategorySelected = true
                         }
                     )
-                    // Scrollable row of category buttons
                     videoCategories?.let { categories ->
                         LazyRow(
                             modifier = Modifier

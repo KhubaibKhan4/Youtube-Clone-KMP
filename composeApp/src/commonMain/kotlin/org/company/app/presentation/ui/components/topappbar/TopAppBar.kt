@@ -402,7 +402,6 @@ fun SearchVideoItemCard(
                             animationSpec = tween()
                         )
 
-                        // Video Total Time
                         Box(
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
@@ -430,7 +429,6 @@ fun SearchVideoItemCard(
                             .padding(start = 8.dp, end = 8.dp, top = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        // Channel Image
                         val image: Resource<Painter> =
                             asyncPainterResource(data = channel?.snippet?.thumbnails?.high?.url.toString())
                         KamelImage(
@@ -456,7 +454,6 @@ fun SearchVideoItemCard(
                                 lineHeight = 20.sp
                             )
 
-                            // Channel Name, Views, Time
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -509,7 +506,6 @@ fun SearchVideoItemCard(
                         }
                         Spacer(modifier = Modifier.width(8.dp))
 
-                        // Vertical Three Dots Icon
                         IconButton(onClick = {
                             moreVertEnable = !moreVertEnable
                         }) {

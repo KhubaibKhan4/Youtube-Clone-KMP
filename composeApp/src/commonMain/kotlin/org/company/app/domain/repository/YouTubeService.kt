@@ -6,7 +6,7 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 
-interface YoutubeApi {
+interface YouTubeService {
     suspend fun getVideoList(userRegion: String) : Youtube
     suspend fun getRelevance(): Youtube
     suspend fun getChannelDetail(channelId: String): Channel

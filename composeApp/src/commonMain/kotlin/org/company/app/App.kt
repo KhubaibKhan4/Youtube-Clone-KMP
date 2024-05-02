@@ -221,7 +221,6 @@ internal expect fun openUrl(url: String?)
 internal expect fun provideShortCuts()
 @Composable
 internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)
-@Single
 @Composable
 internal expect fun ShortsVideoPlayer(url: String?, modifier: Modifier)
 internal expect fun UserRegion(): String

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.company.app.data.repository.Repository
+import org.company.app.data.repository.YouTubeServiceImpl
 import org.company.app.domain.model.categories.VideoCategories
 import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
@@ -17,7 +17,7 @@ import org.koin.android.annotation.KoinViewModel
 import sqldelight.db.YoutubeEntity
 @KoinViewModel
 class MainViewModel(
-    private val repository: Repository,
+    private val repository: YouTubeServiceImpl,
     private val database: YoutubeDatabase,
 ) : ViewModel() {
    private val _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
