@@ -12,11 +12,11 @@ import org.company.app.UserRegion
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.isConnected
-import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.common.NoInternet
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectShorts
 import org.company.app.presentation.ui.components.shorts.ShortList
+import org.company.app.presentation.viewmodel.MainViewModel
 import org.koin.compose.koinInject
 
 class ShortScreen() : Screen {
@@ -29,6 +29,7 @@ class ShortScreen() : Screen {
 @Composable
 fun ShortContent(viewModel: MainViewModel = koinInject<MainViewModel>()) {
     var shortsData by remember { mutableStateOf<Youtube?>(null) }
+    var isRetry by remember { mutableStateOf(false) }
     /* UnComment this, If you want to use the Dark Theme
     When User enter the Shorts Screen
     var isDark by LocalThemeIsDark.current
@@ -55,7 +56,7 @@ fun ShortContent(viewModel: MainViewModel = koinInject<MainViewModel>()) {
 
         is ResultState.ERROR -> {
             val Error = (state as ResultState.ERROR).error
-            if (!isConnected(retry = {})) {
+            if (!isConnected(retry = { isRetry = !isRetry })) {
                 NoInternet()
             } else {
                 ErrorBox(Error)

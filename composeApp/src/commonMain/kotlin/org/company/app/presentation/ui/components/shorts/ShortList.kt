@@ -180,7 +180,7 @@ fun ShortItem(
         }
     }
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxWidth()
             .background(color = Color.Black)
             .padding(top = 10.dp),
         contentAlignment = Alignment.TopCenter
@@ -413,8 +413,6 @@ fun ShortItem(
                                 tint = Color.White,
                                 modifier = Modifier.size(25.dp).padding(start = 4.dp)
                             )
-                        } else {
-                            //  Nothing here..
                         }
                     }
                     Spacer(modifier = Modifier.width(4.dp))
