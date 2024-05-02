@@ -109,11 +109,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun ShortList(youtube: Youtube) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    LazyColumn{
         youtube.items?.let { videos ->
             items(videos) { items ->
                 ShortItem(items)
@@ -183,14 +179,14 @@ fun ShortItem(
         modifier = Modifier.fillMaxWidth()
             .background(color = Color.Black)
             .padding(top = 10.dp),
-        contentAlignment = Alignment.TopCenter
+        contentAlignment = Alignment.Center
     ) {
         ShortsVideoPlayer(url = shortsUrl, modifier = Modifier)
         Napier.d(message = "Video ID: ${video.id}", tag = "SHORTS")
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.Center
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
