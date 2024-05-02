@@ -8,12 +8,12 @@ import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.UserRegion
 import org.company.app.domain.usecases.ResultState
 import org.company.app.isConnected
-import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.common.NoInternet
 import org.company.app.presentation.ui.components.offline.OfflineList
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.presentation.ui.components.video_list.VideosList
+import org.company.app.presentation.viewmodel.MainViewModel
 import org.koin.compose.koinInject
 
 class HomeScreen() : Screen {
