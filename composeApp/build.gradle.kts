@@ -19,7 +19,6 @@ kotlin {
             }
         }
     }
-
     jvm()
 
     js {
@@ -126,8 +125,7 @@ kotlin {
 
         jsMain.dependencies {
             implementation(compose.html.core)
-            implementation(compose.html.svg)
-            implementation(compose.runtime)
+            implementation(libs.ktor.client.js)
             implementation(libs.sqlDelight.driver.js)
         }
 
@@ -164,7 +162,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.13"
+        kotlinCompilerExtensionVersion = "1.5.10.1"
     }
 }
 
