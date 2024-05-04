@@ -87,7 +87,6 @@ fun YoutubeShortsPlayer(
     AndroidView(
         modifier = modifier
             .fillMaxWidth()
-            .height(1000.dp)
             .background(Color.Black),
         factory = {
             playerFragment.apply {

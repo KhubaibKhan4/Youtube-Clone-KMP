@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -36,6 +35,7 @@ import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Comment
 import androidx.compose.material.icons.automirrored.outlined.PlaylistAddCheck
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
@@ -94,8 +94,6 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.company.app.presentation.viewmodel.MainViewModel
-import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.components.comments.CommentsList
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.screens.channel_detail.ChannelDetail
@@ -105,11 +103,13 @@ import org.company.app.presentation.ui.screens.detail.formatSubscribers
 import org.company.app.presentation.ui.screens.detail.formatViewComments
 import org.company.app.presentation.ui.screens.detail.formatViewCount
 import org.company.app.presentation.ui.screens.detail.getFormattedDateLikeMonthDay
+import org.company.app.presentation.viewmodel.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.koin.compose.koinInject
 
 @Composable
 fun ShortList(youtube: Youtube) {
-    LazyColumn{
+    LazyColumn {
         youtube.items?.let { videos ->
             items(videos) { items ->
                 ShortItem(items)
@@ -193,17 +193,18 @@ fun ShortItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                /* IconButton(
-                     onClick = {
+                IconButton(
+                    onClick = {
 
-                     },
-                 ) {
-                     Icon(
-                         imageVector = Icons.Default.ArrowBack,
-                         contentDescription = "Arrow Back",
-                         tint = Color.White
-                     )
-                 }*/
+                    },
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Arrow Back",
+                        tint = Color.White
+                    )
+                }
+
 
                 Spacer(modifier = Modifier.weight(1f))
 
@@ -288,7 +289,8 @@ fun ShortItem(
                         isCommentEnabled = !isCommentEnabled
                     }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.Comment, contentDescription = "Comments",
+                            imageVector = Icons.AutoMirrored.Filled.Comment,
+                            contentDescription = "Comments",
                             tint = Color.White
                         )
                     }
@@ -659,7 +661,10 @@ fun ShortItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                Icon(imageVector = Icons.AutoMirrored.Outlined.PlaylistAddCheck, contentDescription = "Save")
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.PlaylistAddCheck,
+                    contentDescription = "Save"
+                )
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = "Save to playlist",

@@ -91,8 +91,7 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .offset(y = (-100).dp),
+            .fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
         YoutubeShortsPlayer(youtubeURL = url)
