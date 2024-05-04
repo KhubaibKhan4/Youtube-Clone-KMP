@@ -82,7 +82,11 @@ fun HomeContent(
                         if (!isConnected(retry = {})) {
                             NoInternet()
                         } else {
-                            ErrorBox(error)
+                            if (error.contains("Unable to resolve host \"www.googleapis.com\": No address associated with hostname")){
+                                NoInternet()
+                            }else{
+                                ErrorBox(error)
+                            }
                         }
                     }
                 }

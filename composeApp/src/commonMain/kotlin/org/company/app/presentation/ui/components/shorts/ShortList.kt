@@ -156,7 +156,7 @@ fun ShortItem(
 
         is ResultState.ERROR -> {
             val error = (commentsState as ResultState.ERROR).error
-            ErrorBox(error)
+            //ErrorBox(error)
         }
     }
     when (state) {
@@ -172,7 +172,7 @@ fun ShortItem(
 
         is ResultState.ERROR -> {
             val error = (state as ResultState.ERROR).error
-            ErrorBox(error)
+            //ErrorBox(error)
         }
     }
     Box(
@@ -195,7 +195,6 @@ fun ShortItem(
             ) {
                 IconButton(
                     onClick = {
-
                     },
                 ) {
                     Icon(
@@ -237,7 +236,6 @@ fun ShortItem(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.End
             ) {
-                //Like Button
                 Column(
                     modifier = Modifier.wrapContentWidth(),
                     verticalArrangement = Arrangement.Center,
@@ -258,7 +256,6 @@ fun ShortItem(
                     )
                 }
 
-                //DisLike Button
                 Column(
                     modifier = Modifier.wrapContentWidth(),
                     verticalArrangement = Arrangement.Center,
@@ -279,7 +276,6 @@ fun ShortItem(
                     )
                 }
 
-                //Comments Button
                 Column(
                     modifier = Modifier.wrapContentWidth(),
                     verticalArrangement = Arrangement.Center,
@@ -302,7 +298,6 @@ fun ShortItem(
                     )
                 }
 
-                //Share Button
                 Column(
                     modifier = Modifier.wrapContentWidth(),
                     verticalArrangement = Arrangement.Center,
@@ -330,7 +325,6 @@ fun ShortItem(
                     }
                 }
 
-                //Remix Button
                 Column(
                     modifier = Modifier.wrapContentWidth(),
                     verticalArrangement = Arrangement.Center,
@@ -453,7 +447,6 @@ fun ShortItem(
                     }
 
                     AnimatedVisibility((video.snippet?.description?.length ?: 0) > 100) {
-                        // Show more button
                         TextButton(
                             onClick = { expanded = !expanded },
                             modifier = Modifier.weight(1f)
@@ -490,7 +483,6 @@ fun ShortItem(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
-                // Comment Title Section
                 Row(
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 12.dp, end = 12.dp),
@@ -516,14 +508,12 @@ fun ShortItem(
 
                 Spacer(modifier = Modifier.height(14.dp))
 
-                // Top and Newest Icon Button
                 val buttons = listOf(
                     "Top",
                     "Newest"
                 )
                 var selectedButton by remember { mutableStateOf(buttons.first()) }
 
-                // Function to fetch comments based on the selected order
                 fun fetchComments(order: String) {
                     viewModel.getVideoComments(video.id.toString(), order)
                 }
@@ -555,7 +545,6 @@ fun ShortItem(
                 }
 
 
-                // Terms and conditions
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -574,12 +563,10 @@ fun ShortItem(
 
                 HorizontalDivider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
 
-                // Comments Lists
                 commentData?.let { comments ->
                     CommentsList(comments, modifier = Modifier.weight(1f))
                 }
 
-                // Own Channel Image and TextField
                 Row(
                     modifier = Modifier
                         .background(color = Color.White)
@@ -588,7 +575,6 @@ fun ShortItem(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    // Own Channel Image
                     val ownChannelImage: Resource<Painter> =
                         asyncPainterResource(data = channelDetail?.items?.get(0)?.brandingSettings?.image?.bannerExternalUrl.toString())
                     KamelImage(
@@ -601,7 +587,6 @@ fun ShortItem(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
 
-                    // TextField
                     TextField(
                         value = commentInput,
                         onValueChange = {
@@ -636,7 +621,6 @@ fun ShortItem(
             modifier = Modifier.fillMaxWidth(),
             containerColor = Color.White
         ) {
-            //Description
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 12.dp, end = 8.dp)
@@ -654,7 +638,6 @@ fun ShortItem(
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            //Save to Playlist
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 12.dp, end = 8.dp),
@@ -673,7 +656,6 @@ fun ShortItem(
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            //Captions
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 12.dp, end = 8.dp),
@@ -689,7 +671,6 @@ fun ShortItem(
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            //Captions
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 12.dp, end = 8.dp),
@@ -704,7 +685,6 @@ fun ShortItem(
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            //Send Feedback
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 12.dp, end = 8.dp),
@@ -786,7 +766,6 @@ fun ShortItem(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    // Channel Image
                     channelDetail?.items?.get(0)?.snippet?.thumbnails?.default?.url?.let {
                         rememberImagePainter(
                             it
@@ -816,7 +795,6 @@ fun ShortItem(
 
                 }
 
-                //Video Details
                 Row(
                     modifier = Modifier.fillMaxWidth()
                         .padding(top = 20.dp, start = 60.dp, end = 60.dp, bottom = 20.dp),
@@ -928,14 +906,12 @@ fun ShortItem(
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
-                // Channel Section
                 Row(
                     modifier = Modifier.fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Channel Image
                     channelDetail?.items?.get(0)?.snippet?.thumbnails?.default?.url?.let {
                         rememberImagePainter(
                             it
@@ -951,7 +927,6 @@ fun ShortItem(
                         )
                     }
 
-                    // Channel Info
                     Column(
                         modifier = Modifier.weight(1f),
                         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -976,7 +951,7 @@ fun ShortItem(
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(
                         horizontal = 8.dp, vertical = 4.dp
-                    ), // Adjust padding as needed
+                    ),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
