@@ -1,7 +1,4 @@
-import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import java.io.FileInputStream
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.multiplatform)
