@@ -50,13 +50,11 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import org.company.app.theme.AppTheme
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.navigation.rails.items.NavigationItem
-import org.company.app.ui.navigation.rails.ui.NavigationSideBar
+import org.company.app.presentation.ui.navigation.rails.navbar.NavigationSideBar
 import org.company.app.presentation.ui.navigation.tabs.home.HomeTab
 import org.company.app.presentation.ui.navigation.tabs.library.LibraryTab
 import org.company.app.presentation.ui.navigation.tabs.shorts.ShortsTab
 import org.company.app.presentation.ui.navigation.tabs.subscriptions.SubscriptionsTab
-import org.koin.core.annotation.Single
-import org.koin.core.annotation.Singleton
 
 
 @Composable

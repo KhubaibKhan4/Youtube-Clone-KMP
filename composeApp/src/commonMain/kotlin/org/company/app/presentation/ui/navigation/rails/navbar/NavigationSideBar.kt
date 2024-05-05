@@ -1,4 +1,4 @@
-package org.company.app.ui.navigation.rails.ui
+package org.company.app.presentation.ui.navigation.rails.navbar
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -70,7 +70,6 @@ fun NavigationSideBar(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationIcon(
     item: NavigationItem, selected: Boolean
