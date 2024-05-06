@@ -204,7 +204,7 @@ fun VideosList(
         drawerContentColor = if (isDark) Color.White else Color.Black,
         drawerState = drawerState,
         gesturesEnabled = true,
-        modifier = Modifier.fillMaxHeight().wrapContentWidth(),
+        modifier = Modifier.fillMaxHeight(),
         drawerContent = {
             Column(
                 modifier = Modifier.fillMaxWidth()
