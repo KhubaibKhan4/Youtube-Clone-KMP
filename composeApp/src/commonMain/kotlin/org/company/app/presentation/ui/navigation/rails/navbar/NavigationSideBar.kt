@@ -1,13 +1,14 @@
 package org.company.app.presentation.ui.navigation.rails.navbar
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -21,12 +22,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import org.company.app.presentation.ui.navigation.rails.items.NavigationItem
 
 @Composable
 fun NavigationSideBar(
-    items: List<NavigationItem>, selectedItemIndex: Int, onNavigate: (Int) -> Unit
+    items: List<NavigationItem>, selectedItemIndex: Int, onNavigate: (Int) -> Unit,
 ) {
     var isTitleVisible by remember { mutableStateOf(false) }
     NavigationRail(
@@ -54,16 +56,13 @@ fun NavigationSideBar(
                         )
                     },
                     label = {
-                        if (isTitleVisible) {
+                        AnimatedVisibility(isTitleVisible) {
                             Text(
                                 text = item.title,
                                 fontSize = MaterialTheme.typography.bodySmall.fontSize
                             )
-                        } else {
-                            //  Nothing to be here
                         }
-
-                    },
+                    }
                 )
             }
         }
@@ -72,7 +71,7 @@ fun NavigationSideBar(
 
 @Composable
 fun NavigationIcon(
-    item: NavigationItem, selected: Boolean
+    item: NavigationItem, selected: Boolean,
 ) {
     BadgedBox(badge = {
         if (item.badgeCount != null) {
