@@ -103,7 +103,7 @@ fun AppContent() {
                 start = if (showNavigationRail) 80.dp else 0.dp
             )
         ) {
-            SetupNavHost(navController = navController)
+            SetupNavHost(navController)
         }
     }
     if (showNavigationRail) {
@@ -121,7 +121,7 @@ fun AppContent() {
         ) {
             when (selectedItemIndex) {
                 0 -> {
-                    HomeScreen()
+                    HomeScreen(navController)
                 }
 
                 1 -> {

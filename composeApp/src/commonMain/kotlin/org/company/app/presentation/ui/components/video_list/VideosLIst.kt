@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -87,8 +86,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.navigator.LocalNavigator
+import androidx.navigation.NavHostController
+import io.ktor.utils.io.core.toByteArray
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.company.app.ShareManager
 import org.company.app.UserRegion
 import org.company.app.domain.model.categories.Item
@@ -99,17 +102,16 @@ import org.company.app.domain.model.channel.PageInfo
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.company.app.presentation.viewmodel.MainViewModel
-import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.custom_image.NetworkImage
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.presentation.ui.components.topappbar.SearchVideoItemCard
 import org.company.app.presentation.ui.components.topappbar.TopBar
-import org.company.app.presentation.ui.screens.channel_screen.ChannelScreen
-import org.company.app.presentation.ui.screens.detail.DetailScreen
+import org.company.app.presentation.ui.navigation.host.ScreenItems
 import org.company.app.presentation.ui.screens.detail.formatLikes
 import org.company.app.presentation.ui.screens.detail.formatSubscribers
+import org.company.app.presentation.viewmodel.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
 import org.company.app.utils.getFormattedDate
@@ -122,6 +124,8 @@ import youtube_clone.composeapp.generated.resources.livestream_icon
 import youtube_clone.composeapp.generated.resources.trending
 import youtube_clone.composeapp.generated.resources.youtube_logo_dark
 import youtube_clone.composeapp.generated.resources.youtube_logo_light
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 import org.company.app.domain.model.videos.Item as VideoItem
 import org.company.app.presentation.ui.screens.detail.formatViewCount as FormateView
 
@@ -129,6 +133,7 @@ import org.company.app.presentation.ui.screens.detail.formatViewCount as Formate
 @Composable
 fun VideosList(
     youtube: Youtube,
+    navController: NavHostController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     var videoCategories by remember { mutableStateOf<VideoCategories?>(null) }
@@ -503,7 +508,7 @@ fun VideosList(
                         ) {
                             youtube.items?.let { items ->
                                 items(items) { videos ->
-                                    VideoItemCard(videos)
+                                    VideoItemCard(videos, navController)
                                 }
                             }
                         }
@@ -519,7 +524,13 @@ fun VideosList(
                                     .padding(16.dp)
                             ) {
                                 Button(
-                                    onClick = { coroutineScope.launch { lazyListState.animateScrollToItem(0) } },
+                                    onClick = {
+                                        coroutineScope.launch {
+                                            lazyListState.animateScrollToItem(
+                                                0
+                                            )
+                                        }
+                                    },
                                     modifier = Modifier.size(60.dp)
                                         .clip(CircleShape),
                                     colors = ButtonColors(
@@ -566,7 +577,13 @@ fun VideosList(
                                     .padding(16.dp)
                             ) {
                                 Button(
-                                    onClick = { coroutineScope.launch { lazyListState.animateScrollToItem(0) } },
+                                    onClick = {
+                                        coroutineScope.launch {
+                                            lazyListState.animateScrollToItem(
+                                                0
+                                            )
+                                        }
+                                    },
                                     modifier = Modifier.size(60.dp)
                                         .clip(CircleShape),
                                     colors = ButtonColors(
@@ -620,13 +637,13 @@ fun CategoryButton(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalEncodingApi::class)
 @Composable
 fun VideoItemCard(
     video: VideoItem,
+    navController: NavHostController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
-    val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }
     var channelData by remember { mutableStateOf<Channel?>(null) }
@@ -666,7 +683,7 @@ fun VideoItemCard(
     val state by viewModel.channelDetails.collectAsState()
     when (state) {
         is ResultState.LOADING -> {
-           // LoadingBox()
+            // LoadingBox()
         }
 
         is ResultState.SUCCESS -> {
@@ -697,7 +714,17 @@ fun VideoItemCard(
             .padding(8.dp)
             .pointerHoverIcon(icon = PointerIcon.Hand)
             .clickable {
-                navigator?.push(DetailScreen(video, channelData = channelData?.items?.get(0)))
+                val videoId = video.id
+                val videoTitle = Json.encodeToString(title)
+                val videoDescription = Json.encodeToString(videoDesc)
+                val videoCommentCount = Json.encodeToString(video.statistics?.commentCount ?: "")
+                navController.navigate(
+                    "${ScreenItems.DetailScreen.title}/$videoId/$videoTitle/${UrlEncoderUtil.encode(videoDescription)}/${
+                        UrlEncoderUtil.encode(
+                            videoThumbnail
+                        )
+                    }/$channelTitle/${UrlEncoderUtil.encode(channelImage)}/$duration/$publishData/$views/$likes/$videoCommentCount/$isVerified/$channelSubs"
+                )
             },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
@@ -748,7 +775,7 @@ fun VideoItemCard(
                         .pointerHoverIcon(icon = PointerIcon.Hand)
                         .clickable {
                             val channelItem = channelData?.items?.get(0)!!
-                            navigator?.push(ChannelScreen(channelItem))
+                            //navigator?.push(ChannelScreen(channelItem))
                         }
                 )
                 Spacer(modifier = Modifier.width(8.dp))

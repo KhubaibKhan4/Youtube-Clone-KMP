@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.company.app.UserRegion
@@ -31,13 +32,16 @@ import org.company.app.presentation.viewmodel.MainViewModel
 import org.koin.compose.koinInject
 
 @Composable
-fun HomeScreen() {
-    HomeContent()
+fun HomeScreen(
+    navController: NavHostController
+) {
+    HomeContent(navController)
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeContent(
+    navController: NavHostController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     val refreshScope = rememberCoroutineScope()
@@ -71,7 +75,7 @@ fun HomeContent(
 
                     is ResultState.SUCCESS -> {
                         val data = (state as ResultState.SUCCESS).response
-                        VideosList(data)
+                        VideosList(data,navController)
                     }
 
                     is ResultState.ERROR -> {
