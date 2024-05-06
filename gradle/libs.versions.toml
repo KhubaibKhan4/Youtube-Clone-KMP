@@ -13,8 +13,6 @@ libres = "1.2.2"
 media3Ui = "1.3.1"
 media3ExoplayerDash = "1.3.1"
 media3Exoplayer = "1.3.1"
-pagingCommon = "3.3.0-alpha02-0.5.1"
-pagingComposeCommon = "3.3.0-alpha02-0.5.1"
 vlcj = "4.7.0"
 voyager = "1.0.0"
 composeImageLoader = "1.7.8"
@@ -48,8 +46,6 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
-paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingCommon" }
-paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingComposeCommon" }
 vlcj = { module = "uk.co.caprica:vlcj", version.ref = "vlcj" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }

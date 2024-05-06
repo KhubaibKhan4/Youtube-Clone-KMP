@@ -15,12 +15,13 @@ import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.koin.android.annotation.KoinViewModel
 import sqldelight.db.YoutubeEntity
+
 @KoinViewModel
 class MainViewModel(
     private val repository: YouTubeServiceImpl,
     private val database: YoutubeDatabase,
 ) : ViewModel() {
-   private val _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
+    private val _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val videos: StateFlow<ResultState<Youtube>> = _videos.asStateFlow()
 
     private val _relevance = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
@@ -62,7 +63,8 @@ class MainViewModel(
     private val _ownChannelVideos = MutableStateFlow<ResultState<Search>>(ResultState.LOADING)
     val ownChannelVideos: StateFlow<ResultState<Search>> = _ownChannelVideos.asStateFlow()
 
-    private val _videoCategories = MutableStateFlow<ResultState<VideoCategories>>(ResultState.LOADING)
+    private val _videoCategories =
+        MutableStateFlow<ResultState<VideoCategories>>(ResultState.LOADING)
     val videoCategories: StateFlow<ResultState<VideoCategories>> = _videoCategories.asStateFlow()
 
 
@@ -72,7 +74,8 @@ class MainViewModel(
     private val _multipleVideos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val multipleVideos: StateFlow<ResultState<Youtube>> = _multipleVideos.asStateFlow()
 
-    private val _localVideos = MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
+    private val _localVideos =
+        MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
     val localVideos: StateFlow<ResultState<List<YoutubeEntity>>> = _localVideos.asStateFlow()
 
     fun getVideosList(userRegion: String) {
@@ -334,7 +337,10 @@ class MainViewModel(
             try {
                 val exitingVideo =
                     database.youtubeEntityQueries.getVideoByTitle(title).executeAsOneOrNull()
-                if (exitingVideo == null || exitingVideo.id == null && !exitingVideo.title.contains(title)) {
+                if (exitingVideo == null || exitingVideo.id == null && !exitingVideo.title.contains(
+                        title
+                    )
+                ) {
                     database.youtubeEntityQueries.insertVideos(
                         id,
                         title,

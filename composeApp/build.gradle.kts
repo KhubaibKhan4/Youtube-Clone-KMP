@@ -67,8 +67,6 @@ kotlin {
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.kamel.image)
             implementation(libs.sqlDelight.extension)
-            implementation(libs.paging.compose.common)
-            implementation(libs.paging.common)
         }
 
         commonTest.dependencies {
