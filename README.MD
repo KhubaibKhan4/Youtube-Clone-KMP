@@ -68,7 +68,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `kotlinx-datetime`: `0.5.0`
 - **Networking**:
   - `coilNetwork`: `3.0.0-alpha01`
-  - `ktor`: `2.3.9`
+  - `ktor`: `2.3.10`
 - **Dependency Injection**:
   - `koin`: `3.5.4`
 - **UI/UX**:
