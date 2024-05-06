@@ -984,7 +984,7 @@ fun ShortItem(
                     OutlinedCard(
                         onClick = {
                             channelDetail?.let { channel ->
-                                navigator?.push(ChannelDetail(channel.items!![0]))
+                              //  navigator?.push(ChannelDetail(channel.items!![0]))
                             }
                         },
                         shape = CardDefaults.outlinedShape,

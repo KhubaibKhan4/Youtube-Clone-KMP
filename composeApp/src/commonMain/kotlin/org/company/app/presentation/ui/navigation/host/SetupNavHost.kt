@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import org.company.app.presentation.ui.screens.channel_detail.ChannelDetail
 import org.company.app.presentation.ui.screens.channel_screen.ChannelScreen
 import org.company.app.presentation.ui.screens.detail.Detail
 import org.company.app.presentation.ui.screens.home.HomeScreen
@@ -161,6 +162,41 @@ fun SetupNavHost(
             val channelDes = it.arguments?.getString("channelDes")
 
             ChannelScreen(channelId,channelTitle,channelLogo,isVerified,subscribers,videoCount,customUrl,channelDes,navController)
+        }
+        composable(
+            ScreenItems.ChannelDetail.title + "/{channelTitle}/{channelDescription}/{customUrl}/{country}/{viewCount}/{isLinked}/{topicDetails}",
+            arguments = listOf<NamedNavArgument>(
+                navArgument("channelTitle") {
+                    type = NavType.StringType
+                },
+                navArgument("channelDescription") {
+                    type = NavType.StringType
+                },
+                navArgument("customUrl") {
+                    type = NavType.StringType
+                },
+                navArgument("country") {
+                    type = NavType.BoolType
+                },
+                navArgument("viewCount") {
+                    type = NavType.StringType
+                },
+                navArgument("isLinked") {
+                    type = NavType.StringType
+                },
+                navArgument("topicDetails") {
+                    type = NavType.StringArrayType
+                })
+        ) {
+            val channelTitle = it.arguments?.getString("channelTitle")
+            val channelDescription = it.arguments?.getString("channelDescription")
+            val customUrl = it.arguments?.getString("customUrl")
+            val country = it.arguments?.getString("country")
+            val viewCount = it.arguments?.getString("viewCount")
+            val isLinked = it.arguments?.getBoolean("isLinked")
+            val topicDetails = it.arguments?.getStringArray("topicDetails")
+
+            ChannelDetail(channelTitle,channelDescription,customUrl,country,viewCount,isLinked,topicDetails)
         }
     }
 }

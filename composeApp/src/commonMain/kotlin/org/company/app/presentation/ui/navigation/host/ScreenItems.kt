@@ -55,9 +55,15 @@ sealed class ScreenItems(
         hasNews = false
     )
     data object ChannelScreen : ScreenItems(
-        title = "Channel",
-        unselectedIcon = Icons.Outlined.WifiChannel,
-        selectedIcon = Icons.Filled.WifiChannel,
+        title = "Detail",
+        unselectedIcon = Icons.Outlined.Details,
+        selectedIcon = Icons.Filled.Details,
+        hasNews = false
+    )
+    data object ChannelDetail : ScreenItems(
+        title = "ChannelDetail",
+        unselectedIcon = Icons.Outlined.Details,
+        selectedIcon = Icons.Filled.Details,
         hasNews = false
     )
 }

@@ -70,6 +70,7 @@ import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.company.app.UserRegion
 import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.search.Search
@@ -84,6 +85,7 @@ import org.company.app.presentation.ui.components.channel.videos.ChannelVideos
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectChannel
 import org.company.app.presentation.ui.components.topappbar.SearchVideoItemCard
+import org.company.app.presentation.ui.navigation.host.ScreenItems
 import org.company.app.presentation.ui.screens.channel_detail.ChannelDetail
 import org.company.app.presentation.ui.screens.detail.formatLikes
 import org.company.app.presentation.ui.screens.detail.formatSubscribers
@@ -584,6 +586,9 @@ fun ChannelContent(
 
                     // Arrow Icon
                     IconButton(onClick = {
+                        navController.navigate(
+                            ScreenItems.ChannelDetail.title+"/$channelTitle/${UrlEncoderUtil.encode(channelDes.toString())}/$customUrl/US/2000/$isVerified/tech"
+                        )
                        // navigator?.push(ChannelDetail(channel = channel))
                     }) {
                         Icon(

@@ -885,7 +885,7 @@ fun DetailContent(
                         OutlinedCard(
                             onClick = {
                                 channelData?.let { channel ->
-                                    navigator?.push(ChannelDetail(channel))
+                                   // navigator?.push(ChannelDetail(channel))
                                 }
                             },
                             shape = CardDefaults.outlinedShape,
