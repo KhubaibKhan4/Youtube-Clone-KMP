@@ -379,7 +379,7 @@ fun ShortItem(
                             .clip(shape = CircleShape)
                             .clickable {
                                 channelDetail?.items?.get(0)?.let { item ->
-                                    navigator?.push(ChannelScreen(channel = item))
+                                    //navigator?.push(ChannelScreen(channel = item))
                                 }
                             }
                     )
@@ -387,7 +387,7 @@ fun ShortItem(
                     Row(
                         modifier = Modifier.clickable {
                             channelDetail?.items?.get(0)?.let { item ->
-                                navigator?.push(ChannelScreen(channel = item))
+                               // navigator?.push(ChannelScreen(channel = item))
                             }
                         },
                         verticalAlignment = Alignment.CenterVertically,
@@ -775,7 +775,7 @@ fun ShortItem(
                             painter = it,
                             contentDescription = null,
                             modifier = Modifier.size(15.dp).clip(CircleShape).clickable {
-                                navigator?.push(ChannelScreen(channelDetail?.items!![0]))
+                               // navigator?.push(ChannelScreen(channelDetail?.items!![0]))
                             },
                             contentScale = ContentScale.FillBounds
                         )
@@ -921,7 +921,7 @@ fun ShortItem(
                             painter = it,
                             contentDescription = null,
                             modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
-                                navigator?.push(ChannelScreen(channelDetail?.items!![0]))
+                               // navigator?.push(ChannelScreen(channelDetail?.items!![0]))
                             },
                             contentScale = ContentScale.FillBounds
                         )

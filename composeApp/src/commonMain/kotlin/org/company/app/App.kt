@@ -140,7 +140,7 @@ fun AppContent() {
                             .fillMaxSize()
                             .background(MaterialTheme.colorScheme.background)
                     ) {
-                        SubscriptionScreen()
+                        SubscriptionScreen(navController)
                     }
                 }
 
@@ -150,7 +150,7 @@ fun AppContent() {
                             .fillMaxSize()
                             .background(MaterialTheme.colorScheme.background)
                     ) {
-                        LibraryScreen()
+                        LibraryScreen(navController)
                     }
                 }
             }

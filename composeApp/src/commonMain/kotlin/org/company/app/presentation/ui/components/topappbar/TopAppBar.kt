@@ -74,10 +74,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.company.app.UserRegion
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
@@ -85,12 +89,15 @@ import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.channel.channel_item.SearchChannelItem
 import org.company.app.presentation.ui.components.channel.home.getFormattedDateHome
 import org.company.app.presentation.ui.components.common.ErrorBox
+import org.company.app.presentation.ui.navigation.host.ScreenItems
 import org.company.app.presentation.ui.screens.account.AccountScreen
-import org.company.app.presentation.ui.screens.detail.DetailScreen
+import org.company.app.presentation.ui.screens.detail.formatLikes
+import org.company.app.presentation.ui.screens.detail.formatSubscribers
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
+import org.company.app.utils.getFormattedDate
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
@@ -104,6 +111,7 @@ import org.company.app.domain.model.videos.Item as YouTubeItem
 @Composable
 fun TopBar(
     modifier: Modifier,
+    navController: NavController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     var isDark by LocalThemeIsDark.current
@@ -261,7 +269,7 @@ fun TopBar(
                     }
                 }
             } else {
-                data?.let { SearchVideosList(it) }
+                data?.let { SearchVideosList(it, navController) }
             }
 
         }
@@ -269,7 +277,10 @@ fun TopBar(
 }
 
 @Composable
-fun SearchVideosList(youtube: Search) {
+fun SearchVideosList(
+    youtube: Search,
+    navController: NavController,
+) {
     Surface(
         color = MaterialTheme.colorScheme.background
     ) {
@@ -277,7 +288,7 @@ fun SearchVideosList(youtube: Search) {
             LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
                 youtube.items?.let { items ->
                     items(items) { videos ->
-                        SearchVideoItemCard(videos)
+                        SearchVideoItemCard(videos, navController)
                     }
                 }
             }
@@ -289,6 +300,7 @@ fun SearchVideosList(youtube: Search) {
 @Composable
 fun SearchVideoItemCard(
     video: org.company.app.domain.model.search.Item,
+    navController: NavController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     var channelDetails by remember {
@@ -352,7 +364,19 @@ fun SearchVideoItemCard(
     val image: Resource<Painter> =
         asyncPainterResource(data = video.snippet.thumbnails.high.url)
 
-
+    val title = video.snippet?.title.toString()
+    val channelTitle = video.snippet?.channelTitle.toString()
+    val channelImage = video.snippet?.thumbnails?.high?.url.toString()
+    val publishData = getFormattedDate(video.snippet?.publishedAt.toString())
+    val views =
+        org.company.app.presentation.ui.screens.detail.formatViewCount(singleVideo?.statistics?.viewCount)
+    val duration = formatVideoDuration(singleVideo?.contentDetails?.duration.toString())
+    val videoThumbnail = video.snippet?.thumbnails?.default?.url.toString()
+    val videoDesc = video.snippet?.description.toString()
+    val likes = formatLikes(singleVideo?.statistics?.likeCount)
+    val channelSubs =
+        formatSubscribers(channel?.statistics?.subscriberCount)
+    val isVerified = channel?.status?.isLinked == true
 
 
     Column(
@@ -364,7 +388,7 @@ fun SearchVideoItemCard(
             channelDetails?.items?.let { items ->
                 if (items.isNotEmpty()) {
                     val channel = items[0]
-                    SearchChannelItem(channel)
+                    SearchChannelItem(channel,navController)
                 }
             }
         } else {
@@ -374,7 +398,22 @@ fun SearchVideoItemCard(
                     .fillMaxWidth()
                     .padding(8.dp)
                     .clickable {
-                        navigator?.push(DetailScreen(video = singleVideo, channelData = channel))
+                        val videoId = video.id
+                        val videoTitle = Json.encodeToString(title)
+                        val videoDescription = Json.encodeToString(videoDesc)
+                        val videoCommentCount =
+                            Json.encodeToString(singleVideo?.statistics?.commentCount ?: "")
+                        navController.navigate(
+                            "${ScreenItems.DetailScreen.title}/$videoId/$videoTitle/${
+                                UrlEncoderUtil.encode(
+                                    videoDescription
+                                )
+                            }/${
+                                UrlEncoderUtil.encode(
+                                    videoThumbnail
+                                )
+                            }/$channelTitle/${UrlEncoderUtil.encode(channelImage)}/$duration/$publishData/$views/$likes/$videoCommentCount/$isVerified/$channelSubs"
+                        )
                     },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface

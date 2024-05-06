@@ -26,18 +26,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import org.company.app.presentation.ui.components.topappbar.TopBar
 import org.company.app.provideShortCuts
 
 @Composable
-fun LibraryScreen() {
+fun LibraryScreen(
+    navController: NavController
+) {
     var isShortEnabled by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
+        TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp),navController)
         Column(
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 30.dp, start = 16.dp, end = 16.dp),

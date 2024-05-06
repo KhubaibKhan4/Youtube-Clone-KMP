@@ -87,7 +87,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import io.ktor.utils.io.core.toByteArray
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -124,8 +123,6 @@ import youtube_clone.composeapp.generated.resources.livestream_icon
 import youtube_clone.composeapp.generated.resources.trending
 import youtube_clone.composeapp.generated.resources.youtube_logo_dark
 import youtube_clone.composeapp.generated.resources.youtube_logo_light
-import kotlin.io.encoding.Base64
-import kotlin.io.encoding.ExperimentalEncodingApi
 import org.company.app.domain.model.videos.Item as VideoItem
 import org.company.app.presentation.ui.screens.detail.formatViewCount as FormateView
 
@@ -430,7 +427,7 @@ fun VideosList(
             color = MaterialTheme.colorScheme.background,
         ) {
             Column {
-                TopBar(modifier = Modifier.fillMaxWidth())
+                TopBar(modifier = Modifier.fillMaxWidth(), navController)
 
                 Row(
                     modifier = Modifier
@@ -562,7 +559,7 @@ fun VideosList(
                         LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
                             videosByCategories?.items?.let { items ->
                                 items(items) { videos ->
-                                    SearchVideoItemCard(videos)
+                                    SearchVideoItemCard(videos, navController)
                                 }
                             }
                         }
@@ -637,7 +634,7 @@ fun CategoryButton(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalEncodingApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VideoItemCard(
     video: VideoItem,
@@ -650,6 +647,7 @@ fun VideoItemCard(
 
     val title = video.snippet?.title.toString()
     val channelTitle = video.snippet?.channelTitle.toString()
+    val channelId = video.snippet?.channelId.toString()
     val channelImage = video.snippet?.thumbnails?.high?.url.toString()
     val publishData = getFormattedDate(video.snippet?.publishedAt.toString())
     val views = FormateView(video.statistics?.viewCount)
@@ -657,6 +655,11 @@ fun VideoItemCard(
     val videoThumbnail = video.snippet?.thumbnails?.default?.url.toString()
     val videoDesc = video.snippet?.description.toString()
     val likes = formatLikes(video.statistics?.likeCount)
+    val customUrl = channelData?.items?.filter { it.id == video.snippet?.channelId }
+        ?.single()?.snippet?.customUrl
+    val channelDes = channelData?.items?.filter { it.id == video.snippet?.channelId }
+        ?.single()?.snippet?.description
+    val channelThumbnail = channelData?.items?.filter { it.id == video.snippet?.channelId }?.single()?.snippet?.thumbnails?.high?.url
     val channelSubs =
         formatSubscribers(channelData?.items?.first()?.statistics?.subscriberCount)
     val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
@@ -719,11 +722,19 @@ fun VideoItemCard(
                 val videoDescription = Json.encodeToString(videoDesc)
                 val videoCommentCount = Json.encodeToString(video.statistics?.commentCount ?: "")
                 navController.navigate(
-                    "${ScreenItems.DetailScreen.title}/$videoId/$videoTitle/${UrlEncoderUtil.encode(videoDescription)}/${
+                    "${ScreenItems.DetailScreen.title}/$videoId/$videoTitle/${
+                        UrlEncoderUtil.encode(
+                            videoDescription
+                        )
+                    }/${
                         UrlEncoderUtil.encode(
                             videoThumbnail
                         )
-                    }/$channelTitle/${UrlEncoderUtil.encode(channelImage)}/$duration/$publishData/$views/$likes/$videoCommentCount/$isVerified/$channelSubs"
+                    }/$channelTitle/${UrlEncoderUtil.encode(videoThumbnail)}/$duration/$publishData/$views/$likes/$videoCommentCount/$isVerified/$channelSubs/$customUrl/${
+                        UrlEncoderUtil.encode(
+                            channelDes.toString()
+                        )
+                    }/$channelId"
                 )
             },
         colors = CardDefaults.cardColors(

@@ -7,12 +7,14 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocalLibrary
 import androidx.compose.material.icons.filled.MusicVideo
 import androidx.compose.material.icons.filled.Subscriptions
+import androidx.compose.material.icons.filled.WifiChannel
 import androidx.compose.material.icons.outlined.Audiotrack
 import androidx.compose.material.icons.outlined.Details
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.LocalLibrary
 import androidx.compose.material.icons.outlined.MusicVideo
 import androidx.compose.material.icons.outlined.Subscriptions
+import androidx.compose.material.icons.outlined.WifiChannel
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class ScreenItems(
@@ -50,6 +52,12 @@ sealed class ScreenItems(
         title = "Detail",
         unselectedIcon = Icons.Outlined.Details,
         selectedIcon = Icons.Filled.Details,
+        hasNews = false
+    )
+    data object ChannelScreen : ScreenItems(
+        title = "Channel",
+        unselectedIcon = Icons.Outlined.WifiChannel,
+        selectedIcon = Icons.Filled.WifiChannel,
         hasNews = false
     )
 }

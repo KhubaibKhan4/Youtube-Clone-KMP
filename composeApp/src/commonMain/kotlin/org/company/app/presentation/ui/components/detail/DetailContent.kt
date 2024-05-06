@@ -434,7 +434,7 @@ fun DetailContent(
                     contentDescription = null,
                     modifier = Modifier.size(60.dp).clip(CircleShape)
                         .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
-                            navigator?.push(ChannelScreen(channelData))
+                           // navigator?.push(ChannelScreen(channelData))
                         },
                     contentScale = ContentScale.FillBounds
                 )
@@ -667,7 +667,7 @@ fun DetailContent(
                                 .size(15.dp)
                                 .clip(CircleShape)
                                 .clickable {
-                                    navigator?.push(ChannelScreen(channelData!!))
+                                   // navigator?.push(ChannelScreen(channelData!!))
                                 },
                             url = channelData?.snippet?.thumbnails?.default?.url.toString(),
                             contentDescription = null,
@@ -817,7 +817,7 @@ fun DetailContent(
                                 painter = it,
                                 contentDescription = null,
                                 modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
-                                    navigator?.push(ChannelScreen(channelData))
+                                  //  navigator?.push(ChannelScreen(channelData))
                                 },
                                 contentScale = ContentScale.FillBounds
                             )
@@ -855,7 +855,7 @@ fun DetailContent(
                         OutlinedCard(
                             onClick = {
                                 channelData?.let { item ->
-                                    navigator?.push(ChannelScreen(item))
+                                  //  navigator?.push(ChannelScreen(item))
                                 }
                             },
                             shape = CardDefaults.outlinedShape,

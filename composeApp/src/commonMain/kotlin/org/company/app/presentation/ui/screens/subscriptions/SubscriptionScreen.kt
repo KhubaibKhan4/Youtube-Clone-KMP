@@ -22,17 +22,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import org.company.app.presentation.ui.components.topappbar.TopBar
 
 @Composable
-fun SubscriptionScreen() {
+fun SubscriptionScreen(
+    navController: NavController
+) {
 
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
+        TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp),navController)
         Column(
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 50.dp, start = 16.dp, end = 16.dp),

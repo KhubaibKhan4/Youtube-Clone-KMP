@@ -43,6 +43,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -56,7 +57,8 @@ import org.company.app.presentation.ui.screens.detail.formatSubscribers
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchChannelItem(
-    channel: Item
+    channel: Item,
+    navController: NavController
 ) {
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
@@ -65,7 +67,7 @@ fun SearchChannelItem(
         modifier = Modifier.fillMaxWidth()
             .padding(10.dp)
             .clickable {
-                navigator?.push(ChannelScreen(channel))
+                //navigator?.push(ChannelScreen(channel,navController))
             },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center

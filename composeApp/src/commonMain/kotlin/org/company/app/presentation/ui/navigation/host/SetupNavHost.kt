@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import org.company.app.presentation.ui.screens.channel_screen.ChannelScreen
 import org.company.app.presentation.ui.screens.detail.Detail
 import org.company.app.presentation.ui.screens.home.HomeScreen
 import org.company.app.presentation.ui.screens.library.LibraryScreen
@@ -25,13 +26,13 @@ fun SetupNavHost(
             ShortContent()
         }
         composable(ScreenItems.Subscription.title) {
-            SubscriptionScreen()
+            SubscriptionScreen(navController)
         }
         composable(ScreenItems.Library.title) {
-            LibraryScreen()
+            LibraryScreen(navController)
         }
         composable(
-            ScreenItems.DetailScreen.title + "/{videoId}/{videoTitle}/{videoDescription}/{videoThumbnail}/{videoChannelTitle}/{videoChannelThumbnail}/{videoDuration}/{videoPublishedAt}/{videoViewCount}/{videoLikeCount}/{videoCommentCount}/{isLinked}/{videoChannelSubs}",
+            ScreenItems.DetailScreen.title + "/{videoId}/{videoTitle}/{videoDescription}/{videoThumbnail}/{videoChannelTitle}/{videoChannelThumbnail}/{videoDuration}/{videoPublishedAt}/{videoViewCount}/{videoLikeCount}/{videoCommentCount}/{isLinked}/{videoChannelSubs}/{customUrl}/{channelDes}/{channelId}",
             arguments = listOf<NamedNavArgument>(
                 navArgument("videoId") {
                     type = NavType.StringType
@@ -71,6 +72,15 @@ fun SetupNavHost(
                 },
                 navArgument("videoChannelSubs") {
                     type = NavType.StringType
+                },
+                navArgument("customUrl") {
+                    type = NavType.StringType
+                },
+                navArgument("channelDes") {
+                    type = NavType.StringType
+                },
+                navArgument("channelId") {
+                    type = NavType.StringType
                 }
             )
         ) {
@@ -87,6 +97,9 @@ fun SetupNavHost(
             val videoCommentCount = it.arguments?.getString("videoCommentCount")
             val isLinked = it.arguments?.getBoolean("isLinked")
             val videoChannelSubs = it.arguments?.getString("videoChannelSubs")
+            val customUrl = it.arguments?.getString("customUrl")
+            val channelDes = it.arguments?.getString("channelDes")
+            val channelId = it.arguments?.getString("channelId")
 
             Detail(
                 videoId,
@@ -101,8 +114,53 @@ fun SetupNavHost(
                 videoLikeCount,
                 videoCommentCount,
                 isLinked,
-                videoChannelSubs
+                videoChannelSubs,
+                customUrl,
+                channelDes,
+                channelId,
+                navController
             )
+        }
+        composable(
+            ScreenItems.ChannelScreen.title + "/{channelId}/{channelTitle}/{channelLogo}/{isVerified}/{subscribers}/{videoCount}/{customUrl}/{channelDes}",
+            arguments = listOf<NamedNavArgument>(
+                navArgument("channelId") {
+                    type = NavType.StringType
+                },
+                navArgument("channelTitle") {
+                    type = NavType.StringType
+                },
+                navArgument("channelLogo") {
+                    type = NavType.StringType
+                },
+                navArgument("isVerified") {
+                    type = NavType.BoolType
+                },
+                navArgument("subscribers") {
+                    type = NavType.StringType
+                },
+                navArgument("videoCount") {
+                    type = NavType.StringType
+                },
+                navArgument("customUrl") {
+                    type = NavType.StringType
+                },
+                navArgument("channelDes") {
+                    type = NavType.StringType
+                },
+
+            )
+        ) {
+            val channelId = it.arguments?.getString("channelId")
+            val channelTitle = it.arguments?.getString("channelTitle")
+            val channelLogo = it.arguments?.getString("channelLogo")
+            val isVerified = it.arguments?.getBoolean("isVerified")
+            val subscribers = it.arguments?.getString("subscribers")
+            val videoCount = it.arguments?.getString("videoCount")
+            val customUrl = it.arguments?.getString("customUrl")
+            val channelDes = it.arguments?.getString("channelDes")
+
+            ChannelScreen(channelId,channelTitle,channelLogo,isVerified,subscribers,videoCount,customUrl,channelDes,navController)
         }
     }
 }

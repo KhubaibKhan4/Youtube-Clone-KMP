@@ -64,7 +64,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
+import androidx.navigation.NavController
 import cafe.adriel.voyager.navigator.LocalNavigator
 import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
@@ -72,12 +72,9 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.UserRegion
 import org.company.app.domain.model.channel.Channel
-import org.company.app.domain.model.channel.Item
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.company.app.presentation.viewmodel.MainViewModel
-import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.components.channel.community.ChannelCommunity
 import org.company.app.presentation.ui.components.channel.featured_channels.FeaturedChannel
 import org.company.app.presentation.ui.components.channel.home.ChannelHome
@@ -90,20 +87,46 @@ import org.company.app.presentation.ui.components.topappbar.SearchVideoItemCard
 import org.company.app.presentation.ui.screens.channel_detail.ChannelDetail
 import org.company.app.presentation.ui.screens.detail.formatLikes
 import org.company.app.presentation.ui.screens.detail.formatSubscribers
+import org.company.app.presentation.viewmodel.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.koin.compose.koinInject
 
-class ChannelScreen(
-    private val channel: Item,
-) : Screen {
-    @Composable
-    override fun Content() {
-        ChannelContent(channel)
-    }
+@Composable
+fun ChannelScreen(
+    channelId: String?,
+    channelTitle: String?,
+    channelLogo: String?,
+    isVerified: Boolean?,
+    subscribers: String?,
+    videoCount: String?,
+    customUrl: String?,
+    channelDes: String?,
+    navController: NavController,
+) {
+    ChannelContent(
+        channelId,
+        channelTitle,
+        channelLogo,
+        isVerified,
+        subscribers,
+        videoCount,
+        customUrl,
+        channelDes,
+        navController
+    )
 }
 
 @Composable
 fun ChannelContent(
-    channel: Item,
+    channelId: String?,
+    channelTitle: String?,
+    channelLogo: String?,
+    isVerified: Boolean?,
+    subscribers: String?,
+    videoCount: String?,
+    customUrl: String?,
+    channelDes: String?,
+    navController: NavController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     val isDark by LocalThemeIsDark.current
@@ -123,12 +146,12 @@ fun ChannelContent(
     var query by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        viewModel.getPlaylists(channel.id)
-        viewModel.getChannelSections(channel.id)
-        viewModel.getChannelLiveStreams(channel.id)
-        viewModel.getChannelVideos(channel.contentDetails.relatedPlaylists.uploads)
-        viewModel.getChannelCommunity(channel.id)
-        viewModel.getOwnChannelVideos(channel.id)
+        viewModel.getPlaylists(channelId.toString())
+        viewModel.getChannelSections(channelId.toString())
+        viewModel.getChannelLiveStreams(channelId.toString())
+        //  viewModel.getChannelVideos(channel.contentDetails.relatedPlaylists.uploads)
+        viewModel.getChannelCommunity(channelId.toString())
+        viewModel.getOwnChannelVideos(channelId.toString())
         val channelIds = channelSections?.items?.map { it.id.toString() }
 
         if (!channelIds.isNullOrEmpty()) {
@@ -328,7 +351,10 @@ fun ChannelContent(
                     isSearchEnabled = false
                     query = ""
                 }) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                        contentDescription = null
+                    )
                 }
 
                 TextField(
@@ -348,8 +374,8 @@ fun ChannelContent(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             // Handle search or done action
-                            viewModel.getChannelSearch(channel.id, query)
-                            println("Channel Search ${channel.id}")
+                            viewModel.getChannelSearch(channelId.toString(), query)
+                            println("Channel Search ${channelId}")
                         }
                     ),
                     colors = TextFieldDefaults.colors(
@@ -399,7 +425,7 @@ fun ChannelContent(
                     LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
                         youtube.items?.let { items ->
                             items(items) { videos ->
-                                SearchVideoItemCard(videos)
+                                SearchVideoItemCard(videos, navController)
                             }
                         }
                     }
@@ -438,7 +464,7 @@ fun ChannelContent(
 
                 // Title
                 Text(
-                    text = channel.snippet.title,
+                    text = channelTitle.toString(),
                     fontSize = MaterialTheme.typography.titleSmall.fontSize,
                     color = if (isDark) Color.White else Color.Black
                 )
@@ -468,7 +494,7 @@ fun ChannelContent(
 
             // Channel Poster Image
             val poster: Resource<Painter> =
-                asyncPainterResource(channel.brandingSettings.image?.bannerExternalUrl.toString())
+                asyncPainterResource(channelLogo.toString())
             KamelImage(
                 resource = poster,
                 contentDescription = null,
@@ -496,7 +522,7 @@ fun ChannelContent(
             ) {
                 // Channel Image
                 val image: Resource<Painter> =
-                    asyncPainterResource(data = channel.snippet.thumbnails.default.url)
+                    asyncPainterResource(data = channelLogo.toString())
                 KamelImage(
                     resource = image,
                     contentDescription = null,
@@ -513,12 +539,11 @@ fun ChannelContent(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = channel.snippet.title.toString(),
+                        text = channelTitle.toString(),
                         fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         color = if (isDark) Color.White else Color.Black
                     )
-                    val isVerified = channel.status.isLinked
-                    if (isVerified) {
+                    if (isVerified == true) {
                         Icon(
                             imageVector = Icons.Default.Verified,
                             contentDescription = null,
@@ -532,9 +557,9 @@ fun ChannelContent(
 
                 // Channel Subscribers and Videos
                 Text(
-                    text = "${channel.snippet.customUrl} • ${formatSubscribers(channel.statistics.subscriberCount)} Subscribers • ${
+                    text = "${customUrl} • ${formatSubscribers(subscribers)} Subscribers • ${
                         formatLikes(
-                            channel.statistics.videoCount
+                            videoCount
                         )
                     } videos",
                     modifier = Modifier.fillMaxWidth().wrapContentHeight()
@@ -552,21 +577,20 @@ fun ChannelContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     // Channel Description
-                    channel.snippet.localized.description.let {
-                        Text(
-                            text = it,
-                            color = if (isDark) Color.White else Color.Black,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                            modifier = Modifier.weight(1f),
-                            textAlign = TextAlign.Center
-                        )
-                    }
+
+                    Text(
+                        text = channelDes.toString(),
+                        color = if (isDark) Color.White else Color.Black,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Center
+                    )
 
                     // Arrow Icon
                     IconButton(onClick = {
-                        navigator?.push(ChannelDetail(channel = channel))
+                       // navigator?.push(ChannelDetail(channel = channel))
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -712,7 +736,7 @@ fun ChannelContent(
                             channelCommunities?.let { youtube ->
                                 ChannelCommunity(
                                     youtube,
-                                    channel.brandingSettings.image?.bannerExternalUrl.toString()
+                                    channelLogo.toString()
                                 )
                             }
                         }

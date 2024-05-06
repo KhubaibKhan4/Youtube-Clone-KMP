@@ -2,7 +2,6 @@ package org.company.app.presentation.ui.screens.detail
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -71,9 +70,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
-import io.kamel.image.KamelImage
+import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.VideoPlayer
@@ -84,12 +83,10 @@ import org.company.app.presentation.ui.components.comments.CommentsList
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.custom_image.NetworkImage
 import org.company.app.presentation.ui.components.relevance.RelevanceList
-import org.company.app.presentation.ui.screens.channel_detail.ChannelDetail
-import org.company.app.presentation.ui.screens.channel_screen.ChannelScreen
+import org.company.app.presentation.ui.navigation.host.ScreenItems
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.utils.Constant
-import org.company.app.utils.formatVideoDuration
 import org.koin.compose.koinInject
 
 
@@ -109,6 +106,10 @@ fun Detail(
     videoCommentCount: String?,
     isLinked: Boolean?,
     videoChannelSubs: String?,
+    customUrl: String?,
+    channelDes: String?,
+    channelId: String?,
+    navController: NavController,
     viewModel: MainViewModel = koinInject(),
 ) {
 
@@ -225,7 +226,7 @@ fun Detail(
                         .clip(RoundedCornerShape(4.dp))
                 ) {
                     Text(
-                        text =videoDuration.toString(),
+                        text = videoDuration.toString(),
                         color = Color.White,
                         fontSize = 10.sp
                     )
@@ -426,6 +427,10 @@ fun Detail(
                 contentDescription = null,
                 modifier = Modifier.size(60.dp).clip(CircleShape)
                     .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
+                        navController.navigate(
+                            ScreenItems.ChannelScreen.title + "/$channelId/$videoChannelTitle/${UrlEncoderUtil.encode(videoChannelThumbnail.toString())}/$isLinked/$videoChannelSubs/$videoViewCount/$customUrl/${UrlEncoderUtil.encode(channelDes.toString())}"
+                        )
+
                         // navigator?.push(ChannelScreen(channelData))
                     },
                 contentScale = ContentScale.FillBounds,
@@ -772,17 +777,17 @@ fun Detail(
                         color = DividerDefaults.color
                     )
 
-                        Text(
-                            text = "More From $videoChannelTitle",
-                            fontWeight = FontWeight.Normal,
-                            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                            modifier = Modifier.fillMaxWidth().padding(
-                                horizontal = 16.dp, vertical = 8.dp
-                            ),
-                            maxLines = 1,
-                            textAlign = TextAlign.Justify,
-                            overflow = TextOverflow.Ellipsis,
-                        )
+                    Text(
+                        text = "More From $videoChannelTitle",
+                        fontWeight = FontWeight.Normal,
+                        fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                        modifier = Modifier.fillMaxWidth().padding(
+                            horizontal = 16.dp, vertical = 8.dp
+                        ),
+                        maxLines = 1,
+                        textAlign = TextAlign.Justify,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                     // Channel Section
                     Row(
                         modifier = Modifier.fillMaxWidth()
@@ -794,7 +799,7 @@ fun Detail(
                         NetworkImage(
                             contentDescription = null,
                             modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
-                               // navigator?.push(ChannelScreen(channelData))
+                                // navigator?.push(ChannelScreen(channelData))
                             },
                             contentScale = ContentScale.FillBounds,
                             url = videoChannelThumbnail.toString()
