@@ -8,14 +8,20 @@ import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.TextButton
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,11 +31,11 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
 import org.company.app.di.appModule
 import org.company.app.shortcuts.TopTrending
-import org.company.app.ui.YoutubeShortsPlayer
-import org.company.app.ui.YoutubeVideoPlayer
 import org.company.app.shortcuts.dynamicShortcut
 import org.company.app.shortcuts.latestVideos
 import org.company.app.shortcuts.pinnedShortCut
+import org.company.app.ui.YoutubeShortsPlayer
+import org.company.app.ui.YoutubeVideoPlayer
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -50,6 +56,7 @@ class AndroidApp : Application() {
         }
     }
 }
+
 class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,8 +107,29 @@ internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
 
 @Composable
 internal actual fun Notify(message: String) {
-    val coroutineContext = LocalContext.current
-    Toast.makeText(coroutineContext, message, Toast.LENGTH_LONG).show()
+    val snackBarHostState = remember {
+        SnackbarHostState()
+    }
+    LaunchedEffect(message) {
+        snackBarHostState.showSnackbar(message = message)
+    }
+    SnackbarHost(
+        hostState = snackBarHostState,
+        snackbar = { data ->
+            Snackbar(
+                modifier = Modifier.padding(2.dp),
+                action = {
+                    data.actionLabel?.let { actionLable ->
+                        TextButton(onClick = { data.performAction() }) {
+                            Text(text = actionLable)
+                        }
+                    }
+                }
+            ) {
+                Text(text = data.message)
+            }
+        }
+    )
 }
 
 @Composable
