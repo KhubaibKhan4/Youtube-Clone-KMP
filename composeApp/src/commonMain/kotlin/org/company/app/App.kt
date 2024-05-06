@@ -1,21 +1,11 @@
 package org.company.app
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.contentColorFor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocalLibrary
@@ -27,6 +17,9 @@ import androidx.compose.material.icons.outlined.MusicVideo
 import androidx.compose.material.icons.outlined.Subscriptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -38,23 +31,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import app.cash.sqldelight.db.SqlDriver
-import cafe.adriel.voyager.navigator.tab.CurrentTab
-import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
-import cafe.adriel.voyager.navigator.tab.Tab
-import cafe.adriel.voyager.navigator.tab.TabNavigator
-import org.company.app.theme.AppTheme
-import org.company.app.theme.LocalThemeIsDark
+import org.company.app.presentation.ui.navigation.host.ScreenItems
+import org.company.app.presentation.ui.navigation.host.SetupNavHost
 import org.company.app.presentation.ui.navigation.rails.items.NavigationItem
 import org.company.app.presentation.ui.navigation.rails.navbar.NavigationSideBar
-import org.company.app.presentation.ui.navigation.tabs.home.HomeTab
-import org.company.app.presentation.ui.navigation.tabs.library.LibraryTab
-import org.company.app.presentation.ui.navigation.tabs.shorts.ShortsTab
-import org.company.app.presentation.ui.navigation.tabs.subscriptions.SubscriptionsTab
+import org.company.app.presentation.ui.screens.home.HomeScreen
+import org.company.app.presentation.ui.screens.library.LibraryScreen
+import org.company.app.presentation.ui.screens.shorts.ShortScreen
+import org.company.app.presentation.ui.screens.subscriptions.SubscriptionScreen
+import org.company.app.theme.AppTheme
 
 
 @Composable
@@ -96,31 +89,21 @@ fun AppContent() {
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)
     }
+    val navController = rememberNavController()
 
-    TabNavigator(HomeTab) { tabNavigator ->
-        Scaffold(bottomBar = {
-            if (!showNavigationRail) {
-                BottomNavigation(
-                    modifier = Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.ime),
-                    backgroundColor = MaterialTheme.colorScheme.background,
-                    contentColor = contentColorFor(Color.Red),
-                    elevation = 8.dp
-                ) {
-                    TabItem(HomeTab)
-                    TabItem(ShortsTab)
-                    TabItem(SubscriptionsTab)
-                    TabItem(LibraryTab)
-                }
-            }
-        }) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(
-                    bottom = it.calculateBottomPadding(),
-                    start = if (showNavigationRail) 80.dp else 0.dp
-                )
-            ) {
-                CurrentTab()
-            }
+
+    Scaffold(bottomBar = {
+        if (!showNavigationRail) {
+            BottomBar(navController = navController)
+        }
+    }) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(
+                bottom = it.calculateBottomPadding(),
+                start = if (showNavigationRail) 80.dp else 0.dp
+            )
+        ) {
+            SetupNavHost(navController = navController)
         }
     }
     if (showNavigationRail) {
@@ -138,7 +121,7 @@ fun AppContent() {
         ) {
             when (selectedItemIndex) {
                 0 -> {
-
+                    HomeScreen()
                 }
 
                 1 -> {
@@ -147,7 +130,7 @@ fun AppContent() {
                             .fillMaxSize()
                             .background(MaterialTheme.colorScheme.background)
                     ) {
-                        TabNavigator(ShortsTab)
+                        ShortScreen()
                     }
                 }
 
@@ -157,7 +140,7 @@ fun AppContent() {
                             .fillMaxSize()
                             .background(MaterialTheme.colorScheme.background)
                     ) {
-                        TabNavigator(SubscriptionsTab)
+                        SubscriptionScreen()
                     }
                 }
 
@@ -167,7 +150,7 @@ fun AppContent() {
                             .fillMaxSize()
                             .background(MaterialTheme.colorScheme.background)
                     ) {
-                        TabNavigator(LibraryTab)
+                        LibraryScreen()
                     }
                 }
             }
@@ -177,39 +160,55 @@ fun AppContent() {
 }
 
 @Composable
-fun RowScope.TabItem(tab: Tab) {
-    val isDark by LocalThemeIsDark.current
-    val tabNavigator = LocalTabNavigator.current
-    BottomNavigationItem(
-        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
-            .height(58.dp).clip(RoundedCornerShape(16.dp)),
-        selected = tabNavigator.current == tab,
+fun BottomBar(navController: NavHostController) {
+    val bottomItems = listOf(
+        ScreenItems.Home,
+        ScreenItems.Shorts,
+        ScreenItems.Subscription,
+        ScreenItems.Library,
+    )
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    NavigationBar {
+        bottomItems.forEach { screenItems ->
+            if (currentDestination != null) {
+                AddItem(
+                    screen = screenItems,
+                    currentDestination = currentDestination,
+                    navController = navController
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun RowScope.AddItem(
+    screen: ScreenItems,
+    currentDestination: NavDestination,
+    navController: NavHostController,
+) {
+    val isSelected = currentDestination.hierarchy?.any { it.route == screen.title } == true
+    NavigationBarItem(
+        selected = isSelected,
         onClick = {
-            tabNavigator.current = tab
+            navController.navigate(screen.title) {
+                popUpTo(navController.graph.route.toString())
+                launchSingleTop = true
+            }
         },
         icon = {
-            tab.options.icon?.let { painter ->
-                Icon(
-                    painter,
-                    contentDescription = tab.options.title,
-                    tint = if (tabNavigator.current == tab) Color.Red else if (isDark) Color.White else Color.Black
-                )
-            }
+            Icon(
+                imageVector = if (isSelected) screen.selectedIcon else screen.unselectedIcon,
+                contentDescription = ""
+            )
         },
-        label = {
-            tab.options.title.let { title ->
-                Text(
-                    title,
-                    fontSize = 12.sp,
-                    color = if (tabNavigator.current == tab) Color.Red else if (isDark) Color.White else Color.Black
-                )
-            }
-        },
-        enabled = true,
-        alwaysShowLabel = true,
-        interactionSource = MutableInteractionSource(),
-        selectedContentColor = Color.Red,
-        unselectedContentColor = Color.Black
+        label = { Text(text = screen.title) },
+        colors = NavigationBarItemDefaults.colors(
+            selectedIconColor = Color.Red,
+            selectedTextColor = Color.Red,
+            indicatorColor = Color.Transparent
+        )
     )
 }
 
@@ -217,8 +216,10 @@ internal expect fun openUrl(url: String?)
 
 @Composable
 internal expect fun provideShortCuts()
+
 @Composable
 internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)
+
 @Composable
 internal expect fun ShortsVideoPlayer(url: String?, modifier: Modifier)
 internal expect fun UserRegion(): String

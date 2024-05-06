@@ -22,16 +22,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.presentation.ui.components.topappbar.TopBar
 
-class SubscriptionScreen : Screen {
-    @Composable
-    override fun Content() {
+@Composable
+fun SubscriptionScreen() {
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
         Column(
             modifier = Modifier.fillMaxWidth()
-                .padding(top = 30.dp, start = 16.dp, end = 16.dp),
+                .padding(top = 50.dp, start = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

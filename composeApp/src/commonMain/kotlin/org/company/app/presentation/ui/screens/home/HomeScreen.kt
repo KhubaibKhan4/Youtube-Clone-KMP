@@ -17,7 +17,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.company.app.UserRegion
@@ -31,11 +30,9 @@ import org.company.app.presentation.ui.components.video_list.VideosList
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.koin.compose.koinInject
 
-class HomeScreen() : Screen {
-    @Composable
-    override fun Content() {
-        HomeContent()
-    }
+@Composable
+fun HomeScreen() {
+    HomeContent()
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -82,9 +79,9 @@ fun HomeContent(
                         if (!isConnected(retry = {})) {
                             NoInternet()
                         } else {
-                            if (error.contains("Unable to resolve host \"www.googleapis.com\": No address associated with hostname")){
+                            if (error.contains("Unable to resolve host \"www.googleapis.com\": No address associated with hostname")) {
                                 NoInternet()
-                            }else{
+                            } else {
                                 ErrorBox(error)
                             }
                         }
@@ -108,7 +105,7 @@ fun HomeContent(
                     }
                 }
             }
-        }else{
+        } else {
             ShimmerEffectMain()
         }
         PullRefreshIndicator(
