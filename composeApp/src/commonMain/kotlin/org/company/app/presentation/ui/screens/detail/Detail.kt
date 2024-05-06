@@ -204,7 +204,7 @@ fun Detail(
                 IconButton(
                     onClick = {
                         displayVideoPlayer = false
-                        navigator?.pop()
+                        navController.navigateUp()
                     },
                     modifier = Modifier.padding(top = 8.dp, start = 6.dp)
                         .align(alignment = Alignment.TopStart)

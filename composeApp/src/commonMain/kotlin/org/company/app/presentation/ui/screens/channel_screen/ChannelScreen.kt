@@ -442,8 +442,6 @@ fun ChannelContent(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val navigator = LocalNavigator.current
-            // Custom Top App Bar
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -451,7 +449,7 @@ fun ChannelContent(
             ) {
                 // Back Icon
                 IconButton(onClick = {
-                    navigator?.pop()
+                    navController.navigateUp()
                 }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -492,7 +490,6 @@ fun ChannelContent(
                 }
             }
 
-            // Channel Poster Image
             val poster: Resource<Painter> =
                 asyncPainterResource(channelLogo.toString())
             KamelImage(
@@ -514,7 +511,6 @@ fun ChannelContent(
                 animationSpec = tween(),
             )
 
-            // Channel Details
             Column(
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalArrangement = Arrangement.Center,
@@ -557,10 +553,8 @@ fun ChannelContent(
 
                 // Channel Subscribers and Videos
                 Text(
-                    text = "${customUrl} • ${formatSubscribers(subscribers)} Subscribers • ${
-                        formatLikes(
-                            videoCount
-                        )
+                    text = "${customUrl} • ${subscribers} Subscribers • ${
+                        videoCount
                     } videos",
                     modifier = Modifier.fillMaxWidth().wrapContentHeight()
                         .padding(horizontal = 16.dp),

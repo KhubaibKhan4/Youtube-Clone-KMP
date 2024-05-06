@@ -659,7 +659,7 @@ fun VideoItemCard(
         ?.single()?.snippet?.customUrl
     val channelDes = channelData?.items?.filter { it.id == video.snippet?.channelId }
         ?.single()?.snippet?.description
-    val channelThumbnail = channelData?.items?.filter { it.id == video.snippet?.channelId }?.single()?.snippet?.thumbnails?.high?.url
+    val videoChannelThumbnail = channelData?.items?.filter { it.snippet.title == video.snippet?.channelTitle }?.firstOrNull()?.snippet?.thumbnails?.high?.url
     val channelSubs =
         formatSubscribers(channelData?.items?.first()?.statistics?.subscriberCount)
     val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
@@ -730,7 +730,7 @@ fun VideoItemCard(
                         UrlEncoderUtil.encode(
                             videoThumbnail
                         )
-                    }/$channelTitle/${UrlEncoderUtil.encode(videoThumbnail)}/$duration/$publishData/$views/$likes/$videoCommentCount/$isVerified/$channelSubs/$customUrl/${
+                    }/$channelTitle/${UrlEncoderUtil.encode(videoChannelThumbnail.toString())}/$duration/$publishData/$views/$likes/$videoCommentCount/$isVerified/$channelSubs/$customUrl/${
                         UrlEncoderUtil.encode(
                             channelDes.toString()
                         )
@@ -777,8 +777,7 @@ fun VideoItemCard(
             ) {
 
                 NetworkImage(
-                    url = channelData?.items?.first()?.snippet?.thumbnails?.high?.url
-                        ?: videoThumbnail,
+                    url = videoChannelThumbnail.toString(),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier.size(40.dp)

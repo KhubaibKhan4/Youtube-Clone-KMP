@@ -412,7 +412,7 @@ fun SearchVideoItemCard(
                                 UrlEncoderUtil.encode(
                                     videoThumbnail
                                 )
-                            }/$channelTitle/${UrlEncoderUtil.encode(channelImage)}/$duration/$publishData/$views/$likes/$videoCommentCount/$isVerified/$channelSubs"
+                            }/$channelTitle/${UrlEncoderUtil.encode(channelImage)}/$duration/$publishData/$views/$likes/$videoCommentCount/$isVerified/$channelSubs/${channel?.snippet?.customUrl}/${UrlEncoderUtil.encode(channel?.snippet?.description.toString())}/${channel?.id}"
                         )
                     },
                 colors = CardDefaults.cardColors(
