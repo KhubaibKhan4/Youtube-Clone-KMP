@@ -566,7 +566,7 @@ fun DetailContent(
             ) {
 
                 NetworkImage(
-                    url = channelData?.brandingSettings?.image?.bannerExternalUrl.toString(),
+                    url =  commentData?.items?.get(0)?.snippet?.topLevelComment?.snippet?.authorProfileImageUrl.toString(),
                     contentDescription = "Comment User Profile",
                     modifier = Modifier.size(25.dp).clip(shape = CircleShape),
                     contentScale = ContentScale.FillBounds
@@ -585,13 +585,11 @@ fun DetailContent(
         }
 
 
-        // Horizontal Divider
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth().height(2.dp),
             thickness = 1.dp,
             color = Color.LightGray
         )
-        // More Videos Section (Lazy Column)
         Text(
             text = "More Videos",
             fontWeight = FontWeight.Bold,
