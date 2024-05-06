@@ -428,10 +428,10 @@ fun SearchVideoItemCard(
                             .padding(start = 8.dp, end = 8.dp, top = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        val image: Resource<Painter> =
+                        val channelLogo: Resource<Painter> =
                             asyncPainterResource(data = channel?.snippet?.thumbnails?.high?.url.toString())
                         KamelImage(
-                            resource = image,
+                            resource = channelLogo,
                             contentDescription = null,
                             modifier = Modifier
                                 .size(40.dp)
