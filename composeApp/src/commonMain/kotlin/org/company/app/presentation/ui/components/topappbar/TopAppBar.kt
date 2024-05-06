@@ -429,7 +429,7 @@ fun SearchVideoItemCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         val channelLogo: Resource<Painter> =
-                            asyncPainterResource(data = channel?.snippet?.thumbnails?.high?.url.toString())
+                            asyncPainterResource(data = video?.snippet?.thumbnails?.high?.url.toString())
                         KamelImage(
                             resource = channelLogo,
                             contentDescription = null,
@@ -445,7 +445,7 @@ fun SearchVideoItemCard(
                                 .weight(1f)
                         ) {
                             Text(
-                                text = singleVideo?.snippet?.title.toString(),
+                                text = video?.snippet?.title.toString(),
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 2,
                                 fontSize = 12.sp,
@@ -462,7 +462,7 @@ fun SearchVideoItemCard(
                                     horizontalArrangement = Arrangement.Center
                                 ) {
                                     Text(
-                                        text = channel?.snippet?.title.toString(),
+                                        text = video?.snippet?.channelTitle.toString(),
                                         fontSize = 10.sp
                                     )
                                     val isVerified = channel?.status?.isLinked == true
@@ -490,11 +490,7 @@ fun SearchVideoItemCard(
                                 Text(text = "•")
                                 Text(
                                     text = "${
-                                        singleVideo?.snippet?.publishedAt?.let {
-                                            getFormattedDateHome(
-                                                it
-                                            )
-                                        }
+                                        getFormattedDateHome(video.snippet.publishedAt)
                                     }",
                                     fontSize = 10.sp,
                                     maxLines = 1,

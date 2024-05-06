@@ -9,9 +9,9 @@ data class Item(
     @SerialName("etag")
     val etag: String,
     @SerialName("id")
-    val id: org.company.app.domain.model.search.Id,
+    val id: Id,
     @SerialName("kind")
     val kind: String,
     @SerialName("snippet")
-    val snippet: org.company.app.domain.model.search.Snippet
+    val snippet: Snippet,
 )
