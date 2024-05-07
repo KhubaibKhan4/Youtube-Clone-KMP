@@ -33,7 +33,7 @@ fun SetupNavHost(
             LibraryScreen(navController)
         }
         composable(
-            ScreenItems.DetailScreen.title + "/{videoId}/{videoTitle}/{videoDescription}/{videoThumbnail}/{videoChannelTitle}/{videoChannelThumbnail}/{videoDuration}/{videoPublishedAt}/{videoViewCount}/{videoLikeCount}/{videoCommentCount}/{isLinked}/{videoChannelSubs}/{customUrl}/{channelDes}/{channelId}/{channelCountry}/{topicDetails}",
+            ScreenItems.DetailScreen.title + "/{videoId}/{videoTitle}/{videoDescription}/{videoThumbnail}/{videoChannelTitle}/{videoChannelThumbnail}/{videoDuration}/{videoPublishedAt}/{videoViewCount}/{videoLikeCount}/{videoCommentCount}/{isLinked}/{videoChannelSubs}/{customUrl}/{channelDes}/{channelId}/{channelCountry}/{topicDetails}/{channelViewCount}",
             arguments = listOf<NamedNavArgument>(
                 navArgument("videoId") {
                     type = NavType.StringType
@@ -105,6 +105,10 @@ fun SetupNavHost(
                 navArgument("topicDetails") {
                     type = NavType.StringType
                     nullable = true
+                },
+                navArgument("channelViewCount"){
+                    type = NavType.StringType
+                    nullable = true
                 }
             )
         ) {
@@ -126,6 +130,7 @@ fun SetupNavHost(
             val channelId = it.arguments?.getString("channelId")
             val channelCountry = it.arguments?.getString("channelCountry")
             val topicDetails = it.arguments?.getString("topicDetails")
+            val channelViewCount = it.arguments?.getString("channelViewCount")
 
             Detail(
                 videoId,
@@ -146,11 +151,12 @@ fun SetupNavHost(
                 channelId,
                 channelCountry,
                 topicDetails,
+                channelViewCount,
                 navController
             )
         }
         composable(
-            ScreenItems.ChannelScreen.title + "/{channelId}/{channelTitle}/{channelLogo}/{isVerified}/{subscribers}/{videoCount}/{customUrl}/{channelDes}/{channelCountry}/{topicDetails}",
+            ScreenItems.ChannelScreen.title + "/{channelId}/{channelTitle}/{channelLogo}/{isVerified}/{subscribers}/{videoCount}/{customUrl}/{channelDes}/{channelCountry}/{topicDetails}/{channelViewCount}",
             arguments = listOf<NamedNavArgument>(
                 navArgument("channelId") {
                     type = NavType.StringType
@@ -190,6 +196,10 @@ fun SetupNavHost(
                 navArgument("topicDetails") {
                     type = NavType.StringType
                     nullable = true
+                },
+                navArgument("channelViewCount") {
+                    type = NavType.StringType
+                    nullable = true
                 }
             )
         ) {
@@ -203,8 +213,9 @@ fun SetupNavHost(
             val channelDes = it.arguments?.getString("channelDes")
             val channelCountry = it.arguments?.getString("channelCountry")
             val topicDetails = it.arguments?.getString("topicDetails")
+            val channelViewCount = it.arguments?.getString("channelViewCount")
 
-            ChannelScreen(channelId,channelTitle,channelLogo,isVerified,subscribers,videoCount,customUrl,channelDes,channelCountry,topicDetails,navController)
+            ChannelScreen(channelId,channelTitle,channelLogo,isVerified,subscribers,videoCount,customUrl,channelDes,channelCountry,topicDetails, channelViewCount,navController)
         }
         composable(
             ScreenItems.ChannelDetail.title + "/{channelTitle}/{channelDescription}/{customUrl}/{country}/{viewCount}/{isLinked}/{topicDetails}",
@@ -236,7 +247,8 @@ fun SetupNavHost(
                 navArgument("topicDetails") {
                     type = NavType.StringType
                     nullable = true
-                })
+                }
+            )
         ) {
             val channelTitle = it.arguments?.getString("channelTitle")
             val channelDescription = it.arguments?.getString("channelDescription")

@@ -38,7 +38,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import cafe.adriel.voyager.navigator.LocalNavigator
-import org.company.app.domain.model.channel.Item
 import org.company.app.openUrl
 
 @Composable
@@ -208,7 +207,6 @@ fun ChannelDetail(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-            //More Info
             Text(
                 text = "More info",
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
@@ -222,7 +220,6 @@ fun ChannelDetail(
             Spacer(modifier = Modifier.height(8.dp))
 
 
-            // Channel Link
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 12.dp),
@@ -246,7 +243,6 @@ fun ChannelDetail(
                 Spacer(modifier = Modifier.height(6.dp))
             }
 
-            // Country
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 12.dp),
@@ -259,11 +255,10 @@ fun ChannelDetail(
                     modifier = Modifier.size(25.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text =country.toString())
+                Text(text =country ?: "Not Found")
                 Spacer(modifier = Modifier.height(6.dp))
             }
 
-            // View Info
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 12.dp),
@@ -281,7 +276,6 @@ fun ChannelDetail(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-            //More Info
             Text(
                 text = "Verification",
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
@@ -293,7 +287,6 @@ fun ChannelDetail(
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(8.dp))
-            // Verification
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 12.dp),
@@ -306,8 +299,9 @@ fun ChannelDetail(
                     modifier = Modifier.size(25.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                val isVerified = isLinked
-                if (isVerified==true) {
+                val isVerified = isLinked!=true
+                println("isVerified: $isVerified")
+                if (isVerified) {
                     Text(text = "Verified")
                 } else {
                     Text(text = "UnVerified")

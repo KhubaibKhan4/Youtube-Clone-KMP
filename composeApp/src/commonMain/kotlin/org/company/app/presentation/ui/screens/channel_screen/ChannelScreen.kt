@@ -106,6 +106,7 @@ fun ChannelScreen(
     channelDes: String?,
     channelCountry: String?,
     topicDetails: String?,
+    channelViewCount: String?,
     navController: NavController,
 ) {
     ChannelContent(
@@ -119,6 +120,7 @@ fun ChannelScreen(
         channelDes,
         channelCountry,
         topicDetails,
+        channelViewCount,
         navController
     )
 }
@@ -135,6 +137,7 @@ fun ChannelContent(
     channelDes: String?,
     channelCountry: String?,
     topicDetails: String?,
+    channelViewCount: String?,
     navController: NavController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
@@ -573,13 +576,11 @@ fun ChannelContent(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                // Channel Details Row
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Channel Description
 
                     Text(
                         text = channelDes.toString(),
@@ -590,13 +591,12 @@ fun ChannelContent(
                         modifier = Modifier.weight(1f),
                         textAlign = TextAlign.Center
                     )
-
-                    // Arrow Icon
+                    val verified = isVerified == true
+                    println("isVerified : $verified")
                     IconButton(onClick = {
                         navController.navigate(
-                            ScreenItems.ChannelDetail.title+"/$channelTitle/${UrlEncoderUtil.encode(channelDes.toString())}/$customUrl/$channelCountry/2000/$isVerified/${UrlEncoderUtil.encode(topicDetails.toString())}"
+                            ScreenItems.ChannelDetail.title+"/$channelTitle/${UrlEncoderUtil.encode(channelDes.toString())}/$customUrl/$channelCountry/$channelViewCount/${UrlEncoderUtil.encode(verified.toString())}/${UrlEncoderUtil.encode(topicDetails.toString())}"
                         )
-                       // navigator?.push(ChannelDetail(channel = channel))
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
