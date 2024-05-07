@@ -196,7 +196,7 @@ fun ChannelDetail(
                     horizontalAlignment = Alignment.Start
                 ) {
                         Text(
-                            text = topicDetails?.replace("[","").toString(),
+                            text = topicDetails?.replace("[","")?.replace("]","").toString(),
                             fontSize = MaterialTheme.typography.titleSmall.fontSize,
                             color = Color.Blue,
                             modifier = Modifier.clickable {

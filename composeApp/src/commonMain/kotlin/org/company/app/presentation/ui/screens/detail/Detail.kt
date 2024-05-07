@@ -432,7 +432,7 @@ fun Detail(
                 modifier = Modifier.size(60.dp).clip(CircleShape)
                     .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
                         navController.navigate(
-                            ScreenItems.ChannelScreen.title + "/$channelId/$videoChannelTitle/${UrlEncoderUtil.encode(videoChannelThumbnail.toString())}/$isLinked/$videoChannelSubs/$videoViewCount/$customUrl/${UrlEncoderUtil.encode(channelDes.toString())}/$channelCountry/${UrlEncoderUtil.encode(topicDetails.toString())}/${channelViewCount}"
+                            ScreenItems.ChannelScreen.title + "/$channelId/$videoChannelTitle/${UrlEncoderUtil.encode(videoChannelThumbnail.toString())}/$isLinked/$videoChannelSubs/$videoViewCount/$customUrl/${UrlEncoderUtil.encode(channelDes?.replace("/","").toString())}/$channelCountry/${UrlEncoderUtil.encode(topicDetails.toString())}/${channelViewCount}"
                         )
 
                         // navigator?.push(ChannelScreen(channelData))
