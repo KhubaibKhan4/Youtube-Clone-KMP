@@ -17,7 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -83,9 +83,9 @@ fun HomeContent(
                         if (!isConnected(retry = {})) {
                             NoInternet()
                         } else {
-                            if (error.contains("Unable to resolve host \"www.googleapis.com\": No address associated with hostname")){
+                            if (error.contains("Unable to resolve host \"www.googleapis.com\": No address associated with hostname")) {
                                 NoInternet()
-                            }else{
+                            } else {
                                 ErrorBox(error)
                             }
                         }
@@ -109,7 +109,7 @@ fun HomeContent(
                     }
                 }
             }
-        }else{
+        } else {
             ShimmerEffectMain()
         }
         PullRefreshIndicator(

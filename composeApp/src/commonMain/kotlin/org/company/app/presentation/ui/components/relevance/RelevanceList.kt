@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
@@ -23,7 +24,9 @@ import org.company.app.presentation.ui.components.common.LoadingBox
 import org.company.app.presentation.ui.components.video_list.VideoItemCard
 
 @Composable
-fun RelevanceList(stateRelevance: ResultState<Youtube>) {
+fun RelevanceList(
+    stateRelevance: ResultState<Youtube>,
+) {
     var relevanceData by remember { mutableStateOf<Youtube?>(null) }
 
     when (stateRelevance) {
@@ -42,7 +45,6 @@ fun RelevanceList(stateRelevance: ResultState<Youtube>) {
             ErrorBox(error)
         }
     }
-    val navController = rememberNavController()
     Surface(
         color = MaterialTheme.colorScheme.background
     ) {

@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavController
 import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.UserRegion
 import org.company.app.domain.model.videos.Youtube
@@ -18,6 +19,7 @@ import org.company.app.presentation.ui.components.shimmer.ShimmerEffectShorts
 import org.company.app.presentation.ui.components.shorts.ShortList
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.koin.compose.koinInject
+
 
 class ShortScreen() : Screen {
     @Composable

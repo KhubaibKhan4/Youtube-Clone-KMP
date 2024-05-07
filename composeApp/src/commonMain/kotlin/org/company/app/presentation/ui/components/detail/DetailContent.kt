@@ -71,6 +71,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
 import org.company.app.Notify
@@ -796,20 +797,18 @@ fun DetailContent(
                             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                             modifier = Modifier.fillMaxWidth().padding(
                                 horizontal = 16.dp, vertical = 8.dp
-                            ), // Adjust padding as needed
+                            ),
                             maxLines = 1,
                             textAlign = TextAlign.Justify,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-                    // Channel Section
                     Row(
                         modifier = Modifier.fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 8.dp),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        // Channel Image
                         channelData?.snippet?.thumbnails?.default?.url?.let {
                             rememberImagePainter(
                                 it
@@ -850,7 +849,7 @@ fun DetailContent(
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(
                             horizontal = 8.dp, vertical = 4.dp
-                        ), // Adjust padding as needed
+                        ),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
@@ -965,14 +964,12 @@ fun DetailContent(
 
                 Spacer(modifier = Modifier.height(14.dp))
 
-                // Top and Newest Icon Button
                 val buttons = listOf(
                     "Top",
                     "Newest"
                 )
                 var selectedButton by remember { mutableStateOf(buttons.first()) }
 
-                // Function to fetch comments based on the selected order
                 fun fetchComments(order: String) {
                     viewModel.getVideoComments(video?.id.toString(), order)
                 }
@@ -1004,7 +1001,6 @@ fun DetailContent(
                 }
 
 
-                // Terms and conditions
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -1023,12 +1019,10 @@ fun DetailContent(
 
                 HorizontalDivider(modifier = Modifier.fillMaxWidth(), color = DividerDefaults.color)
 
-                // Comments Lists
                 commentData?.let { comments ->
                     CommentsList(comments, modifier = Modifier.weight(1f))
                 }
 
-                // Own Channel Image and TextField
                 Row(
                     modifier = Modifier
                         .background(color = Color.White)
@@ -1037,7 +1031,6 @@ fun DetailContent(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    // Own Channel Image
                     NetworkImage(
                         modifier = Modifier.size(25.dp)
                             .clip(CircleShape)
@@ -1048,7 +1041,6 @@ fun DetailContent(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
 
-                    // TextField
                     TextField(
                         value = commentInput,
                         onValueChange = {

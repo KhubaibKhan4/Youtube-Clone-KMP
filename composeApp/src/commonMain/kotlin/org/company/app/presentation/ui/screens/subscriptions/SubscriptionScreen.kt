@@ -22,11 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.presentation.ui.components.topappbar.TopBar
 
-class SubscriptionScreen : Screen{
+class SubscriptionScreen : Screen {
     @Composable
     override fun Content() {
         Column(

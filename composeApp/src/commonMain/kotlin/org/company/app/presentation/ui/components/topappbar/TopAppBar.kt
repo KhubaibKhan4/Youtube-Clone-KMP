@@ -354,8 +354,6 @@ fun SearchVideoItemCard(
         asyncPainterResource(data = video.snippet.thumbnails.high.url)
 
 
-
-
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -364,12 +362,11 @@ fun SearchVideoItemCard(
         if (video.snippet.title == channel?.snippet?.title) {
             channelDetails?.items?.let { items ->
                 if (items.isNotEmpty()) {
-                    val channel = items[0]
-                    SearchChannelItem(channel)
+                    val channelItem = items[0]
+                    SearchChannelItem(channelItem)
                 }
             }
         } else {
-
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
