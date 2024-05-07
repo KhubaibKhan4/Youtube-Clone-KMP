@@ -434,7 +434,7 @@ fun DetailContent(
                     contentDescription = null,
                     modifier = Modifier.size(60.dp).clip(CircleShape)
                         .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
-                           // navigator?.push(ChannelScreen(channelData))
+                            navigator?.push(ChannelScreen(channelData))
                         },
                     contentScale = ContentScale.FillBounds
                 )
@@ -566,7 +566,7 @@ fun DetailContent(
             ) {
 
                 NetworkImage(
-                    url =  commentData?.items?.get(0)?.snippet?.topLevelComment?.snippet?.authorProfileImageUrl.toString(),
+                    url = channelData?.brandingSettings?.image?.bannerExternalUrl.toString(),
                     contentDescription = "Comment User Profile",
                     modifier = Modifier.size(25.dp).clip(shape = CircleShape),
                     contentScale = ContentScale.FillBounds
@@ -585,11 +585,13 @@ fun DetailContent(
         }
 
 
+        // Horizontal Divider
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth().height(2.dp),
             thickness = 1.dp,
             color = Color.LightGray
         )
+        // More Videos Section (Lazy Column)
         Text(
             text = "More Videos",
             fontWeight = FontWeight.Bold,
@@ -667,7 +669,7 @@ fun DetailContent(
                                 .size(15.dp)
                                 .clip(CircleShape)
                                 .clickable {
-                                   // navigator?.push(ChannelScreen(channelData!!))
+                                    navigator?.push(ChannelScreen(channelData!!))
                                 },
                             url = channelData?.snippet?.thumbnails?.default?.url.toString(),
                             contentDescription = null,
@@ -817,7 +819,7 @@ fun DetailContent(
                                 painter = it,
                                 contentDescription = null,
                                 modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
-                                  //  navigator?.push(ChannelScreen(channelData))
+                                    navigator?.push(ChannelScreen(channelData))
                                 },
                                 contentScale = ContentScale.FillBounds
                             )
@@ -855,7 +857,7 @@ fun DetailContent(
                         OutlinedCard(
                             onClick = {
                                 channelData?.let { item ->
-                                  //  navigator?.push(ChannelScreen(item))
+                                    navigator?.push(ChannelScreen(item))
                                 }
                             },
                             shape = CardDefaults.outlinedShape,
@@ -885,7 +887,7 @@ fun DetailContent(
                         OutlinedCard(
                             onClick = {
                                 channelData?.let { channel ->
-                                   // navigator?.push(ChannelDetail(channel))
+                                    navigator?.push(ChannelDetail(channel))
                                 }
                             },
                             shape = CardDefaults.outlinedShape,

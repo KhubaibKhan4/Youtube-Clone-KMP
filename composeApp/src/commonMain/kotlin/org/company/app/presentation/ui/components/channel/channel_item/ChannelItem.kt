@@ -57,8 +57,7 @@ import org.company.app.presentation.ui.screens.detail.formatSubscribers
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchChannelItem(
-    channel: Item,
-    navController: NavController
+    channel: Item
 ) {
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
@@ -67,7 +66,7 @@ fun SearchChannelItem(
         modifier = Modifier.fillMaxWidth()
             .padding(10.dp)
             .clickable {
-                //navigator?.push(ChannelScreen(channel,navController))
+                navigator?.push(ChannelScreen(channel))
             },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center

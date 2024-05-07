@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.company.app.UserRegion
@@ -31,17 +32,16 @@ import org.company.app.presentation.ui.components.video_list.VideosList
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.koin.compose.koinInject
 
-@Composable
-fun HomeScreen(
-    navController: NavHostController
-) {
-    HomeContent(navController)
+class HomeScreen() : Screen {
+    @Composable
+    override fun Content() {
+        HomeContent()
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeContent(
-    navController: NavHostController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     val refreshScope = rememberCoroutineScope()
@@ -75,7 +75,7 @@ fun HomeContent(
 
                     is ResultState.SUCCESS -> {
                         val data = (state as ResultState.SUCCESS).response
-                        VideosList(data,navController)
+                        VideosList(data)
                     }
 
                     is ResultState.ERROR -> {
@@ -83,9 +83,9 @@ fun HomeContent(
                         if (!isConnected(retry = {})) {
                             NoInternet()
                         } else {
-                            if (error.contains("Unable to resolve host \"www.googleapis.com\": No address associated with hostname")) {
+                            if (error.contains("Unable to resolve host \"www.googleapis.com\": No address associated with hostname")){
                                 NoInternet()
-                            } else {
+                            }else{
                                 ErrorBox(error)
                             }
                         }
@@ -109,7 +109,7 @@ fun HomeContent(
                     }
                 }
             }
-        } else {
+        }else{
             ShimmerEffectMain()
         }
         PullRefreshIndicator(

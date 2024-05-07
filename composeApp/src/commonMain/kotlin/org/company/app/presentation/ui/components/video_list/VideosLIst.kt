@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -86,11 +87,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import cafe.adriel.voyager.navigator.LocalNavigator
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.company.app.ShareManager
 import org.company.app.UserRegion
 import org.company.app.domain.model.categories.Item
@@ -106,7 +104,8 @@ import org.company.app.presentation.ui.components.custom_image.NetworkImage
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.presentation.ui.components.topappbar.SearchVideoItemCard
 import org.company.app.presentation.ui.components.topappbar.TopBar
-import org.company.app.presentation.ui.navigation.host.ScreenItems
+import org.company.app.presentation.ui.screens.channel_screen.ChannelScreen
+import org.company.app.presentation.ui.screens.detail.DetailScreen
 import org.company.app.presentation.ui.screens.detail.formatLikes
 import org.company.app.presentation.ui.screens.detail.formatSubscribers
 import org.company.app.presentation.viewmodel.MainViewModel
@@ -130,7 +129,6 @@ import org.company.app.presentation.ui.screens.detail.formatViewCount as Formate
 @Composable
 fun VideosList(
     youtube: Youtube,
-    navController: NavHostController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     var videoCategories by remember { mutableStateOf<VideoCategories?>(null) }
@@ -206,7 +204,7 @@ fun VideosList(
         drawerContentColor = if (isDark) Color.White else Color.Black,
         drawerState = drawerState,
         gesturesEnabled = true,
-        modifier = Modifier.fillMaxHeight(),
+        modifier = Modifier.fillMaxHeight().wrapContentWidth(),
         drawerContent = {
             Column(
                 modifier = Modifier.fillMaxWidth()
@@ -427,7 +425,7 @@ fun VideosList(
             color = MaterialTheme.colorScheme.background,
         ) {
             Column {
-                TopBar(modifier = Modifier.fillMaxWidth(), navController)
+                TopBar(modifier = Modifier.fillMaxWidth())
 
                 Row(
                     modifier = Modifier
@@ -505,7 +503,7 @@ fun VideosList(
                         ) {
                             youtube.items?.let { items ->
                                 items(items) { videos ->
-                                    VideoItemCard(videos, navController)
+                                    VideoItemCard(videos)
                                 }
                             }
                         }
@@ -559,7 +557,7 @@ fun VideosList(
                         LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
                             videosByCategories?.items?.let { items ->
                                 items(items) { videos ->
-                                    SearchVideoItemCard(videos, navController)
+                                    SearchVideoItemCard(videos)
                                 }
                             }
                         }
@@ -638,16 +636,15 @@ fun CategoryButton(
 @Composable
 fun VideoItemCard(
     video: VideoItem,
-    navController: NavHostController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
+    val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
     var moreVertEnable by remember { mutableStateOf(false) }
     var channelData by remember { mutableStateOf<Channel?>(null) }
 
     val title = video.snippet?.title.toString()
     val channelTitle = video.snippet?.channelTitle.toString()
-    val channelId = video.snippet?.channelId.toString()
     val channelImage = video.snippet?.thumbnails?.high?.url.toString()
     val publishData = getFormattedDate(video.snippet?.publishedAt.toString())
     val views = FormateView(video.statistics?.viewCount)
@@ -655,14 +652,6 @@ fun VideoItemCard(
     val videoThumbnail = video.snippet?.thumbnails?.default?.url.toString()
     val videoDesc = video.snippet?.description.toString()
     val likes = formatLikes(video.statistics?.likeCount)
-    val customUrl = channelData?.items?.filter { it.id == video.snippet?.channelId }
-        ?.single()?.snippet?.customUrl
-    val channelDes = channelData?.items?.filter { it.id == video.snippet?.channelId }
-        ?.single()?.snippet?.description
-    val videoChannelThumbnail = channelData?.items?.filter { it.snippet.title == video.snippet?.channelTitle }?.firstOrNull()?.snippet?.thumbnails?.high?.url
-    val channelCountry = channelData?.items?.filter { it.snippet.title == video.snippet?.channelTitle }?.firstOrNull()?.snippet?.country
-    val topicDetails = channelData?.items?.filter { it.snippet.title == video.snippet?.channelTitle }?.firstOrNull()?.topicDetails?.topicCategories
-    val channelViewCount = channelData?.items?.filter { it.snippet.title == video.snippet?.channelTitle }?.firstOrNull()?.statistics?.viewCount
     val channelSubs =
         formatSubscribers(channelData?.items?.first()?.statistics?.subscriberCount)
     val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
@@ -720,25 +709,7 @@ fun VideoItemCard(
             .padding(8.dp)
             .pointerHoverIcon(icon = PointerIcon.Hand)
             .clickable {
-                val videoId = video.id
-                val videoTitle = Json.encodeToString(title)
-                val videoDescription = Json.encodeToString(videoDesc)
-                val videoCommentCount = Json.encodeToString(video.statistics?.commentCount ?: "")
-                navController.navigate(
-                    "${ScreenItems.DetailScreen.title}/$videoId/$videoTitle/${
-                        UrlEncoderUtil.encode(
-                            videoDescription
-                        )
-                    }/${
-                        UrlEncoderUtil.encode(
-                            videoThumbnail
-                        )
-                    }/$channelTitle/${UrlEncoderUtil.encode(videoChannelThumbnail.toString())}/$duration/$publishData/$views/$likes/$videoCommentCount/$isVerified/$channelSubs/$customUrl/${
-                        UrlEncoderUtil.encode(
-                            channelDes.toString()
-                        )
-                    }/$channelId/$channelCountry/${UrlEncoderUtil.encode(topicDetails.toString())}/${UrlEncoderUtil.encode(channelViewCount.toString())}"
-                )
+                navigator?.push(DetailScreen(video, channelData = channelData?.items?.get(0)))
             },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
@@ -780,7 +751,8 @@ fun VideoItemCard(
             ) {
 
                 NetworkImage(
-                    url = videoChannelThumbnail ?: videoThumbnail,
+                    url = channelData?.items?.first()?.snippet?.thumbnails?.high?.url
+                        ?: videoThumbnail,
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier.size(40.dp)
@@ -788,7 +760,7 @@ fun VideoItemCard(
                         .pointerHoverIcon(icon = PointerIcon.Hand)
                         .clickable {
                             val channelItem = channelData?.items?.get(0)!!
-                            //navigator?.push(ChannelScreen(channelItem))
+                            navigator?.push(ChannelScreen(channelItem))
                         }
                 )
                 Spacer(modifier = Modifier.width(8.dp))

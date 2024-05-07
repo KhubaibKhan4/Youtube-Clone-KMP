@@ -23,56 +23,58 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.presentation.ui.components.topappbar.TopBar
 
-@Composable
-fun SubscriptionScreen(
-    navController: NavController
-) {
-
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp),navController)
+class SubscriptionScreen : Screen{
+    @Composable
+    override fun Content() {
         Column(
-            modifier = Modifier.fillMaxWidth()
-                .padding(top = 50.dp, start = 16.dp, end = 16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Icon(
-                imageVector = Icons.Default.Subscriptions,
-                contentDescription = "Subscriptions",
-                modifier = Modifier.size(140.dp),
-                tint = Color.LightGray
-            )
-
-            Spacer(modifier = Modifier.height(40.dp))
-
-            Text(
-                text = "Don't miss new videos",
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = "Sign in to see updates from favorite \nYouTube channels",
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-            TextButton(
-                onClick = {},
-                shape = RoundedCornerShape(24.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Blue,
-                    contentColor = Color.White
-                )
+            TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
+            Column(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 50.dp, start = 16.dp, end = 16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Sign in")
+                Icon(
+                    imageVector = Icons.Default.Subscriptions,
+                    contentDescription = "Subscriptions",
+                    modifier = Modifier.size(140.dp),
+                    tint = Color.LightGray
+                )
+
+                Spacer(modifier = Modifier.height(40.dp))
+
+                Text(
+                    text = "Don't miss new videos",
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    text = "Sign in to see updates from favorite \nYouTube channels",
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                TextButton(
+                    onClick = {},
+                    shape = RoundedCornerShape(24.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Blue,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(text = "Sign in")
+                }
             }
         }
     }
+
+
 }

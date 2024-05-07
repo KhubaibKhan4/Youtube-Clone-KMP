@@ -55,7 +55,7 @@ fun RelevanceList(stateRelevance: ResultState<Youtube>) {
             ) {
                 relevanceData?.items?.let { items ->
                     items(items) { videos ->
-                        VideoItemCard(videos,navController)
+                        VideoItemCard(videos)
                     }
                 }
             }

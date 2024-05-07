@@ -37,276 +37,278 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import org.company.app.domain.model.channel.Item
 import org.company.app.openUrl
 
-@Composable
-fun ChannelDetail(
-    channelTitle: String?,
-    channelDescription: String?,
-    customUrl: String?,
-    country: String?,
-    viewCount: String?,
-    isLinked: Boolean?,
-    topicDetails: String?,
-    navController: NavController
-) {
-
-    val navigator = LocalNavigator.current
-    val localUri = LocalUriHandler.current
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(state = rememberScrollState())
-            .padding(top = 49.dp),
-    ) {
-        Column(
+class ChannelDetail(
+    private val channel: Item,
+) : Screen {
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.current
+        val localUri = LocalUriHandler.current
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top
+                .fillMaxSize()
+                .verticalScroll(state = rememberScrollState())
+                .padding(top = 49.dp),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp, end = 8.dp),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Top
             ) {
-                IconButton(onClick = {
-                    navController.popBackStack()
-                }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                        contentDescription = null
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(onClick = {
+                        navigator?.pop()
+                    }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                            contentDescription = null
+                        )
+                    }
+                    Text(
+                        text = channel.snippet.title,
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
+
+                    IconButton(onClick = {}) {
+                        Icon(imageVector = Icons.Default.Cast, contentDescription = null)
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
+                    }
                 }
+                Spacer(modifier = Modifier.height(16.dp))
+
+                //Description
                 Text(
-                    text = channelTitle.toString(),
+                    text = "Description",
                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                val description = channel.brandingSettings.channel.description
+                Text(
+                    text = description.toString(),
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
+                    fontWeight = FontWeight.Normal,
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                //Links
+                Text(
+                    text = "Links",
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
 
-                IconButton(onClick = {}) {
-                    Icon(imageVector = Icons.Default.Cast, contentDescription = null)
-                }
-                IconButton(onClick = {}) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
-                }
-                IconButton(onClick = {}) {
-                    Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-
-            //Description
-            Text(
-                text = "Description",
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            val description = channelDescription.toString()
-            Text(
-                text = description.toString(),
-                fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                fontWeight = FontWeight.Normal,
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            //Links
-            Text(
-                text = "Links",
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(8.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Icon(imageVector = Icons.Default.Facebook, contentDescription = "Facebook")
-                Spacer(modifier = Modifier.width(6.dp))
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.Start
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.Start
                 ) {
-                    Text(
-                        text = "Follow",
-                        fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                    )
-                    // Use regular expressions to find social links
-                    val socialLinks =
-                        Regex("(?i)\\b(?:twitter|instagram|facebook|linkedin|youtube)\\b[\\w/@]+")
-                            .findAll(description.toString())
-                            .map { it.value }
-                            .toList()
-
-                    for (link in socialLinks) {
+                    Icon(imageVector = Icons.Default.Facebook, contentDescription = "Facebook")
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start
+                    ) {
                         Text(
-                            text = link,
+                            text = "Follow",
                             fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                            color = Color.Blue
                         )
-                        println("Social Link: $link")
+                        // Use regular expressions to find social links
+                        val socialLinks =
+                            Regex("(?i)\\b(?:twitter|instagram|facebook|linkedin|youtube)\\b[\\w/@]+")
+                                .findAll(description.toString())
+                                .map { it.value }
+                                .toList()
+
+                        for (link in socialLinks) {
+                            Text(
+                                text = link,
+                                fontSize = MaterialTheme.typography.titleSmall.fontSize,
+                                color = Color.Blue
+                            )
+                            println("Social Link: $link")
+                        }
                     }
                 }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            //Links
-            Text(
-                text = "Categories",
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(8.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Spacer(modifier = Modifier.width(6.dp))
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.Start
-                ) {
-                        Text(
-                            text = topicDetails?.replace("[","")?.replace("]","").toString(),
-                            fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                            color = Color.Blue,
-                            modifier = Modifier.clickable {
-                                openUrl(topicDetails?.replace("[","").toString())
-                            }
-                        )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "More info",
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 12.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Link,
-                    contentDescription = "Link Icon",
-                    modifier = Modifier.size(25.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                val channelURL = "https://www/youtube.com/" +customUrl
+                //Links
                 Text(
-                    text = channelURL,
-                    color = Color.Blue,
-                    modifier = Modifier.clickable {
-                        localUri.openUri(channelURL)
+                    text = "Categories",
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        channel.topicDetails?.topicCategories?.forEach {
+                            Text(
+                                text = it,
+                                fontSize = MaterialTheme.typography.titleSmall.fontSize,
+                                color = Color.Blue,
+                                modifier = Modifier.clickable {
+                                    openUrl(it)
+                                }
+                            )
+                        }
                     }
-                )
-                Spacer(modifier = Modifier.height(6.dp))
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 12.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Public,
-                    contentDescription = "Country Icon",
-                    modifier = Modifier.size(25.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text =country ?: "Not Found")
-                Spacer(modifier = Modifier.height(6.dp))
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 12.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.TrendingUp,
-                    contentDescription = "View Icon",
-                    modifier = Modifier.size(25.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "${viewCount} views")
-                Spacer(modifier = Modifier.height(6.dp))
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Verification",
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 12.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Verified,
-                    contentDescription = "Verified Icon",
-                    modifier = Modifier.size(25.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                val isVerified = isLinked!=true
-                println("isVerified: $isVerified")
-                if (isVerified) {
-                    Text(text = "Verified")
-                } else {
-                    Text(text = "UnVerified")
                 }
-                Spacer(modifier = Modifier.height(6.dp))
+
+                Spacer(modifier = Modifier.height(16.dp))
+                //More Info
+                Text(
+                    text = "More info",
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+
+                // Channel Link
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 12.dp),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Link,
+                        contentDescription = "Link Icon",
+                        modifier = Modifier.size(25.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    val channelURL = "https://www/youtube.com/" + channel.snippet.customUrl
+                    Text(
+                        text = channelURL,
+                        color = Color.Blue,
+                        modifier = Modifier.clickable {
+                            localUri.openUri(channelURL)
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
+                }
+
+                // Country
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 12.dp),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Public,
+                        contentDescription = "Country Icon",
+                        modifier = Modifier.size(25.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = channel.brandingSettings.channel.country.toString())
+                    Spacer(modifier = Modifier.height(6.dp))
+                }
+
+                // View Info
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 12.dp),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.TrendingUp, contentDescription = "View Icon",
+                        modifier = Modifier.size(25.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "${channel.statistics.viewCount} views")
+                    Spacer(modifier = Modifier.height(6.dp))
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+                //More Info
+                Text(
+                    text = "Verification",
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                // Verification
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 12.dp),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Verified,
+                        contentDescription = "Verified Icon",
+                        modifier = Modifier.size(25.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    val isVerified = channel.status.isLinked
+                    if (isVerified) {
+                        Text(text = "Verified")
+                    } else {
+                        Text(text = "UnVerified")
+                    }
+                    Spacer(modifier = Modifier.height(6.dp))
+                }
             }
         }
     }
