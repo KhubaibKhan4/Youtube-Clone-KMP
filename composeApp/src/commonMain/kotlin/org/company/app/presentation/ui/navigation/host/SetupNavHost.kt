@@ -52,6 +52,7 @@ fun SetupNavHost(
                 },
                 navArgument("videoChannelThumbnail") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoDuration") {
                     type = NavType.StringType
@@ -176,7 +177,7 @@ fun SetupNavHost(
                     type = NavType.StringType
                 },
                 navArgument("country") {
-                    type = NavType.BoolType
+                    type = NavType.StringType
                 },
                 navArgument("viewCount") {
                     type = NavType.StringType
