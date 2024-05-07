@@ -73,6 +73,7 @@ import io.kamel.image.asyncPainterResource
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.company.app.UserRegion
 import org.company.app.domain.model.channel.Channel
+import org.company.app.domain.model.channel.TopicDetails
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
@@ -103,6 +104,8 @@ fun ChannelScreen(
     videoCount: String?,
     customUrl: String?,
     channelDes: String?,
+    channelCountry: String?,
+    topicDetails: String?,
     navController: NavController,
 ) {
     ChannelContent(
@@ -114,6 +117,8 @@ fun ChannelScreen(
         videoCount,
         customUrl,
         channelDes,
+        channelCountry,
+        topicDetails,
         navController
     )
 }
@@ -128,6 +133,8 @@ fun ChannelContent(
     videoCount: String?,
     customUrl: String?,
     channelDes: String?,
+    channelCountry: String?,
+    topicDetails: String?,
     navController: NavController,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
@@ -587,7 +594,7 @@ fun ChannelContent(
                     // Arrow Icon
                     IconButton(onClick = {
                         navController.navigate(
-                            ScreenItems.ChannelDetail.title+"/$channelTitle/${UrlEncoderUtil.encode(channelDes.toString())}/$customUrl/US/2000/$isVerified/tech"
+                            ScreenItems.ChannelDetail.title+"/$channelTitle/${UrlEncoderUtil.encode(channelDes.toString())}/$customUrl/$channelCountry/2000/$isVerified/${UrlEncoderUtil.encode(topicDetails.toString())}"
                         )
                        // navigator?.push(ChannelDetail(channel = channel))
                     }) {

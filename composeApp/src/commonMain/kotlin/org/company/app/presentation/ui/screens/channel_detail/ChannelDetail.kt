@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import cafe.adriel.voyager.navigator.LocalNavigator
 import org.company.app.domain.model.channel.Item
 import org.company.app.openUrl
@@ -48,7 +49,8 @@ fun ChannelDetail(
     country: String?,
     viewCount: String?,
     isLinked: Boolean?,
-    topicDetails: Array<String>?
+    topicDetails: String?,
+    navController: NavController
 ) {
 
     val navigator = LocalNavigator.current
@@ -72,7 +74,7 @@ fun ChannelDetail(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 IconButton(onClick = {
-                    navigator?.pop()
+                    navController.popBackStack()
                 }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
@@ -194,16 +196,14 @@ fun ChannelDetail(
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.Start
                 ) {
-                    topicDetails?.forEach {
                         Text(
-                            text = it,
+                            text = topicDetails?.replace("[","").toString(),
                             fontSize = MaterialTheme.typography.titleSmall.fontSize,
                             color = Color.Blue,
                             modifier = Modifier.clickable {
-                                openUrl(it)
+                                openUrl(topicDetails?.replace("[","").toString())
                             }
                         )
-                    }
                 }
             }
 

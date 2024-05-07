@@ -33,22 +33,27 @@ fun SetupNavHost(
             LibraryScreen(navController)
         }
         composable(
-            ScreenItems.DetailScreen.title + "/{videoId}/{videoTitle}/{videoDescription}/{videoThumbnail}/{videoChannelTitle}/{videoChannelThumbnail}/{videoDuration}/{videoPublishedAt}/{videoViewCount}/{videoLikeCount}/{videoCommentCount}/{isLinked}/{videoChannelSubs}/{customUrl}/{channelDes}/{channelId}",
+            ScreenItems.DetailScreen.title + "/{videoId}/{videoTitle}/{videoDescription}/{videoThumbnail}/{videoChannelTitle}/{videoChannelThumbnail}/{videoDuration}/{videoPublishedAt}/{videoViewCount}/{videoLikeCount}/{videoCommentCount}/{isLinked}/{videoChannelSubs}/{customUrl}/{channelDes}/{channelId}/{channelCountry}/{topicDetails}",
             arguments = listOf<NamedNavArgument>(
                 navArgument("videoId") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoTitle") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoDescription") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoThumbnail") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoChannelTitle") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoChannelThumbnail") {
                     type = NavType.StringType
@@ -56,33 +61,50 @@ fun SetupNavHost(
                 },
                 navArgument("videoDuration") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoPublishedAt") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoViewCount") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoLikeCount") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoCommentCount") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("isLinked") {
                     type = NavType.BoolType
                 },
                 navArgument("videoChannelSubs") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("customUrl") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("channelDes") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("channelId") {
                     type = NavType.StringType
+                    nullable = true
+                },
+                navArgument("channelCountry") {
+                    type = NavType.StringType
+                    nullable = true
+                },
+                navArgument("topicDetails") {
+                    type = NavType.StringType
+                    nullable = true
                 }
             )
         ) {
@@ -102,6 +124,8 @@ fun SetupNavHost(
             val customUrl = it.arguments?.getString("customUrl")
             val channelDes = it.arguments?.getString("channelDes")
             val channelId = it.arguments?.getString("channelId")
+            val channelCountry = it.arguments?.getString("channelCountry")
+            val topicDetails = it.arguments?.getString("topicDetails")
 
             Detail(
                 videoId,
@@ -120,37 +144,53 @@ fun SetupNavHost(
                 customUrl,
                 channelDes,
                 channelId,
+                channelCountry,
+                topicDetails,
                 navController
             )
         }
         composable(
-            ScreenItems.ChannelScreen.title + "/{channelId}/{channelTitle}/{channelLogo}/{isVerified}/{subscribers}/{videoCount}/{customUrl}/{channelDes}",
+            ScreenItems.ChannelScreen.title + "/{channelId}/{channelTitle}/{channelLogo}/{isVerified}/{subscribers}/{videoCount}/{customUrl}/{channelDes}/{channelCountry}/{topicDetails}",
             arguments = listOf<NamedNavArgument>(
                 navArgument("channelId") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("channelTitle") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("channelLogo") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("isVerified") {
                     type = NavType.BoolType
                 },
                 navArgument("subscribers") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("videoCount") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("customUrl") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("channelDes") {
                     type = NavType.StringType
+                    nullable = true
                 },
-
+                navArgument("channelCountry") {
+                    type = NavType.StringType
+                    nullable = true
+                },
+                navArgument("topicDetails") {
+                    type = NavType.StringType
+                    nullable = true
+                }
             )
         ) {
             val channelId = it.arguments?.getString("channelId")
@@ -161,32 +201,41 @@ fun SetupNavHost(
             val videoCount = it.arguments?.getString("videoCount")
             val customUrl = it.arguments?.getString("customUrl")
             val channelDes = it.arguments?.getString("channelDes")
+            val channelCountry = it.arguments?.getString("channelCountry")
+            val topicDetails = it.arguments?.getString("topicDetails")
 
-            ChannelScreen(channelId,channelTitle,channelLogo,isVerified,subscribers,videoCount,customUrl,channelDes,navController)
+            ChannelScreen(channelId,channelTitle,channelLogo,isVerified,subscribers,videoCount,customUrl,channelDes,channelCountry,topicDetails,navController)
         }
         composable(
             ScreenItems.ChannelDetail.title + "/{channelTitle}/{channelDescription}/{customUrl}/{country}/{viewCount}/{isLinked}/{topicDetails}",
             arguments = listOf<NamedNavArgument>(
                 navArgument("channelTitle") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("channelDescription") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("customUrl") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("country") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("viewCount") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("isLinked") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("topicDetails") {
-                    type = NavType.StringArrayType
+                    type = NavType.StringType
+                    nullable = true
                 })
         ) {
             val channelTitle = it.arguments?.getString("channelTitle")
@@ -195,9 +244,9 @@ fun SetupNavHost(
             val country = it.arguments?.getString("country")
             val viewCount = it.arguments?.getString("viewCount")
             val isLinked = it.arguments?.getBoolean("isLinked")
-            val topicDetails = it.arguments?.getStringArray("topicDetails")
+            val topicDetails = it.arguments?.getString("topicDetails")
 
-            ChannelDetail(channelTitle,channelDescription,customUrl,country,viewCount,isLinked,topicDetails)
+            ChannelDetail(channelTitle,channelDescription,customUrl,country,viewCount,isLinked,topicDetails,navController)
         }
     }
 }

@@ -660,6 +660,8 @@ fun VideoItemCard(
     val channelDes = channelData?.items?.filter { it.id == video.snippet?.channelId }
         ?.single()?.snippet?.description
     val videoChannelThumbnail = channelData?.items?.filter { it.snippet.title == video.snippet?.channelTitle }?.firstOrNull()?.snippet?.thumbnails?.high?.url
+    val channelCountry = channelData?.items?.filter { it.snippet.title == video.snippet?.channelTitle }?.firstOrNull()?.snippet?.country
+    val topicDetails = channelData?.items?.filter { it.snippet.title == video.snippet?.channelTitle }?.firstOrNull()?.topicDetails?.topicCategories
     val channelSubs =
         formatSubscribers(channelData?.items?.first()?.statistics?.subscriberCount)
     val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
@@ -734,7 +736,7 @@ fun VideoItemCard(
                         UrlEncoderUtil.encode(
                             channelDes.toString()
                         )
-                    }/$channelId"
+                    }/$channelId/$channelCountry/${UrlEncoderUtil.encode(topicDetails.toString())}"
                 )
             },
         colors = CardDefaults.cardColors(

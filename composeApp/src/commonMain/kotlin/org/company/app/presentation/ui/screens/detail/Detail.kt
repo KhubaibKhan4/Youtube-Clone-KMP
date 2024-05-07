@@ -76,6 +76,7 @@ import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.VideoPlayer
+import org.company.app.domain.model.channel.TopicDetails
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
@@ -109,6 +110,8 @@ fun Detail(
     customUrl: String?,
     channelDes: String?,
     channelId: String?,
+    channelCountry: String?,
+    topicDetails: String?,
     navController: NavController,
     viewModel: MainViewModel = koinInject(),
 ) {
@@ -428,7 +431,7 @@ fun Detail(
                 modifier = Modifier.size(60.dp).clip(CircleShape)
                     .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
                         navController.navigate(
-                            ScreenItems.ChannelScreen.title + "/$channelId/$videoChannelTitle/${UrlEncoderUtil.encode(videoChannelThumbnail.toString())}/$isLinked/$videoChannelSubs/$videoViewCount/$customUrl/${UrlEncoderUtil.encode(channelDes.toString())}"
+                            ScreenItems.ChannelScreen.title + "/$channelId/$videoChannelTitle/${UrlEncoderUtil.encode(videoChannelThumbnail.toString())}/$isLinked/$videoChannelSubs/$videoViewCount/$customUrl/${UrlEncoderUtil.encode(channelDes.toString())}/$channelCountry/${UrlEncoderUtil.encode(topicDetails.toString())}"
                         )
 
                         // navigator?.push(ChannelScreen(channelData))
