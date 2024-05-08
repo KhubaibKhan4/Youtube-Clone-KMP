@@ -74,6 +74,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
+import compose.icons.AllIcons
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Brands
+import compose.icons.fontawesomeicons.Regular
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.brands.Youtube
+import compose.icons.fontawesomeicons.brands.YoutubeSquare
+import compose.icons.fontawesomeicons.regular.PlayCircle
+import compose.icons.fontawesomeicons.solid.Play
+import compose.icons.fontawesomeicons.solid.PlayCircle
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.VideoPlayer
@@ -187,10 +197,9 @@ fun DetailContent(
                             .align(alignment = Alignment.Center)
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.PlayArrow,
-                            contentDescription = "play icon",
-                            tint = Color.White,
-                            modifier = Modifier.size(300.dp)
+                            imageVector = FontAwesomeIcons.Solid.PlayCircle,
+                            contentDescription = null,
+                            tint = Color.Red
                         )
                     }
                 }

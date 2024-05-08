@@ -56,7 +56,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.core)
             implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.composeIcons.featherIcons)
+            implementation(libs.composeIcons.fontAwesome)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
             implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.4"))
