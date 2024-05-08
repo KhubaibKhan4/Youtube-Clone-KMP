@@ -19,7 +19,6 @@ composeImageLoader = "1.7.8"
 napier = "2.7.1"
 buildConfig = "5.3.5"
 kotlinx-coroutines = "1.8.0"
-moko-mvvm = "0.16.1"
 ktor = "2.3.10"
 composeIcons = "1.1.0"
 kotlinx-serialization = "1.6.3"
@@ -52,7 +51,6 @@ composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref =
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-moko-mvvm = { module = "dev.icerock.moko:mvvm-compose", version.ref = "moko-mvvm" }
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }

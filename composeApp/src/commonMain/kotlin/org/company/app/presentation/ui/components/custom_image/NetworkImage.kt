@@ -2,7 +2,6 @@
 
 import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,7 +10,6 @@ import androidx.compose.ui.layout.ContentScale
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.presentation.ui.components.common.LoadingBox
 
 @Composable
 fun NetworkImage(

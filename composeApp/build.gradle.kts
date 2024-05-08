@@ -54,7 +54,6 @@ kotlin {
             implementation(libs.composeImageLoader)
             implementation(libs.napier)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.moko.mvvm)
             implementation(libs.ktor.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.composeIcons.featherIcons)
