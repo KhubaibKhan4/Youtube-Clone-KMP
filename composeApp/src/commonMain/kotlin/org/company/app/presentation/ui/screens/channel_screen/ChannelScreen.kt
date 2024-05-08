@@ -135,32 +135,17 @@ fun ChannelContent(
             viewModel.getChannelDetails(channelIds.toString())
         }
         channelAllVideos?.items?.forEach { channelVideos ->
-            // viewModel.getMultipleVideo(channelVideos.contentDetails)
+            viewModel.getMultipleVideo(channelVideos.contentDetails?.projection.toString())
         }
 
     }
-    //Simple Playlist
     val state by viewModel.playlists.collectAsState()
-
-    //Channel Section Data Like Home Screens Videos,Playlists ID,Featured Channels
     val channelState by viewModel.channelSections.collectAsState()
-
-    //Channel LiveStreams
     val liveStreams by viewModel.channelLiveStream.collectAsState()
-
-    //Channel All Videos
     val allVideos by viewModel.channelVideos.collectAsState()
-
-    //Channel Community
     val channelCommunity by viewModel.channelCommunity.collectAsState()
-
-    //OWN Channel Videos
     val ownChannelVideos by viewModel.ownChannelVideos.collectAsState()
-
-    //Featured Channels
     val channelDetails by viewModel.channelDetails.collectAsState()
-
-    //Multiple Videos
     val multipleVideos by viewModel.multipleVideos.collectAsState()
 
     when (state) {
@@ -193,7 +178,6 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
-    //Channel Sections
     when (channelState) {
         is ResultState.LOADING -> {
             // LoadingBox()
@@ -209,7 +193,6 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
-    //Channel LiveStreams
     when (liveStreams) {
         is ResultState.LOADING -> {
             //LoadingBox()
@@ -226,7 +209,6 @@ fun ChannelContent(
         }
     }
 
-    //Channel All Videos
     when (allVideos) {
         is ResultState.LOADING -> {
             //LoadingBox()
@@ -244,7 +226,6 @@ fun ChannelContent(
         }
     }
 
-    //Channel Community
     when (channelCommunity) {
         is ResultState.LOADING -> {
             //LoadingBox()
@@ -261,7 +242,6 @@ fun ChannelContent(
         }
     }
 
-    //Own Channel Videos
     when (ownChannelVideos) {
         is ResultState.LOADING -> {
             //LoadingBox()
@@ -277,7 +257,6 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
-    //Channel Details
     when (channelDetails) {
         is ResultState.LOADING -> {
             // LoadingBox()
@@ -420,13 +399,11 @@ fun ChannelContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val navigator = LocalNavigator.current
-            // Custom Top App Bar
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Back Icon
                 IconButton(onClick = {
                     navigator?.pop()
                 }) {
@@ -439,7 +416,6 @@ fun ChannelContent(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Title
                 Text(
                     text = channel.snippet.title,
                     fontSize = MaterialTheme.typography.titleSmall.fontSize,
@@ -448,7 +424,6 @@ fun ChannelContent(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                // Search Icon
                 IconButton(onClick = { isSearchEnabled = !isSearchEnabled }) {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -457,7 +432,6 @@ fun ChannelContent(
                     )
                 }
 
-                // More Vert Icon
                 IconButton(onClick = {
 
                 }) {
@@ -469,7 +443,6 @@ fun ChannelContent(
                 }
             }
 
-            // Channel Poster Image
             val poster: Resource<Painter> =
                 asyncPainterResource(channel.brandingSettings.image?.bannerExternalUrl.toString())
             KamelImage(
@@ -491,13 +464,11 @@ fun ChannelContent(
                 animationSpec = tween(),
             )
 
-            // Channel Details
             Column(
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Channel Image
                 val image: Resource<Painter> =
                     asyncPainterResource(data = channel.snippet.thumbnails.default.url)
                 KamelImage(
@@ -509,7 +480,6 @@ fun ChannelContent(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Channel Title
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -533,7 +503,6 @@ fun ChannelContent(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                // Channel Subscribers and Videos
                 Text(
                     text = "${channel.snippet.customUrl} • ${formatSubscribers(channel.statistics.subscriberCount)} Subscribers • ${
                         formatLikes(
@@ -548,13 +517,11 @@ fun ChannelContent(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                // Channel Details Row
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Channel Description
                     channel.snippet.localized.description.let {
                         Text(
                             text = it,
@@ -567,7 +534,6 @@ fun ChannelContent(
                         )
                     }
 
-                    // Arrow Icon
                     IconButton(onClick = {
                         navigator?.push(ChannelDetail(channel = channel))
                     }) {
@@ -666,7 +632,6 @@ fun ChannelContent(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                 }
-                //Data of Row Tabs
                 Column(
                     modifier = Modifier
                         .height(900.dp),

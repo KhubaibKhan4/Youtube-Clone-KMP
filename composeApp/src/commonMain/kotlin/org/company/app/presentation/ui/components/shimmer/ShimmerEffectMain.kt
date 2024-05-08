@@ -61,7 +61,7 @@ fun ShimmerEffectMain() {
     ShimmerItem(brush)
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShimmerItem(
     brush: Brush
@@ -72,9 +72,9 @@ fun ShimmerItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        //TopAppBar
         TopAppBar(
             title = {
+                Spacer(modifier = Modifier.width(6.dp))
                 Spacer(
                     modifier = Modifier
                         .size(width = 120.dp, height = 40.dp)
@@ -85,6 +85,7 @@ fun ShimmerItem(
                 )
             },
             actions = {
+                Spacer(modifier = Modifier.width(6.dp))
                 Spacer(
                     modifier = Modifier
                         .size(35.dp)
@@ -114,6 +115,7 @@ fun ShimmerItem(
                         .clip(shape = RoundedCornerShape(14.dp))
                         .background(brush = brush)
                 )
+                Spacer(modifier = Modifier.width(6.dp))
             },
             modifier = Modifier.fillMaxWidth()
         )
@@ -161,7 +163,6 @@ fun ShimmerItem(
                                         )
                                         .background(brush = brush)
                                 )
-                                // Video Total Time
                                 Box(
                                     modifier = Modifier
                                         .align(Alignment.BottomEnd)
@@ -185,7 +186,6 @@ fun ShimmerItem(
                                     .padding(start = 8.dp, end = 8.dp, top = 8.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                // Channel Image
                                 Spacer(
                                     modifier = Modifier
                                         .size(40.dp)
@@ -205,7 +205,6 @@ fun ShimmerItem(
                                             .background(brush = brush)
                                     )
 
-                                    // Channel Name, Views, Time
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -221,6 +220,7 @@ fun ShimmerItem(
                                                     .clip(shape = RoundedCornerShape(12.dp))
                                                     .background(brush = brush)
                                             )
+                                            Spacer(modifier = Modifier.width(4.dp))
                                             Spacer(
                                                 modifier = Modifier
                                                     .size(15.dp)
@@ -257,8 +257,6 @@ fun ShimmerItem(
                                     }
                                 }
                                 Spacer(modifier = Modifier.width(8.dp))
-
-                                // Vertical Three Dots Icon
                                 Spacer(
                                     modifier = Modifier
                                         .size(24.dp)
