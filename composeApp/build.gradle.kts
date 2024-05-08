@@ -43,6 +43,7 @@ kotlin {
             implementation(compose.material3)
             implementation(libs.screen.size)
             implementation(compose.material)
+            implementation(compose.animation)
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(compose.materialIconsExtended)
