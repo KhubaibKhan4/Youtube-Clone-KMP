@@ -1,6 +1,7 @@
 package org.company.app.presentation.ui.components.video_list
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
@@ -125,7 +126,10 @@ import youtube_clone.composeapp.generated.resources.youtube_logo_light
 import org.company.app.domain.model.videos.Item as VideoItem
 import org.company.app.presentation.ui.screens.detail.formatViewCount as FormateView
 
-@OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
+@OptIn(
+    ExperimentalResourceApi::class, ExperimentalMaterial3WindowSizeClassApi::class,
+    ExperimentalAnimationApi::class
+)
 @Composable
 fun VideosList(
     youtube: Youtube,
