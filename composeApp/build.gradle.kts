@@ -34,6 +34,8 @@ kotlin {
         it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            // Required when using NativeSQLiteDriver
+            linkerOpts.add("-lsqlite3")
         }
     }
 
