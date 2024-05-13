@@ -94,7 +94,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `size`: `0.3.1`
 - **Voyager Navigation**: `1.0.0`
 - **Other Utilities**:
-  - `moko-mvvm`: `0.16.1`
+  - `official-viewmodel`: `Beta-2.0.0`
   - `vlcj`: `4.7.0`
   - `ffmpegPlatform`: `4.1-1.4.4`
 - **JavaFX**: `22-ea+16`
