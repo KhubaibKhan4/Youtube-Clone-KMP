@@ -55,6 +55,7 @@ import org.company.app.domain.model.search.Search
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.screens.detail.DetailScreen
 import org.company.app.utils.formatVideoDuration
+import org.company.app.utils.getFormattedDateHome
 import kotlin.random.Random
 
 @Composable
@@ -99,7 +100,6 @@ fun ChannelVideosItems(videos: Item) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
-        // Thumbnail with playlist count overlay
         Box(
             modifier = Modifier
                 .width(140.dp)
@@ -152,7 +152,6 @@ fun ChannelVideosItems(videos: Item) {
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Video Title
             Text(
                 text = videos.snippet.title,
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
@@ -167,15 +166,13 @@ fun ChannelVideosItems(videos: Item) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Playlist Title
                 Text(
-                    text = videos.snippet.title,
+                    text = getFormattedDateHome(videos.snippet.publishedAt),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     color = if (isDark) Color.White else Color.DarkGray,
                     modifier = Modifier.weight(1f)
                 )
 
-                // More options icon
                 Box(contentAlignment = Alignment.TopEnd) {
                     IconButton(
                         onClick = {

@@ -83,7 +83,6 @@ import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.channel.channel_item.SearchChannelItem
-import org.company.app.presentation.ui.components.channel.home.getFormattedDateHome
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.screens.account.AccountScreen
 import org.company.app.presentation.ui.screens.detail.DetailScreen
@@ -91,6 +90,7 @@ import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
+import org.company.app.utils.getFormattedDateHome
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
