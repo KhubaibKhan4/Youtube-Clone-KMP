@@ -51,6 +51,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.domain.model.channel.Item
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
@@ -67,6 +68,7 @@ import kotlin.random.Random
 @Composable
 fun ChannelVideos(
     search: Search,
+    channel: Item,
     viewModel: MainViewModel = koinInject(),
 ) {
     val isDark by LocalThemeIsDark.current

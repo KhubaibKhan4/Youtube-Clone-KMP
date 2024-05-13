@@ -648,11 +648,13 @@ fun ChannelContent(
                                     ChannelHome(
                                         youtube = it1,
                                         modifier = Modifier.weight(1f),
-                                        title = "Home"
+                                        title = "Home",
+                                        channel
                                     )
+
                                 }
                             }
-                            ownChannelVideo?.let { ChannelVideos(it) }
+                            ownChannelVideo?.let { ChannelVideos(it, channel) }
                             featuresChannels?.let { channel ->
                                 FeaturedChannel(
                                     channel,
@@ -663,7 +665,7 @@ fun ChannelContent(
 
 
                         1 -> {
-                            ownChannelVideo?.let { ChannelVideos(it) }
+                            ownChannelVideo?.let { ChannelVideos(it, channel) }
                         }
 
                         2 -> {

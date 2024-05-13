@@ -22,7 +22,6 @@ class DetailScreen(
 }
 
 
-// Utility functions for formatting
 fun formatViewCount(count: String?): String {
     return count?.toDoubleOrNull()?.let {
         when {

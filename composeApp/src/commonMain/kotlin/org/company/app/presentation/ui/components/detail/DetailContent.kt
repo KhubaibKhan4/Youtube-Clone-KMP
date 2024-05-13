@@ -21,7 +21,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
 import androidx.compose.material.ModalBottomSheetDefaults
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -30,7 +29,6 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.NotificationsActive
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ThumbDown
@@ -45,6 +43,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -71,18 +70,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
-import compose.icons.AllIcons
 import compose.icons.FontAwesomeIcons
-import compose.icons.fontawesomeicons.Brands
-import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.brands.Youtube
-import compose.icons.fontawesomeicons.brands.YoutubeSquare
-import compose.icons.fontawesomeicons.regular.PlayCircle
-import compose.icons.fontawesomeicons.solid.Play
 import compose.icons.fontawesomeicons.solid.PlayCircle
 import org.company.app.Notify
 import org.company.app.ShareManager
@@ -91,8 +82,6 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.company.app.presentation.viewmodel.MainViewModel
-import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.components.comments.CommentsList
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.custom_image.NetworkImage
@@ -104,6 +93,8 @@ import org.company.app.presentation.ui.screens.detail.formatSubscribers
 import org.company.app.presentation.ui.screens.detail.formatViewComments
 import org.company.app.presentation.ui.screens.detail.formatViewCount
 import org.company.app.presentation.ui.screens.detail.getFormattedDateLikeMonthDay
+import org.company.app.presentation.viewmodel.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.utils.Constant
 import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.getFormattedDate
@@ -115,10 +106,10 @@ fun DetailContent(
     video: Item?,
     search: org.company.app.domain.model.search.Item?,
     channelData: org.company.app.domain.model.channel.Item?,
-    viewModel: MainViewModel = koinInject<MainViewModel>()
+    viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     var stateRelevance by remember { mutableStateOf<ResultState<Youtube>>(ResultState.LOADING) }
-    var commentData by remember {mutableStateOf<Comments?>(null) }
+    var commentData by remember { mutableStateOf<Comments?>(null) }
     var descriptionEnabled by remember { mutableStateOf(false) }
     var displayVideoPlayer by remember { mutableStateOf(false) }
     var isCommentLive by remember { mutableStateOf(false) }
@@ -433,23 +424,19 @@ fun DetailContent(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
-            channelData?.snippet?.thumbnails?.default?.url?.let {
-                rememberImagePainter(
-                    it
-                )
-            }?.let {
-                Image(
-                    painter = it,
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp).clip(CircleShape)
-                        .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
-                            navigator?.push(ChannelScreen(channelData))
-                        },
-                    contentScale = ContentScale.FillBounds
-                )
-            }
-
+            println("CHANNEL_DATA: $channelData")
+            val channelImage = channelData?.snippet?.thumbnails?.high?.url.toString()
+            NetworkImage(
+                url = channelImage,
+                contentDescription = null,
+                modifier = Modifier.size(60.dp).clip(CircleShape)
+                    .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
+                        channelData?.let { channelItem ->
+                            navigator?.push(ChannelScreen(channelItem))
+                        }
+                    },
+                contentScale = ContentScale.FillBounds
+            )
 
             Column(
                 modifier = Modifier

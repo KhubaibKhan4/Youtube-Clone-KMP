@@ -50,6 +50,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.domain.model.channel.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.common.ErrorBox
@@ -66,6 +67,7 @@ fun ChannelHome(
     youtube: Youtube,
     modifier: Modifier,
     title: String,
+    channel: Item,
     viewModel: MainViewModel = koinInject(),
 ) {
     val isDark by LocalThemeIsDark.current
@@ -109,7 +111,7 @@ fun ChannelHome(
         val visibleVideoCount = if (isExpanded) videosList?.items?.size ?: 0 else 3
         items(visibleVideoCount) { index ->
             videosList?.items?.getOrNull(index)?.let { videos ->
-                ChannelHomeItems(videos)
+                ChannelHomeItems(videos,channel)
             }
         }
         if (youtube.items?.size ?: 0 > visibleVideoCount) {
@@ -133,7 +135,10 @@ fun ChannelHome(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
+fun ChannelHomeItems(
+    videos: org.company.app.domain.model.videos.Item,
+    channel: Item
+) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
@@ -150,7 +155,7 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
             modifier = Modifier.width(140.dp)
                 .height(80.dp)
                 .clickable {
-                    navigator?.push(DetailScreen(video = videos))
+                    navigator?.push(DetailScreen(video = videos, channelData = channel))
                 }
                 .clip(
                     shape = RoundedCornerShape(12.dp)
