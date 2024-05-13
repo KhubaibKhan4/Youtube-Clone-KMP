@@ -19,7 +19,7 @@ class DetailScreen(
 
     @Composable
     override fun Content() {
-        DetailContent(video, search, channelData,logo, subscribersCount!!)
+        DetailContent(video, search, channelData,logo, subscribersCount.toString())
     }
 }
 
