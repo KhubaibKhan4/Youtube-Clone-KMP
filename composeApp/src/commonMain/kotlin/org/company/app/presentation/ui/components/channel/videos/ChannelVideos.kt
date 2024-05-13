@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -52,18 +51,15 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.domain.model.search.Item
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.common.LoadingBox
-import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.screens.detail.DetailScreen
-import org.company.app.presentation.ui.screens.detail.getFormattedDate
 import org.company.app.presentation.viewmodel.MainViewModel
+import org.company.app.theme.LocalThemeIsDark
 import org.company.app.utils.formatVideoDuration
-import org.company.app.utils.formatViewCount
 import org.company.app.utils.getFormattedDateHome
 import org.koin.compose.koinInject
 import kotlin.random.Random
@@ -71,14 +67,15 @@ import kotlin.random.Random
 @Composable
 fun ChannelVideos(
     search: Search,
-    viewModel: MainViewModel = koinInject()
+    viewModel: MainViewModel = koinInject(),
 ) {
     val isDark by LocalThemeIsDark.current
     var videosList by remember { mutableStateOf<Youtube?>(null) }
     val videosIds = search.items?.map { it.id.videoId }
-    val formatedIds = videosIds.toString().replace("[", "").replace("]", "")
+    val formattedIds = videosIds.toString().replace("[", "").replace("]", "")
+    val newFormattedIds = formattedIds.split(",").map { it.trim() }.joinToString(",")
     LaunchedEffect(Unit) {
-        viewModel.getVideosUsingIds(formatedIds)
+        viewModel.getVideosUsingIds(newFormattedIds)
     }
     val videoState by viewModel.videosUsingIds.collectAsState()
     when (videoState) {
@@ -94,7 +91,7 @@ fun ChannelVideos(
         is ResultState.SUCCESS -> {
             val response = (videoState as ResultState.SUCCESS).response
             videosList = response
-            println("CHANNEL_DETAIL: $videosList : VIDEO_IDS : $videosIds + $videosIds")
+            println("CHANNEL_DETAIL: $videosList : VIDEO_IDS : $newFormattedIds + $videosIds")
         }
     }
     Column(
@@ -145,7 +142,7 @@ fun ChannelVideosItems(videos: org.company.app.domain.model.videos.Item) {
             KamelImage(
                 resource = image,
                 contentDescription = "Thumbnail",
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxWidth()
                     .clickable {
                         navigator?.push(DetailScreen(video = videos, search = null))
                     }
@@ -166,7 +163,7 @@ fun ChannelVideosItems(videos: org.company.app.domain.model.videos.Item) {
             )
             Box(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
+                    .align(Alignment.BottomEnd)
                     .padding(8.dp)
                     .background(MaterialTheme.colorScheme.primary)
                     .clip(RoundedCornerShape(4.dp))
@@ -202,7 +199,7 @@ fun ChannelVideosItems(videos: org.company.app.domain.model.videos.Item) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = getFormattedDate(videos.snippet?.publishedAt.toString()),
+                    text = getFormattedDateHome(videos.snippet?.publishedAt.toString()),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     color = if (isDark) Color.White else Color.Gray,
                     modifier = Modifier.weight(1f)

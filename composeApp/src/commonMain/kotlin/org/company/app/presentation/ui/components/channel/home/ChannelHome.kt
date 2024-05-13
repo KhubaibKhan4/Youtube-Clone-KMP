@@ -63,7 +63,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun ChannelHome(
-    youtube: org.company.app.domain.model.videos.Youtube,
+    youtube: Youtube,
     modifier: Modifier,
     title: String,
     viewModel: MainViewModel = koinInject(),
@@ -71,12 +71,11 @@ fun ChannelHome(
     val isDark by LocalThemeIsDark.current
     var isExpanded by remember { mutableStateOf(false) }
     var videosList by remember { mutableStateOf<Youtube?>(null) }
-    val videosIds = youtube.items?.mapNotNull { it.id }
-    val formatedIds = videosIds?.joinToString(",")
+    val videosIds = youtube.items?.map { it.id }
+    val formattedIds = videosIds.toString().replace("[", "").replace("]", "")
+    val newFormattedIds = formattedIds.split(",").map { it.trim() }.joinToString(",")
     LaunchedEffect(Unit) {
-        if (formatedIds != null) {
-            viewModel.getVideosUsingIds(formatedIds)
-        }
+        viewModel.getVideosUsingIds(newFormattedIds)
     }
     val videoState by viewModel.videosUsingIds.collectAsState()
     when (videoState) {

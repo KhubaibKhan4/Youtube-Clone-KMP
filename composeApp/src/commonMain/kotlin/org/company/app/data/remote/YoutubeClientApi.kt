@@ -70,8 +70,7 @@ object YoutubeClientApi {
         return client.get(url).body()
     }
     suspend fun getVideosUsingIds(ids: String): Youtube {
-        val url =
-            BASE_URL + "videos?part=contentDetails%2Csnippet%2Cstatistics,statistics&id=${ids}&key=${API_KEY}"
+        val url = BASE_URL+"videos?id=$ids&key=$API_KEY&part=snippet,contentDetails,statistics&maxResults=20"
         return client.get(url).body()
     }
 
