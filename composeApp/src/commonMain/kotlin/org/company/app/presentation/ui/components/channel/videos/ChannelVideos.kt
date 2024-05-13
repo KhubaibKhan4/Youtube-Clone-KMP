@@ -182,7 +182,7 @@ fun ChannelVideosItems(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(8.dp)
-                    .background(MaterialTheme.colorScheme.primary)
+                    .background(Color.Black.copy(alpha = 0.8f))
                     .clip(RoundedCornerShape(4.dp))
             ) {
                 androidx.compose.material3.Text(
