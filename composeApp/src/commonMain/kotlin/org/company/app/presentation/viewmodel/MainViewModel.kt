@@ -25,6 +25,9 @@ class MainViewModel(
     private val _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val videos: StateFlow<ResultState<Youtube>> = _videos.asStateFlow()
 
+    private val _videosUsingIds = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
+    val videosUsingIds: StateFlow<ResultState<Youtube>> = _videosUsingIds.asStateFlow()
+
     private val _relevance = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val relevance: StateFlow<ResultState<Youtube>> = _relevance.asStateFlow()
 
@@ -88,6 +91,19 @@ class MainViewModel(
             } catch (e: Exception) {
                 val error = e.message.toString()
                 _videos.value = ResultState.ERROR(error)
+            }
+
+        }
+    }
+    fun getVideosUsingIds(ids: List<String>) {
+        viewModelScope.launch {
+            _videosUsingIds.value = ResultState.LOADING
+            try {
+                val response = repository.getVideosUsingIds(ids)
+                _videosUsingIds.value = ResultState.SUCCESS(response)
+            } catch (e: Exception) {
+                val error = e.message.toString()
+                _videosUsingIds.value = ResultState.ERROR(error)
             }
 
         }
