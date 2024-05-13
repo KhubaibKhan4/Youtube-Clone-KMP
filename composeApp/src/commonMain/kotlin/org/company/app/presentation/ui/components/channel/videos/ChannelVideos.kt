@@ -69,6 +69,7 @@ import kotlin.random.Random
 fun ChannelVideos(
     search: Search,
     channel: Item,
+    logo: String,
     viewModel: MainViewModel = koinInject(),
 ) {
     val isDark by LocalThemeIsDark.current
@@ -115,7 +116,7 @@ fun ChannelVideos(
         ) {
             videosList?.items?.let { items ->
                 items(items) { videos ->
-                    ChannelVideosItems(videos)
+                    ChannelVideosItems(videos,logo)
                 }
             }
         }
@@ -124,7 +125,10 @@ fun ChannelVideos(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChannelVideosItems(videos: org.company.app.domain.model.videos.Item) {
+fun ChannelVideosItems(
+    videos: org.company.app.domain.model.videos.Item,
+    logo: String
+) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
@@ -146,7 +150,7 @@ fun ChannelVideosItems(videos: org.company.app.domain.model.videos.Item) {
                 contentDescription = "Thumbnail",
                 modifier = Modifier.fillMaxWidth()
                     .clickable {
-                        navigator?.push(DetailScreen(video = videos, search = null))
+                        navigator?.push(DetailScreen(video = videos, search = null, logo = logo))
                     }
                     .clip(
                         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)

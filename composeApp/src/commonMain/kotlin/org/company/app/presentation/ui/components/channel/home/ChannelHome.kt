@@ -68,6 +68,7 @@ fun ChannelHome(
     modifier: Modifier,
     title: String,
     channel: Item,
+    logo: String,
     viewModel: MainViewModel = koinInject(),
 ) {
     val isDark by LocalThemeIsDark.current
@@ -111,7 +112,7 @@ fun ChannelHome(
         val visibleVideoCount = if (isExpanded) videosList?.items?.size ?: 0 else 3
         items(visibleVideoCount) { index ->
             videosList?.items?.getOrNull(index)?.let { videos ->
-                ChannelHomeItems(videos,channel)
+                ChannelHomeItems(videos,channel, logo)
             }
         }
         if (youtube.items?.size ?: 0 > visibleVideoCount) {
@@ -137,7 +138,8 @@ fun ChannelHome(
 @Composable
 fun ChannelHomeItems(
     videos: org.company.app.domain.model.videos.Item,
-    channel: Item
+    channel: Item,
+    logo: String
 ) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
@@ -155,7 +157,7 @@ fun ChannelHomeItems(
             modifier = Modifier.width(140.dp)
                 .height(80.dp)
                 .clickable {
-                    navigator?.push(DetailScreen(video = videos, channelData = channel))
+                    navigator?.push(DetailScreen(video = videos, channelData = channel, logo = logo))
                 }
                 .clip(
                     shape = RoundedCornerShape(12.dp)

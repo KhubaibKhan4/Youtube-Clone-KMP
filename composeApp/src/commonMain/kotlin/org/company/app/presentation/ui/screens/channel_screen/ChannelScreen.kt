@@ -649,12 +649,13 @@ fun ChannelContent(
                                         youtube = it1,
                                         modifier = Modifier.weight(1f),
                                         title = "Home",
-                                        channel
+                                        channel,
+                                        logo = channel.brandingSettings.image?.bannerExternalUrl.toString()
                                     )
 
                                 }
                             }
-                            ownChannelVideo?.let { ChannelVideos(it, channel) }
+                            ownChannelVideo?.let { ChannelVideos(it, channel, logo = channel.snippet.thumbnails.default.url) }
                             featuresChannels?.let { channel ->
                                 FeaturedChannel(
                                     channel,
@@ -665,7 +666,7 @@ fun ChannelContent(
 
 
                         1 -> {
-                            ownChannelVideo?.let { ChannelVideos(it, channel) }
+                            ownChannelVideo?.let { ChannelVideos(it, channel,logo = channel.snippet.thumbnails.default.url) }
                         }
 
                         2 -> {

@@ -106,6 +106,7 @@ fun DetailContent(
     video: Item?,
     search: org.company.app.domain.model.search.Item?,
     channelData: org.company.app.domain.model.channel.Item?,
+    logo: String?,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     var stateRelevance by remember { mutableStateOf<ResultState<Youtube>>(ResultState.LOADING) }
@@ -424,19 +425,33 @@ fun DetailContent(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            println("CHANNEL_DATA: $channelData")
-            val channelImage = channelData?.snippet?.thumbnails?.high?.url.toString()
-            NetworkImage(
-                url = channelImage,
-                contentDescription = null,
-                modifier = Modifier.size(60.dp).clip(CircleShape)
-                    .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
-                        channelData?.let { channelItem ->
-                            navigator?.push(ChannelScreen(channelItem))
-                        }
-                    },
-                contentScale = ContentScale.FillBounds
-            )
+            println("CHANNEL_DATA: $logo")
+            val channelImage =if (channelData?.snippet?.thumbnails?.high?.url?.isEmpty() == true) logo.toString() else channelData?.snippet?.thumbnails?.high?.url.toString()
+            if (channelData?.snippet?.thumbnails?.high?.url.isNullOrBlank()){
+                NetworkImage(
+                    url = logo.toString(),
+                    contentDescription = null,
+                    modifier = Modifier.size(60.dp).clip(CircleShape)
+                        .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
+                            channelData?.let { channelItem ->
+                                navigator?.push(ChannelScreen(channelItem))
+                            }
+                        },
+                    contentScale = ContentScale.FillBounds
+                )
+            }else{
+                NetworkImage(
+                    url = channelImage,
+                    contentDescription = null,
+                    modifier = Modifier.size(60.dp).clip(CircleShape)
+                        .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
+                            channelData?.let { channelItem ->
+                                navigator?.push(ChannelScreen(channelItem))
+                            }
+                        },
+                    contentScale = ContentScale.FillBounds
+                )
+            }
 
             Column(
                 modifier = Modifier
