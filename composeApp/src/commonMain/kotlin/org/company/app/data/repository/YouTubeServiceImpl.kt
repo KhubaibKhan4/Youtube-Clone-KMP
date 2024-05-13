@@ -83,4 +83,8 @@ class YouTubeServiceImpl : YouTubeService {
     override suspend fun getChannelSearch(channelID: String, query: String): Search {
         return YoutubeClientApi.getChannelSearch(channelID, query)
     }
+
+    override suspend fun getVideosUsingIds(ids: List<String>): Youtube {
+        return YoutubeClientApi.getVideosUsingIds(ids)
+    }
 }
