@@ -33,6 +33,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,17 +54,49 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.domain.model.search.Item
 import org.company.app.domain.model.search.Search
+import org.company.app.domain.model.videos.Youtube
+import org.company.app.domain.usecases.ResultState
+import org.company.app.presentation.ui.components.common.ErrorBox
+import org.company.app.presentation.ui.components.common.LoadingBox
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.screens.detail.DetailScreen
+import org.company.app.presentation.ui.screens.detail.getFormattedDate
+import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.utils.formatVideoDuration
+import org.company.app.utils.formatViewCount
 import org.company.app.utils.getFormattedDateHome
+import org.koin.compose.koinInject
 import kotlin.random.Random
 
 @Composable
 fun ChannelVideos(
     search: Search,
+    viewModel: MainViewModel = koinInject()
 ) {
     val isDark by LocalThemeIsDark.current
+    var videosList by remember { mutableStateOf<Youtube?>(null) }
+    val videosIds = search.items?.map { it.id.videoId }
+    val formatedIds = videosIds.toString().replace("[", "").replace("]", "")
+    LaunchedEffect(Unit) {
+        viewModel.getVideosUsingIds(formatedIds)
+    }
+    val videoState by viewModel.videosUsingIds.collectAsState()
+    when (videoState) {
+        is ResultState.ERROR -> {
+            val error = (videoState as ResultState.ERROR).error
+            ErrorBox(error)
+        }
+
+        is ResultState.LOADING -> {
+            LoadingBox()
+        }
+
+        is ResultState.SUCCESS -> {
+            val response = (videoState as ResultState.SUCCESS).response
+            videosList = response
+            println("CHANNEL_DETAIL: $videosList : VIDEO_IDS : $videosIds + $videosIds")
+        }
+    }
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
@@ -80,7 +114,7 @@ fun ChannelVideos(
                 .padding(start = 8.dp, end = 8.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            search.items?.let { items ->
+            videosList?.items?.let { items ->
                 items(items) { videos ->
                     ChannelVideosItems(videos)
                 }
@@ -91,7 +125,7 @@ fun ChannelVideos(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChannelVideosItems(videos: Item) {
+fun ChannelVideosItems(videos: org.company.app.domain.model.videos.Item) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
@@ -104,16 +138,16 @@ fun ChannelVideosItems(videos: Item) {
             modifier = Modifier
                 .width(140.dp)
                 .height(80.dp),
-            contentAlignment = Alignment.BottomEnd
+            contentAlignment = Alignment.Center
         ) {
             val image: Resource<Painter> =
-                asyncPainterResource(data = videos.snippet.thumbnails.high.url)
+                asyncPainterResource(data = videos.snippet?.thumbnails?.high?.url.toString())
             KamelImage(
                 resource = image,
                 contentDescription = "Thumbnail",
                 modifier = Modifier.fillMaxSize()
                     .clickable {
-                        navigator?.push(DetailScreen(video = null, search = videos))
+                        navigator?.push(DetailScreen(video = videos, search = null))
                     }
                     .clip(
                         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
@@ -132,14 +166,15 @@ fun ChannelVideosItems(videos: Item) {
             )
             Box(
                 modifier = Modifier
-                    .align(Alignment.BottomEnd)
+                    .align(Alignment.BottomCenter)
                     .padding(8.dp)
                     .background(MaterialTheme.colorScheme.primary)
                     .clip(RoundedCornerShape(4.dp))
             ) {
                 androidx.compose.material3.Text(
-                    text = videos.snippet.publishTime.let { formatVideoDuration(it) },
-                    color = if (isDark) Color.White else Color.Black,
+                    text = videos.contentDetails?.duration?.let { formatVideoDuration(it) }
+                        ?: "00:00",
+                    color = Color.White,
                     fontSize = 10.sp
                 )
             }
@@ -153,7 +188,7 @@ fun ChannelVideosItems(videos: Item) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = videos.snippet.title,
+                text = videos.snippet?.title.toString(),
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -167,9 +202,9 @@ fun ChannelVideosItems(videos: Item) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = getFormattedDateHome(videos.snippet.publishedAt),
+                    text = getFormattedDate(videos.snippet?.publishedAt.toString()),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                    color = if (isDark) Color.White else Color.DarkGray,
+                    color = if (isDark) Color.White else Color.Gray,
                     modifier = Modifier.weight(1f)
                 )
 

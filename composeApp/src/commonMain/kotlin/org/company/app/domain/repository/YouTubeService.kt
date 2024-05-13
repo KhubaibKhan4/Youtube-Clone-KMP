@@ -24,5 +24,5 @@ interface YouTubeService {
     suspend fun getSingleVideoDetail(videoId: String): Youtube
     suspend fun getMultipleVideos(videoId: String): Youtube
     suspend fun getChannelSearch(channelID: String, query: String): Search
-    suspend fun getVideosUsingIds(ids: List<String>): Youtube
+    suspend fun getVideosUsingIds(ids: String): Youtube
 }

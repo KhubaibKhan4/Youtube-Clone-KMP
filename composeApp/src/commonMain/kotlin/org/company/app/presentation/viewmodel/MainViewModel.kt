@@ -95,7 +95,7 @@ class MainViewModel(
 
         }
     }
-    fun getVideosUsingIds(ids: List<String>) {
+    fun getVideosUsingIds(ids: String) {
         viewModelScope.launch {
             _videosUsingIds.value = ResultState.LOADING
             try {

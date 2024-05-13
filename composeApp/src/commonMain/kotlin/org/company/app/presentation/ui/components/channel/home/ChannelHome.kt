@@ -32,6 +32,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,18 +50,50 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.company.app.domain.model.videos.Youtube
+import org.company.app.domain.usecases.ResultState
+import org.company.app.presentation.ui.components.common.ErrorBox
+import org.company.app.presentation.ui.components.common.LoadingBox
 import org.company.app.presentation.ui.screens.detail.DetailScreen
+import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
+import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.getFormattedDateHome
+import org.koin.compose.koinInject
 
 @Composable
 fun ChannelHome(
     youtube: org.company.app.domain.model.videos.Youtube,
     modifier: Modifier,
     title: String,
+    viewModel: MainViewModel = koinInject(),
 ) {
     val isDark by LocalThemeIsDark.current
     var isExpanded by remember { mutableStateOf(false) }
+    var videosList by remember { mutableStateOf<Youtube?>(null) }
+    val videosIds = youtube.items?.mapNotNull { it.id }
+    val formatedIds = videosIds?.joinToString(",")
+    LaunchedEffect(Unit) {
+        if (formatedIds != null) {
+            viewModel.getVideosUsingIds(formatedIds)
+        }
+    }
+    val videoState by viewModel.videosUsingIds.collectAsState()
+    when (videoState) {
+        is ResultState.ERROR -> {
+            val error = (videoState as ResultState.ERROR).error
+            ErrorBox(error)
+        }
+
+        is ResultState.LOADING -> {
+            LoadingBox()
+        }
+
+        is ResultState.SUCCESS -> {
+            val response = (videoState as ResultState.SUCCESS).response
+            videosList = response
+        }
+    }
     LazyVerticalGrid(
         columns = GridCells.Adaptive(300.dp),
         modifier = modifier.fillMaxWidth()
@@ -73,9 +107,9 @@ fun ChannelHome(
                 color = if (isDark) Color.White else Color.Black
             )
         }
-        val visibleVideoCount = if (isExpanded) youtube.items?.size ?: 0 else 3
+        val visibleVideoCount = if (isExpanded) videosList?.items?.size ?: 0 else 3
         items(visibleVideoCount) { index ->
-            youtube.items?.getOrNull(index)?.let { videos ->
+            videosList?.items?.getOrNull(index)?.let { videos ->
                 ChannelHomeItems(videos)
             }
         }
@@ -155,6 +189,12 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+
+                Text(
+                    text = formatVideoDuration(videos.contentDetails?.duration.toString()),
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                    color = if (isDark) Color.White else Color.LightGray
+                )
                 Text(
                     text = getFormattedDateHome(videos.snippet?.publishedAt.toString()),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
