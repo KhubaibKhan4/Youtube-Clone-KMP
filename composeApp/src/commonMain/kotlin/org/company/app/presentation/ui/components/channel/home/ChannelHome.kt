@@ -24,8 +24,6 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Download
-import androidx.compose.material.icons.outlined.PlaylistAdd
-import androidx.compose.material.icons.outlined.PlaylistAddCheck
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.CircularProgressIndicator
@@ -50,14 +48,9 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.screens.detail.DetailScreen
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
+import org.company.app.theme.LocalThemeIsDark
+import org.company.app.utils.getFormattedDateHome
 
 @Composable
 fun ChannelHome(
@@ -86,8 +79,6 @@ fun ChannelHome(
                 ChannelHomeItems(videos)
             }
         }
-
-        // Display the expand/collapse button
         if (youtube.items?.size ?: 0 > visibleVideoCount) {
             item {
                 IconButton(
@@ -151,7 +142,6 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            //Video Title
             Text(
                 text = videos.snippet?.title.toString(),
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
@@ -165,7 +155,6 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                //Date
                 Text(
                     text = getFormattedDateHome(videos.snippet?.publishedAt.toString()),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
@@ -196,7 +185,7 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
                     modifier = Modifier.fillMaxWidth(),
                     sheetState = rememberModalBottomSheetState(),
                     shape = RoundedCornerShape(4.dp),
-                    contentColor = if (isDark) Color.White else Color.Black,  // Adjust color as needed
+                    contentColor = if (isDark) Color.White else Color.Black,
                     scrimColor = Color.Transparent,
                     tonalElevation = 4.dp,
                 ) {
@@ -312,41 +301,5 @@ fun ChannelHomeItems(videos: org.company.app.domain.model.videos.Item) {
                 }
             }
         }
-    }
-}
-
-fun getFormattedDateHome(publishedAt: String): String {
-    return try {
-        val instant = Instant.parse(publishedAt)
-        val currentInstant = Clock.System.now()
-
-        val duration: Duration = currentInstant - instant
-        when {
-            duration < 1.minutes -> "${duration.inWholeSeconds} seconds ago"
-            duration < 1.hours -> "${duration.inWholeMinutes} minutes ago"
-            duration < 1.days -> "${duration.inWholeHours} hours ago"
-            else -> {
-                val days = duration.inWholeDays
-                when {
-                    days < 7 -> "$days days ago"
-                    days < 30 -> {
-                        val weeks = (days / 7).toInt()
-                        "$weeks weeks ago"
-                    }
-
-                    days < 365 -> {
-                        val months = (days / 30).toInt()
-                        "$months months ago"
-                    }
-
-                    else -> {
-                        val years = (days / 365).toInt()
-                        "$years years ago"
-                    }
-                }
-            }
-        }
-    } catch (e: Throwable) {
-        "Unknown date"
     }
 }
