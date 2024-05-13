@@ -108,7 +108,6 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
-        // Thumbnail with playlist count overlay
         Box(
             modifier = Modifier
                 .width(140.dp)
@@ -140,7 +139,6 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
                 animationSpec = tween()
             )
 
-            // Playlist count overlay
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -178,7 +176,6 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Video Title
             Text(
                 text = videos.snippet?.title.toString(),
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
@@ -193,14 +190,12 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Playlist Title
                 Text(
                     text = videos.snippet?.channelTitle.toString(),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     color =if (isDark) Color.White else Color.DarkGray
                 )
 
-                // More options icon
                 Box(contentAlignment = Alignment.TopEnd) {
                     IconButton(
                         onClick = {
@@ -225,7 +220,7 @@ fun ChannelPlaylistsItems(videos: org.company.app.domain.model.videos.Item) {
                 modifier = Modifier.fillMaxWidth(),
                 sheetState = rememberModalBottomSheetState(),
                 shape = RoundedCornerShape(4.dp),
-                contentColor = if (isDark) Color.White else Color.Black,  // Adjust color as needed
+                contentColor = if (isDark) Color.White else Color.Black,
                 scrimColor = Color.Transparent,
                 tonalElevation = 4.dp,
             ) {
@@ -352,5 +347,3 @@ private fun getRandomColors(): Color {
         alpha = 0.75f
     )
 }
-
-

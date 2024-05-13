@@ -379,7 +379,7 @@ fun ShortItem(
                             .clip(shape = CircleShape)
                             .clickable {
                                 channelDetail?.items?.get(0)?.let { item ->
-                                    //navigator?.push(ChannelScreen(channel = item))
+                                    navigator?.push(ChannelScreen(channel = item))
                                 }
                             }
                     )
@@ -387,7 +387,7 @@ fun ShortItem(
                     Row(
                         modifier = Modifier.clickable {
                             channelDetail?.items?.get(0)?.let { item ->
-                               // navigator?.push(ChannelScreen(channel = item))
+                                navigator?.push(ChannelScreen(channel = item))
                             }
                         },
                         verticalAlignment = Alignment.CenterVertically,
