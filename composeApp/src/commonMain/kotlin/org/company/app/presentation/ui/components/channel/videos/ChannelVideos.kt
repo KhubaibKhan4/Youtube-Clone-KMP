@@ -56,7 +56,7 @@ import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.common.ErrorBox
-import org.company.app.presentation.ui.components.common.LoadingBox
+import org.company.app.presentation.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.presentation.ui.screens.detail.DetailScreen
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -70,7 +70,8 @@ fun ChannelVideos(
     search: Search,
     channel: Item,
     logo: String,
-    subscriberCount : String,
+    subscriberCount: String,
+    modifier: Modifier,
     viewModel: MainViewModel = koinInject(),
 ) {
     val isDark by LocalThemeIsDark.current
@@ -89,7 +90,7 @@ fun ChannelVideos(
         }
 
         is ResultState.LOADING -> {
-            LoadingBox()
+            ShimmerEffectMain()
         }
 
         is ResultState.SUCCESS -> {
@@ -99,7 +100,7 @@ fun ChannelVideos(
         }
     }
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -117,7 +118,7 @@ fun ChannelVideos(
         ) {
             videosList?.items?.let { items ->
                 items(items) { videos ->
-                    ChannelVideosItems(videos,logo,subscriberCount)
+                    ChannelVideosItems(videos, logo, subscriberCount)
                 }
             }
         }
@@ -129,7 +130,7 @@ fun ChannelVideos(
 fun ChannelVideosItems(
     videos: org.company.app.domain.model.videos.Item,
     logo: String,
-    subscriberCount : String
+    subscriberCount: String,
 ) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
@@ -152,7 +153,14 @@ fun ChannelVideosItems(
                 contentDescription = "Thumbnail",
                 modifier = Modifier.fillMaxWidth()
                     .clickable {
-                        navigator?.push(DetailScreen(video = videos, search = null, logo = logo, subscribersCount = subscriberCount))
+                        navigator?.push(
+                            DetailScreen(
+                                video = videos,
+                                search = null,
+                                logo = logo,
+                                subscribersCount = subscriberCount
+                            )
+                        )
                     }
                     .clip(
                         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)

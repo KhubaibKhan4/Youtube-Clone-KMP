@@ -55,6 +55,8 @@ import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.common.LoadingBox
+import org.company.app.presentation.ui.components.shimmer.ShimmerEffectChannel
+import org.company.app.presentation.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.presentation.ui.screens.detail.DetailScreen
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
@@ -88,7 +90,7 @@ fun ChannelHome(
         }
 
         is ResultState.LOADING -> {
-            LoadingBox()
+            ShimmerEffectMain()
         }
 
         is ResultState.SUCCESS -> {

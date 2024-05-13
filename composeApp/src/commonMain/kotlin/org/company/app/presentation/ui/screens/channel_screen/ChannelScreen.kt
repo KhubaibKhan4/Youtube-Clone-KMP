@@ -647,7 +647,7 @@ fun ChannelContent(
                                 youtube?.let { it1 ->
                                     ChannelHome(
                                         youtube = it1,
-                                        modifier = Modifier.weight(1f),
+                                        modifier = Modifier.fillMaxWidth(),
                                         title = "Home",
                                         channel,
                                         logo = channel.brandingSettings.image?.bannerExternalUrl.toString()
@@ -655,18 +655,35 @@ fun ChannelContent(
 
                                 }
                             }
-                            ownChannelVideo?.let { ChannelVideos(it, channel, logo = channel.snippet.thumbnails.default.url, channel.statistics.subscriberCount) }
+                            ownChannelVideo?.let {
+                                ChannelVideos(
+                                    it,
+                                    channel,
+                                    logo = channel.snippet.thumbnails.default.url,
+                                    channel.statistics.subscriberCount,
+                                    modifier = Modifier.fillMaxWidth().weight(1f)
+                                )
+                            }
                             featuresChannels?.let { channel ->
                                 FeaturedChannel(
                                     channel,
-                                    featuredText = "Sub To All Channels for Cookie"
+                                    featuredText = "Sub To All Channels for Cookie",
+                                    modifier = Modifier.weight(1f)
                                 )
                             }
                         }
 
 
                         1 -> {
-                            ownChannelVideo?.let { ChannelVideos(it, channel,logo = channel.snippet.thumbnails.default.url,channel.statistics.subscriberCount) }
+                            ownChannelVideo?.let {
+                                ChannelVideos(
+                                    it,
+                                    channel,
+                                    logo = channel.snippet.thumbnails.default.url,
+                                    channel.statistics.subscriberCount,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
                         }
 
                         2 -> {

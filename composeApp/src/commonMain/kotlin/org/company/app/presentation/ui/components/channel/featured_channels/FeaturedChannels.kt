@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -27,27 +29,29 @@ import androidx.compose.ui.unit.dp
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.screens.detail.formatSubscribers
+import org.company.app.theme.LocalThemeIsDark
 
 @Composable
 fun FeaturedChannel(
     channel: org.company.app.domain.model.channel.Channel,
-    featuredText: String
+    featuredText: String,
+    modifier: Modifier,
 ) {
     val isDark by LocalThemeIsDark.current
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(300.dp)
+        columns = GridCells.Adaptive(300.dp),
+        modifier = modifier
     ) {
         item {
             Text(
                 text = featuredText,
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
                 modifier = Modifier.fillMaxWidth().padding(start = 6.dp, end = 4.dp),
-                color =if (isDark) Color.White else Color.Black
+                color = if (isDark) Color.White else Color.Black
             )
         }
-        channel.items?.let {items->
+        channel.items?.let { items ->
             items(items) { item ->
                 FeatureChannelItems(item)
             }
@@ -62,14 +66,15 @@ fun FeatureChannelItems(channel: org.company.app.domain.model.channel.Item) {
         modifier = Modifier.fillMaxWidth()
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
         val channelImage: Resource<Painter> =
             asyncPainterResource(data = channel.snippet.thumbnails.high.url)
         KamelImage(
             resource = channelImage,
             contentDescription = "Channel Logo",
-            modifier = Modifier.size(250.dp),
+            modifier = Modifier.size(100.dp)
+                .clip(CircleShape),
             contentScale = ContentScale.Crop,
             onFailure = {
                 Text(text = "Failed to Load Image")
@@ -106,7 +111,7 @@ fun FeatureChannelItems(channel: org.company.app.domain.model.channel.Item) {
                 text = "SUBSCRIBE",
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
                 fontWeight = FontWeight.Bold,
-                color =Color.Red
+                color = Color.Red
             )
         }
     }
