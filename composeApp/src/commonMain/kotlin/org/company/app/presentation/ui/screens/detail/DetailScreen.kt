@@ -14,11 +14,12 @@ class DetailScreen(
     private val search: org.company.app.domain.model.search.Item? = null,
     private val channelData: Item? = null,
     private val logo: String? = null,
+    private val subscribersCount: String? =null
 ) : Screen {
 
     @Composable
     override fun Content() {
-        DetailContent(video, search, channelData,logo)
+        DetailContent(video, search, channelData,logo, subscribersCount!!)
     }
 }
 

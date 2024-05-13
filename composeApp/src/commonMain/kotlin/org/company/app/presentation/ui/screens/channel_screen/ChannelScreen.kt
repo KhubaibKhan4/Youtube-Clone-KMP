@@ -655,7 +655,7 @@ fun ChannelContent(
 
                                 }
                             }
-                            ownChannelVideo?.let { ChannelVideos(it, channel, logo = channel.snippet.thumbnails.default.url) }
+                            ownChannelVideo?.let { ChannelVideos(it, channel, logo = channel.snippet.thumbnails.default.url, channel.statistics.subscriberCount) }
                             featuresChannels?.let { channel ->
                                 FeaturedChannel(
                                     channel,
@@ -666,7 +666,7 @@ fun ChannelContent(
 
 
                         1 -> {
-                            ownChannelVideo?.let { ChannelVideos(it, channel,logo = channel.snippet.thumbnails.default.url) }
+                            ownChannelVideo?.let { ChannelVideos(it, channel,logo = channel.snippet.thumbnails.default.url,channel.statistics.subscriberCount) }
                         }
 
                         2 -> {

@@ -157,7 +157,7 @@ fun ChannelHomeItems(
             modifier = Modifier.width(140.dp)
                 .height(80.dp)
                 .clickable {
-                    navigator?.push(DetailScreen(video = videos, channelData = channel, logo = logo))
+                    navigator?.push(DetailScreen(video = videos, channelData = channel, logo = logo, subscribersCount = channel.statistics?.subscriberCount.toString()))
                 }
                 .clip(
                     shape = RoundedCornerShape(12.dp)

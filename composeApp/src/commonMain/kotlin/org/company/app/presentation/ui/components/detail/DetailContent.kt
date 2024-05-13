@@ -107,6 +107,7 @@ fun DetailContent(
     search: org.company.app.domain.model.search.Item?,
     channelData: org.company.app.domain.model.channel.Item?,
     logo: String?,
+    subscribersCount: String,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
     var stateRelevance by remember { mutableStateOf<ResultState<Youtube>>(ResultState.LOADING) }
@@ -483,8 +484,9 @@ fun DetailContent(
                         )
                     }
                 }
+                val subscribers = if (channelData?.statistics?.subscriberCount.isNullOrBlank()) subscribersCount else channelData?.statistics?.subscriberCount
                 Text(
-                    text = "${formatSubscribers(channelData?.statistics?.subscriberCount)} Subscribers",
+                    text = "${formatSubscribers(subscribers)} Subscribers",
                     fontSize = 14.sp
                 )
 

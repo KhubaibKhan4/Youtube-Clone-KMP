@@ -70,6 +70,7 @@ fun ChannelVideos(
     search: Search,
     channel: Item,
     logo: String,
+    subscriberCount : String,
     viewModel: MainViewModel = koinInject(),
 ) {
     val isDark by LocalThemeIsDark.current
@@ -116,7 +117,7 @@ fun ChannelVideos(
         ) {
             videosList?.items?.let { items ->
                 items(items) { videos ->
-                    ChannelVideosItems(videos,logo)
+                    ChannelVideosItems(videos,logo,subscriberCount)
                 }
             }
         }
@@ -127,7 +128,8 @@ fun ChannelVideos(
 @Composable
 fun ChannelVideosItems(
     videos: org.company.app.domain.model.videos.Item,
-    logo: String
+    logo: String,
+    subscriberCount : String
 ) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
@@ -150,7 +152,7 @@ fun ChannelVideosItems(
                 contentDescription = "Thumbnail",
                 modifier = Modifier.fillMaxWidth()
                     .clickable {
-                        navigator?.push(DetailScreen(video = videos, search = null, logo = logo))
+                        navigator?.push(DetailScreen(video = videos, search = null, logo = logo, subscribersCount = subscriberCount))
                     }
                     .clip(
                         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
