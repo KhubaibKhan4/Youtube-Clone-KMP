@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -634,7 +635,8 @@ fun ChannelContent(
                 }
                 Column(
                     modifier = Modifier
-                        .height(900.dp),
+                        .fillMaxWidth()
+                        .height(1200.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -655,15 +657,19 @@ fun ChannelContent(
 
                                 }
                             }
+                            Spacer(modifier = Modifier.height(12.dp))
                             ownChannelVideo?.let {
                                 ChannelVideos(
                                     it,
                                     channel,
                                     logo = channel.snippet.thumbnails.default.url,
                                     channel.statistics.subscriberCount,
-                                    modifier = Modifier.fillMaxWidth().weight(1f)
+                                    modifier = Modifier.fillMaxWidth()
+                                        .fillMaxHeight(1f)
+                                        .weight(1f)
                                 )
                             }
+                            Spacer(modifier = Modifier.height(12.dp))
                             featuresChannels?.let { channel ->
                                 FeaturedChannel(
                                     channel,

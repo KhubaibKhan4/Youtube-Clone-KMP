@@ -1,6 +1,7 @@
 package org.company.app.presentation.ui.components.channel.home
 
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -46,6 +47,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -54,8 +56,6 @@ import org.company.app.domain.model.channel.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.common.ErrorBox
-import org.company.app.presentation.ui.components.common.LoadingBox
-import org.company.app.presentation.ui.components.shimmer.ShimmerEffectChannel
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.presentation.ui.screens.detail.DetailScreen
 import org.company.app.presentation.viewmodel.MainViewModel
@@ -114,7 +114,7 @@ fun ChannelHome(
         val visibleVideoCount = if (isExpanded) videosList?.items?.size ?: 0 else 3
         items(visibleVideoCount) { index ->
             videosList?.items?.getOrNull(index)?.let { videos ->
-                ChannelHomeItems(videos,channel, logo)
+                ChannelHomeItems(videos, channel, logo)
             }
         }
         if (youtube.items?.size ?: 0 > visibleVideoCount) {
@@ -141,7 +141,7 @@ fun ChannelHome(
 fun ChannelHomeItems(
     videos: org.company.app.domain.model.videos.Item,
     channel: Item,
-    logo: String
+    logo: String,
 ) {
     var moreVertEnable by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
@@ -151,31 +151,56 @@ fun ChannelHomeItems(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
-        val image: Resource<Painter> =
-            asyncPainterResource(data = videos.snippet?.thumbnails?.high?.url.toString())
-        KamelImage(
-            resource = image,
-            contentDescription = "Thumbnail",
-            modifier = Modifier.width(140.dp)
-                .height(80.dp)
-                .clickable {
-                    navigator?.push(DetailScreen(video = videos, channelData = channel, logo = logo, subscribersCount = channel.statistics?.subscriberCount.toString()))
-                }
-                .clip(
-                    shape = RoundedCornerShape(12.dp)
-                ),
-            contentAlignment = Alignment.Center,
-            contentScale = ContentScale.Crop,
-            onFailure = {
-                Text("Failed to Load Image")
-            },
-            onLoading = {
-                CircularProgressIndicator(
-                    progress = { it },
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+            val image: Resource<Painter> =
+                asyncPainterResource(data = videos.snippet?.thumbnails?.high?.url.toString())
+            KamelImage(
+                resource = image,
+                contentDescription = "Thumbnail",
+                modifier = Modifier.width(140.dp)
+                    .height(80.dp)
+                    .clickable {
+                        navigator?.push(
+                            DetailScreen(
+                                video = videos,
+                                channelData = channel,
+                                logo = logo,
+                                subscribersCount = channel.statistics?.subscriberCount.toString()
+                            )
+                        )
+                    }
+                    .clip(
+                        shape = RoundedCornerShape(12.dp)
+                    ),
+                contentAlignment = Alignment.Center,
+                contentScale = ContentScale.Crop,
+                onFailure = {
+                    Text("Failed to Load Image")
+                },
+                onLoading = {
+                    CircularProgressIndicator(
+                        progress = { it },
+                    )
+                },
+                animationSpec = tween()
+            )
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(8.dp)
+                    .background(MaterialTheme.colorScheme.primary)
+                    .clip(RoundedCornerShape(4.dp))
+            ) {
+                androidx.compose.material3.Text(
+                    text = videos.contentDetails?.duration?.let { formatVideoDuration(it) }
+                        ?: "00:00",
+                    color = Color.White,
+                    fontSize = 10.sp
                 )
-            },
-            animationSpec = tween()
-        )
+            }
+        }
 
         Spacer(modifier = Modifier.width(8.dp))
 
