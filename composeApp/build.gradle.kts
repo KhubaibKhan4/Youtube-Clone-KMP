@@ -101,6 +101,8 @@ kotlin {
             implementation("io.insert-koin:koin-core")
             implementation("io.insert-koin:koin-android")
             implementation("io.insert-koin:koin-annotations:1.3.1")
+            implementation(libs.androidx.glance.app.widget)
+            implementation(libs.androidx.glance.material3)
         }
 
         jvmMain.dependencies {

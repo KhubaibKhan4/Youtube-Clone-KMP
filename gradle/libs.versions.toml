@@ -32,7 +32,7 @@ glace-effect = "1.0.0"
 
 [libraries]
 androidx-glance-app-widget = {module = "androidx.glance:glance-appwidget", version.ref = "glace-effect"}
-androidx-glance-material3 = {module = "androidx.glance:glance-material", version.ref = "glace-effect"}
+androidx-glance-material3 = {module = "androidx.glance:glance-material3", version.ref = "glace-effect"}
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3Ui" }
