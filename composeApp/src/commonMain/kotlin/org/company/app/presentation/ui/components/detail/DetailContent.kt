@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -502,100 +503,105 @@ fun DetailContent(
                 )
 
             }
-            Row {
-                AnimatedVisibility(!isSubscribed) {
-                    Text(text = "SUBSCRIBE",
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        modifier = Modifier
-                            .pointerHoverIcon(icon = PointerIcon.Hand)
-                            .clickable {
-                                isSubscribed = !isSubscribed
-                            }
-                    )
-                }
+            Column(
+                modifier = Modifier.wrapContentWidth(),
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Row {
+                    AnimatedVisibility(!isSubscribed) {
+                        Text(text = "SUBSCRIBE",
+                            color = Color.Red,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .pointerHoverIcon(icon = PointerIcon.Hand)
+                                .clickable {
+                                    isSubscribed = !isSubscribed
+                                }
+                        )
+                    }
 
-                AnimatedVisibility(isSubscribed) {
-                    FilledTonalButton(onClick = {
-                        subscribedMenu = true
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.NotificationsActive,
-                            contentDescription = null,
-                            modifier = Modifier.size(25.dp)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(text = "Subscribed")
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(6.dp))
-            AnimatedVisibility(subscribedMenu) {
-                DropdownMenu(
-                    expanded = subscribedMenu,
-                    onDismissRequest = {
-                        subscribedMenu = false
-                    }
-                ) {
-                    DropdownMenuItem(
-                        text = {
-                            Text("All")
-                        },
-                        onClick = {},
-                        leadingIcon = {
+                    AnimatedVisibility(isSubscribed) {
+                        FilledTonalButton(onClick = {
+                            subscribedMenu = true
+                        }) {
                             Icon(
                                 imageVector = Icons.Filled.NotificationsActive,
                                 contentDescription = null,
                                 modifier = Modifier.size(25.dp)
                             )
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = {
-                            Text("Personalized")
-                        },
-                        onClick = {},
-                        leadingIcon = {
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(text = "Subscribed")
+                            Spacer(modifier = Modifier.width(4.dp))
                             Icon(
-                                imageVector = Icons.Outlined.Notifications,
+                                imageVector = Icons.Default.ArrowDropDown,
                                 contentDescription = null,
-                                modifier = Modifier.size(25.dp)
+                                modifier = Modifier.size(20.dp)
                             )
                         }
-                    )
-                    DropdownMenuItem(
-                        text = {
-                            Text("None")
-                        },
-                        onClick = {},
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Outlined.NotificationsOff,
-                                contentDescription = null,
-                                modifier = Modifier.size(25.dp)
-                            )
+                    }
+                }
+                AnimatedVisibility(subscribedMenu) {
+                    DropdownMenu(
+                        expanded = subscribedMenu,
+                        onDismissRequest = {
+                            subscribedMenu = false
                         }
-                    )
-                    DropdownMenuItem(
-                        text = {
-                            Text("Unsubscribe")
-                        },
-                        onClick = {},
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Outlined.PersonOutline,
-                                contentDescription = null,
-                                modifier = Modifier.size(25.dp)
-                            )
-                        }
-                    )
+                    ) {
+                        DropdownMenuItem(
+                            text = {
+                                Text("All")
+                            },
+                            onClick = {},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Filled.NotificationsActive,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(25.dp)
+                                )
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text("Personalized")
+                            },
+                            onClick = {},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.Notifications,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(25.dp)
+                                )
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text("None")
+                            },
+                            onClick = {},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.NotificationsOff,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(25.dp)
+                                )
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text("Unsubscribe")
+                            },
+                            onClick = {},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.PersonOutline,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(25.dp)
+                                )
+                            }
+                        )
+                    }
                 }
             }
         }
