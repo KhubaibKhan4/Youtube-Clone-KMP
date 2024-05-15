@@ -21,10 +21,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetDefaults
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -36,12 +39,17 @@ import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.filled.UnfoldMoreDouble
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.AccountBox
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.NotificationsOff
+import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -100,7 +108,7 @@ import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.getFormattedDate
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun DetailContent(
     video: Item?,
@@ -117,6 +125,7 @@ fun DetailContent(
     var isCommentLive by remember { mutableStateOf(false) }
     var isShareEnabled by remember { mutableStateOf(false) }
     var isSubscribed by remember { mutableStateOf(false) }
+    var subscribedMenu by remember { mutableStateOf(false) }
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
 
@@ -427,8 +436,9 @@ fun DetailContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             println("CHANNEL_DATA: $logo")
-            val channelImage =if (channelData?.snippet?.thumbnails?.high?.url?.isEmpty() == true) logo.toString() else channelData?.snippet?.thumbnails?.high?.url.toString()
-            if (channelData?.snippet?.thumbnails?.high?.url.isNullOrBlank()){
+            val channelImage =
+                if (channelData?.snippet?.thumbnails?.high?.url?.isEmpty() == true) logo.toString() else channelData?.snippet?.thumbnails?.high?.url.toString()
+            if (channelData?.snippet?.thumbnails?.high?.url.isNullOrBlank()) {
                 NetworkImage(
                     url = logo.toString(),
                     contentDescription = null,
@@ -440,7 +450,7 @@ fun DetailContent(
                         },
                     contentScale = ContentScale.FillBounds
                 )
-            }else{
+            } else {
                 NetworkImage(
                     url = channelImage,
                     contentDescription = null,
@@ -484,58 +494,108 @@ fun DetailContent(
                         )
                     }
                 }
-                val subscribers = if (channelData?.statistics?.subscriberCount.isNullOrBlank()) subscribersCount else channelData?.statistics?.subscriberCount
+                val subscribers =
+                    if (channelData?.statistics?.subscriberCount.isNullOrBlank()) subscribersCount else channelData?.statistics?.subscriberCount
                 Text(
                     text = "${formatSubscribers(subscribers)} Subscribers",
                     fontSize = 14.sp
                 )
 
             }
-            androidx.compose.animation.AnimatedVisibility(!isSubscribed) {
-                Text(text = "SUBSCRIBE",
-                    color = Color.Red,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                    modifier = Modifier
-                        .pointerHoverIcon(icon = PointerIcon.Hand)
-                        .clickable {
-                            isSubscribed = !isSubscribed
-                        }
-                )
-            }
-
-            AnimatedVisibility(isSubscribed) {
-                Card(
-                    modifier = Modifier
-                        .width(145.dp)
-                        .height(35.dp)
-                        .padding(8.dp),
-                    onClick = {
-                        isSubscribed = !isSubscribed
-                    }
-                ) {
-                    Row(
+            Row {
+                AnimatedVisibility(!isSubscribed) {
+                    Text(text = "SUBSCRIBE",
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
+                            .pointerHoverIcon(icon = PointerIcon.Hand)
+                            .clickable {
+                                isSubscribed = !isSubscribed
+                            }
+                    )
+                }
+
+                AnimatedVisibility(isSubscribed) {
+                    FilledTonalButton(onClick = {
+                        subscribedMenu = true
+                    }) {
                         Icon(
                             imageVector = Icons.Filled.NotificationsActive,
                             contentDescription = null,
                             modifier = Modifier.size(25.dp)
                         )
-                        Text(
-                            text = "Subscribed",
-                            fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                            fontWeight = FontWeight.SemiBold
-                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(text = "Subscribed")
+                        Spacer(modifier = Modifier.width(4.dp))
                         Icon(
-                            imageVector = Icons.Filled.KeyboardArrowDown,
+                            imageVector = Icons.Default.ArrowDropDown,
                             contentDescription = null,
-                            modifier = Modifier.size(25.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                     }
+                }
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+            AnimatedVisibility(subscribedMenu) {
+                DropdownMenu(
+                    expanded = subscribedMenu,
+                    onDismissRequest = {
+                        subscribedMenu = false
+                    }
+                ) {
+                    DropdownMenuItem(
+                        text = {
+                            Text("All")
+                        },
+                        onClick = {},
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Filled.NotificationsActive,
+                                contentDescription = null,
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                            Text("Personalized")
+                        },
+                        onClick = {},
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Notifications,
+                                contentDescription = null,
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                            Text("None")
+                        },
+                        onClick = {},
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.NotificationsOff,
+                                contentDescription = null,
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                            Text("Unsubscribe")
+                        },
+                        onClick = {},
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.PersonOutline,
+                                contentDescription = null,
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
+                    )
                 }
             }
         }
