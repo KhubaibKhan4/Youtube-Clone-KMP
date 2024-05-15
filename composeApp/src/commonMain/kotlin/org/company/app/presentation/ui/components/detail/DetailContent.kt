@@ -503,6 +503,8 @@ fun DetailContent(
                 )
 
             }
+            var selectedOption by remember { mutableStateOf("All") }
+
             Column(
                 modifier = Modifier.wrapContentWidth(),
                 horizontalAlignment = Alignment.End,
@@ -510,14 +512,15 @@ fun DetailContent(
             ) {
                 Row {
                     AnimatedVisibility(!isSubscribed) {
-                        Text(text = "SUBSCRIBE",
+                        Text(
+                            text = "SUBSCRIBE",
                             color = Color.Red,
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
                             modifier = Modifier
                                 .pointerHoverIcon(icon = PointerIcon.Hand)
                                 .clickable {
-                                    isSubscribed = !isSubscribed
+                                    isSubscribed = true
                                 }
                         )
                     }
@@ -527,13 +530,21 @@ fun DetailContent(
                             subscribedMenu = true
                         }) {
                             Icon(
-                                imageVector = Icons.Filled.NotificationsActive,
+                                imageVector = when (selectedOption) {
+                                    "All" -> Icons.Filled.NotificationsActive
+                                    "Personalized" -> Icons.Outlined.Notifications
+                                    "None" -> Icons.Outlined.NotificationsOff
+                                    "Unsubscribe" -> Icons.Outlined.PersonOutline
+                                    else -> Icons.Filled.NotificationsActive
+                                },
                                 contentDescription = null,
                                 modifier = Modifier.size(25.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text(text = "Subscribed")
-                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = "Subscribed",
+                                modifier = Modifier.padding(end = 4.dp)
+                            )
                             Icon(
                                 imageVector = Icons.Default.ArrowDropDown,
                                 contentDescription = null,
@@ -542,6 +553,7 @@ fun DetailContent(
                         }
                     }
                 }
+
                 AnimatedVisibility(subscribedMenu) {
                     DropdownMenu(
                         expanded = subscribedMenu,
@@ -549,58 +561,32 @@ fun DetailContent(
                             subscribedMenu = false
                         }
                     ) {
-                        DropdownMenuItem(
-                            text = {
-                                Text("All")
-                            },
-                            onClick = {},
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Filled.NotificationsActive,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(25.dp)
-                                )
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = {
-                                Text("Personalized")
-                            },
-                            onClick = {},
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Outlined.Notifications,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(25.dp)
-                                )
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = {
-                                Text("None")
-                            },
-                            onClick = {},
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Outlined.NotificationsOff,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(25.dp)
-                                )
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = {
-                                Text("Unsubscribe")
-                            },
-                            onClick = {},
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Outlined.PersonOutline,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(25.dp)
-                                )
-                            }
-                        )
+                        listOf("All", "Personalized", "None", "Unsubscribe").forEach { option ->
+                            DropdownMenuItem(
+                                text = { Text(option) },
+                                onClick = {
+                                    if (option == "Unsubscribe") {
+                                        isSubscribed = false
+                                    } else {
+                                        selectedOption = option
+                                    }
+                                    subscribedMenu = false
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = when (option) {
+                                            "All" -> Icons.Filled.NotificationsActive
+                                            "Personalized" -> Icons.Outlined.Notifications
+                                            "None" -> Icons.Outlined.NotificationsOff
+                                            "Unsubscribe" -> Icons.Outlined.PersonOutline
+                                            else -> Icons.Filled.NotificationsActive
+                                        },
+                                        contentDescription = null,
+                                        modifier = Modifier.size(25.dp)
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
             }
