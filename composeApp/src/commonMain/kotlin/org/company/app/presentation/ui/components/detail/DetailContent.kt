@@ -676,7 +676,7 @@ fun DetailContent(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Icon(
-                    imageVector = Icons.Default.UnfoldMoreDouble,
+                    imageVector = Icons.Default.ArrowDropDown,
                     contentDescription = "More Comments Icon"
                 )
             }
