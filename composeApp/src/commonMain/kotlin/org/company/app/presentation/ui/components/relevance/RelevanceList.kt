@@ -21,6 +21,7 @@ import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.common.LoadingBox
+import org.company.app.presentation.ui.components.shimmer.ShimmerEffectSingleVideo
 import org.company.app.presentation.ui.components.video_list.VideoItemCard
 
 @Composable
@@ -31,7 +32,7 @@ fun RelevanceList(
 
     when (stateRelevance) {
         is ResultState.LOADING -> {
-            LoadingBox()
+           ShimmerEffectSingleVideo()
         }
 
         is ResultState.SUCCESS -> {

@@ -97,6 +97,7 @@ import org.company.app.presentation.ui.components.comments.CommentsList
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.custom_image.NetworkImage
 import org.company.app.presentation.ui.components.relevance.RelevanceList
+import org.company.app.presentation.ui.components.shimmer.ShimmerEffectSingleVideo
 import org.company.app.presentation.ui.screens.channel_detail.ChannelDetail
 import org.company.app.presentation.ui.screens.channel_screen.ChannelScreen
 import org.company.app.presentation.ui.screens.detail.formatLikes
@@ -144,7 +145,7 @@ fun DetailContent(
 
     when (commentsState) {
         is ResultState.LOADING -> {
-            //LoadingBox()
+          //  ShimmerEffectSingleVideo()
         }
 
         is ResultState.SUCCESS -> {
@@ -670,7 +671,7 @@ fun DetailContent(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "Comments ${formatViewComments(video?.statistics?.commentCount.toString())}",
+                    text = "Comments ${formatViewComments(video?.statistics?.commentCount.toString()) ?: 0.0}",
                     fontSize = MaterialTheme.typography.labelMedium.fontSize
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -706,13 +707,11 @@ fun DetailContent(
         }
 
 
-        // Horizontal Divider
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth().height(2.dp),
             thickness = 1.dp,
             color = Color.LightGray
         )
-        // More Videos Section (Lazy Column)
         Text(
             text = "More Videos",
             fontWeight = FontWeight.Bold,
