@@ -22,6 +22,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetDefaults
@@ -128,6 +129,7 @@ fun DetailContent(
     var isShareEnabled by remember { mutableStateOf(false) }
     var isSubscribed by remember { mutableStateOf(false) }
     var subscribedMenu by remember { mutableStateOf(false) }
+    var unSubscribe by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf("All") }
     val notificationMessage = remember { mutableStateOf("") }
     val navigator = LocalNavigator.current
@@ -584,8 +586,7 @@ fun DetailContent(
                                 text = { Text(option) },
                                 onClick = {
                                     if (option == "Unsubscribe") {
-                                        isSubscribed = false
-                                        notificationMessage.value = "Unsubscribed!"
+                                        unSubscribe = true
                                     } else {
                                         selectedOption = option
                                         when (selectedOption) {
@@ -594,9 +595,6 @@ fun DetailContent(
 
                                             "Personalized" -> notificationMessage.value =
                                                 "You'll get Personalized Notifications"
-
-                                            "None" -> notificationMessage.value =
-                                                "Notifications turned off for this Channel"
                                         }
                                     }
                                     subscribedMenu = false
@@ -619,6 +617,32 @@ fun DetailContent(
                     }
                 }
             }
+        }
+        if (unSubscribe) {
+            AlertDialog(
+                onDismissRequest = {
+                    unSubscribe = false
+                },
+                text = {
+                    Text("Unsubscribe from ${channelData?.snippet?.title}")
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        isSubscribed = false
+                        unSubscribe = false
+                        notificationMessage.value = "Subscription Removed"
+                    }) {
+                        Text("Unsubscribe")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = {
+                        unSubscribe = false
+                    }) {
+                        Text("Cancel")
+                    }
+                }
+            )
         }
         if (notificationMessage.value.isNotBlank()) {
             Notify(notificationMessage.value)
