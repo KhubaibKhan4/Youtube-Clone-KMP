@@ -45,6 +45,7 @@ import androidx.compose.material.icons.outlined.NotificationsOff
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DividerDefaults
@@ -512,23 +513,38 @@ fun DetailContent(
             ) {
                 Row {
                     AnimatedVisibility(!isSubscribed) {
-                        Text(
-                            text = "SUBSCRIBE",
-                            color = Color.Red,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp,
-                            modifier = Modifier
-                                .pointerHoverIcon(icon = PointerIcon.Hand)
-                                .clickable {
-                                    isSubscribed = true
-                                }
-                        )
+                        FilledTonalButton(
+                            onClick = {
+                                subscribedMenu = true
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Black,
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text(
+                                text = "SUBSCRIBE",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp,
+                                modifier = Modifier
+                                    .pointerHoverIcon(icon = PointerIcon.Hand)
+                                    .clickable {
+                                        isSubscribed = true
+                                    }
+                            )
+                        }
                     }
 
                     AnimatedVisibility(isSubscribed) {
-                        FilledTonalButton(onClick = {
-                            subscribedMenu = true
-                        }) {
+                        FilledTonalButton(
+                            onClick = {
+                                subscribedMenu = true
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Black,
+                                contentColor = Color.White
+                            )
+                        ) {
                             Icon(
                                 imageVector = when (selectedOption) {
                                     "All" -> Icons.Filled.NotificationsActive
@@ -538,7 +554,7 @@ fun DetailContent(
                                     else -> Icons.Filled.NotificationsActive
                                 },
                                 contentDescription = null,
-                                modifier = Modifier.size(25.dp)
+                                modifier = Modifier.size(25.dp),
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
