@@ -135,9 +135,9 @@ actual fun isConnected(retry: () -> Unit): Boolean {
         networkInfo?.isConnected == true
     }
 
-//    if (!isConnected){
-//       isConnected(retry)
-//    }
+    if (!isConnected){
+       isConnected(retry)
+    }
     return isConnected
 }
 
