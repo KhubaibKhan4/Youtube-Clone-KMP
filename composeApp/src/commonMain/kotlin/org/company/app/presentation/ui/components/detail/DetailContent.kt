@@ -128,6 +128,8 @@ fun DetailContent(
     var isShareEnabled by remember { mutableStateOf(false) }
     var isSubscribed by remember { mutableStateOf(false) }
     var subscribedMenu by remember { mutableStateOf(false) }
+    var selectedOption by remember { mutableStateOf("All") }
+    val notificationMessage = remember { mutableStateOf("") }
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
 
@@ -504,7 +506,6 @@ fun DetailContent(
                 )
 
             }
-            var selectedOption by remember { mutableStateOf("All") }
 
             Column(
                 modifier = Modifier.wrapContentWidth(),
@@ -530,6 +531,7 @@ fun DetailContent(
                                     .pointerHoverIcon(icon = PointerIcon.Hand)
                                     .clickable {
                                         isSubscribed = true
+                                        notificationMessage.value = "Subscription Added"
                                     }
                             )
                         }
@@ -583,8 +585,19 @@ fun DetailContent(
                                 onClick = {
                                     if (option == "Unsubscribe") {
                                         isSubscribed = false
+                                        notificationMessage.value = "Unsubscribed!"
                                     } else {
                                         selectedOption = option
+                                        when (selectedOption) {
+                                            "All" -> notificationMessage.value =
+                                                "You'll get All the Notifications"
+
+                                            "Personalized" -> notificationMessage.value =
+                                                "You'll get Personalized Notifications"
+
+                                            "None" -> notificationMessage.value =
+                                                "Notifications turned off for this Channel"
+                                        }
                                     }
                                     subscribedMenu = false
                                 },
@@ -607,7 +620,9 @@ fun DetailContent(
                 }
             }
         }
-
+        if (notificationMessage.value.isNotBlank()) {
+            Notify(notificationMessage.value)
+        }
 
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth().height(2.dp),
