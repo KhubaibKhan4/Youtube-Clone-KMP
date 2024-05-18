@@ -201,7 +201,7 @@ compose.experimental {
 tasks.getByPath("jvmProcessResources").dependsOn("libresGenerateResources")
 tasks.getByPath("jvmSourcesJar").dependsOn("libresGenerateResources")
 tasks.getByPath("jsProcessResources").dependsOn("libresGenerateResources")
-task("testClasses"){}
+task("testClasses") {}
 
 buildConfig {
 
