@@ -86,3 +86,4 @@ libres = { id = "io.github.skeptick.libres", version.ref = "libres" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
