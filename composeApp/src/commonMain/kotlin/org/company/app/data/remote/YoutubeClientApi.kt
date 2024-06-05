@@ -21,36 +21,9 @@ import org.company.app.utils.Constant.API_KEY
 import org.company.app.utils.Constant.BASE_URL
 import org.company.app.utils.Constant.TIMEOUT
 
-object YoutubeClientApi {
-    @OptIn(ExperimentalSerializationApi::class)
-    private val client = HttpClient {
-        install(ContentNegotiation) {
-            json(Json {
-                isLenient = true
-                explicitNulls = false
-                ignoreUnknownKeys = true
-            },
-                contentType = ContentType.Application.Json
-            )
-        }
-
-        install(Logging) {
-            level = LogLevel.ALL
-            logger = object : Logger {
-                override fun log(message: String) {
-                    println(message)
-                }
-
-            }
-        }
-
-        install(HttpTimeout) {
-            connectTimeoutMillis = TIMEOUT
-            requestTimeoutMillis = TIMEOUT
-            socketTimeoutMillis = TIMEOUT
-        }
-    }
-
+class YoutubeClientApi(
+    private val client: HttpClient
+) {
     private fun getRandomVideoIds(): String? {
         val videoIds = listOf(
             "Ra9KOsF4BjY,XTtTtlVhh5g,NIM_drzGMJk,-yMaznEn1LM,NiMWG8KyBY4,bQpGIcRphCo,urXQVXswcgc,8OVCL0lMV1I,8qcqpwJ1LBw,C_sEA0c94zs,wxBtwCZtDAg,IX0QVURTqb8,74pnrYPozcU,MDZlKThUOSw,At4T3Ujv4xk,AIt_6ReFzEw,D_rY6oJlCoM,pXtmG1b1-Pw,Fq23VNXRV40,gzlwegTk1AM,Y9HKtiq0q9A,wjY_1Z27_sE,GFo32hjd1QY,aTCq7fHpcww,-Cqe6xIe3ys"

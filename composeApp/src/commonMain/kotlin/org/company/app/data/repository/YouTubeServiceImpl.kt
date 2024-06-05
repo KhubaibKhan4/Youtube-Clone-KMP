@@ -8,83 +8,85 @@ import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.repository.YouTubeService
 
-class YouTubeServiceImpl : YouTubeService {
+class YouTubeServiceImpl(
+    private val youtubeClientApi: YoutubeClientApi,
+) : YouTubeService {
 
     override suspend fun getVideoList(userRegion: String): Youtube {
-        return YoutubeClientApi.getVideoList(userRegion)
+        return youtubeClientApi.getVideoList(userRegion)
     }
 
     override suspend fun getRelevance(): Youtube {
-        return YoutubeClientApi.getRelevance()
+        return youtubeClientApi.getRelevance()
     }
 
     override suspend fun getChannelDetail(channelId: String): Channel {
-        return YoutubeClientApi.getChannelDetails(channelId)
+        return youtubeClientApi.getChannelDetails(channelId)
     }
 
     override suspend fun getRelevanceVideos(): Youtube {
-        return YoutubeClientApi.getRelevanceVideos()
+        return youtubeClientApi.getRelevanceVideos()
     }
 
     override suspend fun getSearch(
         query: String,
         userRegion: String,
     ): Search {
-        return YoutubeClientApi.getSearch(query, userRegion)
+        return youtubeClientApi.getSearch(query, userRegion)
     }
 
     override suspend fun getChannelBranding(channelId: String): Channel {
-        return YoutubeClientApi.getChannelBranding(channelId)
+        return youtubeClientApi.getChannelBranding(channelId)
     }
 
     override suspend fun getPlaylists(channelId: String): Youtube {
-        return YoutubeClientApi.getPlaylists(channelId)
+        return youtubeClientApi.getPlaylists(channelId)
     }
 
     override suspend fun getChannelSections(channelId: String): Youtube {
-        return YoutubeClientApi.getChannelSections(channelId)
+        return youtubeClientApi.getChannelSections(channelId)
     }
 
     override suspend fun getChannelLiveStreams(channelID: String): Search {
-        return YoutubeClientApi.getChannelLiveStreams(channelID)
+        return youtubeClientApi.getChannelLiveStreams(channelID)
     }
 
     override suspend fun getChannelVideos(playlistID: String): Youtube {
-        return YoutubeClientApi.getChannelVideos(playlistID)
+        return youtubeClientApi.getChannelVideos(playlistID)
     }
 
     override suspend fun getOwnChannelVideos(channelId: String): Search {
-        return YoutubeClientApi.getOwnChannelVideos(channelId)
+        return youtubeClientApi.getOwnChannelVideos(channelId)
     }
 
     override suspend fun getChannelCommunity(channelId: String): Youtube {
-        return YoutubeClientApi.getChannelCommunity(channelId)
+        return youtubeClientApi.getChannelCommunity(channelId)
     }
 
     override suspend fun getComments(
         videoId: String,
         order: String,
     ): Comments {
-        return YoutubeClientApi.getComments(videoId, order)
+        return youtubeClientApi.getComments(videoId, order)
     }
 
     override suspend fun getVideoCategories(): VideoCategories {
-        return YoutubeClientApi.getVideoCategories()
+        return youtubeClientApi.getVideoCategories()
     }
 
     override suspend fun getSingleVideoDetail(videoId: String): Youtube {
-        return YoutubeClientApi.getSingleVideoDetail(videoId)
+        return youtubeClientApi.getSingleVideoDetail(videoId)
     }
 
     override suspend fun getMultipleVideos(videoId: String): Youtube {
-        return YoutubeClientApi.getMultipleVideos(videoId)
+        return youtubeClientApi.getMultipleVideos(videoId)
     }
 
     override suspend fun getChannelSearch(channelID: String, query: String): Search {
-        return YoutubeClientApi.getChannelSearch(channelID, query)
+        return youtubeClientApi.getChannelSearch(channelID, query)
     }
 
     override suspend fun getVideosUsingIds(ids: String): Youtube {
-        return YoutubeClientApi.getVideosUsingIds(ids)
+        return youtubeClientApi.getVideosUsingIds(ids)
     }
 }

@@ -11,6 +11,7 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.company.app.DriverFactory
+import org.company.app.data.remote.YoutubeClientApi
 import org.company.app.data.repository.YouTubeServiceImpl
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.utils.Constant
@@ -48,7 +49,8 @@ val appModule = module {
             }
         }
     }
-    single{ YouTubeServiceImpl() }
+    single { YoutubeClientApi(get()) }
+    singleOf(::YouTubeServiceImpl)
     single { YoutubeDatabase(DriverFactory().createDriver()) }
     singleOf(::MainViewModel)
 }
