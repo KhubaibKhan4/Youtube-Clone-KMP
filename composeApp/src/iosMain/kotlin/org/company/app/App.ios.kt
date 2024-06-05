@@ -9,6 +9,8 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
+import org.company.app.di.appModule
+import org.koin.core.context.startKoin
 import platform.AVFoundation.AVPlayer
 import platform.AVFoundation.AVPlayerLayer
 import platform.AVFoundation.play
@@ -38,6 +40,11 @@ internal actual fun openUrl(url: String?) {
     UIApplication.sharedApplication.openURL(nsUrl)
 }
 
+fun initKoin(){
+    startKoin {
+        modules(appModule)
+    }
+}
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
