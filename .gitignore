@@ -4,6 +4,7 @@
 .idea
 .DS_Store
 .kotlin
+*/kotlin
 build
 */build
 captures
