@@ -721,7 +721,8 @@ fun VideoItemCard(
                 NetworkImage(
                     modifier = Modifier.fillMaxWidth()
                         .height(200.dp)
-                        .pointerHoverIcon(icon = PointerIcon.Hand),
+                        .pointerHoverIcon(icon = PointerIcon.Hand)
+                        .clip(RoundedCornerShape(12.dp)),
                     url = video.snippet?.thumbnails?.high?.url.toString(),
                     contentDescription = "Image",
                     contentScale = ContentScale.Crop
