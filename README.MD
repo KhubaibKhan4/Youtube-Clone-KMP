@@ -55,7 +55,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 
 - **Kotlin Multiplatform**: `1.9.23`
 - **AGP (Android Gradle Plugin)**: `8.2.2`
-- **Compose**: `1.6.2`
+- **Compose**: `1.6.11`
   - `androidx-appcompat`: `1.7.0`
   - `androidx-activityCompose`: `1.9.0`
   - `compose-uitooling`: `1.6.7`
@@ -65,7 +65,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Kotlinx Libraries**:
   - `kotlinx-coroutines`: `1.8.0`
   - `kotlinx-serialization`: `1.6.3`
-  - `kotlinx-datetime`: `0.5.0`
+  - `kotlinx-datetime`: `0.6.0`
 - **Networking**:
   - `coilNetwork`: `3.0.0-alpha01`
   - `ktor`: `2.3.10`
