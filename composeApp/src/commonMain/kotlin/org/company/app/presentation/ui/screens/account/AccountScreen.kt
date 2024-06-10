@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpCenter
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.HelpCenter
 import androidx.compose.material.icons.outlined.Settings
@@ -34,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,7 +52,6 @@ import youtube_clone.composeapp.generated.resources.youtube_kids
 import youtube_clone.composeapp.generated.resources.youtube_music
 
 object AccountScreen : Tab {
-    @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
@@ -227,10 +228,11 @@ object AccountScreen : Tab {
     override val options: TabOptions
         @Composable
         get() {
+            val title = "Account Screen"
+            val icon = rememberVectorPainter(Icons.Default.AccountCircle)
+            val index: UShort = 5u
             return TabOptions(
-                index = 5u,
-                title = "Account Screen",
-                icon = null
+               index, title, icon
             )
         }
 
