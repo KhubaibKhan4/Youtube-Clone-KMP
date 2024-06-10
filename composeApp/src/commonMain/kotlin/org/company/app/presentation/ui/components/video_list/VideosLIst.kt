@@ -730,8 +730,7 @@ fun VideoItemCard(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(8.dp)
-                        .background(Color.Black.copy(alpha = 0.8f))
-                        .clip(RoundedCornerShape(4.dp))
+                        .background(Color.Black.copy(alpha = 0.8f), shape = RoundedCornerShape(4.dp))
                 ) {
                     Text(
                         text = video.contentDetails?.duration?.let { formatVideoDuration(it) }
