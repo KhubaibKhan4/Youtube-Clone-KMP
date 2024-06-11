@@ -26,6 +26,9 @@ import androidx.compose.material.icons.outlined.MusicVideo
 import androidx.compose.material.icons.outlined.Subscriptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
@@ -100,11 +103,11 @@ fun AppContent() {
     TabNavigator(HomeTab) { tabNavigator ->
         Scaffold(bottomBar = {
             if (!showNavigationRail) {
-                BottomNavigation(
+                NavigationBar(
                     modifier = Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.ime),
-                    backgroundColor = MaterialTheme.colorScheme.background,
+                    containerColor = Color.White,
                     contentColor = contentColorFor(Color.Red),
-                    elevation = 8.dp
+                    tonalElevation =  8.dp
                 ) {
                     TabItem(HomeTab)
                     TabItem(ShortsTab)
@@ -180,8 +183,8 @@ fun AppContent() {
 fun RowScope.TabItem(tab: Tab) {
     val isDark by LocalThemeIsDark.current
     val tabNavigator = LocalTabNavigator.current
-    BottomNavigationItem(
-        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+    NavigationBarItem(
+        modifier = Modifier
             .height(58.dp).clip(RoundedCornerShape(16.dp)),
         selected = tabNavigator.current == tab,
         onClick = {
@@ -208,8 +211,11 @@ fun RowScope.TabItem(tab: Tab) {
         enabled = true,
         alwaysShowLabel = true,
         interactionSource = MutableInteractionSource(),
-        selectedContentColor = Color.Red,
-        unselectedContentColor = Color.Black
+        colors = NavigationBarItemDefaults.colors(
+            selectedIconColor = Color.Red,
+            unselectedIconColor = Color.Black,
+            indicatorColor = Color.LightGray
+        ),
     )
 }
 
