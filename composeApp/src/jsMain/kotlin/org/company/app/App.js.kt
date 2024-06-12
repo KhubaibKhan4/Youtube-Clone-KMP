@@ -115,9 +115,9 @@ internal actual fun isConnected(retry : () -> Unit): Boolean {
             false
         }
     }
-    if (!isConnected){
+    /*if (!isConnected){
         isConnected(retry)
-    }
+    }*/
     return isConnected
 }
 

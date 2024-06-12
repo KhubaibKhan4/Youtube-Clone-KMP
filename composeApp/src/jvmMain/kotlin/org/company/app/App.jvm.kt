@@ -105,9 +105,9 @@ internal actual fun isConnected(retry: () -> Unit): Boolean {
         e.printStackTrace()
         false
     }
-    if (!isConnect) {
+   /* if (!isConnect) {
         isConnected(retry)
-    }
+    }*/
     return isConnect
 }
 
