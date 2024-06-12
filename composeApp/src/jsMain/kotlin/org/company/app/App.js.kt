@@ -3,6 +3,7 @@ package org.company.app
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +19,8 @@ import com.youtube.clone.db.YoutubeDatabase
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import org.company.app.html.LocalLayerContainer
+import org.company.app.video.HTMLVideoPlayer
 import org.w3c.dom.Worker
 
 internal actual fun openUrl(url: String?) {
@@ -27,29 +30,9 @@ internal actual fun openUrl(url: String?) {
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     val videoId = extractVideoId(url.toString())
-    console.log("Before YouTube API is ready $videoId")
-
-    val iframeId = "youtube-iframe-${videoId.hashCode()}"
-    val body = document.body
-    val videoContainer = document.getElementById("video-container") ?: run {
-        val newContainer = document.createElement("div")
-        newContainer.id = "video-container"
-        document.body?.appendChild(newContainer)
-        newContainer
+    CompositionLocalProvider(LocalLayerContainer provides document.body!!) {
+        HTMLVideoPlayer(videoId)
     }
-    videoContainer.innerHTML = """
-    <iframe 
-        width="100%" 
-        height="150" 
-        style="background-color: black;" 
-        src="https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0" 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen
-        modestbranding>
-    </iframe>
-"""
 
 }
 
@@ -68,28 +51,13 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
     window.open(url = videoUrl, "_blank")
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
     val videoId = extractVideoId(url.toString())
     console.log("Before YouTube API is ready $videoId")
 
-    val iframeId = "youtube-iframe-${videoId.hashCode()}"
-    val body = document.body
-
-    CanvasBasedWindow {
-        Column(
-            modifier = Modifier.background(color = Color.Black)
-        ) {
-            val videoContainer = document.getElementById("video-container") ?: run {
-                val newContainer = document.createElement("div")
-                newContainer.id = "video-container"
-                document.body?.appendChild(newContainer)
-                newContainer
-            }
-            videoContainer.innerHTML =
-                "<iframe width=\"230\" height=\"430\" style=\"background-color: transparent;\" src=\"https://www.youtube.com/embed/$videoId?autoplay=1&mute=1&showinfo=0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;fullscreen\" modestbranding></iframe>"
-        }
+    CompositionLocalProvider(LocalLayerContainer provides document.body!!) {
+        HTMLVideoPlayer(videoId)
     }
 }
 
