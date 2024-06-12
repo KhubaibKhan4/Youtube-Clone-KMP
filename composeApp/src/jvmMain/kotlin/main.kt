@@ -11,7 +11,6 @@ import youtube_clone.composeapp.generated.resources.Res
 import youtube_clone.composeapp.generated.resources.youtube_music
 import java.awt.Dimension
 
-@OptIn(ExperimentalResourceApi::class)
 fun main() = application {
     startKoin {
         modules(appModule)
