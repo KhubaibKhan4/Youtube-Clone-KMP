@@ -53,7 +53,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 
 # Tech Stack Highlights
 
-- **Kotlin Multiplatform**: `1.9.23`
+- **Kotlin Multiplatform**: `2.0.0`
 - **AGP (Android Gradle Plugin)**: `8.2.2`
 - **Compose**: `1.6.11`
   - `androidx-appcompat`: `1.7.0`
@@ -70,7 +70,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `coilNetwork`: `3.0.0-alpha01`
   - `ktor`: `2.3.10`
 - **Dependency Injection**:
-  - `koin`: `3.5.4`
+  - `koin-bom`: `3.6.0-wasm-alpha2`
 - **UI/UX**:
   - `compose-uitooling`: `1.6.3`
   - `composeIcons`: `1.1.0`
