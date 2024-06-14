@@ -1,7 +1,6 @@
 [versions]
 
 core = "12.1.0"
-ffmpegPlatform = "4.1-1.4.4"
 kotestProperty = "5.3.1"
 kotlin = "2.0.0"
 agp = "8.2.2"
@@ -13,7 +12,6 @@ libres = "1.2.2"
 media3Ui = "1.3.1"
 media3ExoplayerDash = "1.3.1"
 media3Exoplayer = "1.3.1"
-vlcj = "4.7.0"
 voyager = "1.1.0-beta02"
 composeImageLoader = "1.8.1"
 napier = "2.7.1"
@@ -41,13 +39,11 @@ androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", versi
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
 core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "core" }
 custom-ui = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui", version.ref = "core" }
-ffmpeg-platform = { module = "org.bytedeco.javacpp-presets:ffmpeg-platform", version.ref = "ffmpegPlatform" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotestProperty" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
-vlcj = { module = "uk.co.caprica:vlcj", version.ref = "vlcj" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
