@@ -1,7 +1,7 @@
 [versions]
 
 core = "12.1.0"
-kotestProperty = "5.3.1"
+kotestProperty = "5.9.1"
 kotlin = "2.0.0"
 agp = "8.2.2"
 compose = "1.6.11"
