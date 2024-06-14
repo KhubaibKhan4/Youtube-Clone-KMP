@@ -60,7 +60,6 @@ kotlin {
             implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.6.0-wasm-alpha2"))
             implementation("io.insert-koin:koin-core")
             implementation("io.insert-koin:koin-compose")
-            implementation("io.insert-koin:koin-annotations:1.3.1")
             implementation(libs.ktor.client.logging)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.kamel.image)
@@ -96,7 +95,6 @@ kotlin {
             implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.6.0-wasm-alpha2"))
             implementation("io.insert-koin:koin-core")
             implementation("io.insert-koin:koin-android")
-            implementation("io.insert-koin:koin-annotations:1.3.1")
             implementation(libs.androidx.glance.app.widget)
             implementation(libs.androidx.glance.material3)
         }

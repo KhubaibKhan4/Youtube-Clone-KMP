@@ -14,10 +14,8 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.koin.android.annotation.KoinViewModel
 import sqldelight.db.YoutubeEntity
 
-@KoinViewModel
 class MainViewModel(
     private val repository: YouTubeServiceImpl,
     private val database: YoutubeDatabase,
