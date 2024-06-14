@@ -2,7 +2,6 @@ package org.company.app.presentation.ui.components.detail
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -82,7 +81,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.VideoPlayer
@@ -924,20 +922,16 @@ fun DetailContent(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        channelData?.snippet?.thumbnails?.default?.url?.let {
-                            rememberImagePainter(
-                                it
-                            )
-                        }?.let {
-                            Image(
-                                painter = it,
-                                contentDescription = null,
-                                modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
+                        NetworkImage(
+                            modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
+                                channelData?.let {
                                     navigator?.push(ChannelScreen(channelData))
-                                },
-                                contentScale = ContentScale.FillBounds
-                            )
-                        }
+                                }
+                            },
+                            contentDescription = "Channel Logo",
+                            contentScale = ContentScale.FillBounds,
+                            url = channelData?.snippet?.thumbnails?.default?.url.toString()
+                        )
 
                         // Channel Info
                         Column(

@@ -2,7 +2,6 @@ package org.company.app.presentation.ui.components.shorts
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -81,7 +80,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
 import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -95,8 +93,7 @@ import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.comments.CommentsList
-import org.company.app.presentation.ui.components.common.ErrorBox
-import org.company.app.presentation.ui.screens.channel_detail.ChannelDetail
+import org.company.app.presentation.ui.components.custom_image.NetworkImage
 import org.company.app.presentation.ui.screens.channel_screen.ChannelScreen
 import org.company.app.presentation.ui.screens.detail.formatLikes
 import org.company.app.presentation.ui.screens.detail.formatSubscribers
@@ -766,20 +763,14 @@ fun ShortItem(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    channelDetail?.items?.get(0)?.snippet?.thumbnails?.default?.url?.let {
-                        rememberImagePainter(
-                            it
-                        )
-                    }?.let {
-                        Image(
-                            painter = it,
-                            contentDescription = null,
-                            modifier = Modifier.size(15.dp).clip(CircleShape).clickable {
-                               // navigator?.push(ChannelScreen(channelDetail?.items!![0]))
-                            },
-                            contentScale = ContentScale.FillBounds
-                        )
-                    }
+                    NetworkImage(
+                        modifier = Modifier.size(15.dp).clip(CircleShape).clickable {
+                            // navigator?.push(ChannelScreen(channelDetail?.items!![0]))
+                        },
+                        contentDescription = "Channel Logo",
+                        contentScale = ContentScale.FillBounds,
+                        url = channelDetail?.items?.get(0)?.snippet?.thumbnails?.default?.url.toString()
+                    )
                     Spacer(modifier = Modifier.width(6.dp))
                     channelDetail?.items?.get(0)?.snippet?.title?.let {
                         androidx.compose.material3.Text(
@@ -912,20 +903,14 @@ fun ShortItem(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    channelDetail?.items?.get(0)?.snippet?.thumbnails?.default?.url?.let {
-                        rememberImagePainter(
-                            it
-                        )
-                    }?.let {
-                        Image(
-                            painter = it,
-                            contentDescription = null,
-                            modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
-                               // navigator?.push(ChannelScreen(channelDetail?.items!![0]))
-                            },
-                            contentScale = ContentScale.FillBounds
-                        )
-                    }
+                    NetworkImage(
+                        contentDescription = null,
+                        modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
+                            // navigator?.push(ChannelScreen(channelDetail?.items!![0]))
+                        },
+                        contentScale = ContentScale.FillBounds,
+                        url = channelDetail?.items?.get(0)?.snippet?.thumbnails?.default?.url.toString()
+                    )
 
                     Column(
                         modifier = Modifier.weight(1f),
@@ -984,7 +969,7 @@ fun ShortItem(
                     OutlinedCard(
                         onClick = {
                             channelDetail?.let { channel ->
-                              //  navigator?.push(ChannelDetail(channel.items!![0]))
+                                //  navigator?.push(ChannelDetail(channel.items!![0]))
                             }
                         },
                         shape = CardDefaults.outlinedShape,
