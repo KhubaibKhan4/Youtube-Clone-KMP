@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,11 +34,11 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.filled.ThumbUp
-import androidx.compose.material.icons.filled.UnfoldMoreDouble
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.Notifications
@@ -84,9 +83,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
-import compose.icons.FontAwesomeIcons
-import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.PlayCircle
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.VideoPlayer
@@ -98,7 +94,6 @@ import org.company.app.presentation.ui.components.comments.CommentsList
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.custom_image.NetworkImage
 import org.company.app.presentation.ui.components.relevance.RelevanceList
-import org.company.app.presentation.ui.components.shimmer.ShimmerEffectSingleVideo
 import org.company.app.presentation.ui.screens.channel_detail.ChannelDetail
 import org.company.app.presentation.ui.screens.channel_screen.ChannelScreen
 import org.company.app.presentation.ui.screens.detail.formatLikes
@@ -146,7 +141,7 @@ fun DetailContent(
 
     when (commentsState) {
         is ResultState.LOADING -> {
-          //  ShimmerEffectSingleVideo()
+            //  ShimmerEffectSingleVideo()
         }
 
         is ResultState.SUCCESS -> {
@@ -207,7 +202,7 @@ fun DetailContent(
                             .align(alignment = Alignment.Center)
                     ) {
                         Icon(
-                            imageVector = FontAwesomeIcons.Solid.PlayCircle,
+                            imageVector = Icons.Default.PlayCircle,
                             contentDescription = null,
                             tint = Color.Red
                         )
