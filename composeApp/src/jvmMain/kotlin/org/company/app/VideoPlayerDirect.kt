@@ -1,3 +1,4 @@
+/*
 package org.company.app
 
 import androidx.compose.foundation.Canvas
@@ -176,4 +177,4 @@ internal class RenderState {
         bufferFormatCallback,
         null
     )
-}
+}*/

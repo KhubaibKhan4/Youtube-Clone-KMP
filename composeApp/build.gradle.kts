@@ -109,8 +109,6 @@ kotlin {
             implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.okhttp)
-            implementation(libs.vlcj)
-            implementation(libs.ffmpeg.platform)
             val fxSuffix = when (osdetector.classifier) {
                 "linux-x86_64" -> "linux"
                 "linux-aarch_64" -> "linux-aarch64"

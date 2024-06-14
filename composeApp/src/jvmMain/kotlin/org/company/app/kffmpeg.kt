@@ -1,3 +1,4 @@
+/*
 package org.company.app
 
 import androidx.compose.ui.graphics.asComposeImageBitmap
@@ -241,9 +242,11 @@ class KFrameGrabber(
     private var currentImageTS: Long = 0L
     fun grabNextFrame(ts: Long) {
         //TODO seek to ts when diff is to high or negative diff
-        /*if (frameCounter == 0) {
+        */
+/*if (frameCounter == 0) {
             avformat.av_seek_frame(fmtCtx, stream, 120, avformat.AVSEEK_FLAG_BACKWARD)
-        }*/
+        }*//*
+
         val timeDiff = currentImageTS - ts
         //println("pts: ${hwFrame.pts()} td: $timeDiff")
         if (timeDiff.absoluteValue > 500) {
@@ -328,4 +331,4 @@ fun av_err2str(errNum: Int): String {
     val string = charArray.decodeToString()
     val endIndex = min(string.indexOf(Char(0)), avutil.AV_ERROR_MAX_STRING_SIZE)
     return string.subSequence(0, endIndex).toString()
-}
+}*/
