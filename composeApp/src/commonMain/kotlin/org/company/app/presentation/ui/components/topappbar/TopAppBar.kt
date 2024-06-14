@@ -353,7 +353,6 @@ fun SearchVideoItemCard(
     val image: Resource<Painter> =
         asyncPainterResource(data = video.snippet.thumbnails.high.url)
 
-
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -372,7 +371,14 @@ fun SearchVideoItemCard(
                     .fillMaxWidth()
                     .padding(8.dp)
                     .clickable {
-                        navigator?.push(DetailScreen(video = singleVideo, channelData = channel))
+                        navigator?.push(
+                            DetailScreen(
+                                video = singleVideo,
+                                channelData = channel,
+                                search = video,
+                                logo = video.snippet.thumbnails.high.url
+                            )
+                        )
                     },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
@@ -380,7 +386,6 @@ fun SearchVideoItemCard(
             ) {
                 Column {
                     Box(modifier = Modifier.fillMaxWidth()) {
-
                         KamelImage(
                             resource = image,
                             contentDescription = null,
@@ -419,22 +424,22 @@ fun SearchVideoItemCard(
                         }
                     }
 
-
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 8.dp, end = 8.dp, top = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        val image: Resource<Painter> =
-                            asyncPainterResource(data = channel?.snippet?.thumbnails?.high?.url.toString())
+                        val channelLogo: String = channel?.snippet?.thumbnails?.high?.url.toString()
+                        val channelImage: Resource<Painter> =
+                            asyncPainterResource(data = video.snippet.thumbnails.high.url)
                         KamelImage(
-                            resource = image,
+                            resource = channelImage,
                             contentDescription = null,
                             modifier = Modifier
                                 .size(40.dp)
                                 .clip(CircleShape),
-                            contentScale = ContentScale.FillBounds
+                            contentScale = ContentScale.Crop
                         )
 
                         Spacer(modifier = Modifier.width(8.dp))
@@ -443,7 +448,7 @@ fun SearchVideoItemCard(
                                 .weight(1f)
                         ) {
                             Text(
-                                text = singleVideo?.snippet?.title.toString(),
+                                text = video?.snippet?.title.toString(),
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 2,
                                 fontSize = 12.sp,
@@ -460,7 +465,7 @@ fun SearchVideoItemCard(
                                     horizontalArrangement = Arrangement.Center
                                 ) {
                                     Text(
-                                        text = channel?.snippet?.title.toString(),
+                                        text = video.snippet.channelTitle.toString(),
                                         fontSize = 10.sp
                                     )
                                     val isVerified = channel?.status?.isLinked == true
@@ -488,7 +493,7 @@ fun SearchVideoItemCard(
                                 Text(text = "•")
                                 Text(
                                     text = "${
-                                        singleVideo?.snippet?.publishedAt?.let {
+                                        video?.snippet?.publishedAt?.let {
                                             getFormattedDateHome(
                                                 it
                                             )
