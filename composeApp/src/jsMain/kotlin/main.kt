@@ -7,9 +7,6 @@ import org.koin.core.context.startKoin
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    startKoin {
-        modules(appModule)
-    }
     onWasmReady {
         CanvasBasedWindow("Youtube Clone") {
             App()

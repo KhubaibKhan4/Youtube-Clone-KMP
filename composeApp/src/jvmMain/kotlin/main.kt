@@ -12,9 +12,6 @@ import youtube_clone.composeapp.generated.resources.youtube_music
 import java.awt.Dimension
 
 fun main() = application {
-    startKoin {
-        modules(appModule)
-    }
     Window(
         title = "Youtube Clone",
         icon = painterResource(Res.drawable.youtube_music),

@@ -4,9 +4,6 @@ import ComposeApp
 
 @main
 struct iosApp: App {
-   init(){
-        MainKt.doInitKoin()
-    }
     var body: some Scene {
         WindowGroup {
             ContentView()

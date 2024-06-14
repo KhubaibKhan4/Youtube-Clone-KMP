@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocalLibrary
@@ -50,6 +48,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import org.company.app.di.appModule
 import org.company.app.presentation.ui.navigation.rails.items.NavigationItem
 import org.company.app.presentation.ui.navigation.rails.navbar.NavigationSideBar
 import org.company.app.presentation.ui.navigation.tabs.home.HomeTab
@@ -58,11 +57,18 @@ import org.company.app.presentation.ui.navigation.tabs.shorts.ShortsTab
 import org.company.app.presentation.ui.navigation.tabs.subscriptions.SubscriptionsTab
 import org.company.app.theme.AppTheme
 import org.company.app.theme.LocalThemeIsDark
+import org.koin.compose.KoinApplication
 
 
 @Composable
 internal fun App() = AppTheme {
-    AppContent()
+    KoinApplication(
+        application = {
+            modules(appModule)
+        }
+    ) {
+        AppContent()
+    }
 }
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -107,7 +113,7 @@ fun AppContent() {
                     modifier = Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.ime),
                     containerColor = Color.White,
                     contentColor = contentColorFor(Color.Red),
-                    tonalElevation =  8.dp
+                    tonalElevation = 8.dp
                 ) {
                     TabItem(HomeTab)
                     TabItem(ShortsTab)
