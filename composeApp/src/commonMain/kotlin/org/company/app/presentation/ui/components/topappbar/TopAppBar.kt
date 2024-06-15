@@ -100,7 +100,7 @@ import youtube_clone.composeapp.generated.resources.youtube_logo_light
 import org.company.app.domain.model.channel.Item as ChannelItem
 import org.company.app.domain.model.videos.Item as YouTubeItem
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
     modifier: Modifier,
