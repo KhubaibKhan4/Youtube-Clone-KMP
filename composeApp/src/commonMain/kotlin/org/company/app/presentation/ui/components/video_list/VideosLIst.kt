@@ -125,7 +125,7 @@ import youtube_clone.composeapp.generated.resources.youtube_logo_light
 import org.company.app.domain.model.videos.Item as VideoItem
 import org.company.app.presentation.ui.screens.detail.formatViewCount as FormateView
 
-@OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun VideosList(
     youtube: Youtube,
