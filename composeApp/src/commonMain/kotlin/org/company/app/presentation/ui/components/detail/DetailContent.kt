@@ -84,6 +84,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.VideoPlayer
+import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
@@ -118,6 +119,7 @@ fun DetailContent(
 ) {
     var stateRelevance by remember { mutableStateOf<ResultState<Youtube>>(ResultState.LOADING) }
     var commentData by remember { mutableStateOf<Comments?>(null) }
+    var channelDetail by remember { mutableStateOf<Channel?>(null) }
     var descriptionEnabled by remember { mutableStateOf(false) }
     var displayVideoPlayer by remember { mutableStateOf(false) }
     var isCommentLive by remember { mutableStateOf(false) }
@@ -131,11 +133,15 @@ fun DetailContent(
     val isDark by LocalThemeIsDark.current
 
     LaunchedEffect(Unit) {
+        if (search?.snippet?.channelId.toString().isNotEmpty()) {
+            viewModel.getChannelDetails(search?.snippet?.channelId.toString())
+        }
         viewModel.getVideoComments(video?.id.toString(), order = "relevance")
         viewModel.getRelevance()
     }
     stateRelevance = viewModel.relevance.collectAsState().value
     val commentsState by viewModel.videoComments.collectAsState()
+    val channelDetails by viewModel.channelDetails.collectAsState()
 
     when (commentsState) {
         is ResultState.LOADING -> {
@@ -149,6 +155,21 @@ fun DetailContent(
 
         is ResultState.ERROR -> {
             val error = (commentsState as ResultState.ERROR).error
+            ErrorBox(error)
+        }
+    }
+    when (channelDetails) {
+        is ResultState.LOADING -> {
+            //  ShimmerEffectSingleVideo()
+        }
+
+        is ResultState.SUCCESS -> {
+            val data = (channelDetails as ResultState.SUCCESS).response
+            channelDetail = data
+        }
+
+        is ResultState.ERROR -> {
+            val error = (channelDetails as ResultState.ERROR).error
             ErrorBox(error)
         }
     }
@@ -438,10 +459,10 @@ fun DetailContent(
         ) {
             println("CHANNEL_DATA: $logo")
             val channelImage =
-                if (channelData?.snippet?.thumbnails?.high?.url?.isEmpty() == true) logo.toString() else channelData?.snippet?.thumbnails?.high?.url.toString()
+                if (channelData?.snippet?.thumbnails?.high?.url?.isEmpty() == true) if (search?.snippet?.channelId?.isNotEmpty() == true) channelDetail?.items?.first()?.snippet?.thumbnails?.high?.url.toString() else logo.toString() else channelData?.snippet?.thumbnails?.high?.url.toString()
             if (channelData?.snippet?.thumbnails?.high?.url.isNullOrBlank()) {
                 NetworkImage(
-                    url = logo.toString(),
+                    url = if (search?.snippet?.channelId?.isNotEmpty() == true) channelDetail?.items?.first()?.snippet?.thumbnails?.high?.url.toString() else logo.toString(),
                     contentDescription = null,
                     modifier = Modifier.size(60.dp).clip(CircleShape)
                         .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
@@ -472,7 +493,8 @@ fun DetailContent(
                 verticalArrangement = Arrangement
                     .spacedBy(4.dp)
             ) {
-                val channelTitle = video?.snippet?.channelTitle.toString()
+                val channelTitle =
+                    if (search?.snippet?.channelTitle?.isEmpty() == true) channelDetail?.items?.first()?.snippet?.title.toString() else video?.snippet?.channelTitle.toString()
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -496,7 +518,7 @@ fun DetailContent(
                     }
                 }
                 val subscribers =
-                    if (channelData?.statistics?.subscriberCount.isNullOrBlank()) subscribersCount else channelData?.statistics?.subscriberCount
+                    if (channelData?.statistics?.subscriberCount.isNullOrBlank()) if (subscribersCount.isEmpty()) channelDetail?.items?.first()?.statistics?.subscriberCount.toString() else subscribersCount else channelData?.statistics?.subscriberCount
                 Text(
                     text = "${formatSubscribers(subscribers)} Subscribers",
                     fontSize = 14.sp
