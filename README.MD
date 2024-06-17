@@ -60,7 +60,6 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `androidx-activityCompose`: `1.9.0`
   - `compose-uitooling`: `1.6.7`
   - `composeImageLoader`: `1.7.1`
-  - `composeIcons`: `1.1.0`
 - **Core Libraries**: `12.1.0`
 - **Kotlinx Libraries**:
   - `kotlinx-coroutines`: `1.8.0`
@@ -73,7 +72,6 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `koin-bom`: `3.6.0-wasm-alpha2`
 - **UI/UX**:
   - `compose-uitooling`: `1.6.3`
-  - `composeIcons`: `1.1.0`
 - **Media Handling**:
   - `media3Ui`: `1.3.1`
   - `media3ExoplayerDash`: `1.3.1`
@@ -95,8 +93,6 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Voyager Navigation**: `1.0.0`
 - **Other Utilities**:
   - `official-viewmodel`: `Beta-2.0.0`
-  - `vlcj`: `4.7.0`
-  - `ffmpegPlatform`: `4.1-1.4.4`
 - **JavaFX**: `22-ea+16`
 
 ## Getting Started
