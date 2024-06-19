@@ -89,7 +89,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Cross-Platform Image Loading**:
   - `kamelImage`: `0.9.5`
 - **Size Measurement**:
-  - `size`: `0.3.1`
+  - `size`: `0.5.0`
 - **Voyager Navigation**: `1.1.0-beta02`
 - **Other Utilities**:
   - `official-viewmodel`: `Beta-2.0.0`
