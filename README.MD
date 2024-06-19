@@ -77,7 +77,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `media3ExoplayerDash`: `1.3.1`
   - `media3Exoplayer`: `1.3.1`
 - **Logging**:
-  - `napier`: `2.6.1`
+  - `napier`: `2.7.1`
 - **Database/Storage**:
   - `sql-delight`: `2.0.2`
 - **Web and Networking**:
