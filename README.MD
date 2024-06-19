@@ -71,7 +71,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Dependency Injection**:
   - `koin-bom`: `3.6.0-wasm-alpha2`
 - **UI/UX**:
-  - `compose-uitooling`: `1.6.3`
+  - `compose-uitooling`: `1.6.8`
 - **Media Handling**:
   - `media3Ui`: `1.3.1`
   - `media3ExoplayerDash`: `1.3.1`
@@ -85,7 +85,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **JSON Parsing**:
   - `json`: `1.6.3`
 - **Build Configurations**:
-  - `buildConfig`: `4.1.1`
+  - `buildConfig`: `5.3.5`
 - **Cross-Platform Image Loading**:
   - `kamelImage`: `0.9.5`
 - **Size Measurement**:
