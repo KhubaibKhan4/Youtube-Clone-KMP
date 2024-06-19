@@ -234,17 +234,18 @@ compose.desktop {
             description = "YouTube Clone Using Kotlin Multiplatform"
             copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
             windows {
-                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.ico"))
             }
             macOS {
-                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.icns"))
             }
             linux {
                 iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
             }
         }
     }
-}'
+}
+'
 
 - Now simply run the command 'gradle createDistributable or ./gradlew createDistributable'
 
