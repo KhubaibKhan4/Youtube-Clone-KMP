@@ -90,7 +90,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `kamelImage`: `0.9.5`
 - **Size Measurement**:
   - `size`: `0.3.1`
-- **Voyager Navigation**: `1.0.0`
+- **Voyager Navigation**: `1.1.0-beta02`
 - **Other Utilities**:
   - `official-viewmodel`: `Beta-2.0.0`
 - **JavaFX**: `22-ea+16`
