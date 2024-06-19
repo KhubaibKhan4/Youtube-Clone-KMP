@@ -62,8 +62,8 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `composeImageLoader`: `1.7.1`
 - **Core Libraries**: `12.1.0`
 - **Kotlinx Libraries**:
-  - `kotlinx-coroutines`: `1.8.0`
-  - `kotlinx-serialization`: `1.6.3`
+  - `kotlinx-coroutines`: `1.8.1`
+  - `kotlinx-serialization`: `1.7.0`
   - `kotlinx-datetime`: `0.6.0`
 - **Networking**:
   - `coilNetwork`: `3.0.0-alpha01`
