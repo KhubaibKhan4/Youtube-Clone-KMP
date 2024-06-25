@@ -58,45 +58,41 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Compose**: `1.6.11`
   - `androidx-appcompat`: `1.7.0`
   - `androidx-activityCompose`: `1.9.0`
-  - `compose-uitooling`: `1.6.7`
+  - `compose-uitooling`: `1.6.8`
   - `composeImageLoader`: `1.7.1`
-  - `composeIcons`: `1.1.0`
 - **Core Libraries**: `12.1.0`
 - **Kotlinx Libraries**:
-  - `kotlinx-coroutines`: `1.8.0`
-  - `kotlinx-serialization`: `1.6.3`
+  - `kotlinx-coroutines`: `1.8.1`
+  - `kotlinx-serialization`: `1.7.0`
   - `kotlinx-datetime`: `0.6.0`
 - **Networking**:
   - `coilNetwork`: `3.0.0-alpha01`
-  - `ktor`: `2.3.10`
+  - `ktor`: `2.3.11`
 - **Dependency Injection**:
   - `koin-bom`: `3.6.0-wasm-alpha2`
 - **UI/UX**:
-  - `compose-uitooling`: `1.6.3`
-  - `composeIcons`: `1.1.0`
+  - `compose-uitooling`: `1.6.8`
 - **Media Handling**:
   - `media3Ui`: `1.3.1`
   - `media3ExoplayerDash`: `1.3.1`
   - `media3Exoplayer`: `1.3.1`
 - **Logging**:
-  - `napier`: `2.6.1`
+  - `napier`: `2.7.1`
 - **Database/Storage**:
-  - `sql-delight`: `2.0.1`
+  - `sql-delight`: `2.0.2`
 - **Web and Networking**:
   - `webview-kmp`: `1.8.0`
 - **JSON Parsing**:
   - `json`: `1.6.3`
 - **Build Configurations**:
-  - `buildConfig`: `4.1.1`
+  - `buildConfig`: `5.3.5`
 - **Cross-Platform Image Loading**:
-  - `kamelImage`: `0.9.4`
+  - `kamelImage`: `0.9.5`
 - **Size Measurement**:
-  - `size`: `0.3.1`
-- **Voyager Navigation**: `1.0.0`
+  - `size`: `0.5.0`
+- **Voyager Navigation**: `1.1.0-beta02`
 - **Other Utilities**:
   - `official-viewmodel`: `Beta-2.0.0`
-  - `vlcj`: `4.7.0`
-  - `ffmpegPlatform`: `4.1-1.4.4`
 - **JavaFX**: `22-ea+16`
 
 ## Getting Started
@@ -140,6 +136,9 @@ If you find my work helpful, you can support me by [![Buy me a coffee](https://i
 
 ## Download Installers
 [<img src="https://user-images.githubusercontent.com/114044633/223920025-83687de0-e463-4c5d-8122-e06e4bb7d40c.png" width="200">](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/raw/master/screenshots/youtube-clone-kmp.apk)
+
+## Web Preview
+If you want to the live version of YouTube Clone KMP then checkout: `https://khubaibkhan4.github.io/Youtube-Clone-KMP/`
 
 ## Screen Shots
 
@@ -235,17 +234,18 @@ compose.desktop {
             description = "YouTube Clone Using Kotlin Multiplatform"
             copyright = "© 2024 Muhammad Khubaib Imtiaz. All rights reserved."
             windows {
-                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.ico"))
             }
             macOS {
-                iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
+                iconFile.set(project.file("src/commonMain/resources/youtube_music.icns"))
             }
             linux {
                 iconFile.set(project.file("src/commonMain/resources/youtube_music.png"))
             }
         }
     }
-}'
+}
+'
 
 - Now simply run the command 'gradle createDistributable or ./gradlew createDistributable'
 
