@@ -62,12 +62,11 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `composeImageLoader`: `1.7.1`
 - **Core Libraries**: `12.1.0`
 - **Kotlinx Libraries**:
-  - `kotlinx-coroutines`: `1.8.1`
+  - `kotlinx-coroutines`: `1.9.0-RC`
   - `kotlinx-serialization`: `1.7.0`
   - `kotlinx-datetime`: `0.6.0`
 - **Networking**:
-  - `coilNetwork`: `3.0.0-alpha01`
-  - `ktor`: `2.3.11`
+  - `ktor`: `2.3.12`
 - **Dependency Injection**:
   - `koin-bom`: `3.6.0-wasm-alpha2`
 - **UI/UX**:
@@ -80,19 +79,17 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `napier`: `2.7.1`
 - **Database/Storage**:
   - `sql-delight`: `2.0.2`
-- **Web and Networking**:
-  - `webview-kmp`: `1.8.0`
 - **JSON Parsing**:
   - `json`: `1.6.3`
 - **Build Configurations**:
   - `buildConfig`: `5.3.5`
 - **Cross-Platform Image Loading**:
-  - `kamelImage`: `0.9.5`
+  - `kamelImage`: `0.9.6`
 - **Size Measurement**:
   - `size`: `0.5.0`
 - **Voyager Navigation**: `1.1.0-beta02`
 - **Other Utilities**:
-  - `official-viewmodel`: `Beta-2.0.0`
+  - `official-viewmodel`: `2.8.0`
 - **JavaFX**: `22-ea+16`
 
 ## Getting Started
@@ -190,6 +187,9 @@ If you want to the live version of YouTube Clone KMP then checkout: `https://khu
 | ![Screenshot 29](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/66.png) | 
 | ![Screenshot 30](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/67.png) | 
 | ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/68.png) |
+
+## Star History
+![star-history-2024629](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/assets/98816544/5a7ebbcb-94ec-4906-870f-2eab317adb2f)
 
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
