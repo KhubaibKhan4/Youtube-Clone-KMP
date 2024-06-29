@@ -119,6 +119,7 @@ kotlin {
             implementation("org.openjfx:javafx-web:19:${fxSuffix}")
             implementation("org.openjfx:javafx-media:19:${fxSuffix}")
             implementation(libs.sqlDelight.driver.sqlite)
+            implementation(libs.kotlinx.coroutines.swing)
         }
 
         jsMain.dependencies {

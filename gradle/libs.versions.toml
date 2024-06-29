@@ -5,6 +5,7 @@ kotestProperty = "5.9.1"
 kotlin = "2.0.0"
 agp = "8.2.2"
 compose = "1.6.11"
+kotlinxCoroutinesSwing = "1.8.1"
 libres = "1.2.2"
 androidx-appcompat = "1.7.0"
 androidx-activityCompose = "1.9.0"
@@ -38,6 +39,7 @@ compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "
 core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "core" }
 custom-ui = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui", version.ref = "core" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotestProperty" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinxCoroutinesSwing" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
