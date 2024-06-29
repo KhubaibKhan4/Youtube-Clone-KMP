@@ -84,7 +84,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Build Configurations**:
   - `buildConfig`: `5.3.5`
 - **Cross-Platform Image Loading**:
-  - `kamelImage`: `0.9.5`
+  - `kamelImage`: `0.9.6`
 - **Size Measurement**:
   - `size`: `0.5.0`
 - **Voyager Navigation**: `1.1.0-beta02`
