@@ -79,8 +79,6 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `napier`: `2.7.1`
 - **Database/Storage**:
   - `sql-delight`: `2.0.2`
-- **Web and Networking**:
-  - `webview-kmp`: `1.8.0`
 - **JSON Parsing**:
   - `json`: `1.6.3`
 - **Build Configurations**:
