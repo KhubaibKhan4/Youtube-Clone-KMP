@@ -89,7 +89,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `size`: `0.5.0`
 - **Voyager Navigation**: `1.1.0-beta02`
 - **Other Utilities**:
-  - `official-viewmodel`: `Beta-2.0.0`
+  - `official-viewmodel`: `2.8.0`
 - **JavaFX**: `22-ea+16`
 
 ## Getting Started
