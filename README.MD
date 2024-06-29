@@ -189,7 +189,7 @@ If you want to the live version of YouTube Clone KMP then checkout: `https://khu
 | ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/68.png) |
 
 ## Star History
-<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=NzM3MzUzMw==#KhubaibKhan4/Youtube-Clone-KMP&Date" frameBorder="0"></iframe>
+![star-history-2024629](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/assets/98816544/5a7ebbcb-94ec-4906-870f-2eab317adb2f)
 
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
