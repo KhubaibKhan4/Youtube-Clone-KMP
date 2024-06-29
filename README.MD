@@ -188,6 +188,9 @@ If you want to the live version of YouTube Clone KMP then checkout: `https://khu
 | ![Screenshot 30](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/67.png) | 
 | ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/68.png) |
 
+## Star History
+<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=#KhubaibKhan4/Youtube-Clone-KMP&Date" frameBorder="0"></iframe>
+
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
  - install JDK 17 on your machine
