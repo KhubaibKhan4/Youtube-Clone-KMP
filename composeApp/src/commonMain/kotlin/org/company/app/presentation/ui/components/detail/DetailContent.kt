@@ -711,7 +711,7 @@ fun DetailContent(
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 val firstComment =
-                    commentData?.items?.get(0)?.snippet?.topLevelComment?.snippet?.textOriginal.toString()
+                    commentData?.items?.get(0)?.snippet?.topLevelComment?.snippet?.textOriginal ?: "No Comments Available"
                 Text(
                     text = firstComment,
                     modifier = Modifier.padding(start = 3.dp),
