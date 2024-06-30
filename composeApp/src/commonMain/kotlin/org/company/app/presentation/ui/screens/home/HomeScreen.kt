@@ -26,6 +26,7 @@ import org.company.app.domain.usecases.ResultState
 import org.company.app.isConnected
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.common.NoInternet
+import org.company.app.presentation.ui.components.error.ErrorScreen
 import org.company.app.presentation.ui.components.offline.OfflineList
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.presentation.ui.components.video_list.VideosList
@@ -44,6 +45,7 @@ class HomeScreen() : Screen {
 fun HomeContent(
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
+    val isConnected by isConnected().collectAsState(initial = true)
     val refreshScope = rememberCoroutineScope()
     var refreshing by remember { mutableStateOf(false) }
 
@@ -56,6 +58,12 @@ fun HomeContent(
 
     val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
 
+    LaunchedEffect(isConnected) {
+        if (isConnected) {
+            viewModel.getVideosList(UserRegion())
+        }
+    }
+
     Box(
         Modifier
             .fillMaxWidth()
@@ -63,7 +71,7 @@ fun HomeContent(
         contentAlignment = Alignment.Center
     ) {
         if (!refreshing) {
-            if (isConnected(retry = {})) {
+            if (isConnected) {
                 LaunchedEffect(Unit) {
                     viewModel.getVideosList(UserRegion())
                 }
@@ -80,15 +88,9 @@ fun HomeContent(
 
                     is ResultState.ERROR -> {
                         val error = (state as ResultState.ERROR).error
-                        if (!isConnected(retry = {})) {
-                            NoInternet()
-                        } else {
-                            if (error.contains("Unable to resolve host \"www.googleapis.com\": No address associated with hostname")) {
-                                NoInternet()
-                            } else {
-                                ErrorBox(error)
-                            }
-                        }
+                        ErrorScreen(error, onRetry = {
+                            viewModel.getVideosList(UserRegion())
+                        })
                     }
                 }
             } else {
@@ -96,10 +98,12 @@ fun HomeContent(
                 when (localState) {
                     is ResultState.ERROR -> {
                         val error = (localState as ResultState.ERROR).error
-                        ErrorBox(error)
+                        ErrorScreen(error, onRetry = {
+                            viewModel.getAllVideos()
+                        })
                     }
 
-                    ResultState.LOADING -> {
+                    is ResultState.LOADING -> {
                         ShimmerEffectMain()
                     }
 
@@ -109,8 +113,6 @@ fun HomeContent(
                     }
                 }
             }
-        } else {
-            ShimmerEffectMain()
         }
         PullRefreshIndicator(
             refreshing, pullRefreshState,

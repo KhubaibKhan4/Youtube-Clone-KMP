@@ -9,6 +9,9 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.company.app.di.appModule
 import org.koin.core.context.startKoin
 import platform.AVFoundation.AVPlayer
@@ -143,31 +146,22 @@ internal actual fun UserRegion(): String {
 }
 
 @Composable
-internal actual fun isConnected(retry: () -> Unit): Boolean{
-    val urlString = "https://www.google.com"
-    val url = NSURL(string = urlString)
-    val session = NSURLSession.sessionWithConfiguration(
-        NSURLSessionConfiguration.defaultSessionConfiguration(),
-        delegate = null,
-        delegateQueue = NSOperationQueue.mainQueue()
-    )
-    val task = session.dataTaskWithURL(url) { data, response, error ->
-        val httpResponse = response as? NSHTTPURLResponse
-        if (httpResponse != null && httpResponse.statusCode.toInt() == 200 && error == null) {
-            retry.invoke()
-        } else {
-            val errorMessage = if (error != null) {
-                "Error: ${error.localizedDescription}"
-            } else {
-                "HTTP Status Code: ${httpResponse?.statusCode?.toInt()}"
+actual fun isConnected(): Flow<Boolean> {
+    return flow {
+        while (true) {
+            val url = NSURL(string = "https://www.google.com")
+            val session = NSURLSession.sharedSession
+            val task = session.dataTaskWithURL(url) { _, response, error ->
+                if (error == null && (response as? NSHTTPURLResponse)?.statusCode?.toInt() == 200) {
+                    emit(true)
+                } else {
+                    emit(false)
+                }
             }
-            println("Connection failed: $errorMessage")
+            task.resume()
+            delay(5000)  // Check every 5 seconds
         }
     }
-
-    task.resume()
-
-    return true
 }
 
 actual class DriverFactory actual constructor(){

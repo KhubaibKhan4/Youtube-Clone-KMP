@@ -8,6 +8,9 @@ import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.awt.Desktop
 import java.awt.SystemTray
@@ -94,21 +97,23 @@ internal actual fun UserRegion(): String {
 }
 
 @Composable
-internal actual fun isConnected(retry: () -> Unit): Boolean {
-    val isConnect = try {
-        val url = URL("https://youtube.com")
-        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-        connection.connectTimeout = 30000
-        connection.connect()
-        connection.responseCode == 200
-    } catch (e: Exception) {
-        e.printStackTrace()
-        false
+actual fun isConnected(): Flow<Boolean> {
+    return flow {
+        while (true) {
+            val isConnected = try {
+                val url = URL("https://www.youtube.com")
+                val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+                connection.connectTimeout = 30000
+                connection.connect()
+                connection.responseCode == 200
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
+            emit(isConnected)
+            delay(5000)
+        }
     }
-   /* if (!isConnect) {
-        isConnected(retry)
-    }*/
-    return isConnect
 }
 
 actual class DriverFactory actual constructor() {

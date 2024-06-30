@@ -48,6 +48,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import kotlinx.coroutines.flow.Flow
 import org.company.app.di.appModule
 import org.company.app.presentation.ui.navigation.rails.items.NavigationItem
 import org.company.app.presentation.ui.navigation.rails.navbar.NavigationSideBar
@@ -244,7 +245,7 @@ internal expect fun Notify(message: String)
 internal expect fun ShareManager(title: String, videoUrl: String)
 
 @Composable
-internal expect fun isConnected(retry: () -> Unit): Boolean
+internal expect fun isConnected(): Flow<Boolean>
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class DriverFactory() {

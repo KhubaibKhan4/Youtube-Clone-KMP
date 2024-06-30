@@ -19,6 +19,9 @@ import com.youtube.clone.db.YoutubeDatabase
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.company.app.html.LocalLayerContainer
 import org.company.app.video.HTMLVideoPlayer
 import org.w3c.dom.Worker
@@ -105,20 +108,19 @@ internal actual fun UserRegion(): String {
 }
 
 @Composable
-internal actual fun isConnected(retry : () -> Unit): Boolean {
-    var isConnected by remember { mutableStateOf(false) }
-    LaunchedEffect(true) {
-        isConnected = try {
-            val response = window.fetch("https://youtube.com").await()
-            response.status == 200.toShort()
-        } catch (e: dynamic) {
-            false
+actual fun isConnected(): Flow<Boolean> {
+    return flow {
+        while (true) {
+            val isConnected = try {
+                val response = window.fetch("https://www.google.com").await()
+                response.ok
+            } catch (e: dynamic) {
+                false
+            }
+            emit(isConnected)
+            delay(5000)
         }
     }
-    /*if (!isConnected){
-        isConnected(retry)
-    }*/
-    return isConnected
 }
 
 actual class DriverFactory actual constructor() {

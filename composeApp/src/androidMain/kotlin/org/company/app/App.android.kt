@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +23,9 @@ import androidx.compose.ui.platform.LocalContext
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import org.company.app.di.appModule
 import org.company.app.shortcuts.TopTrending
 import org.company.app.shortcuts.dynamicShortcut
@@ -116,24 +121,30 @@ internal actual fun UserRegion(): String {
 }
 
 @Composable
-actual fun isConnected(retry: () -> Unit): Boolean {
+actual fun isConnected(): Flow<Boolean> {
     val context = LocalContext.current
-    val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val network = connectivityManager.activeNetwork
-        val capabilities = connectivityManager.getNetworkCapabilities(network)
-        capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
-    } else {
-        @Suppress("DEPRECATION")
-        val networkInfo = connectivityManager.activeNetworkInfo
-        networkInfo?.isConnected == true
-    }
+    return callbackFlow {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val callback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                trySend(true)
+            }
 
-   /* if (!isConnected) {
-        isConnected(retry)
-    }*/
-    return isConnected
+            override fun onLost(network: Network) {
+                trySend(false)
+            }
+        }
+
+        val request = NetworkRequest.Builder()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
+
+        connectivityManager.registerNetworkCallback(request, callback)
+
+        awaitClose {
+            connectivityManager.unregisterNetworkCallback(callback)
+        }
+    }
 }
 
 actual class DriverFactory actual constructor() {
