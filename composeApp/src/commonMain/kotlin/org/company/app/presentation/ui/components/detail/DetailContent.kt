@@ -704,14 +704,16 @@ fun DetailContent(
             ) {
 
                 NetworkImage(
-                    url = channelData?.brandingSettings?.image?.bannerExternalUrl.toString(),
+                    url = commentData?.items?.first()?.snippet?.topLevelComment?.snippet?.authorProfileImageUrl
+                        ?: channelData?.snippet?.thumbnails?.high?.url.toString(),
                     contentDescription = "Comment User Profile",
                     modifier = Modifier.size(25.dp).clip(shape = CircleShape),
                     contentScale = ContentScale.FillBounds
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 val firstComment =
-                    commentData?.items?.get(0)?.snippet?.topLevelComment?.snippet?.textOriginal ?: "No Comments Available"
+                    commentData?.items?.get(0)?.snippet?.topLevelComment?.snippet?.textOriginal
+                        ?: "No Comments Available"
                 Text(
                     text = firstComment,
                     modifier = Modifier.padding(start = 3.dp),
