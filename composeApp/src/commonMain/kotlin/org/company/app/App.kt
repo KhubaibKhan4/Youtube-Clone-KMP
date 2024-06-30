@@ -251,3 +251,6 @@ internal expect fun isConnected(): Flow<Boolean>
 expect class DriverFactory() {
     fun createDriver(): SqlDriver
 }
+expect class VideoDownloader() {
+    suspend fun downloadVideo(url: String): String
+}

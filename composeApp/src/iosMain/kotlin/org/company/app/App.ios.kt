@@ -9,9 +9,12 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import org.company.app.di.appModule
 import org.koin.core.context.startKoin
 import platform.AVFoundation.AVPlayer
@@ -167,5 +170,24 @@ actual fun isConnected(): Flow<Boolean> {
 actual class DriverFactory actual constructor(){
     actual fun createDriver(): SqlDriver {
         return NativeSqliteDriver(YoutubeDatabase.Schema,"YouTubeDatabase.db")
+    }
+}
+
+actual class VideoDownloader {
+    actual suspend fun downloadVideo(url: String): String {
+        return withContext(Dispatchers.IO) {
+            try {
+                val downloadDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).first() as String
+                val destination = "$downloadDir/%(title)s.%(ext)s"
+                val nsUrl = NSURL.URLWithString(url)
+                val data = NSData.dataWithContentsOfURL(nsUrl)
+                val filePath = downloadDir + "/downloaded_video.mp4"
+                data?.writeToFile(filePath, true)
+                filePath
+            } catch (e: Exception) {
+                e.printStackTrace()
+                "Error: ${e.message}"
+            }
+        }
     }
 }

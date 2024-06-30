@@ -10,6 +10,7 @@ import android.net.NetworkRequest
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,9 +24,11 @@ import androidx.compose.ui.platform.LocalContext
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.withContext
 import org.company.app.di.appModule
 import org.company.app.shortcuts.TopTrending
 import org.company.app.shortcuts.dynamicShortcut
@@ -36,6 +39,8 @@ import org.company.app.ui.YoutubeVideoPlayer
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.Locale
 
 class AndroidApp : Application() {
@@ -151,5 +156,30 @@ actual class DriverFactory actual constructor() {
     private var context: Context = AndroidApp.INSTANCE.applicationContext
     actual fun createDriver(): SqlDriver {
         return AndroidSqliteDriver(YoutubeDatabase.Schema, context, "YouTubeDatabase.db")
+    }
+}
+
+actual class VideoDownloader {
+    actual suspend fun downloadVideo(url: String): String {
+        return withContext(Dispatchers.IO) {
+            try {
+                val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
+                val destination = "$downloadDir/%(title)s.%(ext)s"
+                val command = listOf("yt-dlp", "-o", destination, url)
+                val processBuilder = ProcessBuilder(command)
+                val process = processBuilder.start()
+                val reader = InputStreamReader(process.inputStream).buffered()
+                val output = StringBuilder()
+                reader.forEachLine { line -> output.append(line).append("\n") }
+                process.waitFor()
+                if (process.exitValue() != 0) {
+                    throw Exception("Error downloading video: ${output.toString()}")
+                }
+                output.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                "Error: ${e.message}"
+            }
+        }
     }
 }

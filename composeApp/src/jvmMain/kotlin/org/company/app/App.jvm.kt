@@ -8,19 +8,25 @@ import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.awt.Desktop
 import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URI
 import java.net.URL
+import java.nio.file.Paths
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import javax.swing.JOptionPane
 
 internal actual fun openUrl(url: String?) {
@@ -123,5 +129,30 @@ actual class DriverFactory actual constructor() {
             YoutubeDatabase.Schema.create(driver)
         }
         return driver
+    }
+}
+actual class VideoDownloader {
+    actual suspend fun downloadVideo(url: String): String {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userHome = System.getProperty("user.home")
+                val downloadDir = Paths.get(userHome, "Downloads").toString()
+                val destination = "$downloadDir/%(title)s-%(id)s.%(ext)s"
+                val command = listOf("C:\\Users\\18bsc\\Downloads\\yt-dlp\\", "-o", destination, url)
+                val processBuilder = ProcessBuilder(command)
+                val process = processBuilder.start()
+                val reader = BufferedReader(InputStreamReader(process.inputStream))
+                val output = StringBuilder()
+                reader.forEachLine { line -> output.append(line).append("\n") }
+                process.waitFor(10, TimeUnit.MINUTES)
+                if (process.exitValue() != 0) {
+                    throw Exception("Error downloading video: ${output.toString()}")
+                }
+                output.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                "Error: ${e.message}"
+            }
+        }
     }
 }

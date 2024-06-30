@@ -18,13 +18,18 @@ import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import com.youtube.clone.db.YoutubeDatabase
 import kotlinx.browser.document
 import kotlinx.browser.window
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.await
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import org.company.app.html.LocalLayerContainer
 import org.company.app.video.HTMLVideoPlayer
+import org.w3c.dom.HTMLAnchorElement
 import org.w3c.dom.Worker
+import org.w3c.dom.url.URL
 import org.w3c.notifications.DEFAULT
 import org.w3c.notifications.DENIED
 import org.w3c.notifications.GRANTED
@@ -128,5 +133,25 @@ actual class DriverFactory actual constructor() {
         val workerScriptUrl = js("import.meta.url.replace('kotlin', 'node_modules/@cashapp/sqldelight-sqljs-worker/sqljs.worker.js')")
         val driver = WebWorkerDriver(workerScriptUrl).also { YoutubeDatabase.Schema.create(it) }
         return driver
+    }
+}
+
+actual class VideoDownloader {
+    actual suspend fun downloadVideo(url: String): String {
+        return withContext(MainScope().coroutineContext) {
+            try {
+                val response = window.fetch(url).await()
+                if (response.ok) {
+                    val blob = response.blob().await()
+                    val downloadUrl = URL.createObjectURL(blob)
+                    downloadUrl
+                } else {
+                    throw Exception("Failed to download video: ${response.statusText}")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                "Error: ${e.message}"
+            }
+        }
     }
 }

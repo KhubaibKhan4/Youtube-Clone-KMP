@@ -33,6 +33,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.PlaylistAdd
@@ -91,6 +92,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import kotlinx.coroutines.launch
 import org.company.app.ShareManager
 import org.company.app.UserRegion
+import org.company.app.VideoDownloader
 import org.company.app.domain.model.categories.Item
 import org.company.app.domain.model.categories.Snippet
 import org.company.app.domain.model.categories.VideoCategories
@@ -659,6 +661,25 @@ fun VideoItemCard(
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
     }
 
+    val scope = rememberCoroutineScope()
+    var videoUrl by remember { mutableStateOf("https://www.youtube.com/watch?v=${video.id}") }
+    val videoDownloader = remember { VideoDownloader() }
+    var downloadOutput by remember { mutableStateOf("") }
+
+    fun downloadVideo() {
+        scope.launch {
+            downloadOutput = videoDownloader.downloadVideo(videoUrl)
+            println("download clicked")
+        }
+    }
+    if (downloadOutput.isNotEmpty()) {
+        Text(
+            text = downloadOutput,
+            modifier = Modifier.padding(16.dp)
+        )
+        println(downloadOutput)
+    }
+
     LaunchedEffect(video) {
         viewModel.insertVideos(
             id = null,
@@ -897,7 +918,7 @@ fun VideoItemCard(
                 Row(
                     modifier = Modifier.fillMaxWidth()
                         .clickable {
-
+                            downloadVideo()
                         },
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
