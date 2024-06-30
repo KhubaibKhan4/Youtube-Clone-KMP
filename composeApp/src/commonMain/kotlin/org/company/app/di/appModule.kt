@@ -4,6 +4,7 @@ import com.youtube.clone.db.YoutubeDatabase
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
@@ -15,6 +16,7 @@ import org.company.app.data.remote.YoutubeClientApi
 import org.company.app.data.repository.YouTubeServiceImpl
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.utils.Constant
+import org.company.app.utils.Constant.BASE_URL
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -47,6 +49,7 @@ val appModule = module {
                 requestTimeoutMillis = Constant.TIMEOUT
                 socketTimeoutMillis = Constant.TIMEOUT
             }
+            defaultRequest { url(BASE_URL) }
         }
     }
     single { YoutubeClientApi(get()) }
