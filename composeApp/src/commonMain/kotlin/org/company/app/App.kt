@@ -111,7 +111,7 @@ fun AppContent() {
             if (!showNavigationRail) {
                 NavigationBar(
                     modifier = Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.ime),
-                    containerColor = Color.White,
+                    containerColor = MaterialTheme.colorScheme.background,
                     contentColor = contentColorFor(Color.Red),
                     tonalElevation = 8.dp
                 ) {
