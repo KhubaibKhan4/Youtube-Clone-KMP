@@ -60,6 +60,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.NavigationDrawerItem
@@ -665,21 +666,40 @@ fun VideoItemCard(
     var videoUrl by remember { mutableStateOf("https://www.youtube.com/watch?v=${video.id}") }
     val videoDownloader = remember { VideoDownloader() }
     var downloadOutput by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
+    var progress by remember { mutableStateOf(0f) }
 
     fun downloadVideo() {
         scope.launch {
+            showDialog = true
+            progress = 0.1f
             downloadOutput = videoDownloader.downloadVideo(videoUrl)
-            println("download clicked")
+            progress = 1.0f
+            showDialog = false
         }
     }
+
     if (downloadOutput.isNotEmpty()) {
         Text(
             text = downloadOutput,
             modifier = Modifier.padding(16.dp)
         )
-        println(downloadOutput)
     }
-
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Downloading Video") },
+            text = {
+                Column {
+                    Text("Downloading video, please wait...")
+                    LinearProgressIndicator(
+                        progress = { progress },
+                    )
+                }
+            },
+            confirmButton = {}
+        )
+    }
     LaunchedEffect(video) {
         viewModel.insertVideos(
             id = null,

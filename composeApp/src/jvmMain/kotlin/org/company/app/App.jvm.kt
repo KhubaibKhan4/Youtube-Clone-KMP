@@ -138,7 +138,7 @@ actual class VideoDownloader {
                 val userHome = System.getProperty("user.home")
                 val downloadDir = Paths.get(userHome, "Downloads").toString()
                 val destination = "$downloadDir/%(title)s-%(id)s.%(ext)s"
-                val command = listOf("C:\\Users\\18bsc\\Downloads\\yt-dlp\\", "-o", destination, url)
+                val command = listOf("C:\\Users\\18bsc\\Downloads\\yt-dlp\\yt-dlp.exe", "-o", destination, url)
                 val processBuilder = ProcessBuilder(command)
                 val process = processBuilder.start()
                 val reader = BufferedReader(InputStreamReader(process.inputStream))

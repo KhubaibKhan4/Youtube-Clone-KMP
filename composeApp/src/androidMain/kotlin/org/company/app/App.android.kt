@@ -168,7 +168,7 @@ actual class VideoDownloader {
                 val command = listOf("yt-dlp", "-o", destination, url)
                 val processBuilder = ProcessBuilder(command)
                 val process = processBuilder.start()
-                val reader = InputStreamReader(process.inputStream).buffered()
+                val reader = BufferedReader(InputStreamReader(process.inputStream))
                 val output = StringBuilder()
                 reader.forEachLine { line -> output.append(line).append("\n") }
                 process.waitFor()
