@@ -663,14 +663,14 @@ fun VideoItemCard(
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
     }
 
-
     val scope = rememberCoroutineScope()
     var videoUrl by remember { mutableStateOf("https://www.youtube.com/watch?v=${video.id}") }
     val videoDownloader = remember { VideoDownloader() }
     var downloadOutput by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
-    var isDownloadedSuccessFully by remember { mutableStateOf(false) }
+    var isDownloadedSuccessfully by remember { mutableStateOf(false) }
     var progress by remember { mutableStateOf(0f) }
+    var downloadedFilePath by remember { mutableStateOf("") }
 
     fun downloadVideo() {
         scope.launch {
@@ -680,28 +680,68 @@ fun VideoItemCard(
                 downloadOutput = output
             }.also {
                 downloadOutput = it
-                isDownloadedSuccessFully = true
+                isDownloadedSuccessfully = true
                 showDialog = false
             }
         }
     }
-    if (isDownloadedSuccessFully){
-        Notify("Video Downloaded SuccessFully...")
+    if (isDownloadedSuccessfully) {
+        AlertDialog(
+            onDismissRequest = { isDownloadedSuccessfully = false },
+            title = {
+                Text(
+                    "Download Complete",
+                    color = Color.Black
+                )
+            },
+            text = {
+                Column {
+                    Text("File downloaded successfully:", color = Color.Black)
+                    Text(
+                        downloadedFilePath,
+                        color = Color.Black,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { isDownloadedSuccessfully = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+                ) {
+                    Text("OK", color = Color.White)
+                }
+            },
+            backgroundColor = Color.White,
+            contentColor = Color.Black
+        )
     }
+
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
-            title = { Text("Downloading Video") },
+            title = {
+                Text(
+                    "Downloading Video",
+                    color = Color.Black
+                )
+            },
             text = {
                 Column {
-                    Text("Downloading video, please wait...")
-                    LinearProgressIndicator(progress = progress)
+                    Text("Downloading video, please wait...", color = Color.Black)
+                    LinearProgressIndicator(
+                        progress = progress,
+                        color = Color.Blue,
+                        trackColor = Color.Gray
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text("Progress: ${(progress * 100).toInt()}%")
-                    Text(downloadOutput)
+                    Text("Progress: ${(progress * 100).toInt()}%", color = Color.Black)
+                    Text(downloadOutput, color = Color.Black)
                 }
             },
-            confirmButton = {}
+            confirmButton = {},
+            backgroundColor = Color.White,
+            contentColor = Color.Black
         )
     }
     LaunchedEffect(video) {
@@ -776,7 +816,10 @@ fun VideoItemCard(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(8.dp)
-                        .background(Color.Black.copy(alpha = 0.8f), shape = RoundedCornerShape(4.dp))
+                        .background(
+                            Color.Black.copy(alpha = 0.8f),
+                            shape = RoundedCornerShape(4.dp)
+                        )
                 ) {
                     Text(
                         text = video.contentDetails?.duration?.let { formatVideoDuration(it) }
