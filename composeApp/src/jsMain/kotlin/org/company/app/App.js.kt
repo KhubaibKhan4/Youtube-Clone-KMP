@@ -137,13 +137,15 @@ actual class DriverFactory actual constructor() {
 }
 
 actual class VideoDownloader {
-    actual suspend fun downloadVideo(url: String): String {
-        return withContext(MainScope().coroutineContext) {
+    actual suspend fun downloadVideo(url: String, onProgress: (Float, String) -> Unit): String {
+        return withContext(Dispatchers.Main) {
             try {
                 val response = window.fetch(url).await()
                 if (response.ok) {
                     val blob = response.blob().await()
                     val downloadUrl = URL.createObjectURL(blob)
+                    // Here, we can’t get real-time progress, so assume it's complete
+                    onProgress(1.0f, "Download complete")
                     downloadUrl
                 } else {
                     throw Exception("Failed to download video: ${response.statusText}")

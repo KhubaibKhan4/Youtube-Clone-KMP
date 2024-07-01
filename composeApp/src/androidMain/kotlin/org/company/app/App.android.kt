@@ -1,8 +1,10 @@
 package org.company.app
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -11,6 +13,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,6 +24,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
@@ -40,8 +45,12 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import java.io.BufferedReader
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStreamReader
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class AndroidApp : Application() {
     companion object {
@@ -55,10 +64,17 @@ class AndroidApp : Application() {
 }
 
 class AppActivity : ComponentActivity() {
+    companion object {
+        const val PERMISSION_REQUEST_CODE = 1
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             App()
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+            }
         }
     }
 }
@@ -160,21 +176,40 @@ actual class DriverFactory actual constructor() {
 }
 
 actual class VideoDownloader {
-    actual suspend fun downloadVideo(url: String): String {
+    actual suspend fun downloadVideo(url: String, onProgress: (Float, String) -> Unit): String {
         return withContext(Dispatchers.IO) {
             try {
-                val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
+                val context = AndroidApp.INSTANCE.applicationContext
+                val ytDlpPath = copyExecutableToInternalStorage(context)
+
+                val downloadDir = context.getExternalFilesDir(null)?.absolutePath ?: throw IOException("Failed to get external files directory")
                 val destination = "$downloadDir/%(title)s.%(ext)s"
-                val command = listOf("yt-dlp", "-o", destination, url)
+                val command = listOf(ytDlpPath, "-o", destination, url)
+
                 val processBuilder = ProcessBuilder(command)
                 val process = processBuilder.start()
                 val reader = BufferedReader(InputStreamReader(process.inputStream))
+                val errorReader = BufferedReader(InputStreamReader(process.errorStream))
                 val output = StringBuilder()
-                reader.forEachLine { line -> output.append(line).append("\n") }
-                process.waitFor()
-                if (process.exitValue() != 0) {
-                    throw Exception("Error downloading video: ${output.toString()}")
+                var line: String?
+
+                while (reader.readLine().also { line = it } != null) {
+                    output.append(line).append("\n")
+                    onProgress(0.5f, line ?: "")
                 }
+
+                while (errorReader.readLine().also { line = it } != null) {
+                    output.append(line).append("\n")
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    process.waitFor(10, TimeUnit.MINUTES)
+                }
+
+                if (process.exitValue() != 0) {
+                    throw Exception("Error downloading video. Exit code: ${process.exitValue()}")
+                }
+
                 output.toString()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -182,4 +217,18 @@ actual class VideoDownloader {
             }
         }
     }
+}
+
+fun copyExecutableToInternalStorage(context: Context): String {
+    val inputStream = context.assets.open("yt-dlp.exe")
+    val file = File(context.filesDir, "yt-dlp.exe")
+    inputStream.use { input ->
+        file.outputStream().use { output ->
+            input.copyTo(output)
+        }
+    }
+    if (!file.setExecutable(true)) {
+        throw IOException("Failed to make yt-dlp executable")
+    }
+    return file.absolutePath
 }

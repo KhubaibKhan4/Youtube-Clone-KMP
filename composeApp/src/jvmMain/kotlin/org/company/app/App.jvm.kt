@@ -132,18 +132,23 @@ actual class DriverFactory actual constructor() {
     }
 }
 actual class VideoDownloader {
-    actual suspend fun downloadVideo(url: String): String {
+    actual suspend fun downloadVideo(url: String, onProgress: (Float, String) -> Unit): String {
         return withContext(Dispatchers.IO) {
             try {
                 val userHome = System.getProperty("user.home")
                 val downloadDir = Paths.get(userHome, "Downloads").toString()
-                val destination = "$downloadDir/%(title)s-%(id)s.%(ext)s"
-                val command = listOf("C:\\Users\\18bsc\\Downloads\\yt-dlp\\yt-dlp.exe", "-o", destination, url)
+                val destination = "$downloadDir/%(title)s.%(ext)s"
+                val command = listOf("C:\\Program Files\\yt-dlp\\yt-dlp.exe", "-o", destination, url)
                 val processBuilder = ProcessBuilder(command)
                 val process = processBuilder.start()
                 val reader = BufferedReader(InputStreamReader(process.inputStream))
                 val output = StringBuilder()
-                reader.forEachLine { line -> output.append(line).append("\n") }
+                var line: String?
+
+                while (reader.readLine().also { line = it } != null) {
+                    output.append(line).append("\n")
+                    onProgress(0.5f, line ?: "")
+                }
                 process.waitFor(10, TimeUnit.MINUTES)
                 if (process.exitValue() != 0) {
                     throw Exception("Error downloading video: ${output.toString()}")

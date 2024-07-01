@@ -174,16 +174,29 @@ actual class DriverFactory actual constructor(){
 }
 
 actual class VideoDownloader {
-    actual suspend fun downloadVideo(url: String): String {
-        return withContext(Dispatchers.IO) {
+    actual suspend fun downloadVideo(url: String, onProgress: (Float, String) -> Unit): String {
+        return withContext(Dispatchers.Main) {
             try {
-                val downloadDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).first() as String
-                val destination = "$downloadDir/%(title)s.%(ext)s"
                 val nsUrl = NSURL.URLWithString(url)
-                val data = NSData.dataWithContentsOfURL(nsUrl)
-                val filePath = downloadDir + "/downloaded_video.mp4"
-                data?.writeToFile(filePath, true)
-                filePath
+                val request = NSURLRequest.requestWithURL(nsUrl!!)
+                val config = NSURLSessionConfiguration.defaultSessionConfiguration()
+                val session = NSURLSession.sessionWithConfiguration(config, null, null)
+                var downloadOutput = ""
+
+                session.dataTaskWithRequest(request) { data, response, error ->
+                    if (error != null) {
+                        onProgress(1.0f, "Error: ${error.localizedDescription}")
+                        downloadOutput = "Error: ${error.localizedDescription}"
+                    } else {
+                        val downloadDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).first() as String
+                        val filePath = downloadDir + "/downloaded_video.mp4"
+                        data?.writeToFile(filePath, true)
+                        onProgress(1.0f, "Download complete: $filePath")
+                        downloadOutput = filePath
+                    }
+                }.resume()
+
+                downloadOutput
             } catch (e: Exception) {
                 e.printStackTrace()
                 "Error: ${e.message}"

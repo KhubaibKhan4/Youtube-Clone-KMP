@@ -91,6 +91,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import kotlinx.coroutines.launch
+import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.UserRegion
 import org.company.app.VideoDownloader
@@ -662,28 +663,30 @@ fun VideoItemCard(
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
     }
 
+
     val scope = rememberCoroutineScope()
     var videoUrl by remember { mutableStateOf("https://www.youtube.com/watch?v=${video.id}") }
     val videoDownloader = remember { VideoDownloader() }
     var downloadOutput by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
+    var isDownloadedSuccessFully by remember { mutableStateOf(false) }
     var progress by remember { mutableStateOf(0f) }
 
     fun downloadVideo() {
         scope.launch {
             showDialog = true
-            progress = 0.1f
-            downloadOutput = videoDownloader.downloadVideo(videoUrl)
-            progress = 1.0f
-            showDialog = false
+            videoDownloader.downloadVideo(videoUrl) { prog, output ->
+                progress = prog
+                downloadOutput = output
+            }.also {
+                downloadOutput = it
+                isDownloadedSuccessFully = true
+                showDialog = false
+            }
         }
     }
-
-    if (downloadOutput.isNotEmpty()) {
-        Text(
-            text = downloadOutput,
-            modifier = Modifier.padding(16.dp)
-        )
+    if (isDownloadedSuccessFully){
+        Notify("Video Downloaded SuccessFully...")
     }
     if (showDialog) {
         AlertDialog(
@@ -692,9 +695,10 @@ fun VideoItemCard(
             text = {
                 Column {
                     Text("Downloading video, please wait...")
-                    LinearProgressIndicator(
-                        progress = { progress },
-                    )
+                    LinearProgressIndicator(progress = progress)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Progress: ${(progress * 100).toInt()}%")
+                    Text(downloadOutput)
                 }
             },
             confirmButton = {}

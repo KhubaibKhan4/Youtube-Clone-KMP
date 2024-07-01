@@ -252,5 +252,5 @@ expect class DriverFactory() {
     fun createDriver(): SqlDriver
 }
 expect class VideoDownloader() {
-    suspend fun downloadVideo(url: String): String
+    suspend fun downloadVideo(url: String, onProgress: (Float, String) -> Unit): String
 }
