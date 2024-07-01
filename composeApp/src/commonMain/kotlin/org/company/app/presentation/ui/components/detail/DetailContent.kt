@@ -48,6 +48,7 @@ import androidx.compose.material.icons.outlined.NotificationsOff
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -58,6 +59,7 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedCard
@@ -70,6 +72,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -88,8 +91,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import kotlinx.coroutines.launch
 import org.company.app.Notify
 import org.company.app.ShareManager
+import org.company.app.VideoDownloader
 import org.company.app.VideoPlayer
 import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
@@ -180,6 +185,93 @@ fun DetailContent(
             ErrorBox(error)
         }
     }
+
+
+
+    val scope = rememberCoroutineScope()
+    var videoUrl by remember { mutableStateOf("https://www.youtube.com/watch?v=${video?.id}") }
+    val videoDownloader = remember { VideoDownloader() }
+    var downloadOutput by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
+    var isDownloadedSuccessfully by remember { mutableStateOf(false) }
+    var progress by remember { mutableStateOf(0f) }
+    var downloadedFilePath by remember { mutableStateOf("") }
+
+    fun downloadVideo() {
+        scope.launch {
+            showDialog = true
+            videoDownloader.downloadVideo(videoUrl) { prog, output ->
+                progress = prog
+                downloadOutput = output
+            }.also {
+                downloadOutput = it
+                isDownloadedSuccessfully = true
+                showDialog = false
+            }
+        }
+    }
+    if (isDownloadedSuccessfully) {
+        AlertDialog(
+            onDismissRequest = { isDownloadedSuccessfully = false },
+            title = {
+                Text(
+                    "Download Complete",
+                    color = Color.Black
+                )
+            },
+            text = {
+                Column {
+                    Text("File downloaded successfully:", color = Color.Black)
+                    Text(
+                        downloadedFilePath,
+                        color = Color.Black,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { isDownloadedSuccessfully = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+                ) {
+                    Text("OK", color = Color.White)
+                }
+            },
+            backgroundColor = Color.White,
+            contentColor = Color.Black
+        )
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = {
+                Text(
+                    "Downloading Video",
+                    color = Color.Black
+                )
+            },
+            text = {
+                Column {
+                    Text("Downloading video, please wait...", color = Color.Black)
+                    LinearProgressIndicator(
+                        progress = { progress },
+                        color = Color.Blue,
+                        trackColor = Color.Gray,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Progress: ${(progress * 100).toInt()}%", color = Color.Black)
+                    Text(downloadOutput, color = Color.Black)
+                }
+            },
+            confirmButton = {},
+            backgroundColor = Color.White,
+            contentColor = Color.Black
+        )
+    }
+
+
+
     Column(
         modifier = Modifier.fillMaxSize().verticalScroll(state = rememberScrollState())
     ) {
@@ -409,6 +501,9 @@ fun DetailContent(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(4.dp)
+                        .clickable {
+                            downloadVideo()
+                        }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Download,
