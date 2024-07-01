@@ -71,11 +71,42 @@ class AppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             App()
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+            checkAndRequestPermissions()
+        }
+    }
+    private fun checkAndRequestPermissions() {
+        val permissions = arrayOf(
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+
+        val permissionsToRequest = permissions.filter {
+            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (permissionsToRequest.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionsToRequest.toTypedArray(), PERMISSION_REQUEST_CODE)
+        } else {
+            proceedWithTask()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                proceedWithTask()
+            } else {
+                Toast.makeText(this, "Permissions are required to proceed.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    private fun proceedWithTask() {
+        // Proceed with video download logic
     }
 }
 
@@ -182,37 +213,43 @@ actual class VideoDownloader {
                 val context = AndroidApp.INSTANCE.applicationContext
                 val ytDlpPath = copyExecutableToInternalStorage(context)
 
-                val downloadDir = context.getExternalFilesDir(null)?.absolutePath ?: throw IOException("Failed to get external files directory")
+                val downloadDir = context.getExternalFilesDir(null)?.absolutePath
+                    ?: throw IOException("Failed to get external files directory")
                 val destination = "$downloadDir/%(title)s.%(ext)s"
                 val command = listOf(ytDlpPath, "-o", destination, url)
 
+                Log.d("VideoDownloader", "Command to run: $command")
+
                 val processBuilder = ProcessBuilder(command)
+                processBuilder.directory(context.filesDir)
+                processBuilder.redirectErrorStream(true)
+
                 val process = processBuilder.start()
                 val reader = BufferedReader(InputStreamReader(process.inputStream))
-                val errorReader = BufferedReader(InputStreamReader(process.errorStream))
                 val output = StringBuilder()
                 var line: String?
 
                 while (reader.readLine().also { line = it } != null) {
                     output.append(line).append("\n")
                     onProgress(0.5f, line ?: "")
-                }
-
-                while (errorReader.readLine().also { line = it } != null) {
-                    output.append(line).append("\n")
+                    Log.d("VideoDownloader", "Output: $line")
                 }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     process.waitFor(10, TimeUnit.MINUTES)
                 }
 
-                if (process.exitValue() != 0) {
-                    throw Exception("Error downloading video. Exit code: ${process.exitValue()}")
+                val exitValue = process.exitValue()
+                Log.d("VideoDownloader", "Process exit value: $exitValue")
+
+                if (exitValue != 0) {
+                    throw Exception("Error downloading video. Exit code: $exitValue")
                 }
 
                 output.toString()
             } catch (e: Exception) {
                 e.printStackTrace()
+                Log.e("VideoDownloader", "Error: ${e.message}")
                 "Error: ${e.message}"
             }
         }
@@ -220,15 +257,29 @@ actual class VideoDownloader {
 }
 
 fun copyExecutableToInternalStorage(context: Context): String {
-    val inputStream = context.assets.open("yt-dlp.exe")
-    val file = File(context.filesDir, "yt-dlp.exe")
-    inputStream.use { input ->
-        file.outputStream().use { output ->
+    val externalFilePath = "/storage/emulated/0/Download/yt-dlp.exe"
+    val externalFile = File(externalFilePath)
+    if (!externalFile.exists()) {
+        throw IOException("yt-dlp.exe not found in external storage")
+    }
+
+    val internalFile = File(context.filesDir, "yt-dlp.exe")
+    Log.d("VideoDownloader", "Copying yt-dlp.exe to ${internalFile.absolutePath}")
+
+    externalFile.inputStream().use { input ->
+        internalFile.outputStream().use { output ->
             input.copyTo(output)
         }
     }
-    if (!file.setExecutable(true)) {
-        throw IOException("Failed to make yt-dlp executable")
+
+    try {
+        Log.d("VideoDownloader", "Setting executable permissions")
+        Runtime.getRuntime().exec("chmod 755 ${internalFile.absolutePath}").waitFor()
+    } catch (e: IOException) {
+        Log.e("VideoDownloader", "Failed to set executable permission", e)
+        throw IOException("Failed to set executable permission", e)
     }
-    return file.absolutePath
+
+    Log.d("VideoDownloader", "yt-dlp.exe copied and set as executable")
+    return internalFile.absolutePath
 }

@@ -136,7 +136,7 @@ actual class VideoDownloader {
         return withContext(Dispatchers.IO) {
             try {
                 val userHome = System.getProperty("user.home")
-                val downloadDir = Paths.get(userHome, "Downloads").toString()
+                val downloadDir = Paths.get(userHome, "Desktop").toString()
                 val destination = "$downloadDir/%(title)s.%(ext)s"
                 val command = listOf("C:\\Program Files\\yt-dlp\\yt-dlp.exe", "-o", destination, url)
                 val processBuilder = ProcessBuilder(command)
