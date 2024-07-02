@@ -69,6 +69,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `ktor`: `2.3.12`
 - **Dependency Injection**:
   - `koin`: `3.6.0-Beta4`
+  - `koinComposeMultiplatform`: `1.2.0-Beta4`
 - **UI/UX**:
   - `compose-uitooling`: `1.6.8`
 - **Media Handling**:
