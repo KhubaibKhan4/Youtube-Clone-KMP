@@ -68,7 +68,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Networking**:
   - `ktor`: `2.3.12`
 - **Dependency Injection**:
-  - `koin-bom`: `3.6.0-wasm-alpha2`
+  - `koin`: `3.6.0-Beta4`
 - **UI/UX**:
   - `compose-uitooling`: `1.6.8`
 - **Media Handling**:
