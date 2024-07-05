@@ -58,26 +58,6 @@ private fun openYouTubeVideo(videoUrl: String) {
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
-@Composable
-internal actual fun Notify(message: String) {
-    if (SystemTray.isSupported()) {
-        val tray = SystemTray.getSystemTray()
-        val image = Toolkit.getDefaultToolkit().createImage("logo.webp")
-        val trayIcon = TrayIcon(image, "Desktop Notification")
-        tray.add(trayIcon)
-        trayIcon.displayMessage("Desktop Notification", message, TrayIcon.MessageType.INFO)
-    } else {
-        // Fallback for systems that don't support SystemTray
-        JOptionPane.showMessageDialog(
-            null,
-            message,
-            "Desktop Notification",
-            JOptionPane.INFORMATION_MESSAGE
-        )
-    }
-}
-
 @Composable
 internal actual fun ShareManager(title: String, videoUrl: String) {
     if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {

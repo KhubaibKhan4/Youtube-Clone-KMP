@@ -150,13 +150,6 @@ internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
 }
 
 @Composable
-internal actual fun Notify(message: String) {
-    Toast.makeText(
-        LocalContext.current, message, Toast.LENGTH_SHORT
-    ).show()
-}
-
-@Composable
 internal actual fun ShareManager(title: String, videoUrl: String) {
     val shareIntent = Intent().apply {
         action = Intent.ACTION_SEND

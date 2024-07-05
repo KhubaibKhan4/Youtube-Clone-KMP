@@ -91,7 +91,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import kotlinx.coroutines.launch
-import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.UserRegion
 import org.company.app.VideoDownloader

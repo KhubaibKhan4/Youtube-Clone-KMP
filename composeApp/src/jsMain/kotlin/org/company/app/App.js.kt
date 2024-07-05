@@ -54,38 +54,6 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 internal actual fun provideShortCuts() {
     return
 }
-
-@Composable
-internal actual fun Notify(message: String) {
-    window.alert(message)
-    if (!js("typeof Notification !== 'undefined'").unsafeCast<Boolean>()) {
-        window.alert(message)
-        return
-    }
-    when (Notification.permission) {
-        NotificationPermission.GRANTED -> {
-            showNotification(message)
-        }
-        NotificationPermission.DENIED -> {
-            window.alert(message)
-        }
-        NotificationPermission.DEFAULT -> {
-            Notification.requestPermission().then { permission ->
-                if (permission == NotificationPermission.GRANTED) {
-                    showNotification(message)
-                } else {
-                    window.alert(message)
-                }
-            }
-        }
-    }
-}
-private fun showNotification(message: String) {
-    val options = NotificationOptions(
-        body = message
-    )
-    Notification("New Notification", options)
-}
 @Composable
 internal actual fun ShareManager(title: String, videoUrl: String) {
     window.open(url = videoUrl, "_blank")

@@ -1,5 +1,6 @@
 package org.company.app.presentation.ui.components.comments
 
+import Notify
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -52,7 +53,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.Notify
 import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.comments.Item

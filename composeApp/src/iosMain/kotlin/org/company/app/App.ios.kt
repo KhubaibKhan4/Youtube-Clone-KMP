@@ -89,24 +89,6 @@ internal actual fun provideShortCuts(){
 }
 
 @Composable
-internal actual fun Notify(message: String) {
-    val viewController = UIApplication.sharedApplication.keyWindow?.rootViewController?.modalViewController
-    val alertController = UIAlertController.alertControllerWithTitle(
-        title = UIDevice.currentDevice.systemName,
-        message = message,
-        preferredStyle = UIAlertControllerStyle.MAX_VALUE
-    )
-    alertController.addAction(
-        UIAlertAction.actionWithTitle(
-            "OK",
-            style = UIAlertControllerStyle.MAX_VALUE,
-            handler = null
-        )
-    )
-    viewController?.presentViewController(alertController, animated = true, completion = null)
-}
-
-@Composable
 internal actual fun ShareManager(title: String, videoUrl: String) {
     val viewController = UIApplication.sharedApplication.keyWindow?.rootViewController
     val activityItems = listOf("$title: $videoUrl")

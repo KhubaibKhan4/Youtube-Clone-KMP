@@ -239,9 +239,6 @@ internal expect fun ShortsVideoPlayer(url: String?, modifier: Modifier)
 internal expect fun UserRegion(): String
 
 @Composable
-internal expect fun Notify(message: String)
-
-@Composable
 internal expect fun ShareManager(title: String, videoUrl: String)
 
 @Composable

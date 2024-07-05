@@ -1,5 +1,6 @@
 package org.company.app.presentation.ui.components.detail
 
+import Notify
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -92,7 +93,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import kotlinx.coroutines.launch
-import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.VideoDownloader
 import org.company.app.VideoPlayer

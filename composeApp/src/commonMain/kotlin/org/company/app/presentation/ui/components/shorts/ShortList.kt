@@ -1,5 +1,6 @@
 package org.company.app.presentation.ui.components.shorts
 
+import Notify
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -84,7 +85,6 @@ import io.github.aakira.napier.Napier
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.company.app.Notify
 import org.company.app.ShareManager
 import org.company.app.ShortsVideoPlayer
 import org.company.app.domain.model.channel.Channel
@@ -462,7 +462,7 @@ fun ShortItem(
     if (isCommentEnabled) {
         val isDark by LocalThemeIsDark.current
         if (video.statistics?.commentCount.isNullOrBlank()) {
-            Notify(message = "No Comments Found...")
+            Notify("No Comments Found...")
         }
         var commentInput by remember { mutableStateOf("") }
 
