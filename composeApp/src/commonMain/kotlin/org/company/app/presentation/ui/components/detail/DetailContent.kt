@@ -187,7 +187,6 @@ fun DetailContent(
     }
 
 
-
     val scope = rememberCoroutineScope()
     var videoUrl by remember { mutableStateOf("https://www.youtube.com/watch?v=${video?.id}") }
     val videoDownloader = remember { VideoDownloader() }
