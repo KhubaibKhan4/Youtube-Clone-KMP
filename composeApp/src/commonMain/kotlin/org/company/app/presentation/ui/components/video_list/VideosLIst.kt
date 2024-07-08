@@ -45,6 +45,7 @@ import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Audiotrack
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Games
 import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material.icons.outlined.Newspaper
@@ -510,6 +511,7 @@ fun VideosList(
                 if (!isAnyCategorySelected) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         layoutInformation?.let { info ->
+                            var canFavourite = info.layoutMeta.favouriteEnabled
                             when (info.layoutMeta.layoutType) {
                                 is LayoutType.List -> {
                                     LazyVerticalGrid(
@@ -519,7 +521,7 @@ fun VideosList(
                                     ) {
                                         youtube.items?.let { items ->
                                             items(items) { videos ->
-                                                VideoItemCard(videos)
+                                                VideoItemCard(videos, canFavourite = canFavourite)
                                             }
                                         }
                                     }
@@ -535,7 +537,7 @@ fun VideosList(
                                             columns = GridCells.Fixed(columns)
                                         ) {
                                             items(youtube.items ?: listOf()) { video ->
-                                                VideoItemGridCard(video)
+                                                VideoItemGridCard(video,canFavourite = canFavourite)
                                             }
                                         }
                                     }else{
@@ -546,7 +548,7 @@ fun VideosList(
                                         ) {
                                             youtube.items?.let { items ->
                                                 items(items) { videos ->
-                                                    VideoItemCard(videos)
+                                                    VideoItemCard(videos,canFavourite = canFavourite)
                                                 }
                                             }
                                         }
@@ -697,6 +699,7 @@ fun CategoryButton(
 fun VideoItemCard(
     video: VideoItem,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
+    canFavourite: Boolean? = null
 ) {
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
@@ -844,6 +847,7 @@ fun VideoItemCard(
             ErrorBox(error)
         }
     }
+    var isFav by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -883,6 +887,25 @@ fun VideoItemCard(
                         color = Color.White,
                         fontSize = 10.sp
                     )
+                }
+                if (canFavourite==true){
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .padding(8.dp)
+                            .background(
+                                Color.White.copy(alpha = 0.8f),
+                                shape = RoundedCornerShape(4.dp)
+                            )
+                            .clickable {
+                                isFav = !isFav
+                            }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.FavoriteBorder,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
 
@@ -1118,6 +1141,7 @@ fun VideoItemCard(
 fun VideoItemGridCard(
     video: VideoItem,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
+    canFavourite: Boolean
 ) {
     val navigator = LocalNavigator.current
     val isDark by LocalThemeIsDark.current
@@ -1265,6 +1289,7 @@ fun VideoItemGridCard(
             ErrorBox(error)
         }
     }
+    var isFav by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -1304,6 +1329,25 @@ fun VideoItemGridCard(
                         color = Color.White,
                         fontSize = 10.sp
                     )
+                }
+                if (canFavourite){
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .padding(8.dp)
+                            .background(
+                                Color.White.copy(alpha = 0.8f),
+                                shape = RoundedCornerShape(4.dp)
+                            )
+                            .clickable {
+                                isFav = !isFav
+                            }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.FavoriteBorder,
+                            contentDescription = null
+                        )
+                    }
                 }
                 IconButton(
                     onClick = {
