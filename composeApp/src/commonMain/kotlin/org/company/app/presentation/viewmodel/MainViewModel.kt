@@ -3,9 +3,11 @@ package org.company.app.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.youtube.clone.db.YoutubeDatabase
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import org.company.app.data.repository.YouTubeServiceImpl
 import org.company.app.domain.model.categories.VideoCategories
@@ -14,6 +16,7 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
+import org.company.app.utils.LayoutInformation
 import sqldelight.db.YoutubeEntity
 
 class MainViewModel(
@@ -78,6 +81,19 @@ class MainViewModel(
     private val _localVideos =
         MutableStateFlow<ResultState<List<YoutubeEntity>>>(ResultState.LOADING)
     val localVideos: StateFlow<ResultState<List<YoutubeEntity>>> = _localVideos.asStateFlow()
+
+
+    val layoutInformation: Flow<LayoutInformation> = flow {
+        repository.fetchLayout().collect { layoutInfo ->
+            try {
+                if (layoutInfo != null) {
+                    emit(layoutInfo)
+                }
+            }catch (e:Exception){
+                println("FIREBASE: ${e.printStackTrace()}")
+            }
+        }
+    }
 
     fun getVideosList(userRegion: String) {
         viewModelScope.launch {

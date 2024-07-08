@@ -1,5 +1,9 @@
 package org.company.app.data.repository
 
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.database.database
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.company.app.data.remote.YoutubeClientApi
 import org.company.app.domain.model.categories.VideoCategories
 import org.company.app.domain.model.channel.Channel
@@ -7,11 +11,40 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.repository.YouTubeService
+import org.company.app.utils.LayoutInformation
+import org.company.app.utils.LayoutMeta
+import org.company.app.utils.LayoutType
 
 class YouTubeServiceImpl(
     private val youtubeClientApi: YoutubeClientApi,
 ) : YouTubeService {
 
+    private val database = Firebase.database.reference()
+
+    fun fetchLayout(): Flow<LayoutInformation?> = flow {
+        try {
+            database.child("ui").child("layout").valueEvents.collect { dataSnapshot ->
+                val layoutType = when (dataSnapshot.child("type").value<String?>()) {
+                    "list" -> LayoutType.List
+                    "grid" -> LayoutType.Grid(dataSnapshot.child("columns").value<Int?>() ?: 1) // Provide default value
+                    else -> LayoutType.List
+                }
+                val canFavourite = dataSnapshot.child("meta").child("canFavourite").value<Boolean?>()
+                if (canFavourite != null) {
+                    val layoutMeta = LayoutMeta(
+                        layoutType = layoutType,
+                        favouriteEnabled = canFavourite
+                    )
+                    emit(LayoutInformation(layoutMeta))
+                } else {
+                    emit(null)
+                }
+            }
+        } catch (e: Exception) {
+            emit(null)
+            println("FetchLayout Error fetching layout: ${e.message}")
+        }
+    }
     override suspend fun getVideoList(userRegion: String): Youtube {
         return youtubeClientApi.getVideoList(userRegion)
     }

@@ -91,7 +91,6 @@ import org.company.app.theme.LocalThemeIsDark
 import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
 import org.company.app.utils.getFormattedDateHome
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import youtube_clone.composeapp.generated.resources.Res

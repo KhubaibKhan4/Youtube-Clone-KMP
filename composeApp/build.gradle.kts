@@ -70,6 +70,7 @@ kotlin {
             implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.5.0")
             implementation(libs.alert.kmp)
             implementation(libs.gitlive.firebase.firestore)
+            implementation(libs.gitlive.firebase.database)
         }
 
         commonTest.dependencies {
