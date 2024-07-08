@@ -69,6 +69,7 @@ kotlin {
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-alpha08")
             implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.5.0")
             implementation(libs.alert.kmp)
+            implementation(libs.gitlive.firebase.firestore)
         }
 
         commonTest.dependencies {
@@ -98,6 +99,7 @@ kotlin {
             implementation(libs.koin.androidx.compose)
             implementation(libs.androidx.glance.app.widget)
             implementation(libs.androidx.glance.material3)
+            implementation(project.dependencies.platform(libs.android.firebase.bom))
         }
 
         jvmMain.dependencies {
