@@ -24,25 +24,39 @@ class YouTubeServiceImpl(
     fun fetchLayout(): Flow<LayoutInformation?> = flow {
         try {
             database.child("ui").child("layout").valueEvents.collect { dataSnapshot ->
-                val layoutType = when (dataSnapshot.child("type").value<String?>()) {
+                val layoutMode = dataSnapshot.child("mode").value<String?>()
+                val selectedLayoutSnapshot = dataSnapshot.child(layoutMode ?: "layout_1")
+
+                val layoutType = when (selectedLayoutSnapshot.child("type").value<String?>()) {
                     "list" -> LayoutType.List
-                    "grid" -> LayoutType.Grid(dataSnapshot.child("columns").value<Int?>() ?: 1) // Provide default value
+                    "grid" -> LayoutType.Grid(selectedLayoutSnapshot.child("columns").value<Int?>() ?: 1)
                     else -> LayoutType.List
                 }
-                val canFavourite = dataSnapshot.child("meta").child("canFavourite").value<Boolean?>()
-                if (canFavourite != null) {
-                    val layoutMeta = LayoutMeta(
-                        layoutType = layoutType,
-                        favouriteEnabled = canFavourite
-                    )
-                    emit(LayoutInformation(layoutMeta))
-                } else {
-                    emit(null)
-                }
+
+                val canFavourite = dataSnapshot.child("meta").child("canFavourite").value<Boolean?>() ?: false
+
+                val layoutMeta = LayoutMeta(
+                    layoutType = layoutType,
+                    favouriteEnabled = canFavourite
+                )
+
+                emit(LayoutInformation(layoutMeta))
             }
         } catch (e: Exception) {
             emit(null)
             println("FetchLayout Error fetching layout: ${e.message}")
+        }
+    }
+    fun fetchCanFavourite(): Flow<Boolean?> = flow {
+        try {
+            database.child("ui").child("meta").child("canFavourite").valueEvents.collect { dataSnapshot ->
+                val canFavourite = dataSnapshot.value<Boolean?>()
+                println("canFavourite Value: $canFavourite")
+                emit(canFavourite)
+            }
+        } catch (e: Exception) {
+            emit(null)
+            println("FetchCanFavourite Error fetching canFavourite: ${e.message}")
         }
     }
     override suspend fun getVideoList(userRegion: String): Youtube {

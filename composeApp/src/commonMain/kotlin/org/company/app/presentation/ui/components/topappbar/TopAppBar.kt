@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Cast
 import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.WatchLater
@@ -114,6 +115,12 @@ fun TopBar(
     var errorData by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
     var query by remember { mutableStateOf("") }
+    val layoutInformation by viewModel.layoutInformation.collectAsState()
+    val canFavourite by viewModel.canFavourite.collectAsState()
+
+    LaunchedEffect(canFavourite) {
+        println("canFavourite Value in Composable: $canFavourite")
+    }
     if (!isSearchEnabled) {
         TopAppBar(
             title = {
@@ -124,6 +131,15 @@ fun TopBar(
                 )
             },
             actions = {
+                if (canFavourite == true){
+                    IconButton(
+                        onClick = {
+
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "Cast Screen")
+                    }
+                }
                 IconButton(
                     onClick = {
 

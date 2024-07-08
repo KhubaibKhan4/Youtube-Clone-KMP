@@ -83,18 +83,31 @@ class MainViewModel(
     val localVideos: StateFlow<ResultState<List<YoutubeEntity>>> = _localVideos.asStateFlow()
 
 
-    val layoutInformation: Flow<LayoutInformation> = flow {
-        repository.fetchLayout().collect { layoutInfo ->
-            try {
-                if (layoutInfo != null) {
-                    emit(layoutInfo)
-                }
-            }catch (e:Exception){
-                println("FIREBASE: ${e.printStackTrace()}")
+    private val _layoutInformation = MutableStateFlow<LayoutInformation?>(null)
+    val layoutInformation: StateFlow<LayoutInformation?> get() = _layoutInformation
+
+    init {
+        fetchLayout()
+        fetchCanFavourite()
+    }
+    private val _canFavourite = MutableStateFlow<Boolean?>(null)
+    val canFavourite: StateFlow<Boolean?> get() = _canFavourite
+
+    private fun fetchCanFavourite() {
+        viewModelScope.launch {
+            repository.fetchCanFavourite().collect { value ->
+                _canFavourite.value = value
             }
         }
     }
 
+    private fun fetchLayout() {
+        viewModelScope.launch {
+            repository.fetchLayout().collect { layoutInfo ->
+                _layoutInformation.value = layoutInfo
+            }
+        }
+    }
     fun getVideosList(userRegion: String) {
         viewModelScope.launch {
             _videos.value = ResultState.LOADING
