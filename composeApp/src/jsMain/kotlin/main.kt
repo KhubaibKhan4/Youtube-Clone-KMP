@@ -12,9 +12,9 @@ import org.koin.core.context.startKoin
 fun main() {
     Firebase.initialize(
         options = FirebaseOptions(
-            applicationId = "Add your firebase web appId here",
-            apiKey = "Add your firebase project api key here",
-            projectId = "Add your firebase projectId here"
+            applicationId = "1:77959177776:web:3ec6ad19a2e3888f7c2ff5",
+            apiKey = "AIzaSyCNt3M8kkTgxs6xWC9LGExe1_bLeQNuFQs",
+            projectId = "clone-ef3ed"
         )
     )
     onWasmReady {

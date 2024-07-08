@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "77959177776",
+    "project_id": "clone-ef3ed",
+    "storage_bucket": "clone-ef3ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77959177776:android:c9258fa1b5ff2e6c7c2ff5",
+        "android_client_info": {
+          "package_name": "org.company.app.androidApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxw06oxH70OHadBg7rDI2wGaGSqNYlPmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
