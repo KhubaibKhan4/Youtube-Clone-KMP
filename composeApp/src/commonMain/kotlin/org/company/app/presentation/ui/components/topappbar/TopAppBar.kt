@@ -116,11 +116,11 @@ fun TopBar(
     var isLoading by remember { mutableStateOf(false) }
     var query by remember { mutableStateOf("") }
     val layoutInformation by viewModel.layoutInformation.collectAsState()
-    val canFavourite by viewModel.canFavourite.collectAsState()
 
-    LaunchedEffect(canFavourite) {
-        println("canFavourite Value in Composable: $canFavourite")
+    LaunchedEffect(layoutInformation) {
+        println("LayoutInformation in Composable: $layoutInformation")
     }
+
     if (!isSearchEnabled) {
         TopAppBar(
             title = {
@@ -131,15 +131,6 @@ fun TopBar(
                 )
             },
             actions = {
-                if (canFavourite == true){
-                    IconButton(
-                        onClick = {
-
-                        }
-                    ) {
-                        Icon(imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "Cast Screen")
-                    }
-                }
                 IconButton(
                     onClick = {
 

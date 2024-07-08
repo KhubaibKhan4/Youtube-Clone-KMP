@@ -11,9 +11,12 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.repository.YouTubeService
+import org.company.app.utils.Layout
 import org.company.app.utils.LayoutInformation
 import org.company.app.utils.LayoutMeta
 import org.company.app.utils.LayoutType
+import org.company.app.utils.Meta
+import org.company.app.utils.UiData
 
 class YouTubeServiceImpl(
     private val youtubeClientApi: YoutubeClientApi,
@@ -21,30 +24,48 @@ class YouTubeServiceImpl(
 
     private val database = Firebase.database.reference()
 
-    fun fetchLayout(): Flow<LayoutInformation?> = flow {
+    fun fetchUiData(): Flow<UiData?> = flow {
         try {
-            database.child("ui").child("layout").valueEvents.collect { dataSnapshot ->
-                val layoutMode = dataSnapshot.child("mode").value<String?>()
-                val selectedLayoutSnapshot = dataSnapshot.child(layoutMode ?: "layout_1")
-
-                val layoutType = when (selectedLayoutSnapshot.child("type").value<String?>()) {
-                    "list" -> LayoutType.List
-                    "grid" -> LayoutType.Grid(selectedLayoutSnapshot.child("columns").value<Int?>() ?: 1)
-                    else -> LayoutType.List
+            database.child("ui").valueEvents.collect { dataSnapshot ->
+                val layoutSnapshot = dataSnapshot.child("layout")
+                val metaSnapshot = dataSnapshot.child("meta")
+                val layout = layoutSnapshot.children.associate { child ->
+                    val key = child.key ?: ""
+                    val type = child.child("type").value<String>() ?: ""
+                    val columns = child.child("columns").value<Int?>()
+                    key to Layout(type, columns)
                 }
-
-                val canFavourite = dataSnapshot.child("meta").child("canFavourite").value<Boolean?>() ?: false
-
-                val layoutMeta = LayoutMeta(
-                    layoutType = layoutType,
-                    favouriteEnabled = canFavourite
-                )
-
-                emit(LayoutInformation(layoutMeta))
+                val canFavourite = metaSnapshot.child("canFavourite").value<Boolean>() ?: false
+                val mode = metaSnapshot.child("mode").value<String>() ?: ""
+                val meta = Meta(canFavourite, mode)
+                val uiData = UiData(layout, meta)
+                emit(uiData)
             }
         } catch (e: Exception) {
             emit(null)
-            println("FetchLayout Error fetching layout: ${e.message}")
+            println("FetchUiData Error fetching UI data: ${e.message}")
+        }
+    }
+
+    fun fetchLayoutInformation(): Flow<LayoutInformation?> = flow {
+        fetchUiData().collect { uiData ->
+            uiData?.let {
+                val layoutMode = it.meta.mode
+                val selectedLayout = it.layout[layoutMode] ?: it.layout["layout_1"]
+
+                val layoutType = when (selectedLayout?.type) {
+                    "list" -> LayoutType.List
+                    "grid" -> LayoutType.Grid(selectedLayout.columns ?: 1)
+                    else -> LayoutType.List
+                }
+
+                val layoutMeta = LayoutMeta(
+                    layoutType = layoutType,
+                    favouriteEnabled = it.meta.canFavourite
+                )
+
+                emit(LayoutInformation(layoutMeta))
+            } ?: emit(null)
         }
     }
     fun fetchCanFavourite(): Flow<Boolean?> = flow {
@@ -57,6 +78,19 @@ class YouTubeServiceImpl(
         } catch (e: Exception) {
             emit(null)
             println("FetchCanFavourite Error fetching canFavourite: ${e.message}")
+        }
+    }
+
+    fun fetchSeverUi(): Flow<UiData?> = flow {
+        try {
+            database.child("ui").valueEvents.collect { dataSnapshot ->
+                val layoutUi = dataSnapshot.value<UiData?>()
+                println("canFavourite Value: $layoutUi")
+                emit(layoutUi)
+            }
+        } catch (e: Exception) {
+            emit(null)
+            println("Layout UI Error fetching canFavourite: ${e.message}")
         }
     }
     override suspend fun getVideoList(userRegion: String): Youtube {

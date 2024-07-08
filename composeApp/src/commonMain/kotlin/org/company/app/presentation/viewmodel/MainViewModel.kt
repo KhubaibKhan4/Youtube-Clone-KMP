@@ -3,11 +3,9 @@ package org.company.app.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.youtube.clone.db.YoutubeDatabase
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import org.company.app.data.repository.YouTubeServiceImpl
 import org.company.app.domain.model.categories.VideoCategories
@@ -17,6 +15,7 @@ import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.utils.LayoutInformation
+import org.company.app.utils.UiData
 import sqldelight.db.YoutubeEntity
 
 class MainViewModel(
@@ -83,15 +82,25 @@ class MainViewModel(
     val localVideos: StateFlow<ResultState<List<YoutubeEntity>>> = _localVideos.asStateFlow()
 
 
+    init {
+        fetchLayoutInformation()
+        fetchCanFavourite()
+    }
     private val _layoutInformation = MutableStateFlow<LayoutInformation?>(null)
     val layoutInformation: StateFlow<LayoutInformation?> get() = _layoutInformation
 
-    init {
-        fetchLayout()
-        fetchCanFavourite()
+    private fun fetchLayoutInformation() {
+        viewModelScope.launch {
+            repository.fetchLayoutInformation().collect { layoutInfo ->
+                _layoutInformation.value = layoutInfo
+            }
+        }
     }
     private val _canFavourite = MutableStateFlow<Boolean?>(null)
     val canFavourite: StateFlow<Boolean?> get() = _canFavourite
+
+    private val _serverUi = MutableStateFlow<UiData?>(null)
+    val serverUi: StateFlow<UiData?>  = _serverUi
 
     private fun fetchCanFavourite() {
         viewModelScope.launch {
@@ -100,14 +109,14 @@ class MainViewModel(
             }
         }
     }
-
-    private fun fetchLayout() {
+    private fun fetchServerUi(){
         viewModelScope.launch {
-            repository.fetchLayout().collect { layoutInfo ->
-                _layoutInformation.value = layoutInfo
+            repository.fetchSeverUi().collect{serverui->
+                _serverUi.value = serverui
             }
         }
     }
+
     fun getVideosList(userRegion: String) {
         viewModelScope.launch {
             _videos.value = ResultState.LOADING

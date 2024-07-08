@@ -24,12 +24,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -56,6 +58,7 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -113,6 +116,7 @@ import org.company.app.presentation.ui.screens.detail.formatLikes
 import org.company.app.presentation.ui.screens.detail.formatSubscribers
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
+import org.company.app.utils.LayoutType
 import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
 import org.company.app.utils.getFormattedDate
@@ -140,7 +144,13 @@ fun VideosList(
     var isAnyCategorySelected by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyGridState()
+
+    val layoutInformation by viewModel.layoutInformation.collectAsState()
+    LaunchedEffect(layoutInformation) {
+        println("LayoutInformation in Composable: $layoutInformation")
+    }
     val showButton by remember { derivedStateOf { lazyListState.firstVisibleItemIndex > 0 } }
+
     LaunchedEffect(Unit) {
         viewModel.getVideoCategories()
     }
@@ -499,14 +509,61 @@ fun VideosList(
                 }
                 if (!isAnyCategorySelected) {
                     Box(modifier = Modifier.fillMaxSize()) {
-                        LazyVerticalGrid(
-                            modifier = Modifier.fillMaxSize(),
-                            state = lazyListState,
-                            columns = GridCells.Adaptive(300.dp)
-                        ) {
-                            youtube.items?.let { items ->
-                                items(items) { videos ->
-                                    VideoItemCard(videos)
+                        layoutInformation?.let { info ->
+                            when (info.layoutMeta.layoutType) {
+                                is LayoutType.List -> {
+                                    LazyVerticalGrid(
+                                        modifier = Modifier.fillMaxSize(),
+                                        state = lazyListState,
+                                        columns = GridCells.Adaptive(300.dp)
+                                    ) {
+                                        youtube.items?.let { items ->
+                                            items(items) { videos ->
+                                                VideoItemCard(videos)
+                                            }
+                                        }
+                                    }
+                                }
+
+                                is LayoutType.Grid -> {
+                                    val columns =
+                                        (info.layoutMeta.layoutType as LayoutType.Grid).columns
+                                    if (columns>1){
+                                        LazyVerticalGrid(
+                                            modifier = Modifier.fillMaxSize(),
+                                            state = lazyListState,
+                                            columns = GridCells.Fixed(columns)
+                                        ) {
+                                            items(youtube.items ?: listOf()) { video ->
+                                                VideoItemGridCard(video)
+                                            }
+                                        }
+                                    }else{
+                                        LazyVerticalGrid(
+                                            modifier = Modifier.fillMaxSize(),
+                                            state = lazyListState,
+                                            columns = GridCells.Adaptive(300.dp)
+                                        ) {
+                                            youtube.items?.let { items ->
+                                                items(items) { videos ->
+                                                    VideoItemCard(videos)
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                        } ?: run {
+                            LazyVerticalGrid(
+                                modifier = Modifier.fillMaxSize(),
+                                state = lazyListState,
+                                columns = GridCells.Adaptive(300.dp)
+                            ) {
+                                youtube.items?.let { items ->
+                                    items(items) { videos ->
+                                        VideoItemCard(videos)
+                                    }
                                 }
                             }
                         }
@@ -919,6 +976,378 @@ fun VideoItemCard(
                         modifier = Modifier.size(24.dp),
                         tint = if (isDark) Color.White else Color.Black
                     )
+                }
+            }
+        }
+    }
+    if (moreVertEnable) {
+        var isShareEnabled by remember { mutableStateOf(false) }
+        ModalBottomSheet(
+            onDismissRequest = {
+                moreVertEnable = false
+            },
+            modifier = Modifier.fillMaxWidth(),
+            sheetState = androidx.compose.material3.rememberModalBottomSheetState(),
+            shape = RoundedCornerShape(4.dp),
+            contentColor = if (isDark) Color.White else Color.Black,
+            scrimColor = Color.Transparent,
+            tonalElevation = 4.dp,
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.WatchLater,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Save to Watch later",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.PlaylistAdd,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Save to playlist",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .clickable {
+                            downloadVideo()
+                        },
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Download,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Download video",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .clickable {
+                            isShareEnabled = !isShareEnabled
+                        },
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Share,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Share",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
+                    )
+                    if (isShareEnabled) {
+                        ShareManager(
+                            title = video.snippet?.title.toString(),
+                            videoUrl = "https://www.youtube.com/watch?v=${video.id}"
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Block,
+                        contentDescription = "Time",
+                        tint = if (isDark) Color.White else Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = "Not interested",
+                        modifier = Modifier.weight(1f),
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        color = if (isDark) Color.White else Color.Black
+                    )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun VideoItemGridCard(
+    video: VideoItem,
+    viewModel: MainViewModel = koinInject<MainViewModel>(),
+) {
+    val navigator = LocalNavigator.current
+    val isDark by LocalThemeIsDark.current
+    var moreVertEnable by remember { mutableStateOf(false) }
+    var channelData by remember { mutableStateOf<Channel?>(null) }
+
+    val title = video.snippet?.title.toString()
+    val channelTitle = video.snippet?.channelTitle.toString()
+    val channelImage = video.snippet?.thumbnails?.high?.url.toString()
+    val publishData = getFormattedDate(video.snippet?.publishedAt.toString())
+    val views = FormateView(video.statistics?.viewCount)
+    val duration = formatVideoDuration(video.contentDetails?.duration.toString())
+    val videoThumbnail = video.snippet?.thumbnails?.default?.url.toString()
+    val videoDesc = video.snippet?.description.toString()
+    val likes = formatLikes(video.statistics?.likeCount)
+    val channelSubs =
+        formatSubscribers(channelData?.items?.first()?.statistics?.subscriberCount)
+    val isVerified = channelData?.items?.get(0)?.status?.isLinked == true
+    LaunchedEffect(Unit) {
+        viewModel.getChannelDetails(video.snippet?.channelId.toString())
+    }
+
+    val scope = rememberCoroutineScope()
+    var videoUrl by remember { mutableStateOf("https://www.youtube.com/watch?v=${video.id}") }
+    val videoDownloader = remember { VideoDownloader() }
+    var downloadOutput by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
+    var isDownloadedSuccessfully by remember { mutableStateOf(false) }
+    var progress by remember { mutableStateOf(0f) }
+    var downloadedFilePath by remember { mutableStateOf("") }
+
+    fun downloadVideo() {
+        scope.launch {
+            showDialog = true
+            videoDownloader.downloadVideo(videoUrl) { prog, output ->
+                progress = prog
+                downloadOutput = output
+            }.also {
+                downloadOutput = it
+                isDownloadedSuccessfully = true
+                showDialog = false
+            }
+        }
+    }
+    if (isDownloadedSuccessfully) {
+        AlertDialog(
+            onDismissRequest = { isDownloadedSuccessfully = false },
+            title = {
+                Text(
+                    "Download Complete",
+                    color = Color.Black
+                )
+            },
+            text = {
+                Column {
+                    Text("File downloaded successfully:", color = Color.Black)
+                    Text(
+                        downloadedFilePath,
+                        color = Color.Black,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { isDownloadedSuccessfully = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+                ) {
+                    Text("OK", color = Color.White)
+                }
+            },
+            backgroundColor = Color.White,
+            contentColor = Color.Black
+        )
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = {
+                Text(
+                    "Downloading Video",
+                    color = Color.Black
+                )
+            },
+            text = {
+                Column {
+                    Text("Downloading video, please wait...", color = Color.Black)
+                    LinearProgressIndicator(
+                        progress = progress,
+                        color = Color.Blue,
+                        trackColor = Color.Gray
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Progress: ${(progress * 100).toInt()}%", color = Color.Black)
+                    Text(downloadOutput, color = Color.Black)
+                }
+            },
+            confirmButton = {},
+            backgroundColor = Color.White,
+            contentColor = Color.Black
+        )
+    }
+    LaunchedEffect(video) {
+        viewModel.insertVideos(
+            id = null,
+            title = title,
+            videoThumbnail = videoThumbnail,
+            videoDesc = videoDesc,
+            likes = likes,
+            channelName = channelTitle,
+            channelImage = channelImage,
+            pubDate = publishData,
+            views = views,
+            duration = duration,
+            isVerified = if (isVerified) 1 else 0,
+            channelSubs = channelSubs
+        )
+    }
+    val state by viewModel.channelDetails.collectAsState()
+    when (state) {
+        is ResultState.LOADING -> {
+            // LoadingBox()
+        }
+
+        is ResultState.SUCCESS -> {
+            val channelResponse = (state as ResultState.SUCCESS).response
+            val matchingChannel =
+                channelResponse.items?.firstOrNull { it.id == video.snippet?.channelId }
+            matchingChannel?.let {
+                channelData = Channel(
+                    etag = "",
+                    items = listOf(it),
+                    kind = "",
+                    pageInfo = PageInfo(
+                        resultsPerPage = 0,
+                        totalResults = 0
+                    )
+                )
+            }
+        }
+
+        is ResultState.ERROR -> {
+            val error = (state as ResultState.ERROR).error
+            ErrorBox(error)
+        }
+    }
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .pointerHoverIcon(icon = PointerIcon.Hand)
+            .clickable {
+                navigator?.push(DetailScreen(video, channelData = channelData?.items?.get(0)))
+            },
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    ) {
+        Column {
+            Box(modifier = Modifier.fillMaxWidth()
+                .height(200.dp)) {
+
+                NetworkImage(
+                    modifier = Modifier.fillMaxSize()
+                        .pointerHoverIcon(icon = PointerIcon.Hand)
+                        .clip(RoundedCornerShape(12.dp)),
+                    url = video.snippet?.thumbnails?.high?.url.toString(),
+                    contentDescription = "Image",
+                    contentScale = ContentScale.Crop
+                )
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(8.dp)
+                        .background(
+                            Color.Black.copy(alpha = 0.8f),
+                            shape = RoundedCornerShape(4.dp)
+                        )
+                ) {
+                    Text(
+                        text = video.contentDetails?.duration?.let { formatVideoDuration(it) }
+                            ?: "00:00",
+                        color = Color.White,
+                        fontSize = 10.sp
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        moreVertEnable = !moreVertEnable
+                    },
+                    modifier = Modifier.align(Alignment.TopEnd)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp),
+                        tint =Color.White
+                    )
+                }
+                Row(
+                    Modifier
+                        .padding(start = 4.dp, bottom = 4.dp)
+                        .wrapContentWidth()
+                        .align(Alignment.BottomStart),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    NetworkImage(
+                        url = channelData?.items?.first()?.snippet?.thumbnails?.high?.url
+                            ?: videoThumbnail,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier.size(25.dp)
+                            .clip(CircleShape)
+                            .pointerHoverIcon(icon = PointerIcon.Hand)
+                            .clickable {
+                                val channelItem = channelData?.items?.get(0)!!
+                                navigator?.push(ChannelScreen(channelItem))
+                            },
+                    )
+                    if (isVerified) {
+                        Icon(
+                            imageVector = Icons.Default.Verified,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp)
+                                .padding(start = 4.dp, top = 0.dp)
+                        )
+                    }
                 }
             }
         }
