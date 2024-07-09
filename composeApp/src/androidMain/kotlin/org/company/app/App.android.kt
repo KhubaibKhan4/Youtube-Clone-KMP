@@ -1,6 +1,5 @@
 package org.company.app
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -12,7 +11,6 @@ import android.net.NetworkRequest
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -35,19 +33,14 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
-import org.company.app.di.appModule
 import org.company.app.shortcuts.TopTrending
 import org.company.app.shortcuts.dynamicShortcut
 import org.company.app.shortcuts.latestVideos
 import org.company.app.shortcuts.pinnedShortCut
 import org.company.app.ui.YoutubeShortsPlayer
 import org.company.app.ui.YoutubeVideoPlayer
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 import java.io.BufferedReader
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.Locale
@@ -76,6 +69,7 @@ class AppActivity : ComponentActivity() {
             checkAndRequestPermissions()
         }
     }
+
     private fun checkAndRequestPermissions() {
         val permissions = arrayOf(
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -87,12 +81,15 @@ class AppActivity : ComponentActivity() {
         }
 
         if (permissionsToRequest.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, permissionsToRequest.toTypedArray(), PERMISSION_REQUEST_CODE)
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsToRequest.toTypedArray(),
+                PERMISSION_REQUEST_CODE
+            )
         } else {
             proceedWithTask()
         }
     }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -103,10 +100,12 @@ class AppActivity : ComponentActivity() {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 proceedWithTask()
             } else {
-                Toast.makeText(this, "Permissions are required to proceed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permissions are required to proceed.", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
+
     private fun proceedWithTask() {
         // Proceed with video download logic
     }
@@ -171,7 +170,8 @@ internal actual fun UserRegion(): String {
 actual fun isConnected(): Flow<Boolean> {
     val context = LocalContext.current
     return callbackFlow {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val callback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 trySend(true)

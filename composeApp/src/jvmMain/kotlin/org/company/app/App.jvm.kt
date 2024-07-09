@@ -13,11 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import java.awt.Desktop
-import java.awt.SystemTray
-import java.awt.Toolkit
-import java.awt.TrayIcon
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -27,7 +23,6 @@ import java.net.URL
 import java.nio.file.Paths
 import java.util.Locale
 import java.util.concurrent.TimeUnit
-import javax.swing.JOptionPane
 
 internal actual fun openUrl(url: String?) {
     val uri = url?.let { URI.create(it) } ?: return
@@ -118,7 +113,8 @@ actual class VideoDownloader {
                 val userHome = System.getProperty("user.home")
                 val downloadDir = Paths.get(userHome, "Desktop").toString()
                 val destination = "$downloadDir/%(title)s.%(ext)s"
-                val command = listOf("C:\\Program Files\\yt-dlp\\yt-dlp.exe", "-o", destination, url)
+                val command =
+                    listOf("C:\\Program Files\\yt-dlp\\yt-dlp.exe", "-o", destination, url)
                 val processBuilder = ProcessBuilder(command)
                 val process = processBuilder.start()
                 val reader = BufferedReader(InputStreamReader(process.inputStream))

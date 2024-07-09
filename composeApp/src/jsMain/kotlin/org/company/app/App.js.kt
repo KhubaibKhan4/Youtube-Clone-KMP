@@ -1,25 +1,14 @@
 package org.company.app
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.window.CanvasBasedWindow
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import com.youtube.clone.db.YoutubeDatabase
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.await
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -27,15 +16,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import org.company.app.html.LocalLayerContainer
 import org.company.app.video.HTMLVideoPlayer
-import org.w3c.dom.HTMLAnchorElement
-import org.w3c.dom.Worker
 import org.w3c.dom.url.URL
-import org.w3c.notifications.DEFAULT
-import org.w3c.notifications.DENIED
-import org.w3c.notifications.GRANTED
-import org.w3c.notifications.Notification
-import org.w3c.notifications.NotificationOptions
-import org.w3c.notifications.NotificationPermission
 
 internal actual fun openUrl(url: String?) {
     url?.let { window.open(it) }
@@ -54,6 +35,7 @@ internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: Str
 internal actual fun provideShortCuts() {
     return
 }
+
 @Composable
 internal actual fun ShareManager(title: String, videoUrl: String) {
     window.open(url = videoUrl, "_blank")
@@ -98,7 +80,8 @@ actual fun isConnected(): Flow<Boolean> {
 
 actual class DriverFactory actual constructor() {
     actual fun createDriver(): SqlDriver {
-        val workerScriptUrl = js("import.meta.url.replace('kotlin', 'node_modules/@cashapp/sqldelight-sqljs-worker/sqljs.worker.js')")
+        val workerScriptUrl =
+            js("import.meta.url.replace('kotlin', 'node_modules/@cashapp/sqldelight-sqljs-worker/sqljs.worker.js')")
         val driver = WebWorkerDriver(workerScriptUrl).also { YoutubeDatabase.Schema.create(it) }
         return driver
     }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import org.company.app.di.appModule
 import org.koin.core.context.startKoin
@@ -40,6 +41,7 @@ import platform.UIKit.UIApplication
 import platform.UIKit.UIDevice
 import platform.UIKit.UIView
 import platform.darwin.*
+import kotlin.coroutines.resumeWithException
 
 internal actual fun openUrl(url: String?) {
     val nsUrl = url?.let { NSURL.URLWithString(it) } ?: return
@@ -184,5 +186,27 @@ actual class VideoDownloader {
                 "Error: ${e.message}"
             }
         }
+    }
+}
+
+actual class GoogleSignInHelper {
+
+    actual suspend fun signIn(): GoogleSignInResult = suspendCancellableCoroutine { cont ->
+        GIDSignIn.sharedInstance().signInWithConfiguration(GIDConfiguration(clientID = "YOUR_IOS_CLIENT_ID"), presentingViewController = getViewController(), callback = { user, error ->
+            if (error != null) {
+                cont.resumeWithException(error)
+            } else if (user != null) {
+                val userData = UserData(
+                    name = user.profile?.name ?: "",
+                    email = user.profile?.email ?: "",
+                    photoUrl = user.profile?.imageURLWithDimension(100)?.absoluteString
+                )
+                cont.resume(GoogleSignInResult(success = true, userData = userData))
+            }
+        })
+    }
+
+    private fun getViewController(): UIViewController {
+        return UIApplication.sharedApplication.keyWindow!!.rootViewController!!
     }
 }
