@@ -15,11 +15,11 @@ import org.company.app.html.HtmlView
 fun HTMLVideoPlayer(videoId: String) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HtmlView(
-            modifier = Modifier.fillMaxWidth().height(300.dp),
+            modifier = Modifier.fillMaxWidth(0.65f).height(300.dp),
             factory = {
                 val iframe = createElement("iframe")
                 iframe.setAttribute("width", "100%")

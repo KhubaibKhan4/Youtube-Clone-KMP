@@ -3,16 +3,20 @@ package org.company.app.presentation.ui.components.shorts
 import Notify
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -23,6 +27,10 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.PagerDefaults
+import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -62,6 +70,9 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -104,18 +115,52 @@ import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.koin.compose.koinInject
 
+@OptIn(ExperimentalFoundationApi::class,
+    ExperimentalMaterial3WindowSizeClassApi::class
+)
 @Composable
-fun ShortList(youtube: Youtube) {
-    LazyColumn {
-        youtube.items?.let { videos ->
-            items(videos) { items ->
-                ShortItem(items)
-            }
+fun ShortList(youtube: Youtube, viewModel: MainViewModel = koinInject<MainViewModel>()) {
+    val windowSizeClass = calculateWindowSizeClass()
+
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        pageCount = { youtube.items?.size ?: 0 }
+    )
+
+    val modifier = when (windowSizeClass.widthSizeClass) {
+        WindowWidthSizeClass.Compact -> Modifier.fillMaxSize()
+        WindowWidthSizeClass.Medium -> Modifier.fillMaxSize()
+        WindowWidthSizeClass.Expanded -> Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxHeight()
+        else -> Modifier.fillMaxSize()
+    }
+
+    VerticalPager(
+        state = pagerState,
+        modifier = modifier,
+        contentPadding = PaddingValues(0.dp),
+        pageSize = PageSize.Fill,
+        beyondBoundsPageCount = PagerDefaults.BeyondBoundsPageCount,
+        pageSpacing = 0.dp,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        flingBehavior = PagerDefaults.flingBehavior(state = pagerState),
+        userScrollEnabled = true,
+        reverseLayout = false,
+        key = null,
+        pageNestedScrollConnection = remember(pagerState) {
+            PagerDefaults.pageNestedScrollConnection(pagerState, Orientation.Vertical)
+        }
+    ) { page ->
+        val video = youtube.items?.get(page)
+        video?.let {
+            ShortItem(it, viewModel)
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShortItem(
     video: Item,
@@ -173,26 +218,28 @@ fun ShortItem(
         }
     }
     Box(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxSize()
             .background(color = Color.Black)
             .padding(top = 10.dp),
         contentAlignment = Alignment.Center
     ) {
-        ShortsVideoPlayer(url = shortsUrl, modifier = Modifier)
-        Napier.d(message = "Video ID: ${video.id}", tag = "SHORTS")
+        ShortsVideoPlayer(url = shortsUrl, modifier = Modifier.fillMaxSize())
+        Napier.d(message = "Video ID: ${video.id}", tag = "REELS")
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
+            // Top Bar
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 IconButton(
-                    onClick = {
-                    },
+                    onClick = { },
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
@@ -201,11 +248,10 @@ fun ShortItem(
                     )
                 }
 
-
                 Spacer(modifier = Modifier.weight(1f))
 
                 IconButton(
-                    onClick = {},
+                    onClick = { },
                 ) {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -215,9 +261,7 @@ fun ShortItem(
                 }
 
                 IconButton(
-                    onClick = {
-                        isMoreVertEnabled = !isMoreVertEnabled
-                    },
+                    onClick = { isMoreVertEnabled = !isMoreVertEnabled },
                 ) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
@@ -226,19 +270,20 @@ fun ShortItem(
                     )
                 }
             }
+
+            // Video Interaction Buttons
             Column(
-                modifier = Modifier.fillMaxHeight()
-                    .padding(end = 6.dp, top = 335.dp, bottom = 49.dp)
-                    .fillMaxWidth(),
+                modifier = Modifier
+                    .padding(top = 140.dp)
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.End
             ) {
                 Column(
-                    modifier = Modifier.wrapContentWidth(),
-                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { }) {
                         Icon(
                             imageVector = Icons.Filled.ThumbUp,
                             contentDescription = "Liked",
@@ -254,11 +299,9 @@ fun ShortItem(
                 }
 
                 Column(
-                    modifier = Modifier.wrapContentWidth(),
-                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { }) {
                         Icon(
                             imageVector = Icons.Filled.ThumbDown,
                             contentDescription = "DisLiked",
@@ -274,13 +317,9 @@ fun ShortItem(
                 }
 
                 Column(
-                    modifier = Modifier.wrapContentWidth(),
-                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    IconButton(onClick = {
-                        isCommentEnabled = !isCommentEnabled
-                    }) {
+                    IconButton(onClick = { isCommentEnabled = !isCommentEnabled }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Comment,
                             contentDescription = "Comments",
@@ -296,15 +335,12 @@ fun ShortItem(
                 }
 
                 Column(
-                    modifier = Modifier.wrapContentWidth(),
-                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    IconButton(onClick = {
-                        isShareEnabled = !isShareEnabled
-                    }) {
+                    IconButton(onClick = { isShareEnabled = !isShareEnabled }) {
                         Icon(
-                            imageVector = Icons.Filled.Share, contentDescription = "Share",
+                            imageVector = Icons.Filled.Share,
+                            contentDescription = "Share",
                             tint = Color.White
                         )
                     }
@@ -323,13 +359,12 @@ fun ShortItem(
                 }
 
                 Column(
-                    modifier = Modifier.wrapContentWidth(),
-                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { }) {
                         Icon(
-                            imageVector = Icons.Filled.Shuffle, contentDescription = "Remix",
+                            imageVector = Icons.Filled.Shuffle,
+                            contentDescription = "Remix",
                             tint = Color.White
                         )
                     }
@@ -342,38 +377,38 @@ fun ShortItem(
                 }
 
                 Column(
-                    modifier = Modifier.wrapContentWidth()
-                        .padding(top = 12.dp, end = 4.dp),
-                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(end = 6.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     KamelImage(
                         resource = image,
                         contentDescription = "Music Image",
-                        modifier = Modifier.size(35.dp)
-                            .clip(shape = RoundedCornerShape(12.dp)),
+                        modifier = Modifier
+                            .size(35.dp)
+                            .clip(RoundedCornerShape(12.dp)),
                         contentScale = ContentScale.FillBounds
                     )
                 }
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 8.dp)
-                    .offset(y = (-85).dp),
-                verticalAlignment = Alignment.Bottom,
-                horizontalArrangement = Arrangement.Start
+            // Channel and Video Description
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
                     KamelImage(
                         resource = image,
                         contentDescription = "Channel image",
-                        modifier = Modifier.size(40.dp)
-                            .clip(shape = CircleShape)
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
                             .clickable {
                                 channelDetail?.items?.get(0)?.let { item ->
                                     navigator?.push(ChannelScreen(channel = item))
@@ -387,8 +422,8 @@ fun ShortItem(
                                 navigator?.push(ChannelScreen(channel = item))
                             }
                         },
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = customName.toString(),
@@ -398,65 +433,56 @@ fun ShortItem(
                         if (isVerified == true) {
                             Icon(
                                 imageVector = Icons.Default.Verified,
-                                contentDescription = null,
-                                tint = Color.White,
-                                modifier = Modifier.size(25.dp).padding(start = 4.dp)
+                                contentDescription = "Verified",
+                                modifier = Modifier.size(15.dp),
+                                tint = Color.White
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.width(4.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
                     Button(
-                        onClick = {},
-                        shape = RoundedCornerShape(6.dp),
+                        onClick = { },
+                        modifier = Modifier.height(30.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Red,
                             contentColor = Color.White
                         ),
-                        modifier = Modifier.wrapContentSize()
                     ) {
-                        Text(
-                            text = "Subscribe",
-                            color = Color.White
-                        )
+                        Text(text = "Subscribe", color = Color.White)
                     }
                 }
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp)
-                    .offset(y = (-85).dp),
-                verticalAlignment = Alignment.Bottom,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = video.snippet?.title.toString(),
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                    maxLines = 2
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { descriptionEnabled = !descriptionEnabled }
                 ) {
-                    FlowRow {
+                    if (descriptionEnabled) {
                         Text(
-                            modifier = Modifier.fillMaxWidth(0.65f),
-                            text = "${video.snippet?.description}",
+                            text = video.snippet?.description.toString(),
                             color = Color.White,
-                            maxLines = if (expanded) Int.MAX_VALUE else 2,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                            maxLines = 2
+                        )
+                    } else {
+                        Text(
+                            text = video.snippet?.description.toString(),
+                            color = Color.White,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                            maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
-
-                    AnimatedVisibility((video.snippet?.description?.length ?: 0) > 100) {
-                        TextButton(
-                            onClick = { expanded = !expanded },
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(
-                                text = if (expanded) "Show Less" else "Show More",
-                                color = Color.White
-                            )
-                        }
-                    }
                 }
             }
-
         }
     }
     if (isCommentEnabled) {
