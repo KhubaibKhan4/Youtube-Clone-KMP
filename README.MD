@@ -20,6 +20,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - **Smooth Interaction**
 - **Responsive UI**
 - **Material Design Components**
+- **Server Driven Ui**
 
 ## 🔥 Additional Features
 - Top Videos
@@ -115,8 +116,11 @@ To use the app, follow these steps:
 4. **Integrate API Key into the App:**
    - Use the `BuildConfig.API_KEY` variable in your code to access the API key securely. (Removed for Now, due to some bugs)
    - Ensure that the API key is not hard-coded or exposed directly in your source code.
+5. **Download Videos Setup**
+   - Use `yt-dlp` to perform download operation in the applications. 
+   - Download the `yt-dlp.exe` file from the official Repository and place that into you Mac, Linux & Windows and just provide it's path in the `actual class VideoDownloader` in each platforms.
 
-5. **Start Using the App:**
+6. **Start Using the App:**
    - Build and run your app to start utilizing the YouTube Data API functionalities.
    - Implement features such as video search, playback, playlists, and more using the API key.
 
@@ -190,6 +194,9 @@ If you want to the live version of YouTube Clone KMP then checkout: `https://khu
 | ![Screenshot 29](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/66.png) | 
 | ![Screenshot 30](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/67.png) | 
 | ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/68.png) |
+
+## Server Driven Ui Setup
+To Setup the Server Driven UI using Firebase. You need to create a new firebase project and add Android, iOS, Web And Desktop inside your project. Make sure to provide the `.json` file in Your `commonMain` & also inside your iOS App as well. Moreover, Provide the `projectId, apiKey, applicationId` inside your `jsMain` & `jvmMain` Modules.
 
 ## Star History
 ![star-history-2024629](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/assets/98816544/5a7ebbcb-94ec-4906-870f-2eab317adb2f)
