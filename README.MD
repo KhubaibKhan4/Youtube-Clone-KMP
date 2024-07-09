@@ -195,6 +195,9 @@ If you want to the live version of YouTube Clone KMP then checkout: `https://khu
 | ![Screenshot 30](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/67.png) | 
 | ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/68.png) |
 
+## Server Driven Ui Setup
+To Setup the Server Driven UI using Firebase. You need to create a new firebase project and add Android, iOS, Web And Desktop inside your project. Make sure to provide the `.json` file in Your `commonMain` & also inside your iOS App as well. Moreover, Provide the `projectId, apiKey, applicationId` inside your `jsMain` & `jvmMain` Modules.
+
 ## Star History
 ![star-history-2024629](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/assets/98816544/5a7ebbcb-94ec-4906-870f-2eab317adb2f)
 
