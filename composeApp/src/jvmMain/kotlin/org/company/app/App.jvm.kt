@@ -77,26 +77,6 @@ internal actual fun UserRegion(): String {
     return currentLocale.country
 }
 
-@Composable
-actual fun isConnected(): Flow<Boolean> {
-    return flow {
-        while (true) {
-            val isConnected = try {
-                val url = URL("https://www.youtube.com")
-                val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-                connection.connectTimeout = 30000
-                connection.connect()
-                connection.responseCode == 200
-            } catch (e: Exception) {
-                e.printStackTrace()
-                false
-            }
-            emit(isConnected)
-            delay(5000)
-        }
-    }
-}
-
 actual class DriverFactory actual constructor() {
     actual fun createDriver(): SqlDriver {
         val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)

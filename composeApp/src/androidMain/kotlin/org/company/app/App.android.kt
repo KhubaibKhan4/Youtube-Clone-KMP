@@ -165,35 +165,6 @@ internal actual fun UserRegion(): String {
     val currentLocale: Locale = Locale.getDefault()
     return currentLocale.country
 }
-
-@Composable
-actual fun isConnected(): Flow<Boolean> {
-    val context = LocalContext.current
-    return callbackFlow {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val callback = object : ConnectivityManager.NetworkCallback() {
-            override fun onAvailable(network: Network) {
-                trySend(true)
-            }
-
-            override fun onLost(network: Network) {
-                trySend(false)
-            }
-        }
-
-        val request = NetworkRequest.Builder()
-            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-            .build()
-
-        connectivityManager.registerNetworkCallback(request, callback)
-
-        awaitClose {
-            connectivityManager.unregisterNetworkCallback(callback)
-        }
-    }
-}
-
 actual class DriverFactory actual constructor() {
     private var context: Context = AndroidApp.INSTANCE.applicationContext
     actual fun createDriver(): SqlDriver {

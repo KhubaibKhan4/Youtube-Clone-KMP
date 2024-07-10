@@ -17,17 +17,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.company.app.UserRegion
 import org.company.app.domain.usecases.ResultState
-import org.company.app.isConnected
-import org.company.app.presentation.ui.components.common.ErrorBox
-import org.company.app.presentation.ui.components.common.NoInternet
 import org.company.app.presentation.ui.components.error.ErrorScreen
-import org.company.app.presentation.ui.components.offline.OfflineList
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.presentation.ui.components.video_list.VideosList
 import org.company.app.presentation.viewmodel.MainViewModel
@@ -45,7 +40,6 @@ class HomeScreen() : Screen {
 fun HomeContent(
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
-    val isConnected by isConnected().collectAsState(initial = true)
     val refreshScope = rememberCoroutineScope()
     var refreshing by remember { mutableStateOf(false) }
 
@@ -58,10 +52,8 @@ fun HomeContent(
 
     val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
 
-    LaunchedEffect(isConnected) {
-        if (isConnected) {
-            viewModel.getVideosList(UserRegion())
-        }
+    LaunchedEffect(Unit) {
+        viewModel.getVideosList(UserRegion())
     }
 
     Box(
@@ -71,46 +63,26 @@ fun HomeContent(
         contentAlignment = Alignment.Center
     ) {
         if (!refreshing) {
-            if (isConnected) {
-                LaunchedEffect(Unit) {
-                    viewModel.getVideosList(UserRegion())
+
+            LaunchedEffect(Unit) {
+                viewModel.getVideosList(UserRegion())
+            }
+            val state by viewModel.videos.collectAsState()
+            when (state) {
+                is ResultState.LOADING -> {
+                    ShimmerEffectMain()
                 }
-                val state by viewModel.videos.collectAsState()
-                when (state) {
-                    is ResultState.LOADING -> {
-                        ShimmerEffectMain()
-                    }
 
-                    is ResultState.SUCCESS -> {
-                        val data = (state as ResultState.SUCCESS).response
-                        VideosList(data)
-                    }
-
-                    is ResultState.ERROR -> {
-                        val error = (state as ResultState.ERROR).error
-                        ErrorScreen(error, onRetry = {
-                            viewModel.getVideosList(UserRegion())
-                        })
-                    }
+                is ResultState.SUCCESS -> {
+                    val data = (state as ResultState.SUCCESS).response
+                    VideosList(data)
                 }
-            } else {
-                val localState by viewModel.localVideos.collectAsState()
-                when (localState) {
-                    is ResultState.ERROR -> {
-                        val error = (localState as ResultState.ERROR).error
-                        ErrorScreen(error, onRetry = {
-                            viewModel.getAllVideos()
-                        })
-                    }
 
-                    is ResultState.LOADING -> {
-                        ShimmerEffectMain()
-                    }
-
-                    is ResultState.SUCCESS -> {
-                        val response = (localState as ResultState.SUCCESS).response
-                        OfflineList(response)
-                    }
+                is ResultState.ERROR -> {
+                    val error = (state as ResultState.ERROR).error
+                    ErrorScreen(error, onRetry = {
+                        viewModel.getVideosList(UserRegion())
+                    })
                 }
             }
         }

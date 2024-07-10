@@ -241,9 +241,6 @@ internal expect fun UserRegion(): String
 @Composable
 internal expect fun ShareManager(title: String, videoUrl: String)
 
-@Composable
-internal expect fun isConnected(): Flow<Boolean>
-
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class DriverFactory() {
     fun createDriver(): SqlDriver

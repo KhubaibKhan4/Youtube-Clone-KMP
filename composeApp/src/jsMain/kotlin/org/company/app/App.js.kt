@@ -62,22 +62,6 @@ internal actual fun UserRegion(): String {
     return js("window.navigator.language.slice(-2)")
 }
 
-@Composable
-actual fun isConnected(): Flow<Boolean> {
-    return flow {
-        while (true) {
-            val isConnected = try {
-                val response = window.fetch("https://www.google.com").await()
-                response.ok
-            } catch (e: dynamic) {
-                false
-            }
-            emit(isConnected)
-            delay(5000)
-        }
-    }
-}
-
 actual class DriverFactory actual constructor() {
     actual fun createDriver(): SqlDriver {
         val workerScriptUrl =

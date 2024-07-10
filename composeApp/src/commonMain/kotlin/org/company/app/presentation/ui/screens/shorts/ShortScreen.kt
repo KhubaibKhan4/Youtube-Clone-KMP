@@ -11,7 +11,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import org.company.app.UserRegion
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
-import org.company.app.isConnected
 import org.company.app.presentation.ui.components.error.ErrorScreen
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectShorts
 import org.company.app.presentation.ui.components.shorts.ShortList
