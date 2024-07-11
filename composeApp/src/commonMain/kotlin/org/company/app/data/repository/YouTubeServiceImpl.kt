@@ -1,7 +1,6 @@
 package org.company.app.data.repository
 
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.database.database
+import dev.gitlive.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.company.app.data.remote.YoutubeClientApi
@@ -20,13 +19,13 @@ import org.company.app.utils.UiData
 
 class YouTubeServiceImpl(
     private val youtubeClientApi: YoutubeClientApi,
+    private val database: FirebaseDatabase
 ) : YouTubeService {
 
-    private val database = Firebase.database.reference()
 
     fun fetchUiData(): Flow<UiData?> = flow {
         try {
-            database.child("ui").valueEvents.collect { dataSnapshot ->
+            database.reference().child("ui").valueEvents.collect { dataSnapshot ->
                 val layoutSnapshot = dataSnapshot.child("layout")
                 val metaSnapshot = dataSnapshot.child("meta")
                 val layout = layoutSnapshot.children.associate { child ->
@@ -68,13 +67,15 @@ class YouTubeServiceImpl(
             } ?: emit(null)
         }
     }
+
     fun fetchCanFavourite(): Flow<Boolean?> = flow {
         try {
-            database.child("ui").child("meta").child("canFavourite").valueEvents.collect { dataSnapshot ->
-                val canFavourite = dataSnapshot.value<Boolean?>()
-                println("canFavourite Value: $canFavourite")
-                emit(canFavourite)
-            }
+            database.reference().child("ui").child("meta")
+                .child("canFavourite").valueEvents.collect { dataSnapshot ->
+                    val canFavourite = dataSnapshot.value<Boolean?>()
+                    println("canFavourite Value: $canFavourite")
+                    emit(canFavourite)
+                }
         } catch (e: Exception) {
             emit(null)
             println("FetchCanFavourite Error fetching canFavourite: ${e.message}")
@@ -83,7 +84,7 @@ class YouTubeServiceImpl(
 
     fun fetchSeverUi(): Flow<UiData?> = flow {
         try {
-            database.child("ui").valueEvents.collect { dataSnapshot ->
+            database.reference().child("ui").valueEvents.collect { dataSnapshot ->
                 val layoutUi = dataSnapshot.value<UiData?>()
                 println("canFavourite Value: $layoutUi")
                 emit(layoutUi)
@@ -93,6 +94,7 @@ class YouTubeServiceImpl(
             println("Layout UI Error fetching canFavourite: ${e.message}")
         }
     }
+
     override suspend fun getVideoList(userRegion: String): Youtube {
         return youtubeClientApi.getVideoList(userRegion)
     }

@@ -1,6 +1,8 @@
 package org.company.app.di
 
 import com.youtube.clone.db.YoutubeDatabase
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.database.database
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -53,6 +55,7 @@ val appModule = module {
         }
     }
     single { YoutubeClientApi(get()) }
+    single { Firebase.database }
     singleOf(::YouTubeServiceImpl)
     single { YoutubeDatabase(DriverFactory().createDriver()) }
     singleOf(::MainViewModel)
