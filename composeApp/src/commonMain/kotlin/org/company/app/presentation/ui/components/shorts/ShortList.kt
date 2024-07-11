@@ -1,17 +1,13 @@
 package org.company.app.presentation.ui.components.shorts
 
 import Notify
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,16 +15,10 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.PageSize
-import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -104,6 +94,7 @@ import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.comments.CommentsList
+import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.custom_image.NetworkImage
 import org.company.app.presentation.ui.screens.channel_screen.ChannelScreen
 import org.company.app.presentation.ui.screens.detail.formatLikes
@@ -115,9 +106,7 @@ import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalFoundationApi::class,
-    ExperimentalMaterial3WindowSizeClassApi::class
-)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun ShortList(youtube: Youtube, viewModel: MainViewModel = koinInject<MainViewModel>()) {
     val windowSizeClass = calculateWindowSizeClass()
@@ -134,6 +123,7 @@ fun ShortList(youtube: Youtube, viewModel: MainViewModel = koinInject<MainViewMo
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
             .fillMaxHeight()
+
         else -> Modifier.fillMaxSize()
     }
 
@@ -142,20 +132,13 @@ fun ShortList(youtube: Youtube, viewModel: MainViewModel = koinInject<MainViewMo
         modifier = modifier,
         contentPadding = PaddingValues(0.dp),
         pageSize = PageSize.Fill,
-        beyondBoundsPageCount = PagerDefaults.BeyondBoundsPageCount,
-        pageSpacing = 0.dp,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        flingBehavior = PagerDefaults.flingBehavior(state = pagerState),
-        userScrollEnabled = true,
-        reverseLayout = false,
-        key = null,
-        pageNestedScrollConnection = remember(pagerState) {
-            PagerDefaults.pageNestedScrollConnection(pagerState, Orientation.Vertical)
-        }
+        reverseLayout = true
     ) { page ->
         val video = youtube.items?.get(page)
         video?.let {
-            ShortItem(it, viewModel)
+            if (page == pagerState.currentPage) {
+                ShortItem(it, viewModel)
+            }
         }
     }
 }
@@ -180,7 +163,6 @@ fun ShortItem(
     var isMoreVertEnabled by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        //Channel Details
         viewModel.getVideoComments(video.id.toString(), order = "relevance")
         viewModel.getChannelDetails(video.snippet?.channelId.toString())
     }
@@ -198,7 +180,7 @@ fun ShortItem(
 
         is ResultState.ERROR -> {
             val error = (commentsState as ResultState.ERROR).error
-            //ErrorBox(error)
+            ErrorBox(error)
         }
     }
     when (state) {
@@ -214,7 +196,7 @@ fun ShortItem(
 
         is ResultState.ERROR -> {
             val error = (state as ResultState.ERROR).error
-            //ErrorBox(error)
+            ErrorBox(error)
         }
     }
     Box(

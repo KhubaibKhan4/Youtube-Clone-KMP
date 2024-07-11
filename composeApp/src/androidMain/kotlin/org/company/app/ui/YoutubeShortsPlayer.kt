@@ -77,7 +77,7 @@ fun YoutubeShortsPlayer(
         controls(0)
         fullscreen(0)
         autoplay(1)
-        modestBranding(1)
+        modestBranding(0)
         rel(0)
         ccLoadPolicy(0)
         ivLoadPolicy(0)
@@ -88,8 +88,12 @@ fun YoutubeShortsPlayer(
             .background(Color.Black),
         factory = {
             playerFragment.apply {
-                enableAutomaticInitialization = false
-                initialize(playerStateListener, playerBuilder.build())
+                try {
+                    enableAutomaticInitialization = false
+                    initialize(playerStateListener, playerBuilder.build())
+                }catch (e: Exception){
+                    println(e)
+                }
             }
         }
     )
