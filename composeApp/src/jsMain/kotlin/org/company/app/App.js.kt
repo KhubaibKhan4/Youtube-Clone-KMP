@@ -1,8 +1,11 @@
 package org.company.app
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import com.youtube.clone.db.YoutubeDatabase
@@ -26,7 +29,7 @@ internal actual fun openUrl(url: String?) {
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
     val videoId = extractVideoId(url.toString())
     CompositionLocalProvider(LocalLayerContainer provides document.body!!) {
-        HTMLVideoPlayer(videoId)
+        HTMLVideoPlayer(videoId, modifier)
     }
 
 }
@@ -47,7 +50,10 @@ internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
     console.log("Before YouTube API is ready $videoId")
 
     CompositionLocalProvider(LocalLayerContainer provides document.body!!) {
-        HTMLVideoPlayer(videoId)
+        HTMLVideoPlayer(
+            videoId, Modifier.fillMaxWidth(0.65f)
+                .height(300.dp)
+        )
     }
 }
 

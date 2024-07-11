@@ -128,11 +128,7 @@ fun <T : Element> HtmlView(
     modifier: Modifier = Modifier,
     update: (T) -> Unit = NoOpUpdate
 ) {
-
-
-
     val componentInfo = remember { ComponentInfo<T>() }
-
     val root = LocalLayerContainer.current
     val density = LocalDensity.current.density
     val focusManager = LocalFocusManager.current
@@ -142,16 +138,22 @@ fun <T : Element> HtmlView(
         modifier = modifier.onGloballyPositioned { coordinates ->
             val location = coordinates.positionInWindow().round()
             val size = coordinates.size
-            changeCoordinates(componentInfo.component,size.width / density, size.height / density, location.x / density,location.y / density)
+            changeCoordinates(
+                componentInfo.component,
+                size.width / density,
+                size.height / density,
+                location.x / density,
+                location.y / density
+            )
         }
     ) {
         focusSwitcher.Content()
     }
 
     DisposableEffect(factory) {
-        componentInfo.container = document.createElement("div",NoOpUpdate)
+        componentInfo.container = document.createElement("div")
         componentInfo.component = document.factory()
-        root.insertBefore(componentInfo.container,root.firstChild)
+        root.insertBefore(componentInfo.container, root.firstChild)
         componentInfo.container.append(componentInfo.component)
         componentInfo.updater = Updater(componentInfo.component, update)
         initializingElement(componentInfo.component)
