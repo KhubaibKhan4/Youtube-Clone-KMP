@@ -19,6 +19,7 @@ import org.company.app.data.repository.YouTubeServiceImpl
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.utils.Constant
 import org.company.app.utils.Constant.BASE_URL
+import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -58,5 +59,5 @@ val appModule = module {
     single { Firebase.database }
     singleOf(::YouTubeServiceImpl)
     single { YoutubeDatabase(DriverFactory().createDriver()) }
-    singleOf(::MainViewModel)
+    viewModelOf(::MainViewModel)
 }
