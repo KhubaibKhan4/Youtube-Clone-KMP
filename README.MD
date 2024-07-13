@@ -45,6 +45,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 
 ## 🚀 Future Plans
 - TV and Wear OS Versions
+- Integrate Custom Server.
 
 ## 🌟 Contributions
 If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
