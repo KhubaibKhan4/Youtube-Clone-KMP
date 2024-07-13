@@ -195,7 +195,7 @@ fun VideosList(
 
         is ResultState.ERROR -> {
             val error = (categoriesVideos as ResultState.ERROR).error
-            ErrorBox(error)
+           // ErrorBox(error)
         }
     }
 
