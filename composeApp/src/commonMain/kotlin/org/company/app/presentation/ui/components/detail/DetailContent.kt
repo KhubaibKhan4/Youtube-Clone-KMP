@@ -119,7 +119,7 @@ import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.getFormattedDate
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailContent(
     video: Item?,
@@ -902,7 +902,6 @@ fun DetailContent(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start
                     ) {
-                        // Channel Image
                         NetworkImage(
                             modifier = Modifier
                                 .size(15.dp)
@@ -929,7 +928,6 @@ fun DetailContent(
 
                     }
 
-                    //Video Details
                     Row(
                         modifier = Modifier.fillMaxWidth()
                             .padding(top = 20.dp, start = 60.dp, end = 60.dp, bottom = 20.dp),
@@ -1076,7 +1074,6 @@ fun DetailContent(
                             url = channelData?.snippet?.thumbnails?.default?.url.toString()
                         )
 
-                        // Channel Info
                         Column(
                             modifier = Modifier.weight(1f),
                             verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -1192,7 +1189,6 @@ fun DetailContent(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
                 ) {
-                    // Comment Title Section
                     Row(
                         modifier = Modifier.fillMaxWidth()
                             .padding(start = 12.dp, end = 12.dp),
