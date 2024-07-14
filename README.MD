@@ -312,3 +312,5 @@ To optimize performance in the YouTube Clone project, consider the following tip
 - **Code Profiling**: Profile your code to identify and optimize performance bottlenecks.
 - **Resource Management**: Ensure efficient use of system resources, such as memory and CPU, to improve overall performance.
 
+## Disclaimer
+This project is for educational purposes. All the Design Credit Goes to YouTube Official Team. 
