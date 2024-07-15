@@ -205,7 +205,7 @@ fun VideosList(
     val drawerState =
         rememberDrawerState(initialValue = androidx.compose.material.DrawerValue.Closed)
 
-    val isDark = LocalThemeIsDark.current.value
+    val isDark by LocalThemeIsDark.current
     if (showRails) {
         coroutineScope.launch {
             drawerState.close()
@@ -1299,12 +1299,13 @@ fun VideoItemGridCard(
                 navigator?.push(DetailScreen(video, channelData = channelData?.items?.get(0)))
             },
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.background
         )
     ) {
         Column {
             Box(modifier = Modifier.fillMaxWidth()
-                .height(200.dp)) {
+                .height(200.dp)
+            ) {
 
                 NetworkImage(
                     modifier = Modifier.fillMaxSize()
