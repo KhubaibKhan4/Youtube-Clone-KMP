@@ -214,7 +214,7 @@ fun VideosList(
 
 
     ModalDrawer(
-        drawerBackgroundColor = MaterialTheme.colorScheme.surface,
+        drawerBackgroundColor = MaterialTheme.colorScheme.background,
         drawerContentColor = if (isDark) Color.White else Color.Black,
         drawerState = drawerState,
         gesturesEnabled = true,
@@ -857,7 +857,7 @@ fun VideoItemCard(
                 navigator?.push(DetailScreen(video, channelData = channelData?.items?.get(0)))
             },
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.background
         )
     ) {
         Column {

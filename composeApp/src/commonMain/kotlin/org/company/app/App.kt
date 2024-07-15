@@ -124,10 +124,11 @@ fun AppContent() {
             }
         }) {
             Column(
-                modifier = Modifier.fillMaxSize().padding(
-                    bottom = it.calculateBottomPadding(),
-                    start = if (showNavigationRail) 80.dp else 0.dp
-                )
+                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+                    .padding(
+                        bottom = it.calculateBottomPadding(),
+                        start = if (showNavigationRail) 80.dp else 0.dp
+                    )
             ) {
                 CurrentTab()
             }
@@ -245,6 +246,7 @@ internal expect fun ShareManager(title: String, videoUrl: String)
 expect class DriverFactory() {
     fun createDriver(): SqlDriver
 }
+
 expect class VideoDownloader() {
     suspend fun downloadVideo(url: String, onProgress: (Float, String) -> Unit): String
 }
