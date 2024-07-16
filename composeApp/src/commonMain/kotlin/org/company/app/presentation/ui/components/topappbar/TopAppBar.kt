@@ -53,6 +53,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -162,7 +163,14 @@ fun TopBar(
                     Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = "Account")
                 }
             },
-            modifier = modifier
+            modifier = modifier,
+            colors = TopAppBarColors(
+                containerColor = if (isDark) Color(0xFF202020) else Color.White,
+                titleContentColor = if (isDark) Color.White else Color.Black,
+                navigationIconContentColor = if (isDark) Color.White else Color.Black,
+                actionIconContentColor = if (isDark) Color.White else Color.Black,
+                scrolledContainerColor = if (isDark) Color.White else Color.Black,
+            )
         )
     } else {
         state = viewModel.search.collectAsState().value

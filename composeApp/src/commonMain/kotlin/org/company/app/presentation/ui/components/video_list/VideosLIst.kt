@@ -435,9 +435,7 @@ fun VideosList(
                 )
             }
         }) {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
-        ) {
+
             Column {
                 TopBar(modifier = Modifier.fillMaxWidth())
 
@@ -664,7 +662,6 @@ fun VideosList(
                         }
                     }
                 }
-            }
         }
     }
 }
@@ -857,7 +854,7 @@ fun VideoItemCard(
                 navigator?.push(DetailScreen(video, channelData = channelData?.items?.get(0)))
             },
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = if (isDark) Color(0xFF202020) else Color.White
         )
     ) {
         Column {
