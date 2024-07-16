@@ -132,7 +132,7 @@ fun ShortList(youtube: Youtube, viewModel: MainViewModel = koinInject<MainViewMo
         modifier = modifier,
         contentPadding = PaddingValues(0.dp),
         pageSize = PageSize.Fill,
-        reverseLayout = true
+        reverseLayout = false
     ) { page ->
         val video = youtube.items?.get(page)
         video?.let {
