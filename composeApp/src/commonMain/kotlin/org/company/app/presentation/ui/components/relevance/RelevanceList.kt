@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -23,11 +24,13 @@ import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.common.LoadingBox
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectSingleVideo
 import org.company.app.presentation.ui.components.video_list.VideoItemCard
+import org.company.app.theme.LocalThemeIsDark
 
 @Composable
 fun RelevanceList(
     stateRelevance: ResultState<Youtube>,
 ) {
+    val isDark by LocalThemeIsDark.current
     var relevanceData by remember { mutableStateOf<Youtube?>(null) }
 
     when (stateRelevance) {
@@ -47,7 +50,7 @@ fun RelevanceList(
         }
     }
     Surface(
-        color = MaterialTheme.colorScheme.background
+        color = if (isDark) Color(0xFF202020) else Color.White
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()

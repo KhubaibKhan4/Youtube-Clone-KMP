@@ -52,6 +52,7 @@ import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -408,13 +409,19 @@ fun DetailContent(
         Row(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp),
         ) {
 
             Card(
                 modifier = Modifier.height(40.dp).padding(4.dp).background(
-                    color = Color.White, shape = RoundedCornerShape(8.dp)
+                    color = if (isDark) Color(0xFF202020) else Color.White, shape = RoundedCornerShape(8.dp)
                 ),
+                colors = CardColors(
+                    containerColor = Color.Gray,
+                    contentColor = if (isDark) Color(0xFF202020) else Color.White,
+                    disabledContentColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent
+                )
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -463,6 +470,12 @@ fun DetailContent(
                 onClick = {
                     isShareEnabled = !isShareEnabled
                 },
+                colors = CardColors(
+                    containerColor = Color.Gray,
+                    contentColor = if (isDark) Color(0xFF202020) else Color.White,
+                    disabledContentColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent
+                )
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -495,6 +508,12 @@ fun DetailContent(
                 modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
                     .padding(4.dp),
                 onClick = { },
+                colors = CardColors(
+                    containerColor = Color.Gray,
+                    contentColor = if (isDark) Color(0xFF202020) else Color.White,
+                    disabledContentColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent
+                )
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -524,6 +543,12 @@ fun DetailContent(
                 modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
                     .padding(4.dp),
                 onClick = { },
+                colors = CardColors(
+                    containerColor = Color.Gray,
+                    contentColor = if (isDark) Color(0xFF202020) else Color.White,
+                    disabledContentColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent
+                )
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
