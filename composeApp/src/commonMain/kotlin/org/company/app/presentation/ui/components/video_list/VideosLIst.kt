@@ -789,9 +789,9 @@ fun VideoItemCard(
                 Column {
                     Text("Downloading video, please wait...", color = Color.Black)
                     LinearProgressIndicator(
-                        progress = progress,
+                        progress = { progress },
                         color = Color.Blue,
-                        trackColor = Color.Gray
+                        trackColor = Color.Gray,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text("Progress: ${(progress * 100).toInt()}%", color = Color.Black)
