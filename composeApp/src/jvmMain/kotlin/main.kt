@@ -11,6 +11,7 @@ import dev.gitlive.firebase.initialize
 import org.company.app.App
 import org.jetbrains.compose.resources.painterResource
 import youtube_clone.composeapp.generated.resources.Res
+import youtube_clone.composeapp.generated.resources.youtube_color_icon
 import youtube_clone.composeapp.generated.resources.youtube_music
 import java.awt.Dimension
 
@@ -45,7 +46,7 @@ fun main() = application {
 
     Window(
         title = "Youtube Clone",
-        icon = painterResource(Res.drawable.youtube_music),
+        icon = painterResource(Res.drawable.youtube_color_icon),
         state = rememberWindowState(width = 1280.dp, height = 720.dp),
         onCloseRequest = ::exitApplication,
     ) {
