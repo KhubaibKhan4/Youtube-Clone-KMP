@@ -581,7 +581,7 @@ fun ChannelContent(
                                 .height(2.dp).background(MaterialTheme.colorScheme.primary)
                         )
                     },
-                    backgroundColor = MaterialTheme.colorScheme.surface,
+                    backgroundColor =  if (isDark) Color(0xFF202020) else Color.White,
                     contentColor = if (isDark) Color.White else Color.Black,
                     modifier = Modifier.fillMaxWidth().padding(8.dp)
                 ) {
