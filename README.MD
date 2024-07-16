@@ -166,7 +166,7 @@ If you want to the live version of YouTube Clone KMP then checkout:
 
 ## iOS Screen Shots
 
-| ![Screenshot 1](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/76.jpg) | ![Screenshot 2](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/77.png) | ![Screenshot 3](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/78.png) |
+| ![Screenshot 1](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/76.jpg) | ![Screenshot 2](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/77.jpg) | ![Screenshot 3](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/78.jpg) |
 | --- | --- | --- |
 | ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/79.png) | ![Screenshot 5](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/80.png) | ![Screenshot 6](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/81.png) |
 | ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/82.png) | ![Screenshot 5](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/83.png) | ![Screenshot 6](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/84.png) | 
