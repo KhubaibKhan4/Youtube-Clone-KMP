@@ -166,14 +166,33 @@ If you want to the live version of YouTube Clone KMP then checkout:
 
 ## iOS Screen Shots
 
-| ![Screenshot 1](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/76.jpg) | ![Screenshot 2](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/77.jpg) | ![Screenshot 3](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/78.jpg) |
-| --- | --- | --- |
-| ![](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/79.jpg) | ![Screenshot 5](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/80.jpg) | ![Screenshot 6](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/81.jpg) |
-| ![](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/82.jpg) | ![Screenshot 5](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/83.jpg) | ![Screenshot 6](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/84.jpg) | 
-| ![](creenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/85.jpg) | ![Screenshot 5](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/86.jpg) | ![Screenshot 6](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/87.jpg) |
-| ![]https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/88.jpg) | ![Screenshot 5](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/89.jpg) | ![Screenshot 6](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/90.jpg) |
-| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/91.jpg) | ![Screenshot 5](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/92.jpg) | ![Screenshot 6](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/93.jpg) |
-| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/94.jpg) | ![Screenshot 5](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/95.jpg) | ![Screenshot 6](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/96.jpg) |
+![Screenshot 1](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/76.jpg)
+![Screenshot 2](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/77.jpg)
+![Screenshot 3](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/78.jpg)
+
+![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/79.jpg)
+![Screenshot 5](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/80.jpg)
+![Screenshot 6](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/81.jpg)
+
+![Screenshot 7](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/82.jpg)
+![Screenshot 8](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/83.jpg)
+![Screenshot 9](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/84.jpg)
+
+![Screenshot 10](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/85.jpg)
+![Screenshot 11](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/86.jpg)
+![Screenshot 12](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/87.jpg)
+
+![Screenshot 13](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/88.jpg)
+![Screenshot 14](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/89.jpg)
+![Screenshot 15](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/90.jpg)
+
+![Screenshot 16](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/91.jpg)
+![Screenshot 17](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/92.jpg)
+![Screenshot 18](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/93.jpg)
+
+![Screenshot 19](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/94.jpg)
+![Screenshot 20](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/95.jpg)
+![Screenshot 21](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/96.jpg)
 
 
 ## Desktop Screen Shots
