@@ -97,6 +97,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import youtube_clone.composeapp.generated.resources.Res
 import youtube_clone.composeapp.generated.resources.youtube_logo_dark
+import youtube_clone.composeapp.generated.resources.youtube_logo_icon_dark
+import youtube_clone.composeapp.generated.resources.youtube_logo_icon_light
 import youtube_clone.composeapp.generated.resources.youtube_logo_light
 import org.company.app.domain.model.channel.Item as ChannelItem
 import org.company.app.domain.model.videos.Item as YouTubeItem
@@ -126,7 +128,7 @@ fun TopBar(
         TopAppBar(
             title = {
                 Image(
-                    painterResource(if (isDark) Res.drawable.youtube_logo_dark else Res.drawable.youtube_logo_light),
+                    painterResource(if (isDark) Res.drawable.youtube_logo_icon_dark else Res.drawable.youtube_logo_icon_light),
                     contentDescription = null,
                     modifier = Modifier.size(120.dp),
                 )
