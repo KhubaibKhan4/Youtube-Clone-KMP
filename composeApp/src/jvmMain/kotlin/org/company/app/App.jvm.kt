@@ -8,6 +8,9 @@ import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.storage.FileStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -115,5 +118,15 @@ actual class VideoDownloader {
                 "Error: ${e.message}"
             }
         }
+    }
+}
+
+actual fun HttpClientConfig<*>.setupHttpCache() {
+    install(HttpCache) {
+        val cacheDir = Paths.get(System.getProperty("user.home"), ".cache", "myAppCache").toFile()
+        if (!cacheDir.exists()) {
+            cacheDir.mkdirs()
+        }
+        publicStorage(FileStorage(cacheDir))
     }
 }

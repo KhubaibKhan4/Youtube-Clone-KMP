@@ -49,6 +49,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import io.ktor.client.HttpClientConfig
 import kotlinx.coroutines.flow.Flow
 import org.company.app.di.appModule
 import org.company.app.presentation.ui.navigation.rails.items.NavigationItem
@@ -251,3 +252,4 @@ expect class DriverFactory() {
 expect class VideoDownloader() {
     suspend fun downloadVideo(url: String, onProgress: (Float, String) -> Unit): String
 }
+expect fun HttpClientConfig<*>.setupHttpCache()

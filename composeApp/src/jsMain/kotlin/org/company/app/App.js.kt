@@ -9,6 +9,8 @@ import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import com.youtube.clone.db.YoutubeDatabase
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.plugins.cache.HttpCache
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.Dispatchers
@@ -101,5 +103,13 @@ actual class VideoDownloader {
                 "Error: ${e.message}"
             }
         }
+    }
+}
+
+actual fun HttpClientConfig<*>.setupHttpCache() {
+    install(HttpCache) {
+        // Implement web-specific storage, using IndexedDB or localStorage
+        // Placeholder implementation
+        // publicStorage(WebStorage())
     }
 }

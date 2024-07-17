@@ -28,6 +28,9 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.google.firebase.FirebaseApp
 import com.youtube.clone.db.YoutubeDatabase
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.storage.FileStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -248,4 +251,14 @@ fun copyExecutableToInternalStorage(context: Context): String {
 
     Log.d("VideoDownloader", "yt-dlp.exe copied and set as executable")
     return internalFile.absolutePath
+}
+
+actual fun HttpClientConfig<*>.setupHttpCache() {
+    install(HttpCache) {
+        val cacheDir = File(AndroidApp.INSTANCE.cacheDir, "myAppCache")
+        if (!cacheDir.exists()) {
+            cacheDir.mkdirs()
+        }
+        publicStorage(FileStorage(cacheDir))
+    }
 }

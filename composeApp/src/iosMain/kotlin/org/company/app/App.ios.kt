@@ -7,6 +7,9 @@ import androidx.compose.ui.interop.UIKitView
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.storage.*
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.Dispatchers
@@ -208,5 +211,14 @@ actual class GoogleSignInHelper {
 
     private fun getViewController(): UIViewController {
         return UIApplication.sharedApplication.keyWindow!!.rootViewController!!
+    }
+}
+
+actual fun HttpClientConfig<*>.setupHttpCache() {
+    install(HttpCache) {
+        val paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSUserDomainMask, true)
+        val cacheDir = paths.first() as String
+        val fileStorage = FileStorage(NSFileManager.defaultManager.URLForDirectory(NSSearchPathDirectory.CachesDirectory, NSUserDomainMask, true, null, null)!!)
+        publicStorage(fileStorage)
     }
 }
