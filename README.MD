@@ -148,7 +148,7 @@ If you want to the live version of YouTube Clone KMP then checkout:
   https://khubaibkhan4.github.io/Youtube-Clone-KMP/
  ```
 
-## Screen Shots
+## Android Screen Shots
 
 | ![Screenshot 1](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/1.png) | ![Screenshot 2](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/9.png) | ![Screenshot 3](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/59.png) |
 | --- | --- | --- |
@@ -163,6 +163,51 @@ If you want to the live version of YouTube Clone KMP then checkout:
 | ![Screenshot 28](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/50.png) | ![Screenshot 29](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/51.png) | ![Screenshot 30](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/52.png) |
 | ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/53.png) | ![Screenshot 32](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/62.png) | ![Screenshot 33](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/63.png) |
 | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/65.png) | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/69.png) | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/70.png) | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/71.png) |
+
+## iOS Screen Shots
+
+<p align="center">
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/76.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/77.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/78.jpg" width="30%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/79.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/80.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/81.jpg" width="30%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/82.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/83.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/84.jpg" width="30%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/85.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/86.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/87.jpg" width="30%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/88.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/89.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/90.jpg" width="30%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/91.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/92.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/93.jpg" width="30%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/94.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/95.jpg" width="30%" />
+  <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/96.jpg" width="30%" />
+</p>
+
 
 ## Desktop Screen Shots
 
