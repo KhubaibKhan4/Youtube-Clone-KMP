@@ -1,0 +1,37 @@
+name: Compile and push the compiled files only to the compiled branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Compile and Push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+      with:
+        gradle-version: 8.6
+
+    - name: Build the production site
+      run: ./gradlew jsBrowserDevelopmentExecutableDistribution
+    
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        user_name: ${{ vars.USER_NAME }}
+        user_email: <${{ vars.USER_EMAIL }}>
+        publish_dir: ./composeApp/build/dist/js/productionExecutable

@@ -241,8 +241,22 @@ If you want to the live version of YouTube Clone KMP then checkout:
 | ![Screenshot 27](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/56.png) | 
 | ![Screenshot 28](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/61.png) | 
 | ![Screenshot 29](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/66.png) | 
-| ![Screenshot 30](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/67.png) | 
-| ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/68.png) |
+
+## Web Screen Shots
+
+| ![Screenshot 1](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/97.png) | 
+| --- |
+| ![Screenshot 2](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/98.png) | 
+| ![Screenshot 3](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/99.png) |
+| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/100.png) |
+| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/101.png) |
+| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/102.png) |
+| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/103.png) |
+| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/104.png) |
+| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/105.png) |
+| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/106.png) |
+| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/107.png) |
+| ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/108.png) |
 
 ## Server Driven Ui Setup
 To Setup the Server Driven UI using Firebase. You need to create a new firebase project and add Android, iOS, Web And Desktop inside your project. Make sure to provide the `.json` file in Your `commonMain` & also inside your iOS App as well. Moreover, Provide the `projectId, apiKey, applicationId` inside your `jsMain` & `jvmMain` Modules.
