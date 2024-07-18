@@ -50,6 +50,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import createNotification
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -180,8 +181,8 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                         channelData?.items?.get(0)?.status?.isLinked == true && channelData?.items?.get(
                             0
                         )?.id.equals(comments.snippet.topLevelComment.snippet.authorChannelId.value)
-                    AnimatedVisibility (isVerified) {
-                       Icon(
+                    AnimatedVisibility(isVerified) {
+                        Icon(
                             imageVector = Icons.Default.Verified,
                             contentDescription = null,
                             modifier = Modifier.size(15.dp).padding(start = 4.dp),
@@ -295,7 +296,10 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                 }
             )
             if (comments.snippet.totalReplyCount == 0 && repliesExpanded) {
-               Notify("No Replies Found...")
+                Notify(
+                    message = "No Replies Found...",
+                    NotificationDuration.LONG
+                )
             } else {
                 AnimatedVisibility(visible = repliesExpanded) {
                     CommentItemWithReplies(comments)
