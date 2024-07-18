@@ -52,7 +52,7 @@ fun HomeContent(
 
     val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(pullRefreshState) {
         viewModel.getVideosList(UserRegion())
     }
 
@@ -63,10 +63,6 @@ fun HomeContent(
         contentAlignment = Alignment.Center
     ) {
         if (!refreshing) {
-
-            LaunchedEffect(Unit) {
-                viewModel.getVideosList(UserRegion())
-            }
             val state by viewModel.videos.collectAsState()
             when (state) {
                 is ResultState.LOADING -> {
