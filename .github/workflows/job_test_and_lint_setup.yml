@@ -15,4 +15,4 @@ jobs:
 
   assembleDebug:
     name: Assemble Debug
-    uses: ./.github/workflows/jobs_test_debug.yml
+    uses: ./.github/workflows/job_test_debug.yml
