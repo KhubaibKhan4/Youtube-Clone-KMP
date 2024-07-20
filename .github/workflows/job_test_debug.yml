@@ -1,13 +1,6 @@
 name: Test Debug
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-
   workflow_call:
 
 jobs:
