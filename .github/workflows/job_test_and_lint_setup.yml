@@ -1,0 +1,18 @@
+name: Run Lint & Assemble Debug
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lintDebug:
+    name:  Lint Debug
+    uses: ./.github/workflows/jobs_lint_debug.yml
+
+  assembleDebug:
+    name: Assemble Debug
+    uses: ./.github/workflows/jobs_test_debug.yml

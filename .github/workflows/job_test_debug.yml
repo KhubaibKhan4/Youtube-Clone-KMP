@@ -1,0 +1,33 @@
+name: Test Debug
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+  workflow_call:
+
+jobs:
+  test_debug:
+    name: Test Compose Multiplatform
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurid'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Run Command
+        run: chmod +x ./gradlew
+
+      - name: Run Test
+        run: ./gradlew :composeApp:cleanJvmTest :composeApp:jvmTest --tests "org.company.app.ComposeTest"
