@@ -13,7 +13,7 @@ jobs:
 
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurid'
+          distribution: 'temurin'
           java-version: '17'
 
       - name: Setup Gradle
