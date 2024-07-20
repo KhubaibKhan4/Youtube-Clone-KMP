@@ -9,10 +9,10 @@ on:
       - master
 
 jobs:
-  lintDebug:
+  assembleDebug:
     name:  Lint Debug
     uses: ./.github/workflows/jobs_lint_debug.yml
 
-  assembleDebug:
+  testDebug:
     name: Assemble Debug
     uses: ./.github/workflows/job_test_debug.yml

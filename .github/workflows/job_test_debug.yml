@@ -23,4 +23,4 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run Test
-        run: ./gradlew :composeApp:cleanJvmTest :composeApp:jvmTest --tests "org.company.app.ComposeTest"
+        run: ./gradlew :composeApp:cleanJvmTest :composeApp:jvmTest --tests "CommonTests"
