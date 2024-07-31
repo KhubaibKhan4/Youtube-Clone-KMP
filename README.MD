@@ -102,6 +102,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `official-viewmodel`: `2.8.0`
 - **JavaFX**: `22-ea+16`
 - **AlertKMP**: `0.0.7`
+- **MediaPlayer-KMP**: `1.1.0`
 
 ## Getting Started
 
