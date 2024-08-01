@@ -12,7 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf 
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.remember 
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -51,11 +51,12 @@ fun HomeContent(
     }
 
     val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
-
+ 
     LaunchedEffect(pullRefreshState) {
-        viewModel.getVideosList(UserRegion())
+        viewModel.getVideosList(UserRegion()) 
     }
 
+    
     Box(
         Modifier
             .fillMaxWidth()
@@ -82,6 +83,8 @@ fun HomeContent(
                 }
             }
         }
+
+        
         PullRefreshIndicator(
             refreshing, pullRefreshState,
             Modifier.wrapContentSize().align(Alignment.TopCenter)
