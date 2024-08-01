@@ -70,7 +70,7 @@ fun HomeContent(
                 }
 
                 is ResultState.SUCCESS -> {
-                    val data = (state as ResultState.SUCCESS).response
+                    val data = (state as ResultState.SUCCESS).response                                   
                     VideosList(data)
                 }
 
