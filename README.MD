@@ -46,6 +46,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - Navigation Rail for Foldable Devices
 - Desktop and Web Version Support
 - YouTube Widgets on Android.
+- Pull to refresh.
 
 
 ## 🚀 Future Plans
