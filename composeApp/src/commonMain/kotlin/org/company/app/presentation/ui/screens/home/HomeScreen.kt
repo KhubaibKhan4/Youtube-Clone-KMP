@@ -2,7 +2,7 @@ package org.company.app.presentation.ui.screens.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentSize 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf 
+import androidx.compose.runtime.remember 
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -38,7 +38,7 @@ class HomeScreen() : Screen {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeContent(
-    viewModel: MainViewModel = koinInject<MainViewModel>(),
+    viewModel: MainViewModel = koinInject<MainViewModel>(),                                      
 ) {
     val refreshScope = rememberCoroutineScope()
     var refreshing by remember { mutableStateOf(false) }
@@ -51,11 +51,12 @@ fun HomeContent(
     }
 
     val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
-
+ 
     LaunchedEffect(pullRefreshState) {
-        viewModel.getVideosList(UserRegion())
+        viewModel.getVideosList(UserRegion()) 
     }
 
+    
     Box(
         Modifier
             .fillMaxWidth()
@@ -70,7 +71,7 @@ fun HomeContent(
                 }
 
                 is ResultState.SUCCESS -> {
-                    val data = (state as ResultState.SUCCESS).response
+                    val data = (state as ResultState.SUCCESS).response                                   
                     VideosList(data)
                 }
 
@@ -82,6 +83,8 @@ fun HomeContent(
                 }
             }
         }
+
+        
         PullRefreshIndicator(
             refreshing, pullRefreshState,
             Modifier.wrapContentSize().align(Alignment.TopCenter)

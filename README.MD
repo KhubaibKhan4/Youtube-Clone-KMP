@@ -13,12 +13,16 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - **Comprehensive Search**
 - **Video Detail**
 - **Trending Videos**
+- **Shorts With Reels view**
 - **Subscribe Channels**
 - **View Verified Channel Badges**
 - **Quick & Responsive Search for Videos & Channels**
+- **Channel Base Search**
+- **Comments Support**
 - **Offline Video Support**
 - **Smooth Interaction**
 - **Responsive UI**
+- **Latest Devices Compactiblity**
 - **Material Design Components**
 - **Server Driven Ui**
 
@@ -38,14 +42,22 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - Relevance Videos
 - Subscriptions
 - Library
+- Channel, Category and General Search.
 - Shimmer Loading Screen
 - Top Categories
 - Navigation Rail for Foldable Devices
 - Desktop and Web Version Support
+- YouTube Widgets on Android.
+- Pull to refresh.
+
 
 ## 🚀 Future Plans
 - TV and Wear OS Versions
 - Integrate Custom Server.
+- Ai based Search System.
+- Google Authentication. 
+- Pipe Api Implementation.
+- Voice Search Implementation.
 
 ## 🌟 Contributions
 If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
@@ -94,7 +106,8 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Other Utilities**:
   - `official-viewmodel`: `2.8.0`
 - **JavaFX**: `22-ea+16`
-- **AlertKMP**: `0.0.4`
+- **AlertKMP**: `0.0.7`
+- **MediaPlayer-KMP**(not implemented yet): `1.0.8`
 
 ## Getting Started
 
