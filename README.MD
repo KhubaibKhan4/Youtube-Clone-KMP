@@ -71,7 +71,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **AGP (Android Gradle Plugin)**: `8.2.2`
 - **Compose**: `1.6.11`
   - `androidx-appcompat`: `1.7.0`
-  - `androidx-activityCompose`: `1.9.0`
+  - `androidx-activityCompose`: `1.9.1`
   - `compose-uitooling`: `1.6.8`
   - `composeImageLoader`: `1.7.1`
 - **Core Libraries**: `12.1.0`
@@ -87,9 +87,9 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **UI/UX**:
   - `compose-uitooling`: `1.6.8`
 - **Media Handling**:
-  - `media3Ui`: `1.3.1`
-  - `media3ExoplayerDash`: `1.3.1`
-  - `media3Exoplayer`: `1.3.1`
+  - `media3Ui`: `1.4.0`
+  - `media3ExoplayerDash`: `1.4.0`
+  - `media3Exoplayer`: `1.4.0`
 - **Logging**:
   - `napier`: `2.7.1`
 - **Database/Storage**:
