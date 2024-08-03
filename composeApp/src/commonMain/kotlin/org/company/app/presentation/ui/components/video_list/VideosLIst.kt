@@ -24,14 +24,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -59,7 +57,6 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -68,7 +65,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -121,7 +117,6 @@ import org.company.app.utils.LayoutType
 import org.company.app.utils.formatVideoDuration
 import org.company.app.utils.formatViewCount
 import org.company.app.utils.getFormattedDate
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import youtube_clone.composeapp.generated.resources.Res
@@ -195,7 +190,7 @@ fun VideosList(
 
         is ResultState.ERROR -> {
             val error = (categoriesVideos as ResultState.ERROR).error
-           // ErrorBox(error)
+            // ErrorBox(error)
         }
     }
 
@@ -436,82 +431,109 @@ fun VideosList(
             }
         }) {
 
-            Column {
-                TopBar(modifier = Modifier.fillMaxWidth())
+        Column {
+            TopBar(modifier = Modifier.fillMaxWidth())
 
-                Row(
-                    modifier = Modifier
-                        .horizontalScroll(state = rememberScrollState())
-                        .width(1500.dp)
-                        .padding(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+            Row(
+                modifier = Modifier
+                    .horizontalScroll(state = rememberScrollState())
+                    .width(1500.dp)
+                    .padding(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+
+                IconButton(
+                    onClick = {
+                        coroutineScope.launch {
+                            drawerState.open()
+                        }
+                    },
+                    modifier = Modifier.size(48.dp).pointerHoverIcon(icon = PointerIcon.Hand)
+                        .clip(shape = RoundedCornerShape(6.dp)),
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = Color.LightGray.copy(alpha = 0.55f)
+                    ),
                 ) {
-
-                    IconButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                drawerState.open()
-                            }
-                        },
-                        modifier = Modifier.size(48.dp).pointerHoverIcon(icon = PointerIcon.Hand)
-                            .clip(shape = RoundedCornerShape(6.dp)),
-                        colors = IconButtonDefaults.iconButtonColors(
-                            containerColor = Color.LightGray.copy(alpha = 0.55f)
-                        ),
-                    ) {
-                        Icon(
-                            painter = painterResource(Res.drawable.compass_icon),
-                            contentDescription = "Compass Icon",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-
-                    CategoryButton(
-                        category = Item(
-                            etag = "",
-                            id = "all",
-                            kind = "",
-                            Snippet(
-                                assignable = true,
-                                title = "All",
-                                channelId = ""
-                            )
-                        ),
-                        isSelected = selectedCategory == "all",
-                        onCategorySelected = {
-                            selectedCategory = "all"
-                            isAnyCategorySelected = true
-                        }
+                    Icon(
+                        painter = painterResource(Res.drawable.compass_icon),
+                        contentDescription = "Compass Icon",
+                        tint = MaterialTheme.colorScheme.primary
                     )
-                    videoCategories?.let { categories ->
-                        LazyRow(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 8.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(categories.items ?: emptyList()) { category ->
-                                CategoryButton(
-                                    category = category,
-                                    isSelected = category.id == selectedCategory,
-                                    onCategorySelected = {
-                                        selectedCategory = category.id
-                                        isAnyCategorySelected = true
-                                    }
-                                )
-                            }
+                }
+
+                CategoryButton(
+                    category = Item(
+                        etag = "",
+                        id = "all",
+                        kind = "",
+                        Snippet(
+                            assignable = true,
+                            title = "All",
+                            channelId = ""
+                        )
+                    ),
+                    isSelected = selectedCategory == "all",
+                    onCategorySelected = {
+                        selectedCategory = "all"
+                        isAnyCategorySelected = true
+                    }
+                )
+                videoCategories?.let { categories ->
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 8.dp),
+                        contentPadding = PaddingValues(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(categories.items ?: emptyList()) { category ->
+                            CategoryButton(
+                                category = category,
+                                isSelected = category.id == selectedCategory,
+                                onCategorySelected = {
+                                    selectedCategory = category.id
+                                    isAnyCategorySelected = true
+                                }
+                            )
                         }
                     }
-
                 }
-                if (!isAnyCategorySelected) {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        layoutInformation?.let { info ->
-                            var canFavourite = info.layoutMeta.favouriteEnabled
-                            when (info.layoutMeta.layoutType) {
-                                is LayoutType.List -> {
+
+            }
+            if (!isAnyCategorySelected) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    layoutInformation?.let { info ->
+                        var canFavourite = info.layoutMeta.favouriteEnabled
+                        when (info.layoutMeta.layoutType) {
+                            is LayoutType.List -> {
+                                LazyVerticalGrid(
+                                    modifier = Modifier.fillMaxSize(),
+                                    state = lazyListState,
+                                    columns = GridCells.Adaptive(300.dp)
+                                ) {
+                                    youtube.items?.let { items ->
+                                        items(items) { videos ->
+                                            VideoItemCard(videos, canFavourite = canFavourite)
+                                        }
+                                    }
+                                }
+                            }
+
+                            is LayoutType.Grid -> {
+                                val columns =
+                                    (info.layoutMeta.layoutType as LayoutType.Grid).columns
+                                if (columns > 1) {
+                                    LazyVerticalGrid(
+                                        modifier = Modifier.fillMaxSize(),
+                                        state = lazyListState,
+                                        columns = GridCells.Fixed(columns)
+                                    ) {
+                                        items(youtube.items ?: listOf()) { video ->
+                                            VideoItemGridCard(video, canFavourite = canFavourite)
+                                        }
+                                    }
+                                } else {
                                     LazyVerticalGrid(
                                         modifier = Modifier.fillMaxSize(),
                                         state = lazyListState,
@@ -525,143 +547,116 @@ fun VideosList(
                                     }
                                 }
 
-                                is LayoutType.Grid -> {
-                                    val columns =
-                                        (info.layoutMeta.layoutType as LayoutType.Grid).columns
-                                    if (columns>1){
-                                        LazyVerticalGrid(
-                                            modifier = Modifier.fillMaxSize(),
-                                            state = lazyListState,
-                                            columns = GridCells.Fixed(columns)
-                                        ) {
-                                            items(youtube.items ?: listOf()) { video ->
-                                                VideoItemGridCard(video,canFavourite = canFavourite)
-                                            }
-                                        }
-                                    }else{
-                                        LazyVerticalGrid(
-                                            modifier = Modifier.fillMaxSize(),
-                                            state = lazyListState,
-                                            columns = GridCells.Adaptive(300.dp)
-                                        ) {
-                                            youtube.items?.let { items ->
-                                                items(items) { videos ->
-                                                    VideoItemCard(videos,canFavourite = canFavourite)
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-                        } ?: run {
-                            LazyVerticalGrid(
-                                modifier = Modifier.fillMaxSize(),
-                                state = lazyListState,
-                                columns = GridCells.Adaptive(300.dp)
-                            ) {
-                                youtube.items?.let { items ->
-                                    items(items) { videos ->
-                                        VideoItemCard(videos)
-                                    }
-                                }
                             }
                         }
-
-                        Column(
-                            modifier = Modifier.align(Alignment.BottomEnd)
+                    } ?: run {
+                        LazyVerticalGrid(
+                            modifier = Modifier.fillMaxSize(),
+                            state = lazyListState,
+                            columns = GridCells.Adaptive(300.dp)
                         ) {
-                            AnimatedVisibility(
-                                visible = showButton,
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                                modifier = Modifier
-                                    .padding(16.dp)
-                            ) {
-                                Button(
-                                    onClick = {
-                                        coroutineScope.launch {
-                                            lazyListState.animateScrollToItem(
-                                                0
-                                            )
-                                        }
-                                    },
-                                    modifier = Modifier.size(60.dp)
-                                        .clip(CircleShape),
-                                    colors = ButtonColors(
-                                        containerColor = if (isDark) Color.Black else Color.White,
-                                        contentColor = if (isDark) Color.White else Color.Black,
-                                        disabledContainerColor = Color.Transparent,
-                                        disabledContentColor = Color.Transparent
-                                    ),
-                                    border = BorderStroke(
-                                        width = 1.dp,
-                                        color = if (isDark) Color.White else Color.Black
-                                    )
-                                ) {
-                                    Icon(
-                                        Icons.Default.ArrowUpward,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(40.dp)
-                                    )
+                            youtube.items?.let { items ->
+                                items(items) { videos ->
+                                    VideoItemCard(videos)
                                 }
                             }
                         }
                     }
 
-
-                } else {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
+                    Column(
+                        modifier = Modifier.align(Alignment.BottomEnd)
                     ) {
-                        LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-                            videosByCategories?.items?.let { items ->
-                                items(items) { videos ->
-                                    SearchVideoItemCard(videos)
-                                }
-                            }
-                        }
-                        Column(
-                            modifier = Modifier.align(Alignment.BottomEnd)
+                        AnimatedVisibility(
+                            visible = showButton,
+                            enter = fadeIn(),
+                            exit = fadeOut(),
+                            modifier = Modifier
+                                .padding(16.dp)
                         ) {
-                            AnimatedVisibility(
-                                visible = showButton,
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                                modifier = Modifier
-                                    .padding(16.dp)
+                            Button(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        lazyListState.animateScrollToItem(
+                                            0
+                                        )
+                                    }
+                                },
+                                modifier = Modifier.size(60.dp)
+                                    .clip(CircleShape),
+                                colors = ButtonColors(
+                                    containerColor = if (isDark) Color.Black else Color.White,
+                                    contentColor = if (isDark) Color.White else Color.Black,
+                                    disabledContainerColor = Color.Transparent,
+                                    disabledContentColor = Color.Transparent
+                                ),
+                                border = BorderStroke(
+                                    width = 1.dp,
+                                    color = if (isDark) Color.White else Color.Black
+                                )
                             ) {
-                                Button(
-                                    onClick = {
-                                        coroutineScope.launch {
-                                            lazyListState.animateScrollToItem(
-                                                0
-                                            )
-                                        }
-                                    },
-                                    modifier = Modifier.size(60.dp)
-                                        .clip(CircleShape),
-                                    colors = ButtonColors(
-                                        containerColor = if (isDark) Color.Black else Color.White,
-                                        contentColor = if (isDark) Color.White else Color.Black,
-                                        disabledContainerColor = Color.Transparent,
-                                        disabledContentColor = Color.Transparent
-                                    ),
-                                    border = BorderStroke(
-                                        width = 1.dp,
-                                        color = if (isDark) Color.White else Color.Black
-                                    )
-                                ) {
-                                    Icon(
-                                        Icons.Default.ArrowUpward,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(50.dp)
-                                    )
-                                }
+                                Icon(
+                                    Icons.Default.ArrowUpward,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(40.dp)
+                                )
                             }
                         }
                     }
                 }
+
+
+            } else {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                        videosByCategories?.items?.let { items ->
+                            items(items) { videos ->
+                                SearchVideoItemCard(videos)
+                            }
+                        }
+                    }
+                    Column(
+                        modifier = Modifier.align(Alignment.BottomEnd)
+                    ) {
+                        AnimatedVisibility(
+                            visible = showButton,
+                            enter = fadeIn(),
+                            exit = fadeOut(),
+                            modifier = Modifier
+                                .padding(16.dp)
+                        ) {
+                            Button(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        lazyListState.animateScrollToItem(
+                                            0
+                                        )
+                                    }
+                                },
+                                modifier = Modifier.size(60.dp)
+                                    .clip(CircleShape),
+                                colors = ButtonColors(
+                                    containerColor = if (isDark) Color.Black else Color.White,
+                                    contentColor = if (isDark) Color.White else Color.Black,
+                                    disabledContainerColor = Color.Transparent,
+                                    disabledContentColor = Color.Transparent
+                                ),
+                                border = BorderStroke(
+                                    width = 1.dp,
+                                    color = if (isDark) Color.White else Color.Black
+                                )
+                            ) {
+                                Icon(
+                                    Icons.Default.ArrowUpward,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(50.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -885,7 +880,7 @@ fun VideoItemCard(
                         fontSize = 10.sp
                     )
                 }
-                if (canFavourite==true){
+                if (canFavourite == true) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopStart)
@@ -1300,8 +1295,9 @@ fun VideoItemGridCard(
         )
     ) {
         Column {
-            Box(modifier = Modifier.fillMaxWidth()
-                .height(200.dp)
+            Box(
+                modifier = Modifier.fillMaxWidth()
+                    .height(200.dp)
             ) {
 
                 NetworkImage(
@@ -1328,7 +1324,7 @@ fun VideoItemGridCard(
                         fontSize = 10.sp
                     )
                 }
-                if (canFavourite){
+                if (canFavourite) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopStart)
@@ -1357,7 +1353,7 @@ fun VideoItemGridCard(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = null,
                         modifier = Modifier.size(24.dp),
-                        tint =Color.White
+                        tint = Color.White
                     )
                 }
                 Row(
