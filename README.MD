@@ -59,6 +59,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - Pipe Api Implementation.
 - Voice Search Implementation.
 - Video History Tab
+- Upload Videos 
 
 ## 🌟 Contributions
 If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
