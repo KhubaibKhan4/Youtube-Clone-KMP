@@ -367,6 +367,7 @@ Join our community to connect with other users and contributors:
 We'd like to thank the following individuals and organizations for their contributions to the YouTube Clone project:
 
 - No Contributor Yet.
+- Checkout Other cool projects on my profile as well.
 
 
 ## FAQs
