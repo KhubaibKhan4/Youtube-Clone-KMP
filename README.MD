@@ -140,7 +140,7 @@ To use the app, follow these steps:
    - Build and run your app to start utilizing the YouTube Data API functionalities.
    - Implement features such as video search, playback, playlists, and more using the API key.
 
-Feel free to reach out if you have any questions or need further assistance!
+Feel free to reach out if you have any questions or need further assistance on the Discussion Tab!
 
 ## 🤝 Connect with Me
 
