@@ -55,7 +55,6 @@ fun HomeContent(
     LaunchedEffect(pullRefreshState) {
         viewModel.getVideosList(UserRegion()) 
     }
-
     
     Box(
         Modifier
@@ -83,8 +82,6 @@ fun HomeContent(
                 }
             }
         }
-
-        
         PullRefreshIndicator(
             refreshing, pullRefreshState,
             Modifier.wrapContentSize().align(Alignment.TopCenter)
