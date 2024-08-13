@@ -89,15 +89,16 @@ fun getFormattedDate(publishedAt: String): String {
     }
 }
 
+
 fun getFormattedDateLikeMonthDay(videoPublishedAt: String): Triple<String, Int, Int> {
     return try {
         val instant = Instant.parse(videoPublishedAt)
         val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
 
         val months = arrayOf(
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" 
         )
-
+           
         val formattedMonth = months[localDateTime.monthNumber - 1]
         val dayOfMonth = localDateTime.dayOfMonth
         val year = localDateTime.year
