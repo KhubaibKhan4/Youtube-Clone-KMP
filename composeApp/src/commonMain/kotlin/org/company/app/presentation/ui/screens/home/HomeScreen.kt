@@ -37,17 +37,17 @@ class HomeScreen() : Screen {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeContent(
+fun HomeContent( 
     viewModel: MainViewModel = koinInject<MainViewModel>(),                                      
 ) {
     val refreshScope = rememberCoroutineScope()
-    var refreshing by remember { mutableStateOf(false) }
+    var refreshing by remember { mutableStateOf(false) } 
 
     fun refresh() = refreshScope.launch {
         refreshing = true
         viewModel.getVideosList(UserRegion())
         delay(1500)
-        refreshing = false
+        refreshing = false 
     }
 
     val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
