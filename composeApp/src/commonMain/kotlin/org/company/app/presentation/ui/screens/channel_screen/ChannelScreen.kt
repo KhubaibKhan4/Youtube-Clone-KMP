@@ -48,7 +48,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.LaunchedEffect 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -114,7 +114,7 @@ fun ChannelContent(
     var channelSections by remember { mutableStateOf<Youtube?>(null) }
     var channelLiveStream by remember { mutableStateOf<Search?>(null) }
     var channelAllVideos by remember { mutableStateOf<Youtube?>(null) }
-    var channelCommunities by remember { mutableStateOf<Youtube?>(null) }
+    var channelCommunities by remember { mutableStateOf<Youtube?>(null) } 
     var ownChannelVideo by remember { mutableStateOf<Search?>(null) }
     var featuresChannels by remember { mutableStateOf<Channel?>(null) }
     var isSearchEnabled by remember { mutableStateOf(false) }
@@ -141,6 +141,7 @@ fun ChannelContent(
         }
 
     }
+    
     val state by viewModel.playlists.collectAsState()
     val channelState by viewModel.channelSections.collectAsState()
     val liveStreams by viewModel.channelLiveStream.collectAsState()
@@ -180,6 +181,7 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
+    
     when (channelState) {
         is ResultState.LOADING -> {
             // LoadingBox()
