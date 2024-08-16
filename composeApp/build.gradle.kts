@@ -21,6 +21,7 @@ kotlin {
             }
         }
     }
+
     jvm()
     js {
         browser()
@@ -206,6 +207,7 @@ dependencies {
 buildConfig {
 
 }
+
 sqldelight {
     databases {
         create("YoutubeDatabase") {
