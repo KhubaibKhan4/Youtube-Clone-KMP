@@ -1,5 +1,5 @@
 package org.company.app.presentation.ui.screens.channel_screen
-
+ 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -46,7 +46,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults  
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect 
 import androidx.compose.runtime.collectAsState
@@ -119,7 +119,7 @@ fun ChannelContent(
     var featuresChannels by remember { mutableStateOf<Channel?>(null) }
     var isSearchEnabled by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf(false) }
-    var isLoading by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }                                                         
     var data by remember { mutableStateOf<Search?>(null) }
     var errorData by remember { mutableStateOf("") }
     var query by remember { mutableStateOf("") }
@@ -170,12 +170,10 @@ fun ChannelContent(
         is ResultState.LOADING -> {
             //ShimmerEffectChannel()
         }
-
         is ResultState.SUCCESS -> {
             val response = (multipleVideos as ResultState.SUCCESS).response
             multipleVideo = response
         }
-
         is ResultState.ERROR -> {
             val error = (multipleVideos as ResultState.ERROR).error
             ErrorBox(error = error)
