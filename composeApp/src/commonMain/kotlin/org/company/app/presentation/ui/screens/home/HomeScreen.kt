@@ -83,7 +83,6 @@ fun HomeContent(
                 }
             }
         }
-
         
         PullRefreshIndicator(
             refreshing, pullRefreshState,
