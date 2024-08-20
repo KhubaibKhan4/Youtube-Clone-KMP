@@ -23,7 +23,6 @@ class DetailScreen(
     } 
 } 
 
-
 fun formatViewCount(count: String?): String {
     return count?.toDoubleOrNull()?.let {
         when {
@@ -55,7 +54,6 @@ fun formatLikes(count: String?): String {
         }
     } ?: "0"
 }
-
 fun formatSubscribers(count: String?): String {
     return count?.toDoubleOrNull()?.let {
         when {
@@ -89,7 +87,6 @@ fun getFormattedDate(publishedAt: String): String {
     }
 }
 
-
 fun getFormattedDateLikeMonthDay(videoPublishedAt: String): Triple<String, Int, Int> {
     return try {
         val instant = Instant.parse(videoPublishedAt)
@@ -108,4 +105,3 @@ fun getFormattedDateLikeMonthDay(videoPublishedAt: String): Triple<String, Int, 
         Triple("Unknown", 0, 0)
     }
 }
-
