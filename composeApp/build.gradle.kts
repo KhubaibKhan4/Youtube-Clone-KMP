@@ -12,7 +12,6 @@ plugins {
     id("com.google.osdetector") version "1.7.3"
     id("com.google.gms.google-services")
 }
-
 kotlin {
     androidTarget {
         compilations.all {
@@ -21,7 +20,6 @@ kotlin {
             }
         }
     }
-
     jvm()
     js {
         browser()
@@ -205,7 +203,6 @@ dependencies {
 }
 
 buildConfig {
-
 }
 
 sqldelight {
