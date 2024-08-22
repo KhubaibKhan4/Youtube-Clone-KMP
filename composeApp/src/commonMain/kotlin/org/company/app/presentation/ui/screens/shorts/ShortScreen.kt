@@ -60,8 +60,6 @@ fun ShortContent(viewModel: MainViewModel = koinInject<MainViewModel>()) {
 
         }
     }
-
-
     shortsData?.let { shorts ->
         ShortList(shorts)
     }
