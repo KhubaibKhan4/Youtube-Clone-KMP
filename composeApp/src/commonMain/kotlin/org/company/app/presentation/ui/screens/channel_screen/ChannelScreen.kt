@@ -141,6 +141,7 @@ fun ChannelContent(
         }
 
     }
+    
     val state by viewModel.playlists.collectAsState()
     val channelState by viewModel.channelSections.collectAsState()
     val liveStreams by viewModel.channelLiveStream.collectAsState()
@@ -293,6 +294,7 @@ fun ChannelContent(
                 errorData = error
             }
         }
+        
         Column(
             modifier = Modifier.fillMaxSize()
                 .padding(top = 49.dp),
@@ -354,7 +356,7 @@ fun ChannelContent(
                     Icon(imageVector = Icons.Default.Mic, contentDescription = null)
                 }
 
-            }\
+            }
          
             Spacer(modifier = Modifier.height(8.dp))
             HorizontalDivider(
@@ -391,6 +393,7 @@ fun ChannelContent(
 
         }
     } else {
+     
         Column(
             modifier = Modifier
                 .fillMaxWidth()
