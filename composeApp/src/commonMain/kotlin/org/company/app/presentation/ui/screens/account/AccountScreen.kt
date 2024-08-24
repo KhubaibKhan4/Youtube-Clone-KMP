@@ -190,7 +190,7 @@ object AccountScreen : Tab {
                 
                 Spacer(modifier = Modifier.width(16.dp))
             }
-            
+        
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -219,7 +219,6 @@ object AccountScreen : Tab {
             }
         }
     }
-
     override val options: TabOptions
         @Composable
         get() {
