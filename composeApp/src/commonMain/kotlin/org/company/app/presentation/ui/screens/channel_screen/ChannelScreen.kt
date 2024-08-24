@@ -5,7 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Row 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight  
 import androidx.compose.foundation.layout.fillMaxSize
@@ -107,7 +107,6 @@ fun ChannelContent(
     channel: Item,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
-    
     val isDark by LocalThemeIsDark.current
     var playlists by remember { mutableStateOf<Youtube?>(null) }
     var multipleVideo by remember { mutableStateOf<Youtube?>(null) }
@@ -166,6 +165,7 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
+    
     when (multipleVideos) {
         is ResultState.LOADING -> {
             //ShimmerEffectChannel()
@@ -195,6 +195,7 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
+    
     when (liveStreams) {
         is ResultState.LOADING -> {
             //LoadingBox()
@@ -274,6 +275,7 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
+    
     if (isSearchEnabled) {
         val searchState = viewModel.channelSearch.collectAsState().value
         when (searchState) {
