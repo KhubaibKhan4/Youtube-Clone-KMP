@@ -49,7 +49,7 @@ fun HomeContent(
         delay(1500)
         refreshing = false 
     }
-
+    
     val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
  
     LaunchedEffect(pullRefreshState) {
@@ -62,6 +62,7 @@ fun HomeContent(
             .pullRefresh(pullRefreshState),
         contentAlignment = Alignment.Center
     ) {
+        
         if (!refreshing) {
             val state by viewModel.videos.collectAsState()
             when (state) {
