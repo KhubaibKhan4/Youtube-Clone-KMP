@@ -81,6 +81,7 @@ class LibraryScreen : Screen {
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
+
                 TextButton(
                     onClick = {
                         isShortEnabled = !isShortEnabled
