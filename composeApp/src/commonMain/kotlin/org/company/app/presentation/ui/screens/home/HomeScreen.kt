@@ -2,11 +2,11 @@ package org.company.app.presentation.ui.screens.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentSize 
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState   
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.launch 
 import org.company.app.UserRegion
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.error.ErrorScreen
@@ -55,7 +55,7 @@ fun HomeContent(
     LaunchedEffect(pullRefreshState) {
         viewModel.getVideosList(UserRegion()) 
     }
- 
+    
     Box(
         Modifier
             .fillMaxWidth()
