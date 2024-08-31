@@ -34,7 +34,7 @@ class HomeScreen() : Screen {
         HomeContent()
     }
 }
-
+ 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeContent( 
@@ -54,7 +54,7 @@ fun HomeContent(
  
     LaunchedEffect(pullRefreshState) {
         viewModel.getVideosList(UserRegion()) 
-    }
+    } 
     
     Box(
         Modifier
