@@ -22,7 +22,7 @@ class DetailScreen(
         DetailContent(video, search, channelData,logo, subscribersCount.toString())
     } 
 } 
-
+  
 fun formatViewCount(count: String?): String {
     return count?.toDoubleOrNull()?.let {
         when {
@@ -54,6 +54,7 @@ fun formatLikes(count: String?): String {
         }
     } ?: "0"
 }
+
 fun formatSubscribers(count: String?): String {
     return count?.toDoubleOrNull()?.let {
         when {
