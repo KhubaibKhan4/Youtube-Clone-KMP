@@ -1,18 +1,18 @@
 package org.company.app.presentation.ui.screens.channel_screen
-
+ 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Row 
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxHeight  
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.size 
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -46,9 +46,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults  
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.LaunchedEffect 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -61,7 +61,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.KeyboardType  
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -113,12 +113,12 @@ fun ChannelContent(
     var channelSections by remember { mutableStateOf<Youtube?>(null) }
     var channelLiveStream by remember { mutableStateOf<Search?>(null) }
     var channelAllVideos by remember { mutableStateOf<Youtube?>(null) }
-    var channelCommunities by remember { mutableStateOf<Youtube?>(null) }
+    var channelCommunities by remember { mutableStateOf<Youtube?>(null) } 
     var ownChannelVideo by remember { mutableStateOf<Search?>(null) }
     var featuresChannels by remember { mutableStateOf<Channel?>(null) }
     var isSearchEnabled by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf(false) }
-    var isLoading by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }                                                         
     var data by remember { mutableStateOf<Search?>(null) }
     var errorData by remember { mutableStateOf("") }
     var query by remember { mutableStateOf("") }
@@ -140,6 +140,7 @@ fun ChannelContent(
         }
 
     }
+    
     val state by viewModel.playlists.collectAsState()
     val channelState by viewModel.channelSections.collectAsState()
     val liveStreams by viewModel.channelLiveStream.collectAsState()
@@ -164,21 +165,21 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
+    
     when (multipleVideos) {
         is ResultState.LOADING -> {
             //ShimmerEffectChannel()
         }
-
         is ResultState.SUCCESS -> {
             val response = (multipleVideos as ResultState.SUCCESS).response
             multipleVideo = response
         }
-
         is ResultState.ERROR -> {
             val error = (multipleVideos as ResultState.ERROR).error
             ErrorBox(error = error)
         }
     }
+    
     when (channelState) {
         is ResultState.LOADING -> {
             // LoadingBox()
@@ -194,6 +195,7 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
+    
     when (liveStreams) {
         is ResultState.LOADING -> {
             //LoadingBox()
@@ -273,6 +275,7 @@ fun ChannelContent(
             ErrorBox(error = error)
         }
     }
+    
     if (isSearchEnabled) {
         val searchState = viewModel.channelSearch.collectAsState().value
         when (searchState) {
@@ -293,6 +296,7 @@ fun ChannelContent(
                 errorData = error
             }
         }
+        
         Column(
             modifier = Modifier.fillMaxSize()
                 .padding(top = 49.dp),
@@ -355,6 +359,7 @@ fun ChannelContent(
                 }
 
             }
+         
             Spacer(modifier = Modifier.height(8.dp))
             HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
@@ -390,6 +395,7 @@ fun ChannelContent(
 
         }
     } else {
+     
         Column(
             modifier = Modifier
                 .fillMaxWidth()

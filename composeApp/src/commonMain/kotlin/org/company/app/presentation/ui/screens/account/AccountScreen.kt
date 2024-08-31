@@ -5,14 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Row 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.rememberScrollState 
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpCenter
@@ -60,7 +60,7 @@ object AccountScreen : Tab {
         ) {
             Box(
                 modifier = Modifier.fillMaxWidth()
-                    .padding(top = 8.dp, start = 6.dp),
+                    .padding(top = 8.dp, start = 6.dp), 
                 contentAlignment = Alignment.TopStart
             ) {
                 IconButton(
@@ -73,7 +73,7 @@ object AccountScreen : Tab {
                     Icon(imageVector = Icons.Default.Close, contentDescription = "Close Icon")
                 }
             }
-
+            
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .padding(16.dp),
@@ -187,9 +187,10 @@ object AccountScreen : Tab {
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(text = "YouTube Kids")
                 }
+                
                 Spacer(modifier = Modifier.width(16.dp))
             }
-
+        
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -216,11 +217,8 @@ object AccountScreen : Tab {
                     )
                 }
             }
-
         }
     }
-
-
     override val options: TabOptions
         @Composable
         get() {
@@ -231,6 +229,4 @@ object AccountScreen : Tab {
                index, title, icon
             )
         }
-
-
 }

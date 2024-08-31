@@ -54,10 +54,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 ## 🚀 Future Plans
 - TV and Wear OS Versions
 - Integrate Custom Server.
-- Ai based Search System.
-- Google Authentication. 
-- Pipe Api Implementation.
-- Voice Search Implementation.
+- Custom UI Sdk
 
 ## 🌟 Contributions
 If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
@@ -71,7 +68,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **AGP (Android Gradle Plugin)**: `8.2.2`
 - **Compose**: `1.6.11`
   - `androidx-appcompat`: `1.7.0`
-  - `androidx-activityCompose`: `1.9.0`
+  - `androidx-activityCompose`: `1.9.1`
   - `compose-uitooling`: `1.6.8`
   - `composeImageLoader`: `1.7.1`
 - **Core Libraries**: `12.1.0`
@@ -87,9 +84,9 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **UI/UX**:
   - `compose-uitooling`: `1.6.8`
 - **Media Handling**:
-  - `media3Ui`: `1.3.1`
-  - `media3ExoplayerDash`: `1.3.1`
-  - `media3Exoplayer`: `1.3.1`
+  - `media3Ui`: `1.4.0`
+  - `media3ExoplayerDash`: `1.4.0`
+  - `media3Exoplayer`: `1.4.0`
 - **Logging**:
   - `napier`: `2.7.1`
 - **Database/Storage**:
@@ -138,7 +135,7 @@ To use the app, follow these steps:
    - Build and run your app to start utilizing the YouTube Data API functionalities.
    - Implement features such as video search, playback, playlists, and more using the API key.
 
-Feel free to reach out if you have any questions or need further assistance!
+Feel free to reach out if you have any questions or need further assistance on the Discussion Tab!
 
 ## 🤝 Connect with Me
 
@@ -148,8 +145,6 @@ Let's chat about potential projects, job opportunities, or any other collaborati
 [![Twitter](https://img.shields.io/badge/Twitter-Follow-blue?style=for-the-badge&logo=twitter)](https://twitter.com/codespacepro)
 [![Email](https://img.shields.io/badge/Email-Drop%20a%20Message-red?style=for-the-badge&logo=gmail)](mailto:18.bscs.803@gmail.com)
 
-  ## 💰 You can help me by Donating
-  [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/khubaibkhan) [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/18.bscs) [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://patreon.com/MuhammadKhubaibImtiaz) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/muhammadkhubaibimtiaz) 
 
 
 ## Download Installers
@@ -365,6 +360,7 @@ Join our community to connect with other users and contributors:
 We'd like to thank the following individuals and organizations for their contributions to the YouTube Clone project:
 
 - No Contributor Yet.
+- Checkout Other cool projects on my profile as well.
 
 
 ## FAQs

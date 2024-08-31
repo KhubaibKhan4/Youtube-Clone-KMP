@@ -22,6 +22,7 @@ class MainViewModel(
     private val repository: YouTubeServiceImpl,
     private val database: YoutubeDatabase,
 ) : ViewModel() {
+    
     private val _videos = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)
     val videos: StateFlow<ResultState<Youtube>> = _videos.asStateFlow()
     private val _videosUsingIds = MutableStateFlow<ResultState<Youtube>>(ResultState.LOADING)

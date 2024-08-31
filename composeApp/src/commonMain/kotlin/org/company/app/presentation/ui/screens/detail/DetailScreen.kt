@@ -3,27 +3,26 @@ package org.company.app.presentation.ui.screens.detail
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlinx.datetime.Instant 
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.company.app.domain.model.channel.Item
 import org.company.app.presentation.ui.components.detail.DetailContent
 
-class DetailScreen(
+class DetailScreen( 
     private val video: org.company.app.domain.model.videos.Item? = null,
     private val search: org.company.app.domain.model.search.Item? = null,
-    private val channelData: Item? = null,
+    private val channelData: Item? = null, 
     private val logo: String? = null,
-    private val subscribersCount: String? =null
+    private val subscribersCount: String? =null 
 ) : Screen {
 
-    @Composable
+    @Composable 
     override fun Content() {
         DetailContent(video, search, channelData,logo, subscribersCount.toString())
-    }
-}
-
-
+    } 
+} 
+  
 fun formatViewCount(count: String?): String {
     return count?.toDoubleOrNull()?.let {
         when {
@@ -89,15 +88,16 @@ fun getFormattedDate(publishedAt: String): String {
     }
 }
 
+
 fun getFormattedDateLikeMonthDay(videoPublishedAt: String): Triple<String, Int, Int> {
     return try {
         val instant = Instant.parse(videoPublishedAt)
         val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
 
         val months = arrayOf(
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" 
         )
-
+           
         val formattedMonth = months[localDateTime.monthNumber - 1]
         val dayOfMonth = localDateTime.dayOfMonth
         val year = localDateTime.year
@@ -107,4 +107,3 @@ fun getFormattedDateLikeMonthDay(videoPublishedAt: String): Triple<String, Int, 
         Triple("Unknown", 0, 0)
     }
 }
-

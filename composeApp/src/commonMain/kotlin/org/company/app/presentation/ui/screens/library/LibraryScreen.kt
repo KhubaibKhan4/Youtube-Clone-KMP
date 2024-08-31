@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.padding 
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -41,6 +41,7 @@ class LibraryScreen : Screen {
             verticalArrangement = Arrangement.Center
         ) {
             TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
+
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .padding(top = 30.dp, start = 16.dp, end = 16.dp),
@@ -80,6 +81,7 @@ class LibraryScreen : Screen {
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
+
                 TextButton(
                     onClick = {
                         isShortEnabled = !isShortEnabled
@@ -92,11 +94,11 @@ class LibraryScreen : Screen {
                 ) {
                     Text(text = "Add Videos ShortCut")
                 }
+                
                 if (isShortEnabled) {
                     provideShortCuts()
                 }
             }
         }
     }
-
 }
