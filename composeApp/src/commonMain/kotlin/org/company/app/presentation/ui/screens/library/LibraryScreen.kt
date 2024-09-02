@@ -34,7 +34,9 @@ import org.company.app.provideShortCuts
 class LibraryScreen : Screen {
     @Composable
     override fun Content() {
+        
         var isShortEnabled by remember { mutableStateOf(false) }
+        
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -79,7 +81,6 @@ class LibraryScreen : Screen {
                 ) {
                     Text(text = "Sign in")
                 }
-
                 Spacer(modifier = Modifier.height(15.dp))
 
                 TextButton(
