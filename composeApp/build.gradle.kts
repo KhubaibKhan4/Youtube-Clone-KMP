@@ -64,7 +64,7 @@ kotlin {
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.kamel.image)
             implementation(libs.sqlDelight.extension)
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha06")
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.8.0-dev1783")
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-alpha08")
             implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.5.0")
             implementation(libs.alert.kmp)
