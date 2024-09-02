@@ -34,6 +34,7 @@ class HomeScreen() : Screen {
         HomeContent()
     }
 }
+
  
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -62,7 +63,6 @@ fun HomeContent(
             .pullRefresh(pullRefreshState),
         contentAlignment = Alignment.Center
     ) {
-        
         if (!refreshing) {
             val state by viewModel.videos.collectAsState()
             when (state) {
