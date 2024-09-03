@@ -22,7 +22,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.KeyboardOptions 
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
@@ -102,6 +102,7 @@ class ChannelScreen(
     }
 }
 
+
 @Composable
 fun ChannelContent(
     channel: Item,
@@ -138,7 +139,6 @@ fun ChannelContent(
         channelAllVideos?.items?.forEach { channelVideos ->
             viewModel.getMultipleVideo(channelVideos.contentDetails?.projection.toString())
         }
-
     }
     
     val state by viewModel.playlists.collectAsState()
@@ -170,10 +170,12 @@ fun ChannelContent(
         is ResultState.LOADING -> {
             //ShimmerEffectChannel()
         }
+        
         is ResultState.SUCCESS -> {
             val response = (multipleVideos as ResultState.SUCCESS).response
             multipleVideo = response
         }
+        
         is ResultState.ERROR -> {
             val error = (multipleVideos as ResultState.ERROR).error
             ErrorBox(error = error)
