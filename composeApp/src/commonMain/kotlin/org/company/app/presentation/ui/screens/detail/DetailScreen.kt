@@ -16,7 +16,6 @@ class DetailScreen(
     private val logo: String? = null,
     private val subscribersCount: String? =null 
 ) : Screen {
-
     @Composable 
     override fun Content() {
         DetailContent(video, search, channelData,logo, subscribersCount.toString())
@@ -87,7 +86,6 @@ fun getFormattedDate(publishedAt: String): String {
         "Unknown date"
     }
 }
-
 
 fun getFormattedDateLikeMonthDay(videoPublishedAt: String): Triple<String, Int, Int> {
     return try {
