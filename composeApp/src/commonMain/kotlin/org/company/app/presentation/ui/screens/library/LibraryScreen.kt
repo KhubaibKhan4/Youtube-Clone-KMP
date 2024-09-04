@@ -69,6 +69,7 @@ class LibraryScreen : Screen {
                     text = "Sign in to access videos that you've liked or \n saved",
                     textAlign = TextAlign.Center
                 )
+                
                 Spacer(modifier = Modifier.height(8.dp))
 
                 TextButton(
@@ -81,6 +82,7 @@ class LibraryScreen : Screen {
                 ) {
                     Text(text = "Sign in")
                 }
+                
                 Spacer(modifier = Modifier.height(15.dp))
 
                 TextButton(
