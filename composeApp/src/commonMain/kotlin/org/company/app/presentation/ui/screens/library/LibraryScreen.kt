@@ -44,6 +44,7 @@ class LibraryScreen : Screen {
         ) {
             TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
 
+    
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .padding(top = 30.dp, start = 16.dp, end = 16.dp),
@@ -95,7 +96,9 @@ class LibraryScreen : Screen {
                         contentColor = Color.White
                     )
                 ) {
+                    
                     Text(text = "Add Videos ShortCut")
+                    
                 }
                 
                 if (isShortEnabled) {
