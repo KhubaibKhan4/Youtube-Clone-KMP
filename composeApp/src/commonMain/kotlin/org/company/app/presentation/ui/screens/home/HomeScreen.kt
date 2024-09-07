@@ -34,7 +34,6 @@ class HomeScreen() : Screen {
         HomeContent()
     }
 }
-
  
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -70,12 +69,10 @@ fun HomeContent(
                 is ResultState.LOADING -> {
                     ShimmerEffectMain()
                 }
-
                 is ResultState.SUCCESS -> {
                     val data = (state as ResultState.SUCCESS).response                                   
                     VideosList(data)
                 }
-
                 is ResultState.ERROR -> {
                     val error = (state as ResultState.ERROR).error
                     ErrorScreen(error, onRetry = {
