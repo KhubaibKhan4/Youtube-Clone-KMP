@@ -34,7 +34,6 @@ import org.company.app.provideShortCuts
 class LibraryScreen : Screen {
     @Composable
     override fun Content() {
-        
         var isShortEnabled by remember { mutableStateOf(false) }
         
         Column(
@@ -44,7 +43,6 @@ class LibraryScreen : Screen {
         ) {
             TopBar(modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
 
-    
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .padding(top = 30.dp, start = 16.dp, end = 16.dp),
