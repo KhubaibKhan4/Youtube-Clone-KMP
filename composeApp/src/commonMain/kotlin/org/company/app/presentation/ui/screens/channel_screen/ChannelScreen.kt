@@ -102,7 +102,6 @@ class ChannelScreen(
     }
 }
 
-
 @Composable
 fun ChannelContent(
     channel: Item,
@@ -397,7 +396,6 @@ fun ChannelContent(
 
         }
     } else {
-     
         Column(
             modifier = Modifier
                 .fillMaxWidth()
