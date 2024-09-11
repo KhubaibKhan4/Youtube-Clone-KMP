@@ -140,7 +140,6 @@ fun ChannelContent(
         }
     }
 
-    
     val state by viewModel.playlists.collectAsState()
     val channelState by viewModel.channelSections.collectAsState()
     val liveStreams by viewModel.channelLiveStream.collectAsState()
