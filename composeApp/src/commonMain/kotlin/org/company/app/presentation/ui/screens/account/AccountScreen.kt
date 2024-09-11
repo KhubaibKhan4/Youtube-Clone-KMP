@@ -138,6 +138,7 @@ object AccountScreen : Tab {
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(text = "Settings")
                 }
+                
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Row(
