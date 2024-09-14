@@ -1,9 +1,13 @@
 import UIKit
 import SwiftUI
 import ComposeApp
+import Firebase
 
 @main
 struct iosApp: App {
+    init() {
+            FirebaseApp.configure() 
+        }
     var body: some Scene {
         WindowGroup {
             ContentView()

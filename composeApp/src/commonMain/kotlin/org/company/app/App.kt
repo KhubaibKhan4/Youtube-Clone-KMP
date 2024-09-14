@@ -61,6 +61,7 @@ import org.company.app.presentation.ui.navigation.tabs.subscriptions.Subscriptio
 import org.company.app.theme.AppTheme
 import org.company.app.theme.LocalThemeIsDark
 import org.koin.compose.KoinApplication
+import org.koin.compose.module.rememberKoinModules
 
 
 @Composable

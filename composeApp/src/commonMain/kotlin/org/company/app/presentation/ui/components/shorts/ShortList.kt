@@ -1,6 +1,5 @@
 package org.company.app.presentation.ui.components.shorts
 
-import Notify
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -470,7 +469,7 @@ fun ShortItem(
     if (isCommentEnabled) {
         val isDark by LocalThemeIsDark.current
         if (video.statistics?.commentCount.isNullOrBlank()) {
-            Notify("No Comments Found...")
+            //Notify("No Comments Found...")
         }
         var commentInput by remember { mutableStateOf("") }
 

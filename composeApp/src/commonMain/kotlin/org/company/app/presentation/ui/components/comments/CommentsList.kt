@@ -1,6 +1,5 @@
 package org.company.app.presentation.ui.components.comments
 
-import Notify
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,7 +49,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import createNotification
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -296,10 +294,10 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                 }
             )
             if (comments.snippet.totalReplyCount == 0 && repliesExpanded) {
-                Notify(
+                /*Notify(
                     message = "No Replies Found...",
                     NotificationDuration.LONG
-                )
+                )*/
             } else {
                 AnimatedVisibility(visible = repliesExpanded) {
                     CommentItemWithReplies(comments)

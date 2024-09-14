@@ -1,6 +1,5 @@
 package org.company.app.presentation.ui.components.detail
 
-import Notify
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -788,7 +787,7 @@ fun DetailContent(
             )
         }
         if (notificationMessage.value.isNotBlank()) {
-            Notify(notificationMessage.value)
+            //Notify(notificationMessage.value)
         }
 
         HorizontalDivider(
@@ -1195,7 +1194,7 @@ fun DetailContent(
     }
     if (isCommentLive) {
         if (video?.statistics?.commentCount.isNullOrBlank()) {
-            Notify(message = "No Comments Found...")
+           // Notify(message = "No Comments Found...")
         }
         var commentInput by remember { mutableStateOf("") }
 

@@ -67,7 +67,7 @@ kotlin {
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha06")
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-rc03")
             implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.5.0")
-            implementation(libs.alert.kmp)
+           // implementation(libs.alert.kmp)
             implementation(libs.gitlive.firebase.firestore)
             implementation(libs.gitlive.firebase.database)
         }

@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		490B4A992C95850100B454C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 490B4A982C95850100B454C5 /* GoogleService-Info.plist */; };
+		493205AD2C95B30400564F49 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 493205AC2C95B30400564F49 /* libsqlite3.tbd */; };
+		493205B02C95C80C00564F49 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 493205AF2C95C80C00564F49 /* FirebaseFirestore */; };
+		493205B22C95C81800564F49 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 493205B12C95C81800564F49 /* FirebaseDatabase */; };
+		493205B42C95C82400564F49 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 493205B32C95C82400564F49 /* FirebaseStorage */; };
+		493205B62C95C84200564F49 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 493205B52C95C84100564F49 /* libsqlite3.0.tbd */; };
 		A93A953B29CC810C00F8E227 /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93A953A29CC810C00F8E227 /* iosApp.swift */; };
 		A93A953F29CC810D00F8E227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A953E29CC810D00F8E227 /* Assets.xcassets */; };
 		A93A954229CC810D00F8E227 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A954129CC810D00F8E227 /* Preview Assets.xcassets */; };
@@ -15,6 +20,8 @@
 
 /* Begin PBXFileReference section */
 		490B4A982C95850100B454C5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		493205AC2C95B30400564F49 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		493205B52C95C84100564F49 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		A93A953729CC810C00F8E227 /* Youtube Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Youtube Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93A953A29CC810C00F8E227 /* iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosApp.swift; sourceTree = "<group>"; };
 		A93A953E29CC810D00F8E227 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -26,6 +33,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493205B62C95C84200564F49 /* libsqlite3.0.tbd in Frameworks */,
+				493205B22C95C81800564F49 /* FirebaseDatabase in Frameworks */,
+				493205B42C95C82400564F49 /* FirebaseStorage in Frameworks */,
+				493205AD2C95B30400564F49 /* libsqlite3.tbd in Frameworks */,
+				493205B02C95C80C00564F49 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +83,8 @@
 		C4127409AE3703430489E7BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				493205B52C95C84100564F49 /* libsqlite3.0.tbd */,
+				493205AC2C95B30400564F49 /* libsqlite3.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -92,6 +106,11 @@
 			dependencies = (
 			);
 			name = iosApp;
+			packageProductDependencies = (
+				493205AF2C95C80C00564F49 /* FirebaseFirestore */,
+				493205B12C95C81800564F49 /* FirebaseDatabase */,
+				493205B32C95C82400564F49 /* FirebaseStorage */,
+			);
 			productName = iosApp;
 			productReference = A93A953729CC810C00F8E227 /* Youtube Clone.app */;
 			productType = "com.apple.product-type.application";
@@ -120,6 +139,7 @@
 			);
 			mainGroup = A93A952E29CC810C00F8E227;
 			packageReferences = (
+				493205AE2C95B89A00564F49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = A93A953829CC810C00F8E227 /* Products */;
 			projectDirPath = "";
@@ -385,6 +405,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		493205AE2C95B89A00564F49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		493205AF2C95C80C00564F49 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493205AE2C95B89A00564F49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		493205B12C95C81800564F49 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493205AE2C95B89A00564F49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		493205B32C95C82400564F49 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493205AE2C95B89A00564F49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A93A952F29CC810C00F8E227 /* Project object */;
 }
