@@ -7,9 +7,12 @@ import androidx.compose.ui.interop.UIKitView
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
+import io.kamel.core.utils.File
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.HttpCacheEntry
 import io.ktor.client.plugins.cache.storage.*
+import io.ktor.http.Url
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.Dispatchers
@@ -135,25 +138,6 @@ internal actual fun UserRegion(): String {
     return NSLocale.currentLocale.countryCode ?: "us"
 }
 
-@Composable
-actual fun isConnected(): Flow<Boolean> {
-    return flow {
-        while (true) {
-            val url = NSURL(string = "https://www.google.com")
-            val session = NSURLSession.sharedSession
-            val task = session.dataTaskWithURL(url) { _, response, error ->
-                if (error == null && (response as? NSHTTPURLResponse)?.statusCode?.toInt() == 200) {
-                    emit(true)
-                } else {
-                    emit(false)
-                }
-            }
-            task.resume()
-            delay(5000)  // Check every 5 seconds
-        }
-    }
-}
-
 actual class DriverFactory actual constructor(){
     actual fun createDriver(): SqlDriver {
         return NativeSqliteDriver(YoutubeDatabase.Schema,"YouTubeDatabase.db")
@@ -192,33 +176,29 @@ actual class VideoDownloader {
     }
 }
 
-actual class GoogleSignInHelper {
-
-    actual suspend fun signIn(): GoogleSignInResult = suspendCancellableCoroutine { cont ->
-        GIDSignIn.sharedInstance().signInWithConfiguration(GIDConfiguration(clientID = "YOUR_IOS_CLIENT_ID"), presentingViewController = getViewController(), callback = { user, error ->
-            if (error != null) {
-                cont.resumeWithException(error)
-            } else if (user != null) {
-                val userData = UserData(
-                    name = user.profile?.name ?: "",
-                    email = user.profile?.email ?: "",
-                    photoUrl = user.profile?.imageURLWithDimension(100)?.absoluteString
-                )
-                cont.resume(GoogleSignInResult(success = true, userData = userData))
-            }
-        })
-    }
-
-    private fun getViewController(): UIViewController {
-        return UIApplication.sharedApplication.keyWindow!!.rootViewController!!
-    }
-}
-
 actual fun HttpClientConfig<*>.setupHttpCache() {
     install(HttpCache) {
-        val paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSUserDomainMask, true)
-        val cacheDir = paths.first() as String
-        val fileStorage = FileStorage(NSFileManager.defaultManager.URLForDirectory(NSSearchPathDirectory.CachesDirectory, NSUserDomainMask, true, null, null)!!)
-        publicStorage(fileStorage)
+        val cacheDir = File("cache_directory") // Set your desired cache directory
+        val cacheStorage = object : HttpCacheStorage() {
+            private val cache = HashMap<String, HttpCacheEntry>()
+
+            override fun find(url: Url, varyKeys: Map<String, String>): HttpCacheEntry? {
+                return cache[url.toString()]
+            }
+
+            override fun findByUrl(url: Url): Set<HttpCacheEntry> {
+                val entry = cache[url.toString()] ?: return emptySet()
+                return setOf(entry)
+            }
+
+            override fun store(url: Url, value: HttpCacheEntry) {
+                if (cache.size < 10 * 1024 * 1024) { // Check if cache size is less than 10MB
+                    cache[url.toString()] = value
+                } else {
+                    // Handle cache size limit, e.g., evict oldest entries or similar
+                }
+            }
+        }
+        cacheStorage
     }
 }
