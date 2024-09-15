@@ -250,7 +250,7 @@ fun ChannelContent(
         }
     }
 
-    when (ownChannelVideos) {
+    when (ownChannelVideos) { 
         is ResultState.LOADING -> {
             //LoadingBox()
         }
