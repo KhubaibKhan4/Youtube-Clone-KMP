@@ -1,5 +1,7 @@
 package org.company.app
 
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -46,6 +48,7 @@ import platform.UIKit.UIAlertController
 import platform.UIKit.UIApplication
 import platform.UIKit.UIDevice
 import platform.UIKit.UIView
+import platform.WebKit.WKWebView
 import platform.darwin.*
 import kotlin.coroutines.resumeWithException
 
@@ -54,43 +57,68 @@ internal actual fun openUrl(url: String?) {
     UIApplication.sharedApplication.openURL(nsUrl)
 }
 
-fun initKoin(){
-    startKoin {
-        modules(appModule)
-    }
-}
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
+    val videoId = remember(url) {
+        url?.substringAfter("v=")?.substringBefore("&") ?: url?.substringAfterLast("/")
+    }
+    val htmlContent = """
+        <html>
+        <head>
+            <style>
+                body, html {
+                    margin: 0;
+                    padding: 0;
+                    height: 100%;
+                    overflow: hidden;
+                }
+                .video-container {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                }
+                .video-container iframe {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/$videoId?autoplay=1" 
+                    allow="autoplay;">
+                </iframe>
+            </div>
+        </body>
+        </html>
+    """.trimIndent()
 
-    val player = remember { NSURL.URLWithString(url.toString())?.let { AVPlayer(uRL = it) } }
-    val playerLayer = remember { AVPlayerLayer() }
-    val avPlayerViewController = remember { AVPlayerViewController() }
-    avPlayerViewController.player = player
-    avPlayerViewController.showsPlaybackControls = true
-
-    playerLayer.player = player
     UIKitView(
         factory = {
-            val playerContainer = UIView()
-            playerContainer.addSubview(avPlayerViewController.view)
-            playerContainer
+            val webView = WKWebView()
+            webView.scrollView.scrollEnabled = false
+            webView.loadHTMLString(htmlContent, baseURL = null)
+            webView
         },
         onResize = { view: UIView, rect: CValue<CGRect> ->
-            CATransaction.begin()
-            CATransaction.setValue(true, kCATransactionDisableActions)
-            view.layer.setFrame(rect)
-            playerLayer.setFrame(rect)
-            avPlayerViewController.view.layer.frame = rect
-            CATransaction.commit()
+            view.setFrame(rect)
         },
         update = { view ->
-            player!!.play()
-            avPlayerViewController.player!!.play()
+            // Update logic if needed
         },
         modifier = modifier
+            .fillMaxWidth()
+            .aspectRatio(16f / 13f)
     )
 }
+
+
 @Composable
 internal actual fun provideShortCuts(){
     return
@@ -106,32 +134,61 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
-    val player = remember { AVPlayer(uRL = url?.let { NSURL.URLWithString(it) }!!) }
-    val playerLayer = remember { AVPlayerLayer() }
-    val avPlayerViewController = remember { AVPlayerViewController() }
-    avPlayerViewController.player = player
-    avPlayerViewController.showsPlaybackControls = true
+    val videoId = remember(url) {
+        url?.substringAfter("v=")?.substringBefore("&") ?: url?.substringAfterLast("/")
+    }
+    val htmlContent = """
+        <html>
+        <head>
+            <style>
+                body, html {
+                    margin: 0;
+                    padding: 0;
+                    height: 100%;
+                    overflow: hidden;
+                }
+                .video-container {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                }
+                .video-container iframe {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/$videoId?autoplay=1" 
+                    allow="autoplay;">
+                </iframe>
+            </div>
+        </body>
+        </html>
+    """.trimIndent()
 
-    playerLayer.player = player
     UIKitView(
         factory = {
-            val playerContainer = UIView()
-            playerContainer.addSubview(avPlayerViewController.view)
-            playerContainer
+            val webView = WKWebView()
+            webView.scrollView.scrollEnabled = false
+            webView.loadHTMLString(htmlContent, baseURL = null)
+            webView
         },
         onResize = { view: UIView, rect: CValue<CGRect> ->
-            CATransaction.begin()
-            CATransaction.setValue(true, kCATransactionDisableActions)
-            view.layer.setFrame(rect)
-            playerLayer.setFrame(rect)
-            avPlayerViewController.view.layer.frame = rect
-            CATransaction.commit()
+            view.setFrame(rect)
         },
         update = { view ->
-            player.play()
-            avPlayerViewController.player!!.play()
+            // Update logic if needed
         },
         modifier = modifier
+            .fillMaxWidth()
+            .aspectRatio(16f / 14f)
     )
 }
 internal actual fun UserRegion(): String {
