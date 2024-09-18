@@ -373,7 +373,7 @@ Here are some frequently asked questions about the YouTube Clone project:
 
 1. **How do I run the application on Android?**
    - Follow the instructions in the README to set up your development environment and run the app on an Android device or emulator.
-
+ 
 2. **Can I contribute to the project if I'm new to Kotlin Multiplatform?**
    - Yes! We welcome contributions from developers of all skill levels. Check out our Contribution Guidelines for more information on how to get started.
 
