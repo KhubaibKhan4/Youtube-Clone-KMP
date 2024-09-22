@@ -1,5 +1,7 @@
 package org.company.app.presentation.ui.components.detail
 
+import Notify
+import VideoPlayer
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -100,7 +102,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import kotlinx.coroutines.launch
 import org.company.app.ShareManager
 import org.company.app.VideoDownloader
-import org.company.app.VideoPlayer
 import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.videos.Item
@@ -286,8 +287,7 @@ fun DetailContent(
         if (displayVideoPlayer) {
             VideoPlayer(
                 modifier = Modifier.fillMaxWidth().height(340.dp),
-                url = "https://www.youtube.com/watch?v=${video?.id}",
-                thumbnail = video?.snippet?.thumbnails?.high?.url,
+                url = "https://www.youtube.com/watch?v=${video?.id}"
             )
             IconButton(onClick = {
                 displayVideoPlayer = false
@@ -794,7 +794,7 @@ fun DetailContent(
             )
         }
         if (notificationMessage.value.isNotBlank()) {
-            //Notify(notificationMessage.value)
+            Notify(notificationMessage.value)
         }
 
         HorizontalDivider(
@@ -1201,7 +1201,7 @@ fun DetailContent(
     }
     if (isCommentLive) {
         if (video?.statistics?.commentCount.isNullOrBlank()) {
-           // Notify(message = "No Comments Found...")
+           Notify(message = "No Comments Found...")
         }
         var commentInput by remember { mutableStateOf("") }
 

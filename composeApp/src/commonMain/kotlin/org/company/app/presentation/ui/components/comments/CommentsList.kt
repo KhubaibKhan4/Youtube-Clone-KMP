@@ -1,5 +1,6 @@
 package org.company.app.presentation.ui.components.comments
 
+import Notify
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -294,10 +295,10 @@ fun CommentItems(comments: Item, viewModel: MainViewModel = koinInject<MainViewM
                 }
             )
             if (comments.snippet.totalReplyCount == 0 && repliesExpanded) {
-                /*Notify(
+                Notify(
                     message = "No Replies Found...",
                     NotificationDuration.LONG
-                )*/
+                )
             } else {
                 AnimatedVisibility(visible = repliesExpanded) {
                     CommentItemWithReplies(comments)

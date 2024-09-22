@@ -1,5 +1,7 @@
 package org.company.app.presentation.ui.components.shorts
 
+import Notify
+import VideoPlayer
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -89,7 +91,6 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.company.app.ShareManager
-import org.company.app.ShortsVideoPlayer
 import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.videos.Item
@@ -208,13 +209,12 @@ fun ShortItem(
             .padding(top = 10.dp),
         contentAlignment = Alignment.Center
     ) {
-        ShortsVideoPlayer(url = shortsUrl, modifier = Modifier.fillMaxSize())
+        VideoPlayer(url = shortsUrl, modifier = Modifier.fillMaxWidth().height(340.dp))
         Napier.d(message = "Video ID: ${video.id}", tag = "REELS")
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Top Bar
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -472,7 +472,7 @@ fun ShortItem(
     if (isCommentEnabled) {
         val isDark by LocalThemeIsDark.current
         if (video.statistics?.commentCount.isNullOrBlank()) {
-            //Notify("No Comments Found...")
+            Notify("No Comments Found...")
         }
         var commentInput by remember { mutableStateOf("") }
 
