@@ -28,7 +28,6 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -50,7 +49,6 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import io.ktor.client.HttpClientConfig
-import kotlinx.coroutines.flow.Flow
 import org.company.app.di.appModule
 import org.company.app.presentation.ui.navigation.rails.items.NavigationItem
 import org.company.app.presentation.ui.navigation.rails.navbar.NavigationSideBar
@@ -61,7 +59,6 @@ import org.company.app.presentation.ui.navigation.tabs.subscriptions.Subscriptio
 import org.company.app.theme.AppTheme
 import org.company.app.theme.LocalThemeIsDark
 import org.koin.compose.KoinApplication
-import org.koin.compose.module.rememberKoinModules
 
 
 @Composable
