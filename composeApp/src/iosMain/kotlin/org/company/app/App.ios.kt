@@ -36,14 +36,7 @@ import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
 import platform.UIKit.UIView
 import platform.WebKit.WKWebView
-import kotlin.collections.HashMap
-import kotlin.collections.Map
-import kotlin.collections.Set
-import kotlin.collections.emptySet
-import kotlin.collections.first
-import kotlin.collections.listOf
 import kotlin.collections.set
-import kotlin.collections.setOf
 
 internal actual fun openUrl(url: String?) {
     val nsUrl = url?.let { NSURL.URLWithString(it) } ?: return
