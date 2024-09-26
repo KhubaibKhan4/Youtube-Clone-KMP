@@ -96,6 +96,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import createNotification
 import kotlinx.coroutines.launch
 import org.company.app.ShareManager
 import org.company.app.VideoDownloader
@@ -1198,7 +1199,10 @@ fun DetailContent(
     }
     if (isCommentLive) {
         if (video?.statistics?.commentCount.isNullOrBlank()) {
-           Notify(message = "No Comments Found...")
+            val notification = createNotification(NotificationType.TOP)
+            notification.show("No Comments Found!...")
+
+            //Notify(message = "No Comments Found...")
         }
         var commentInput by remember { mutableStateOf("") }
 
