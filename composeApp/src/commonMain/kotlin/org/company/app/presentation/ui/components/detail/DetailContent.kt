@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
@@ -280,8 +281,6 @@ fun DetailContent(
             .windowInsetsPadding(WindowInsets.statusBars)
             .verticalScroll(state = rememberScrollState())
     ) {
-
-
         if (displayVideoPlayer) {
             VideoPlayer(
                 modifier = Modifier.fillMaxWidth().height(340.dp),
@@ -352,8 +351,9 @@ fun DetailContent(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(8.dp)
-                        .background(MaterialTheme.colorScheme.primary)
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(MaterialTheme.colorScheme.primary),
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = formatVideoDuration(video?.contentDetails?.duration.toString())
