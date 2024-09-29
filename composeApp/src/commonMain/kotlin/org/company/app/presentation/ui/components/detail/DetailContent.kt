@@ -421,7 +421,7 @@ fun DetailContent(
                     color = if (isDark) Color(0xFF202020) else Color.White, shape = RoundedCornerShape(8.dp)
                 ),
                 colors = CardColors(
-                    containerColor = Color.Gray,
+                    containerColor = Color.LightGray,
                     contentColor = if (isDark) Color(0xFF202020) else Color.White,
                     disabledContentColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent
@@ -475,7 +475,7 @@ fun DetailContent(
                     isShareEnabled = !isShareEnabled
                 },
                 colors = CardColors(
-                    containerColor = Color.Gray,
+                    containerColor = Color.LightGray,
                     contentColor = if (isDark) Color(0xFF202020) else Color.White,
                     disabledContentColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent
@@ -513,7 +513,7 @@ fun DetailContent(
                     .padding(4.dp),
                 onClick = { },
                 colors = CardColors(
-                    containerColor = Color.Gray,
+                    containerColor = Color.LightGray,
                     contentColor = if (isDark) Color(0xFF202020) else Color.White,
                     disabledContentColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent
@@ -548,7 +548,7 @@ fun DetailContent(
                     .padding(4.dp),
                 onClick = { },
                 colors = CardColors(
-                    containerColor = Color.Gray,
+                    containerColor = Color.LightGray,
                     contentColor = if (isDark) Color(0xFF202020) else Color.White,
                     disabledContentColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent
