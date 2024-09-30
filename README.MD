@@ -67,7 +67,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **AGP (Android Gradle Plugin)**: `8.2.2`
 - **Compose**: `1.6.11`
   - `androidx-appcompat`: `1.7.0`
-  - `androidx-activityCompose`: `1.9.1`
+  - `androidx-activityCompose`: `1.9.2`
   - `compose-uitooling`: `1.6.8`
   - `composeImageLoader`: `1.7.1`
 - **Core Libraries**: `12.1.0`
