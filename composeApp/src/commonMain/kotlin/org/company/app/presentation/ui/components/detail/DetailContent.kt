@@ -118,6 +118,7 @@ import org.company.app.presentation.ui.screens.detail.formatViewComments
 import org.company.app.presentation.ui.screens.detail.formatViewCount
 import org.company.app.presentation.ui.screens.detail.getFormattedDateLikeMonthDay
 import org.company.app.presentation.viewmodel.MainViewModel
+import org.company.app.showDialog
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.utils.Constant
 import org.company.app.utils.formatVideoDuration
@@ -559,12 +560,18 @@ fun DetailContent(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(4.dp)
                 ) {
+                    var isDialogOpen by remember { mutableStateOf(false) }
                     Icon(
                         imageVector = Icons.Default.Save,
                         contentDescription = null,
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(24.dp).clickable {
+                            isDialogOpen = !isDialogOpen
+                        },
                         tint = if (isDark) Color.White else Color.Black
                     )
+                    if(isDialogOpen){
+                        showDialog(title = "Save Video", message = "Saving This Video in Local Storage.")
+                    }
                 }
             }
         }
