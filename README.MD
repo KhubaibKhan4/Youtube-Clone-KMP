@@ -67,7 +67,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **AGP (Android Gradle Plugin)**: `8.2.2`
 - **Compose**: `1.6.11`
   - `androidx-appcompat`: `1.7.0`
-  - `androidx-activityCompose`: `1.9.1`
+  - `androidx-activityCompose`: `1.9.2`
   - `compose-uitooling`: `1.6.8`
   - `composeImageLoader`: `1.7.1`
 - **Core Libraries**: `12.1.0`
@@ -102,7 +102,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Other Utilities**:
   - `official-viewmodel`: `2.8.0`
 - **JavaFX**: `22-ea+16`
-- **AlertKMP**: `0.0.7`
+- **AlertKMP**: `1.0.5`
 - **MediaPlayer-KMP**(not implemented yet): `1.0.8`
 
 ## Getting Started
