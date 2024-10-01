@@ -1,5 +1,6 @@
 package org.company.app.presentation.ui.components.detail
 
+import NotificationType
 import Notify
 import VideoPlayer
 import androidx.compose.animation.AnimatedVisibility
@@ -20,7 +21,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
@@ -277,939 +277,947 @@ fun DetailContent(
 
 
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars)
-            .verticalScroll(state = rememberScrollState())
-    ) {
-        if (displayVideoPlayer) {
-            VideoPlayer(
-                modifier = Modifier.fillMaxWidth().height(340.dp),
-                url = "https://www.youtube.com/watch?v=${video?.id}"
-            )
-            IconButton(onClick = {
-                displayVideoPlayer = false
-            }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                    contentDescription = null
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .verticalScroll(state = rememberScrollState())
+        ) {
+            if (displayVideoPlayer) {
+                VideoPlayer(
+                    modifier = Modifier.fillMaxWidth().height(340.dp),
+                    url = "https://www.youtube.com/watch?v=${video?.id}"
                 )
-            }
-
-        } else {
-            Box(
-                modifier = Modifier.fillMaxWidth()
-                    .height(356.dp),
-                contentAlignment = Alignment.Center
-            ) {
-
-                val image = video?.snippet?.thumbnails?.high?.url.toString()
-                NetworkImage(
-                    url = image,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize(),
-                )
-
-                Box(
-                    modifier = Modifier.width(89.dp).height(120.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    IconButton(
-                        onClick = {
-                            displayVideoPlayer = true
-                        },
-                        modifier = Modifier
-                            .pointerHoverIcon(icon = PointerIcon.Hand)
-                            .align(alignment = Alignment.Center)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.PlayCircle,
-                            contentDescription = null,
-                            tint = Color.Red
-                        )
-                    }
-                }
-
-                IconButton(
-                    onClick = {
-                        displayVideoPlayer = false
-                        navigator?.pop()
-                    },
-                    modifier = Modifier.padding(top = 8.dp, start = 6.dp)
-                        .align(alignment = Alignment.TopStart)
-                        .pointerHoverIcon(icon = PointerIcon.Hand)
-                ) {
+                IconButton(onClick = {
+                    displayVideoPlayer = false
+                }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                        contentDescription = "Arrow Back",
-                        tint = Color.White
+                        contentDescription = null
                     )
                 }
 
-
+            } else {
                 Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(8.dp)
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(MaterialTheme.colorScheme.primary),
+                    modifier = Modifier.fillMaxWidth()
+                        .height(356.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = formatVideoDuration(video?.contentDetails?.duration.toString())
-                            ?: "00:00",
-                        color = Color.White,
-                        fontSize = 10.sp
-                    )
-                }
-            }
-        }
 
-
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = video?.snippet?.title.toString(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                modifier = Modifier.weight(0.9f)
-            )
-            Icon(imageVector = Icons.Default.KeyboardArrowDown,
-                contentDescription = null,
-                modifier = Modifier
-                    .pointerHoverIcon(icon = PointerIcon.Hand).size(24.dp).clickable {
-                        descriptionEnabled = true
-                    })
-        }
-
-
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val views = video?.statistics?.viewCount.toString()
-            val pubDate = video?.snippet?.publishedAt.toString()
-
-            Text(
-                text = "${formatViewCount(views)} views - ${
-                    getFormattedDate(
-                        pubDate
-                    )
-                }",
-                fontSize = 14.sp
-            )
-        }
-
-        HorizontalDivider(
-            modifier = Modifier.fillMaxWidth().height(1.dp).padding(vertical = 8.dp),
-            thickness = 1.dp,
-            color = Color.LightGray
-        )
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp),
-        ) {
-
-            Card(
-                modifier = Modifier.height(40.dp).padding(4.dp).background(
-                    color = if (isDark) Color(0xFF202020) else Color.White, shape = RoundedCornerShape(8.dp)
-                ),
-                colors = CardColors(
-                    containerColor = Color.LightGray,
-                    contentColor = if (isDark) Color(0xFF202020) else Color.White,
-                    disabledContentColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent
-                )
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ThumbUp,
+                    val image = video?.snippet?.thumbnails?.high?.url.toString()
+                    NetworkImage(
+                        url = image,
                         contentDescription = null,
-                        modifier = Modifier.size(24.dp)
-                            .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
-                        tint = if (isDark) Color.White else Color.Black
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize(),
                     )
 
-                    val videoLikes = video?.statistics?.likeCount.toString()
-                    Text(
-                        text = formatLikes(videoLikes),
-                        fontSize = 14.sp,
-                        color = if (isDark) Color.White else Color.Black
-                    )
+                    Box(
+                        modifier = Modifier.width(89.dp).height(120.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        IconButton(
+                            onClick = {
+                                displayVideoPlayer = true
+                            },
+                            modifier = Modifier
+                                .pointerHoverIcon(icon = PointerIcon.Hand)
+                                .align(alignment = Alignment.Center)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.PlayCircle,
+                                contentDescription = null,
+                                tint = Color.Red
+                            )
+                        }
+                    }
 
-                    Spacer(modifier = Modifier.width(4.dp))
+                    IconButton(
+                        onClick = {
+                            displayVideoPlayer = false
+                            navigator?.pop()
+                        },
+                        modifier = Modifier.padding(top = 8.dp, start = 6.dp)
+                            .align(alignment = Alignment.TopStart)
+                            .pointerHoverIcon(icon = PointerIcon.Hand)
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                            contentDescription = "Arrow Back",
+                            tint = Color.White
+                        )
+                    }
 
 
                     Box(
-                        modifier = Modifier.fillMaxHeight().width(1.dp).background(Color.White)
-                    )
-
-                    Spacer(modifier = Modifier.width(4.dp))
-
-
-                    Icon(
-                        imageVector = Icons.Default.ThumbDown,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
-                            .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
-                        tint = if (isDark) Color.White else Color.Black
-                    )
-                }
-            }
-
-
-            Card(
-                modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
-                    .padding(4.dp),
-                onClick = {
-                    isShareEnabled = !isShareEnabled
-                },
-                colors = CardColors(
-                    containerColor = Color.LightGray,
-                    contentColor = if (isDark) Color(0xFF202020) else Color.White,
-                    disabledContentColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent
-                )
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Share,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp),
-                        tint = if (isDark) Color.White else Color.Black
-                    )
-
-                    Text(
-                        text = "Share",
-                        fontSize = 14.sp,
-                        color = if (isDark) Color.White else Color.Black
-                    )
-                }
-                if (isShareEnabled) {
-                    ShareManager(
-                        title = video?.snippet?.title.toString(),
-                        videoUrl = Constant.VIDEO_URL + video?.id
-                    )
-                }
-            }
-
-
-            Card(
-                modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
-                    .padding(4.dp),
-                onClick = { },
-                colors = CardColors(
-                    containerColor = Color.LightGray,
-                    contentColor = if (isDark) Color(0xFF202020) else Color.White,
-                    disabledContentColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent
-                )
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(4.dp)
-                        .clickable {
-                            downloadVideo()
-                        }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Download,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp),
-                        tint = if (isDark) Color.White else Color.Black
-                    )
-
-                    Text(
-                        text = "Download",
-                        fontSize = 14.sp,
-                        color = if (isDark) Color.White else Color.Black
-                    )
-                }
-            }
-
-
-            Card(
-                modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
-                    .padding(4.dp),
-                onClick = { },
-                colors = CardColors(
-                    containerColor = Color.LightGray,
-                    contentColor = if (isDark) Color(0xFF202020) else Color.White,
-                    disabledContentColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent
-                )
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    var isDialogOpen by remember { mutableStateOf(false) }
-                    Icon(
-                        imageVector = Icons.Default.Save,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp).clickable {
-                            isDialogOpen = !isDialogOpen
-                        },
-                        tint = if (isDark) Color.White else Color.Black
-                    )
-                    if(isDialogOpen){
-                        showDialog(title = "Save Video", message = "Saving This Video in Local Storage.")
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(MaterialTheme.colorScheme.primary),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = formatVideoDuration(video?.contentDetails?.duration.toString())
+                                ?: "00:00",
+                            color = Color.White,
+                            fontSize = 10.sp
+                        )
                     }
                 }
             }
-        }
 
 
-        Spacer(modifier = Modifier.height(6.dp))
-
-
-        HorizontalDivider(
-            modifier = Modifier.fillMaxWidth().height(2.dp),
-            thickness = 1.dp,
-            color = Color.LightGray
-        )
-
-
-
-        Row(
-            modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            println("CHANNEL_DATA: $logo")
-            val channelImage =
-                if (channelData?.snippet?.thumbnails?.high?.url?.isEmpty() == true) if (search?.snippet?.channelId?.isNotEmpty() == true) channelDetail?.items?.first()?.snippet?.thumbnails?.high?.url.toString() else logo.toString() else channelData?.snippet?.thumbnails?.high?.url.toString()
-            if (channelData?.snippet?.thumbnails?.high?.url.isNullOrBlank()) {
-                NetworkImage(
-                    url = if (search?.snippet?.channelId?.isNotEmpty() == true) channelDetail?.items?.first()?.snippet?.thumbnails?.high?.url.toString() else logo.toString(),
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp).clip(CircleShape)
-                        .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
-                            channelData?.let { channelItem ->
-                                navigator?.push(ChannelScreen(channelItem))
-                            }
-                        },
-                    contentScale = ContentScale.FillBounds
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = video?.snippet?.title.toString(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    modifier = Modifier.weight(0.9f)
                 )
-            } else {
-                NetworkImage(
-                    url = channelImage,
+                Icon(imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
-                    modifier = Modifier.size(60.dp).clip(CircleShape)
-                        .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
-                            channelData?.let { channelItem ->
-                                navigator?.push(ChannelScreen(channelItem))
-                            }
-                        },
-                    contentScale = ContentScale.FillBounds
+                    modifier = Modifier
+                        .pointerHoverIcon(icon = PointerIcon.Hand).size(24.dp).clickable {
+                            descriptionEnabled = true
+                        })
+            }
+
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                val views = video?.statistics?.viewCount.toString()
+                val pubDate = video?.snippet?.publishedAt.toString()
+
+                Text(
+                    text = "${formatViewCount(views)} views - ${
+                        getFormattedDate(
+                            pubDate
+                        )
+                    }",
+                    fontSize = 14.sp
                 )
             }
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                verticalArrangement = Arrangement
-                    .spacedBy(4.dp)
+            HorizontalDivider(
+                modifier = Modifier.fillMaxWidth().height(1.dp).padding(vertical = 8.dp),
+                thickness = 1.dp,
+                color = Color.LightGray
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp),
             ) {
-                val channelTitle =
-                    if (search?.snippet?.channelTitle?.isEmpty() == true) channelDetail?.items?.first()?.snippet?.title.toString() else video?.snippet?.channelTitle.toString()
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    Text(
-                        text = channelTitle,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = if (isSubscribed) 12.sp else MaterialTheme.typography.titleSmall.fontSize
-
+                Card(
+                    modifier = Modifier.height(40.dp).padding(4.dp).background(
+                        color = if (isDark) Color(0xFF202020) else Color.White,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
+                    colors = CardColors(
+                        containerColor = Color.LightGray,
+                        contentColor = if (isDark) Color(0xFF202020) else Color.White,
+                        disabledContentColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent
                     )
-                    val isVerified = channelData?.status?.isLinked
-                    if (isVerified == true) {
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
                         Icon(
-                            imageVector = Icons.Default.Verified,
+                            imageVector = Icons.Default.ThumbUp,
                             contentDescription = null,
-                            modifier = Modifier.padding(start = 4.dp)
-                                .size(if (isSubscribed) 15.dp else 25.dp),
+                            modifier = Modifier.size(24.dp)
+                                .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
+                            tint = if (isDark) Color.White else Color.Black
+                        )
+
+                        val videoLikes = video?.statistics?.likeCount.toString()
+                        Text(
+                            text = formatLikes(videoLikes),
+                            fontSize = 14.sp,
+                            color = if (isDark) Color.White else Color.Black
+                        )
+
+                        Spacer(modifier = Modifier.width(4.dp))
+
+
+                        Box(
+                            modifier = Modifier.fillMaxHeight().width(1.dp).background(Color.White)
+                        )
+
+                        Spacer(modifier = Modifier.width(4.dp))
+
+
+                        Icon(
+                            imageVector = Icons.Default.ThumbDown,
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp)
+                                .pointerHoverIcon(icon = PointerIcon.Hand).clickable { },
                             tint = if (isDark) Color.White else Color.Black
                         )
                     }
                 }
-                val subscribers =
-                    if (channelData?.statistics?.subscriberCount.isNullOrBlank()) if (subscribersCount.isEmpty()) channelDetail?.items?.first()?.statistics?.subscriberCount.toString() else subscribersCount else channelData?.statistics?.subscriberCount
-                Text(
-                    text = "${formatSubscribers(subscribers)} Subscribers",
-                    fontSize = 14.sp
-                )
-
-            }
-
-            Column(
-                modifier = Modifier.wrapContentWidth(),
-                horizontalAlignment = Alignment.End,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Row {
-                    AnimatedVisibility(!isSubscribed) {
-                        FilledTonalButton(
-                            onClick = {
-                                subscribedMenu = true
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Black,
-                                contentColor = Color.White
-                            )
-                        ) {
-                            Text(
-                                text = "SUBSCRIBE",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                modifier = Modifier
-                                    .pointerHoverIcon(icon = PointerIcon.Hand)
-                                    .clickable {
-                                        isSubscribed = true
-                                        notificationMessage.value = "Subscription Added"
-                                    }
-                            )
-                        }
-                    }
-
-                    AnimatedVisibility(isSubscribed) {
-                        FilledTonalButton(
-                            onClick = {
-                                subscribedMenu = true
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Black,
-                                contentColor = Color.White
-                            )
-                        ) {
-                            Icon(
-                                imageVector = when (selectedOption) {
-                                    "All" -> Icons.Filled.NotificationsActive
-                                    "Personalized" -> Icons.Outlined.Notifications
-                                    "None" -> Icons.Outlined.NotificationsOff
-                                    "Unsubscribe" -> Icons.Outlined.PersonOutline
-                                    else -> Icons.Filled.NotificationsActive
-                                },
-                                contentDescription = null,
-                                modifier = Modifier.size(25.dp),
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = "Subscribed",
-                                modifier = Modifier.padding(end = 4.dp)
-                            )
-                            Icon(
-                                imageVector = Icons.Default.ArrowDropDown,
-                                contentDescription = null,
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
-                    }
-                }
-
-                AnimatedVisibility(subscribedMenu) {
-                    DropdownMenu(
-                        expanded = subscribedMenu,
-                        onDismissRequest = {
-                            subscribedMenu = false
-                        }
-                    ) {
-                        listOf("All", "Personalized", "None", "Unsubscribe").forEach { option ->
-                            DropdownMenuItem(
-                                text = { Text(option) },
-                                onClick = {
-                                    if (option == "Unsubscribe") {
-                                        unSubscribe = true
-                                    } else {
-                                        selectedOption = option
-                                        when (selectedOption) {
-                                            "All" -> notificationMessage.value =
-                                                "You'll get All the Notifications"
-
-                                            "Personalized" -> notificationMessage.value =
-                                                "You'll get Personalized Notifications"
-                                        }
-                                    }
-                                    subscribedMenu = false
-                                },
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = when (option) {
-                                            "All" -> Icons.Filled.NotificationsActive
-                                            "Personalized" -> Icons.Outlined.Notifications
-                                            "None" -> Icons.Outlined.NotificationsOff
-                                            "Unsubscribe" -> Icons.Outlined.PersonOutline
-                                            else -> Icons.Filled.NotificationsActive
-                                        },
-                                        contentDescription = null,
-                                        modifier = Modifier.size(25.dp)
-                                    )
-                                }
-                            )
-                        }
-                    }
-                }
-            }
-        }
-        if (unSubscribe) {
-            AlertDialog(
-                onDismissRequest = {
-                    unSubscribe = false
-                },
-                text = {
-                    Text("Unsubscribe from ${channelData?.snippet?.title}")
-                },
-                confirmButton = {
-                    TextButton(onClick = {
-                        isSubscribed = false
-                        unSubscribe = false
-                        notificationMessage.value = "Subscription Removed"
-                    }) {
-                        Text("Unsubscribe")
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = {
-                        unSubscribe = false
-                    }) {
-                        Text("Cancel")
-                    }
-                }
-            )
-        }
-        if (notificationMessage.value.isNotBlank()) {
-            Notify(notificationMessage.value)
-        }
-
-        HorizontalDivider(
-            modifier = Modifier.fillMaxWidth().height(2.dp),
-            thickness = 1.dp,
-            color = Color.LightGray
-        )
 
 
-
-        Column(
-            modifier = Modifier.fillMaxWidth()
-                .pointerHoverIcon(icon = PointerIcon.Hand)
-                .clickable {
-                    isCommentLive = !isCommentLive
-                }
-                .padding(8.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Text(
-                    text = "Comments ${formatViewComments(video?.statistics?.commentCount.toString()) ?: 0.0}",
-                    fontSize = MaterialTheme.typography.labelMedium.fontSize
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "More Comments Icon"
-                )
-            }
-            Spacer(modifier = Modifier.height(4.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
-            ) {
-
-                NetworkImage(
-                    url = commentData?.items?.first()?.snippet?.topLevelComment?.snippet?.authorProfileImageUrl
-                        ?: channelData?.snippet?.thumbnails?.high?.url.toString(),
-                    contentDescription = "Comment User Profile",
-                    modifier = Modifier.size(25.dp).clip(shape = CircleShape),
-                    contentScale = ContentScale.FillBounds
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                val firstComment =
-                    commentData?.items?.get(0)?.snippet?.topLevelComment?.snippet?.textOriginal
-                        ?: "No Comments Available"
-                Text(
-                    text = firstComment,
-                    modifier = Modifier.padding(start = 3.dp),
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = MaterialTheme.typography.labelSmall.fontSize
-                )
-            }
-        }
-
-
-        HorizontalDivider(
-            modifier = Modifier.fillMaxWidth().height(2.dp),
-            thickness = 1.dp,
-            color = Color.LightGray
-        )
-        Text(
-            text = "More Videos",
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-        )
-        RelevanceList(stateRelevance)
-
-        if (descriptionEnabled) {
-            ModalBottomSheet(
-                onDismissRequest = {
-                    descriptionEnabled = false
-                },
-                modifier = Modifier.fillMaxWidth(),
-                sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true,
-                    confirmValueChange = { true }),
-                shape = RoundedCornerShape(12.dp),
-                containerColor = MaterialTheme.colorScheme.surface,
-                contentColor = Color.Black,
-                tonalElevation = 8.dp,
-                scrimColor = Color.Transparent,
-                dragHandle = null,
-                windowInsets = BottomSheetDefaults.windowInsets,
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                        .verticalScroll(state = rememberScrollState())
+                Card(
+                    modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
+                        .padding(4.dp),
+                    onClick = {
+                        isShareEnabled = !isShareEnabled
+                    },
+                    colors = CardColors(
+                        containerColor = Color.LightGray,
+                        contentColor = if (isDark) Color(0xFF202020) else Color.White,
+                        disabledContentColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent
+                    )
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                        modifier = Modifier.padding(4.dp)
                     ) {
-                        Text(
-                            text = "Description",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                            modifier = Modifier.fillMaxWidth().weight(1f).padding(start = 4.dp)
+                        Icon(
+                            imageVector = Icons.Default.Share,
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp),
+                            tint = if (isDark) Color.White else Color.Black
                         )
 
-                        IconButton(onClick = {
-                            descriptionEnabled = false
-                        }) {
-                            Icon(imageVector = Icons.Default.Close, contentDescription = null)
+                        Text(
+                            text = "Share",
+                            fontSize = 14.sp,
+                            color = if (isDark) Color.White else Color.Black
+                        )
+                    }
+                    if (isShareEnabled) {
+                        ShareManager(
+                            title = video?.snippet?.title.toString(),
+                            videoUrl = Constant.VIDEO_URL + video?.id
+                        )
+                    }
+                }
+
+
+                Card(
+                    modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
+                        .padding(4.dp),
+                    onClick = { },
+                    colors = CardColors(
+                        containerColor = Color.LightGray,
+                        contentColor = if (isDark) Color(0xFF202020) else Color.White,
+                        disabledContentColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent
+                    )
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(4.dp)
+                            .clickable {
+                                downloadVideo()
+                            }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Download,
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp),
+                            tint = if (isDark) Color.White else Color.Black
+                        )
+
+                        Text(
+                            text = "Download",
+                            fontSize = 14.sp,
+                            color = if (isDark) Color.White else Color.Black
+                        )
+                    }
+                }
+
+
+                Card(
+                    modifier = Modifier.height(40.dp).pointerHoverIcon(icon = PointerIcon.Hand)
+                        .padding(4.dp),
+                    onClick = { },
+                    colors = CardColors(
+                        containerColor = Color.LightGray,
+                        contentColor = if (isDark) Color(0xFF202020) else Color.White,
+                        disabledContentColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent
+                    )
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        var isDialogOpen by remember { mutableStateOf(false) }
+                        Icon(
+                            imageVector = Icons.Default.Save,
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp).clickable {
+                                isDialogOpen = !isDialogOpen
+                            },
+                            tint = if (isDark) Color.White else Color.Black
+                        )
+                        if (isDialogOpen) {
+                            showDialog(
+                                title = "Save Video",
+                                message = "Saving This Video in Local Storage."
+                            )
                         }
                     }
+                }
+            }
 
-                    HorizontalDivider(
-                        modifier = Modifier.fillMaxWidth().padding(2.dp),
-                        thickness = 2.dp,
-                        color = DividerDefaults.color
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+
+            HorizontalDivider(
+                modifier = Modifier.fillMaxWidth().height(2.dp),
+                thickness = 1.dp,
+                color = Color.LightGray
+            )
+
+
+
+            Row(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                println("CHANNEL_DATA: $logo")
+                val channelImage =
+                    if (channelData?.snippet?.thumbnails?.high?.url?.isEmpty() == true) if (search?.snippet?.channelId?.isNotEmpty() == true) channelDetail?.items?.first()?.snippet?.thumbnails?.high?.url.toString() else logo.toString() else channelData?.snippet?.thumbnails?.high?.url.toString()
+                if (channelData?.snippet?.thumbnails?.high?.url.isNullOrBlank()) {
+                    NetworkImage(
+                        url = if (search?.snippet?.channelId?.isNotEmpty() == true) channelDetail?.items?.first()?.snippet?.thumbnails?.high?.url.toString() else logo.toString(),
+                        contentDescription = null,
+                        modifier = Modifier.size(60.dp).clip(CircleShape)
+                            .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
+                                channelData?.let { channelItem ->
+                                    navigator?.push(ChannelScreen(channelItem))
+                                }
+                            },
+                        contentScale = ContentScale.FillBounds
                     )
-
-                    val videoTitle = video?.snippet?.title.toString()
-                    Text(
-                        text = videoTitle,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                        modifier = Modifier.fillMaxWidth().padding(12.dp),
-                        maxLines = 2,
-                        textAlign = TextAlign.Justify,
-                        overflow = TextOverflow.Ellipsis,
+                } else {
+                    NetworkImage(
+                        url = channelImage,
+                        contentDescription = null,
+                        modifier = Modifier.size(60.dp).clip(CircleShape)
+                            .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
+                                channelData?.let { channelItem ->
+                                    navigator?.push(ChannelScreen(channelItem))
+                                }
+                            },
+                        contentScale = ContentScale.FillBounds
                     )
+                }
 
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    verticalArrangement = Arrangement
+                        .spacedBy(4.dp)
+                ) {
+                    val channelTitle =
+                        if (search?.snippet?.channelTitle?.isEmpty() == true) channelDetail?.items?.first()?.snippet?.title.toString() else video?.snippet?.channelTitle.toString()
 
                     Row(
-                        modifier = Modifier.fillMaxWidth()
-                            .padding(start = 10.dp, end = 2.dp, top = 4.dp, bottom = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start
                     ) {
-                        NetworkImage(
-                            modifier = Modifier
-                                .size(15.dp)
-                                .clip(CircleShape)
-                                .clickable {
-                                    navigator?.push(ChannelScreen(channelData!!))
-                                },
-                            url = channelData?.snippet?.thumbnails?.default?.url.toString(),
-                            contentDescription = null,
-                            contentScale = ContentScale.FillBounds
+                        Text(
+                            text = channelTitle,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = if (isSubscribed) 12.sp else MaterialTheme.typography.titleSmall.fontSize
+
                         )
-                        Spacer(modifier = Modifier.width(6.dp))
+                        val isVerified = channelData?.status?.isLinked
+                        if (isVerified == true) {
+                            Icon(
+                                imageVector = Icons.Default.Verified,
+                                contentDescription = null,
+                                modifier = Modifier.padding(start = 4.dp)
+                                    .size(if (isSubscribed) 15.dp else 25.dp),
+                                tint = if (isDark) Color.White else Color.Black
+                            )
+                        }
+                    }
+                    val subscribers =
+                        if (channelData?.statistics?.subscriberCount.isNullOrBlank()) if (subscribersCount.isEmpty()) channelDetail?.items?.first()?.statistics?.subscriberCount.toString() else subscribersCount else channelData?.statistics?.subscriberCount
+                    Text(
+                        text = "${formatSubscribers(subscribers)} Subscribers",
+                        fontSize = 14.sp
+                    )
+
+                }
+
+                Column(
+                    modifier = Modifier.wrapContentWidth(),
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Row {
+                        AnimatedVisibility(!isSubscribed) {
+                            FilledTonalButton(
+                                onClick = {
+                                    subscribedMenu = true
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Black,
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                Text(
+                                    text = "SUBSCRIBE",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 14.sp,
+                                    modifier = Modifier
+                                        .pointerHoverIcon(icon = PointerIcon.Hand)
+                                        .clickable {
+                                            isSubscribed = true
+                                            notificationMessage.value = "Subscription Added"
+                                        }
+                                )
+                            }
+                        }
+
+                        AnimatedVisibility(isSubscribed) {
+                            FilledTonalButton(
+                                onClick = {
+                                    subscribedMenu = true
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Black,
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                Icon(
+                                    imageVector = when (selectedOption) {
+                                        "All" -> Icons.Filled.NotificationsActive
+                                        "Personalized" -> Icons.Outlined.Notifications
+                                        "None" -> Icons.Outlined.NotificationsOff
+                                        "Unsubscribe" -> Icons.Outlined.PersonOutline
+                                        else -> Icons.Filled.NotificationsActive
+                                    },
+                                    contentDescription = null,
+                                    modifier = Modifier.size(25.dp),
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = "Subscribed",
+                                    modifier = Modifier.padding(end = 4.dp)
+                                )
+                                Icon(
+                                    imageVector = Icons.Default.ArrowDropDown,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        }
+                    }
+
+                    AnimatedVisibility(subscribedMenu) {
+                        DropdownMenu(
+                            expanded = subscribedMenu,
+                            onDismissRequest = {
+                                subscribedMenu = false
+                            }
+                        ) {
+                            listOf("All", "Personalized", "None", "Unsubscribe").forEach { option ->
+                                DropdownMenuItem(
+                                    text = { Text(option) },
+                                    onClick = {
+                                        if (option == "Unsubscribe") {
+                                            unSubscribe = true
+                                        } else {
+                                            selectedOption = option
+                                            when (selectedOption) {
+                                                "All" -> notificationMessage.value =
+                                                    "You'll get All the Notifications"
+
+                                                "Personalized" -> notificationMessage.value =
+                                                    "You'll get Personalized Notifications"
+                                            }
+                                        }
+                                        subscribedMenu = false
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = when (option) {
+                                                "All" -> Icons.Filled.NotificationsActive
+                                                "Personalized" -> Icons.Outlined.Notifications
+                                                "None" -> Icons.Outlined.NotificationsOff
+                                                "Unsubscribe" -> Icons.Outlined.PersonOutline
+                                                else -> Icons.Filled.NotificationsActive
+                                            },
+                                            contentDescription = null,
+                                            modifier = Modifier.size(25.dp)
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            if (unSubscribe) {
+                AlertDialog(
+                    onDismissRequest = {
+                        unSubscribe = false
+                    },
+                    text = {
+                        Text("Unsubscribe from ${channelData?.snippet?.title}")
+                    },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            isSubscribed = false
+                            unSubscribe = false
+                            notificationMessage.value = "Subscription Removed"
+                        }) {
+                            Text("Unsubscribe")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = {
+                            unSubscribe = false
+                        }) {
+                            Text("Cancel")
+                        }
+                    }
+                )
+            }
+            if (notificationMessage.value.isNotBlank()) {
+                Notify(notificationMessage.value)
+            }
+
+            HorizontalDivider(
+                modifier = Modifier.fillMaxWidth().height(2.dp),
+                thickness = 1.dp,
+                color = Color.LightGray
+            )
+
+
+
+            Column(
+                modifier = Modifier.fillMaxWidth()
+                    .pointerHoverIcon(icon = PointerIcon.Hand)
+                    .clickable {
+                        isCommentLive = !isCommentLive
+                    }
+                    .padding(8.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Text(
+                        text = "Comments ${formatViewComments(video?.statistics?.commentCount.toString()) ?: 0.0}",
+                        fontSize = MaterialTheme.typography.labelMedium.fontSize
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "More Comments Icon"
+                    )
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+
+                    NetworkImage(
+                        url = commentData?.items?.first()?.snippet?.topLevelComment?.snippet?.authorProfileImageUrl
+                            ?: channelData?.snippet?.thumbnails?.high?.url.toString(),
+                        contentDescription = "Comment User Profile",
+                        modifier = Modifier.size(25.dp).clip(shape = CircleShape),
+                        contentScale = ContentScale.FillBounds
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    val firstComment =
+                        commentData?.items?.get(0)?.snippet?.topLevelComment?.snippet?.textOriginal
+                            ?: "No Comments Available"
+                    Text(
+                        text = firstComment,
+                        modifier = Modifier.padding(start = 3.dp),
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = MaterialTheme.typography.labelSmall.fontSize
+                    )
+                }
+            }
+
+
+            HorizontalDivider(
+                modifier = Modifier.fillMaxWidth().height(2.dp),
+                thickness = 1.dp,
+                color = Color.LightGray
+            )
+            Text(
+                text = "More Videos",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+            RelevanceList(stateRelevance)
+
+            if (descriptionEnabled) {
+                ModalBottomSheet(
+                    onDismissRequest = {
+                        descriptionEnabled = false
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true,
+                        confirmValueChange = { true }),
+                    shape = RoundedCornerShape(12.dp),
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = Color.Black,
+                    tonalElevation = 8.dp,
+                    scrimColor = Color.Transparent,
+                    dragHandle = null,
+                    windowInsets = BottomSheetDefaults.windowInsets,
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                            .verticalScroll(state = rememberScrollState())
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "Description",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                modifier = Modifier.fillMaxWidth().weight(1f).padding(start = 4.dp)
+                            )
+
+                            IconButton(onClick = {
+                                descriptionEnabled = false
+                            }) {
+                                Icon(imageVector = Icons.Default.Close, contentDescription = null)
+                            }
+                        }
+
+                        HorizontalDivider(
+                            modifier = Modifier.fillMaxWidth().padding(2.dp),
+                            thickness = 2.dp,
+                            color = DividerDefaults.color
+                        )
+
+                        val videoTitle = video?.snippet?.title.toString()
+                        Text(
+                            text = videoTitle,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                            modifier = Modifier.fillMaxWidth().padding(12.dp),
+                            maxLines = 2,
+                            textAlign = TextAlign.Justify,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(start = 10.dp, end = 2.dp, top = 4.dp, bottom = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            NetworkImage(
+                                modifier = Modifier
+                                    .size(15.dp)
+                                    .clip(CircleShape)
+                                    .clickable {
+                                        navigator?.push(ChannelScreen(channelData!!))
+                                    },
+                                url = channelData?.snippet?.thumbnails?.default?.url.toString(),
+                                contentDescription = null,
+                                contentScale = ContentScale.FillBounds
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            channelData?.snippet?.title?.let {
+                                Text(
+                                    text = it,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = MaterialTheme.typography.titleSmall.fontSize,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    maxLines = 1,
+                                    textAlign = TextAlign.Justify,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            }
+
+                        }
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(top = 20.dp, start = 60.dp, end = 60.dp, bottom = 20.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = formatLikes(video?.statistics?.likeCount),
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = MaterialTheme.typography.titleMedium.fontSize
+                                )
+
+                                Text(
+                                    text = "Likes",
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = MaterialTheme.typography.labelSmall.fontSize
+                                )
+                            }
+
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = formatViewCount(video?.statistics?.viewCount),
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = MaterialTheme.typography.titleMedium.fontSize
+                                )
+
+                                Text(
+                                    text = "Views",
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = MaterialTheme.typography.labelSmall.fontSize
+                                )
+                            }
+
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                val (formattedMonth, day, year) = getFormattedDateLikeMonthDay(video?.snippet?.publishedAt.toString())
+
+                                Text(
+                                    text = "$formattedMonth $day",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = MaterialTheme.typography.titleMedium.fontSize
+                                )
+
+                                Text(
+                                    text = "$year",
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = MaterialTheme.typography.labelSmall.fontSize
+                                )
+                            }
+                        }
+
+                        HorizontalDivider(
+                            modifier = Modifier.fillMaxWidth().padding(8.dp),
+                            thickness = 2.dp,
+                            color = DividerDefaults.color
+                        )
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            var descExpanded by remember { mutableStateOf(false) }
+                            val videoDescription = video?.snippet?.description ?: ""
+                            val showMoreThreshold = 150
+                            val displayDescription =
+                                if (descExpanded) videoDescription else videoDescription.take(
+                                    showMoreThreshold
+                                )
+
+                            val descriptionText = buildAnnotatedString {
+                                withStyle(style = ParagraphStyle(textAlign = TextAlign.Start)) {
+                                    append(displayDescription)
+                                }
+                                if (videoDescription.length > showMoreThreshold) {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            fontSize = 14.sp,
+                                            color = Color.Gray
+                                        )
+                                    ) {
+                                        append(if (descExpanded) " show less" else "... show more")
+                                    }
+                                }
+                            }
+
+                            Text(
+                                text = descriptionText,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .animateContentSize(
+                                        tween(
+                                            durationMillis = 1000,
+                                            delayMillis = 500,
+                                            easing = FastOutLinearInEasing
+                                        )
+                                    )
+                                    .padding(top = 16.dp, start = 4.dp, end = 4.dp)
+                                    .clickable { descExpanded = !descExpanded },
+                                maxLines = if (descExpanded) Int.MAX_VALUE else 9,
+                                fontSize = MaterialTheme.typography.bodySmall.fontSize
+                            )
+                        }
+
+
+                        HorizontalDivider(
+                            modifier = Modifier.fillMaxWidth(),
+                            thickness = 8.dp,
+                            color = DividerDefaults.color
+                        )
+
                         channelData?.snippet?.title?.let {
                             Text(
-                                text = it,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                                modifier = Modifier.fillMaxWidth(),
+                                text = "More From $it",
+                                fontWeight = FontWeight.Normal,
+                                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                                modifier = Modifier.fillMaxWidth().padding(
+                                    horizontal = 16.dp, vertical = 8.dp
+                                ),
                                 maxLines = 1,
                                 textAlign = TextAlign.Justify,
                                 overflow = TextOverflow.Ellipsis,
                             )
                         }
-
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                            .padding(top = 20.dp, start = 60.dp, end = 60.dp, bottom = 20.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = formatLikes(video?.statistics?.likeCount),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = MaterialTheme.typography.titleMedium.fontSize
+                            NetworkImage(
+                                modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
+                                    channelData?.let {
+                                        navigator?.push(ChannelScreen(channelData))
+                                    }
+                                },
+                                contentDescription = "Channel Logo",
+                                contentScale = ContentScale.FillBounds,
+                                url = channelData?.snippet?.thumbnails?.default?.url.toString()
                             )
 
-                            Text(
-                                text = "Likes",
-                                fontWeight = FontWeight.Normal,
-                                fontSize = MaterialTheme.typography.labelSmall.fontSize
-                            )
-                        }
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                val channelTitle = video?.snippet?.channelTitle.toString()
 
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = formatViewCount(video?.statistics?.viewCount),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = MaterialTheme.typography.titleMedium.fontSize
-                            )
-
-                            Text(
-                                text = "Views",
-                                fontWeight = FontWeight.Normal,
-                                fontSize = MaterialTheme.typography.labelSmall.fontSize
-                            )
-                        }
-
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            val (formattedMonth, day, year) = getFormattedDateLikeMonthDay(video?.snippet?.publishedAt.toString())
-
-                            Text(
-                                text = "$formattedMonth $day",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = MaterialTheme.typography.titleMedium.fontSize
-                            )
-
-                            Text(
-                                text = "$year",
-                                fontWeight = FontWeight.Normal,
-                                fontSize = MaterialTheme.typography.labelSmall.fontSize
-                            )
-                        }
-                    }
-
-                    HorizontalDivider(
-                        modifier = Modifier.fillMaxWidth().padding(8.dp),
-                        thickness = 2.dp,
-                        color = DividerDefaults.color
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        var descExpanded by remember { mutableStateOf(false) }
-                        val videoDescription = video?.snippet?.description ?: ""
-                        val showMoreThreshold = 150
-                        val displayDescription =
-                            if (descExpanded) videoDescription else videoDescription.take(
-                                showMoreThreshold
-                            )
-
-                        val descriptionText = buildAnnotatedString {
-                            withStyle(style = ParagraphStyle(textAlign = TextAlign.Start)) {
-                                append(displayDescription)
-                            }
-                            if (videoDescription.length > showMoreThreshold) {
-                                withStyle(style = SpanStyle(fontSize = 14.sp, color = Color.Gray)) {
-                                    append(if (descExpanded) " show less" else "... show more")
-                                }
-                            }
-                        }
-
-                        Text(
-                            text = descriptionText,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .animateContentSize(
-                                    tween(
-                                        durationMillis = 1000,
-                                        delayMillis = 500,
-                                        easing = FastOutLinearInEasing
-                                    )
+                                Text(
+                                    text = channelTitle,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp
                                 )
-                                .padding(top = 16.dp, start = 4.dp, end = 4.dp)
-                                .clickable { descExpanded = !descExpanded },
-                            maxLines = if (descExpanded) Int.MAX_VALUE else 9,
-                            fontSize = MaterialTheme.typography.bodySmall.fontSize
-                        )
-                    }
+                                Text(
+                                    text = "${formatSubscribers(channelData?.statistics?.subscriberCount)} Subscribers",
+                                    fontSize = 14.sp
+                                )
 
+                            }
+                        }
 
-                    HorizontalDivider(
-                        modifier = Modifier.fillMaxWidth(),
-                        thickness = 8.dp,
-                        color = DividerDefaults.color
-                    )
+                        Spacer(modifier = Modifier.height(2.dp))
 
-                    channelData?.snippet?.title?.let {
-                        Text(
-                            text = "More From $it",
-                            fontWeight = FontWeight.Normal,
-                            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                        Row(
                             modifier = Modifier.fillMaxWidth().padding(
-                                horizontal = 16.dp, vertical = 8.dp
+                                horizontal = 8.dp, vertical = 4.dp
                             ),
-                            maxLines = 1,
-                            textAlign = TextAlign.Justify,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        NetworkImage(
-                            modifier = Modifier.size(60.dp).clip(CircleShape).clickable {
-                                channelData?.let {
-                                    navigator?.push(ChannelScreen(channelData))
-                                }
-                            },
-                            contentDescription = "Channel Logo",
-                            contentScale = ContentScale.FillBounds,
-                            url = channelData?.snippet?.thumbnails?.default?.url.toString()
-                        )
-
-                        Column(
-                            modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            val channelTitle = video?.snippet?.channelTitle.toString()
-
-                            Text(
-                                text = channelTitle,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp
-                            )
-                            Text(
-                                text = "${formatSubscribers(channelData?.statistics?.subscriberCount)} Subscribers",
-                                fontSize = 14.sp
-                            )
-
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(2.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(
-                            horizontal = 8.dp, vertical = 4.dp
-                        ),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        OutlinedCard(
-                            onClick = {
-                                channelData?.let { item ->
-                                    navigator?.push(ChannelScreen(item))
-                                }
-                            },
-                            shape = CardDefaults.outlinedShape,
-                            enabled = true,
-                            border = BorderStroke(width = 1.dp, color = Color.Black),
-                            modifier = Modifier.weight(1f).padding(16.dp)
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
+                            OutlinedCard(
+                                onClick = {
+                                    channelData?.let { item ->
+                                        navigator?.push(ChannelScreen(item))
+                                    }
+                                },
+                                shape = CardDefaults.outlinedShape,
+                                enabled = true,
+                                border = BorderStroke(width = 1.dp, color = Color.Black),
+                                modifier = Modifier.weight(1f).padding(16.dp)
                             ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.VideoLibrary,
-                                    contentDescription = "Videos",
-                                    modifier = Modifier.padding(8.dp)
-                                )
-                                Text(
-                                    "VIDEOS",
-                                    textAlign = TextAlign.Center,
-                                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(8.dp)
-                                )
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.VideoLibrary,
+                                        contentDescription = "Videos",
+                                        modifier = Modifier.padding(8.dp)
+                                    )
+                                    Text(
+                                        "VIDEOS",
+                                        textAlign = TextAlign.Center,
+                                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = Modifier.padding(8.dp)
+                                    )
+                                }
+                            }
+
+                            OutlinedCard(
+                                onClick = {
+                                    channelData?.let { channel ->
+                                        navigator?.push(ChannelDetail(channel))
+                                    }
+                                },
+                                shape = CardDefaults.outlinedShape,
+                                enabled = true,
+                                border = BorderStroke(width = 1.dp, color = Color.Black),
+                                modifier = Modifier.weight(1f).padding(16.dp)
+                            ) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.AccountBox,
+                                        contentDescription = "About",
+                                        modifier = Modifier.padding(8.dp)
+                                    )
+                                    Text(
+                                        "ABOUT",
+                                        textAlign = TextAlign.Center,
+                                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = Modifier.padding(8.dp)
+                                    )
+                                }
                             }
                         }
 
-                        OutlinedCard(
-                            onClick = {
-                                channelData?.let { channel ->
-                                    navigator?.push(ChannelDetail(channel))
-                                }
-                            },
-                            shape = CardDefaults.outlinedShape,
-                            enabled = true,
-                            border = BorderStroke(width = 1.dp, color = Color.Black),
-                            modifier = Modifier.weight(1f).padding(16.dp)
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.AccountBox,
-                                    contentDescription = "About",
-                                    modifier = Modifier.padding(8.dp)
-                                )
-                                Text(
-                                    "ABOUT",
-                                    textAlign = TextAlign.Center,
-                                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(8.dp)
-                                )
-                            }
-                        }
                     }
-
                 }
             }
-        }
-
     }
     if (isCommentLive) {
         if (video?.statistics?.commentCount.isNullOrBlank()) {
             val notification = createNotification(NotificationType.TOP)
             notification.show("No Comments Found!...")
 
-            //Notify(message = "No Comments Found...")
+            Notify(message = "No Comments Found...")
         }
         var commentInput by remember { mutableStateOf("") }
 
