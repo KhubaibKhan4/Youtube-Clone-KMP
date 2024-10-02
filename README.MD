@@ -98,6 +98,8 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `kamelImage`: `0.9.6`
 - **Size Measurement**:
   - `size`: `0.5.0`
+- **Firebase Bom**
+  - `firebase-bom`:`33.4.0`
 - **Voyager Navigation**: `1.1.0-beta02`
 - **Other Utilities**:
   - `official-viewmodel`: `2.8.0`
