@@ -11,12 +11,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -55,7 +58,15 @@ fun ShimmerEffectChannel() {
         start = Offset.Zero,
         end = Offset(x = translateAnim.value, y = translateAnim.value)
     )
-    ShimmerItemChannel(brush)
+
+    Column(
+        modifier = Modifier.fillMaxWidth()
+            .windowInsetsPadding(WindowInsets.statusBars),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
+    ) {
+        ShimmerItemChannel(brush)
+    }
 }
 
 @Composable
@@ -65,7 +76,7 @@ fun ShimmerItemChannel(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 25.dp)
+            .padding(8.dp)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -155,9 +166,9 @@ fun ShimmerItemChannel(
                 )
                 Spacer(
                     modifier = Modifier
+                        .padding(start = 8.dp)
                         .size(25.dp)
                         .clip(shape = CircleShape)
-                        .padding(start = 4.dp)
                         .background(brush = brush)
                 )
             }
