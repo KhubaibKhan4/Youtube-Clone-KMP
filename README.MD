@@ -54,6 +54,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - TV and Wear OS Versions
 - Integrate Custom Server.
 - Custom UI Sdk
+- FCM Support
 
 ## 🌟 Contributions
 If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
@@ -83,9 +84,9 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **UI/UX**:
   - `compose-uitooling`: `1.6.8`
 - **Media Handling**:
-  - `media3Ui`: `1.4.0`
-  - `media3ExoplayerDash`: `1.4.0`
-  - `media3Exoplayer`: `1.4.0`
+  - `media3Ui`: `1.4.1`
+  - `media3ExoplayerDash`: `1.4.1`
+  - `media3Exoplayer`: `1.4.1`
 - **Logging**:
   - `napier`: `2.7.1`
 - **Database/Storage**:
