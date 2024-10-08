@@ -1,10 +1,6 @@
 package org.company.app
 
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
@@ -12,17 +8,12 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.FileStorage
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import java.awt.Desktop
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
-import java.net.HttpURLConnection
 import java.net.URI
-import java.net.URL
 import java.nio.file.Paths
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -32,12 +23,6 @@ internal actual fun openUrl(url: String?) {
     Desktop.getDesktop().browse(uri)
 }
 
-
-@Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
-    val videoId = splitLinkForVideoId(url.toString())
-    DesktopWebView(modifier, "https://www.youtube.com/embed/$videoId")
-}
 
 @Composable
 internal actual fun provideShortCuts() {
@@ -61,14 +46,6 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
     if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
         Desktop.getDesktop().browse(URI(videoUrl))
     }
-}
-
-@Composable
-internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
-    DesktopWebView(
-        modifier = Modifier.width(640.dp).height(360.dp),
-        url = "https://www.youtube.com/embed/$url/"
-    )
 }
 
 fun splitLinkForShotsVideoId(url: String?): String {

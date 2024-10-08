@@ -43,66 +43,6 @@ internal actual fun openUrl(url: String?) {
     UIApplication.sharedApplication.openURL(nsUrl)
 }
 
-@OptIn(ExperimentalForeignApi::class)
-@Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
-    val videoId = remember(url) {
-        url?.substringAfter("v=")?.substringBefore("&") ?: url?.substringAfterLast("/")
-    }
-    val htmlContent = """
-        <html>
-        <head>
-            <style>
-                body, html {
-                    margin: 0;
-                    padding: 0;
-                    height: 100%;
-                    overflow: hidden;
-                }
-                .video-container {
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                }
-                .video-container iframe {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    border: none;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="video-container">
-                <iframe 
-                    src="https://www.youtube.com/embed/$videoId?autoplay=1" 
-                    allow="autoplay;">
-                </iframe>
-            </div>
-        </body>
-        </html>
-    """.trimIndent()
-
-    UIKitView(
-        factory = {
-            val webView = WKWebView()
-            webView.scrollView.scrollEnabled = false
-            webView.loadHTMLString(htmlContent, baseURL = null)
-            webView
-        },
-        onResize = { view: UIView, rect: CValue<CGRect> ->
-            view.setFrame(rect)
-        },
-        update = { view ->
-            // Update logic if needed
-        },
-        modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(16f / 13f)
-    )
-}
 
 
 @Composable
@@ -117,66 +57,7 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
     val activityViewController = UIActivityViewController(activityItems, null)
     viewController?.presentViewController(activityViewController, true, null)
 }
-@OptIn(ExperimentalForeignApi::class)
-@Composable
-internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
-    val videoId = remember(url) {
-        url?.substringAfter("v=")?.substringBefore("&") ?: url?.substringAfterLast("/")
-    }
-    val htmlContent = """
-        <html>
-        <head>
-            <style>
-                body, html {
-                    margin: 0;
-                    padding: 0;
-                    height: 100%;
-                    overflow: hidden;
-                }
-                .video-container {
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                }
-                .video-container iframe {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    border: none;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="video-container">
-                <iframe 
-                    src="https://www.youtube.com/embed/$videoId?autoplay=1" 
-                    allow="autoplay;">
-                </iframe>
-            </div>
-        </body>
-        </html>
-    """.trimIndent()
 
-    UIKitView(
-        factory = {
-            val webView = WKWebView()
-            webView.scrollView.scrollEnabled = false
-            webView.loadHTMLString(htmlContent, baseURL = null)
-            webView
-        },
-        onResize = { view: UIView, rect: CValue<CGRect> ->
-            view.setFrame(rect)
-        },
-        update = { view ->
-            // Update logic if needed
-        },
-        modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(16f / 14f)
-    )
-}
 internal actual fun UserRegion(): String {
     return NSLocale.currentLocale.countryCode ?: "us"
 }

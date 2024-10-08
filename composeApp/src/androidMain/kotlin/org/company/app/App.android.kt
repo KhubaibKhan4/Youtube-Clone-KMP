@@ -127,25 +127,6 @@ internal actual fun openUrl(url: String?) {
     AndroidApp.INSTANCE.startActivity(intent)
 }
 
-@RequiresApi(Build.VERSION_CODES.S)
-@Composable
-internal actual fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?) {
-    YoutubeVideoPlayer(youtubeURL = url)
-}
-
-
-@RequiresApi(Build.VERSION_CODES.S)
-@Composable
-internal actual fun ShortsVideoPlayer(url: String?, modifier: Modifier) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center,
-    ) {
-        YoutubeShortsPlayer(youtubeURL = url)
-    }
-}
-
 @Composable
 internal actual fun ShareManager(title: String, videoUrl: String) {
     val shareIntent = Intent().apply {

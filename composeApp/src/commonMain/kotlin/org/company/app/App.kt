@@ -233,11 +233,6 @@ internal expect fun showDialog(title: String,message: String)
 @Composable
 internal expect fun provideShortCuts()
 
-@Composable
-internal expect fun VideoPlayer(modifier: Modifier, url: String?, thumbnail: String?)
-
-@Composable
-internal expect fun ShortsVideoPlayer(url: String?, modifier: Modifier)
 internal expect fun UserRegion(): String
 
 @Composable
