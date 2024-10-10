@@ -194,13 +194,13 @@ fun DetailContent(
 
 
     val scope = rememberCoroutineScope()
-    var videoUrl by remember { mutableStateOf("https://www.youtube.com/watch?v=${video?.id}") }
+    val videoUrl by remember { mutableStateOf("https://www.youtube.com/watch?v=${video?.id}") }
     val videoDownloader = remember { VideoDownloader() }
     var downloadOutput by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
     var isDownloadedSuccessfully by remember { mutableStateOf(false) }
     var progress by remember { mutableStateOf(0f) }
-    var downloadedFilePath by remember { mutableStateOf("") }
+    val downloadedFilePath by remember { mutableStateOf("") }
 
     fun downloadVideo() {
         scope.launch {
