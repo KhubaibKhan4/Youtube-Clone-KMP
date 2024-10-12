@@ -71,6 +71,7 @@ kotlin {
             implementation(libs.mediaplayer.kmp)
             implementation(libs.gitlive.firebase.firestore)
             implementation(libs.gitlive.firebase.database)
+            implementation("io.github.alexzhirkevich:cupertino-adaptive:0.1.0-alpha04")
         }
 
         commonTest.dependencies {

@@ -11,12 +11,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -33,8 +28,6 @@ import org.company.app.shortcuts.TopTrending
 import org.company.app.shortcuts.dynamicShortcut
 import org.company.app.shortcuts.latestVideos
 import org.company.app.shortcuts.pinnedShortCut
-import org.company.app.ui.YoutubeShortsPlayer
-import org.company.app.ui.YoutubeVideoPlayer
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException

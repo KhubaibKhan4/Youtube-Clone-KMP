@@ -1,11 +1,6 @@
 package org.company.app
 
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.interop.UIKitView
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
@@ -15,11 +10,8 @@ import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.HttpCacheEntry
 import io.ktor.client.plugins.cache.storage.HttpCacheStorage
 import io.ktor.http.Url
-import kotlinx.cinterop.CValue
-import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import platform.CoreGraphics.CGRect
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSLocale
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
@@ -34,8 +26,6 @@ import platform.Foundation.dataTaskWithRequest
 import platform.Foundation.writeToFile
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
-import platform.UIKit.UIView
-import platform.WebKit.WKWebView
 import kotlin.collections.set
 
 internal actual fun openUrl(url: String?) {
