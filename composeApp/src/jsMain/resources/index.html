@@ -7,6 +7,48 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="skiko.js"></script>
     <script type="module" src="@cashapp/sqldelight-sqljs-worker/sqljs.worker.js"></script>
+
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }).catch(function (error) {
+                console.log('ServiceWorker registration failed: ', error);
+            });
+        }
+
+        // Handle beforeinstallprompt event for PWA installation
+        let deferredPrompt;
+        const showInstallButton = () =>
+            console.log('PWA install prompt available');
+        };
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallButton();
+        });
+
+        const installButton = document.createElement('button');
+        installButton.innerText = 'Install App';
+        document.body.appendChild(installButton);
+
+        installButton.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+    </script>
 </head>
 <body>
 <div id="video-container"></div>

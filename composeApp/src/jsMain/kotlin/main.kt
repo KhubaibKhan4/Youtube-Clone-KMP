@@ -15,6 +15,12 @@ fun main() {
             projectId = "clone-ef3ed"
         )
     )
+    if (js("navigator.serviceWorker")) {
+        js("navigator.serviceWorker.register('/service-worker.js')")
+            .then { console.log("Service Worker Registered") }
+            .catch { console.log("Service Worker Registration Failed") }
+    }
+
     onWasmReady {
         CanvasBasedWindow("Youtube Clone") {
             App()
