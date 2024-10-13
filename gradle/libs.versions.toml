@@ -93,6 +93,8 @@ junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.r
 android-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 gitlive-firebase-firestore = { group = "dev.gitlive", name = "firebase-firestore", version.ref = "gitlive" }
 gitlive-firebase-database = { group = "dev.gitlive", name = "firebase-database", version.ref = "gitlive" }
+gitlive-firebase-analytics = { group = "dev.gitlive", name = "firebase-analytics", version.ref = "gitlive" }
+gitlive-firebase-messaging = { group = "dev.gitlive", name = "firebase-messaging", version.ref = "gitlive" }
 
 [plugins]
 

@@ -71,6 +71,8 @@ kotlin {
             implementation(libs.mediaplayer.kmp)
             implementation(libs.gitlive.firebase.firestore)
             implementation(libs.gitlive.firebase.database)
+            implementation(libs.gitlive.firebase.analytics)
+            implementation(libs.gitlive.firebase.messaging)
             implementation(libs.cupertino.adaptive)
         }
 
