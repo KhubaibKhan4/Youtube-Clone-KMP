@@ -1,6 +1,6 @@
 [versions]
 
-core = "12.1.0"
+core = "12.1.1"
 cupertinoAdaptive = "0.1.0-alpha04"
 kotestProperty = "5.9.1"
 kotlin = "2.0.0"
