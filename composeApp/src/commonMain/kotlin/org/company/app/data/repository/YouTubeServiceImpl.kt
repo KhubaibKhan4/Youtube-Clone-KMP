@@ -2,7 +2,6 @@ package org.company.app.data.repository
 
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.database.FirebaseDatabase
-import dev.gitlive.firebase.messaging.messaging
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.company.app.data.remote.YoutubeClientApi
@@ -46,16 +45,6 @@ class YouTubeServiceImpl(
             emit(null)
             println("FetchUiData Error fetching UI data: ${e.message}")
         }
-    }
-    suspend fun registerMessagingToken(): String{
-        return Firebase.messaging.getToken()
-    }
-
-    fun subscribeToTopic(topic: String) {
-        return Firebase.messaging.subscribeToTopic(topic)
-    }
-    fun unSubscribeToTopic(topic: String){
-        return Firebase.messaging.unsubscribeFromTopic(topic)
     }
 
     fun fetchLayoutInformation(): Flow<LayoutInformation?> = flow {
