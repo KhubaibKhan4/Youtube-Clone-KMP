@@ -26,14 +26,6 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
     window.open(url = videoUrl, "_blank")
 }
 
-
-private fun extractVideoId(url: String): String {
-    val videoIdRegex =
-        Regex("""(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})""")
-    val matchResult = videoIdRegex.find(url)
-    return matchResult?.groupValues?.get(1) ?: "default_video_id"
-}
-
 internal actual fun UserRegion(): String {
     return js("window.navigator.language.slice(-2)")
 }

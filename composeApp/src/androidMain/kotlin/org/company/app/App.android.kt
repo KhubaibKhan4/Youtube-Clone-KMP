@@ -96,7 +96,7 @@ class AppActivity : ComponentActivity() {
     }
 
     private fun proceedWithTask() {
-        // Proceed with video download logic
+
     }
 }
 

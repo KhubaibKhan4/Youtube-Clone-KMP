@@ -29,18 +29,6 @@ internal actual fun provideShortCuts() {
     return
 }
 
-fun splitLinkForVideoId(
-    url: String?,
-): String {
-    return url?.substringAfter("v=").toString()
-}
-
-private fun openYouTubeVideo(videoUrl: String) {
-    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-        Desktop.getDesktop().browse(URI(videoUrl))
-    }
-}
-
 @Composable
 internal actual fun ShareManager(title: String, videoUrl: String) {
     if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
@@ -48,9 +36,6 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
     }
 }
 
-fun splitLinkForShotsVideoId(url: String?): String {
-    return url!!.split("v=").get(1)
-}
 
 internal actual fun UserRegion(): String {
     val currentLocale: Locale = Locale.getDefault()

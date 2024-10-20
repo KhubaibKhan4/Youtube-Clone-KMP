@@ -92,7 +92,7 @@ actual class VideoDownloader {
 
 actual fun HttpClientConfig<*>.setupHttpCache() {
     install(HttpCache) {
-        val cacheDir = File("cache_directory") // Set your desired cache directory
+        val cacheDir = File("cache_directory")
         val cacheStorage = object : HttpCacheStorage() {
             private val cache = HashMap<String, HttpCacheEntry>()
 
@@ -106,10 +106,10 @@ actual fun HttpClientConfig<*>.setupHttpCache() {
             }
 
             override fun store(url: Url, value: HttpCacheEntry) {
-                if (cache.size < 10 * 1024 * 1024) { // Check if cache size is less than 10MB
+                if (cache.size < 10 * 1024 * 1024) {
                     cache[url.toString()] = value
                 } else {
-                    // Handle cache size limit, e.g., evict oldest entries or similar
+
                 }
             }
         }
