@@ -50,6 +50,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import io.ktor.client.HttpClientConfig
 import io.ktor.util.Platform
+import kotlinx.serialization.descriptors.PrimitiveKind
 import org.company.app.di.appModule
 import org.company.app.presentation.ui.navigation.rails.items.NavigationItem
 import org.company.app.presentation.ui.navigation.rails.navbar.NavigationSideBar
@@ -108,7 +109,10 @@ fun AppContent() {
         mutableStateOf(0)
     }
 
-    TabNavigator(HomeTab) { tabNavigator ->
+    TabNavigator(
+        tab = HomeTab,
+        disposeNestedNavigators = true
+    ) { tabNavigator ->
         Scaffold(bottomBar = {
             if (!showNavigationRail) {
                 NavigationBar(
