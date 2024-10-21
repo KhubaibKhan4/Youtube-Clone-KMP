@@ -56,6 +56,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - Custom UI Sdk
 - FCM Support
 - Custom Popup Implementation 
+- Reels View in Feed Implementation 
 
 ## 🌟 Contributions
 If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
