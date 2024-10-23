@@ -13,6 +13,8 @@
 		493205B22C95C81800564F49 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 493205B12C95C81800564F49 /* FirebaseDatabase */; };
 		493205B42C95C82400564F49 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 493205B32C95C82400564F49 /* FirebaseStorage */; };
 		493205B62C95C84200564F49 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 493205B52C95C84100564F49 /* libsqlite3.0.tbd */; };
+		495701072CC96BA60086C7FC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 495701062CC96BA60086C7FC /* FirebaseAnalytics */; };
+		495701092CC96BAD0086C7FC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 495701082CC96BAD0086C7FC /* FirebaseMessaging */; };
 		A93A953B29CC810C00F8E227 /* iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93A953A29CC810C00F8E227 /* iosApp.swift */; };
 		A93A953F29CC810D00F8E227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A953E29CC810D00F8E227 /* Assets.xcassets */; };
 		A93A954229CC810D00F8E227 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A93A954129CC810D00F8E227 /* Preview Assets.xcassets */; };
@@ -36,6 +38,8 @@
 			files = (
 				493205B62C95C84200564F49 /* libsqlite3.0.tbd in Frameworks */,
 				493205B22C95C81800564F49 /* FirebaseDatabase in Frameworks */,
+				495701092CC96BAD0086C7FC /* FirebaseMessaging in Frameworks */,
+				495701072CC96BA60086C7FC /* FirebaseAnalytics in Frameworks */,
 				493205B42C95C82400564F49 /* FirebaseStorage in Frameworks */,
 				493205AD2C95B30400564F49 /* libsqlite3.tbd in Frameworks */,
 				493205B02C95C80C00564F49 /* FirebaseFirestore in Frameworks */,
@@ -112,6 +116,8 @@
 				493205AF2C95C80C00564F49 /* FirebaseFirestore */,
 				493205B12C95C81800564F49 /* FirebaseDatabase */,
 				493205B32C95C82400564F49 /* FirebaseStorage */,
+				495701062CC96BA60086C7FC /* FirebaseAnalytics */,
+				495701082CC96BAD0086C7FC /* FirebaseMessaging */,
 			);
 			productName = iosApp;
 			productReference = A93A953729CC810C00F8E227 /* Youtube Clone.app */;
@@ -438,6 +444,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 493205AE2C95B89A00564F49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		495701062CC96BA60086C7FC /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493205AE2C95B89A00564F49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		495701082CC96BAD0086C7FC /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493205AE2C95B89A00564F49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
