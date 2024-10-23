@@ -51,7 +51,9 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 }
 
 internal actual fun UserRegion(): String {
-    return NSLocale.currentLocale.countryCode ?: "US"
+    var locale = Locale.current
+    println("Region: ${locale.region}")
+    return "US" ?: locale.region
 }
 
 actual class DriverFactory actual constructor(){
