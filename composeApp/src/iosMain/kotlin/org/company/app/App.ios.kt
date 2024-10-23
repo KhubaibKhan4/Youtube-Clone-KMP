@@ -1,6 +1,7 @@
 package org.company.app
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.intl.Locale
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.youtube.clone.db.YoutubeDatabase
@@ -23,6 +24,7 @@ import platform.Foundation.NSUserDomainMask
 import platform.Foundation.countryCode
 import platform.Foundation.currentLocale
 import platform.Foundation.dataTaskWithRequest
+import platform.Foundation.regionCode
 import platform.Foundation.writeToFile
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
@@ -49,7 +51,7 @@ internal actual fun ShareManager(title: String, videoUrl: String) {
 }
 
 internal actual fun UserRegion(): String {
-    return NSLocale.currentLocale.countryCode ?: "us"
+    return NSLocale.currentLocale.countryCode ?: "US"
 }
 
 actual class DriverFactory actual constructor(){
