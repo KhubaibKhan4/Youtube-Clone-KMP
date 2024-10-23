@@ -116,7 +116,3 @@ actual fun HttpClientConfig<*>.setupHttpCache() {
         cacheStorage
     }
 }
-
-@Composable
-internal actual fun showDialog(title: String, message: String) {
-}

@@ -234,8 +234,6 @@ fun RowScope.TabItem(tab: Tab) {
 
 internal expect fun openUrl(url: String?)
 @Composable
-internal expect fun showDialog(title: String,message: String)
-@Composable
 internal expect fun provideShortCuts()
 
 internal expect fun UserRegion(): String
