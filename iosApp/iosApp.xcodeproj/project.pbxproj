@@ -52,7 +52,6 @@
 		A93A952E29CC810C00F8E227 = {
 			isa = PBXGroup;
 			children = (
-				490B4A982C95850100B454C5 /* GoogleService-Info.plist */,
 				A93A953929CC810C00F8E227 /* iosApp */,
 				A93A953829CC810C00F8E227 /* Products */,
 				C4127409AE3703430489E7BC /* Frameworks */,
@@ -70,6 +69,7 @@
 		A93A953929CC810C00F8E227 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				490B4A982C95850100B454C5 /* GoogleService-Info.plist */,
 				49C7F75B2CBA88BB002A882E /* Info.plist */,
 				A93A953A29CC810C00F8E227 /* iosApp.swift */,
 				A93A953E29CC810D00F8E227 /* Assets.xcassets */,
@@ -348,7 +348,7 @@
 					"-framework",
 					ComposeApp,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.company.app.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.company.app.YouTube-Clone";
 				PRODUCT_NAME = "Youtube Clone";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -387,7 +387,7 @@
 					"-framework",
 					ComposeApp,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.company.app.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.company.app.YouTube-Clone";
 				PRODUCT_NAME = "Youtube Clone";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
