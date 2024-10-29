@@ -69,7 +69,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Compose**: `1.7.0`
   - `androidx-appcompat`: `1.7.0`
   - `androidx-activityCompose`: `1.9.3`
-  - `compose-uitooling`: `1.6.8`
+  - `compose-uitooling`: `1.7.4`
   - `composeImageLoader`: `1.7.1`
 - **Core Libraries**: `12.1.0`
 - **Kotlinx Libraries**:
