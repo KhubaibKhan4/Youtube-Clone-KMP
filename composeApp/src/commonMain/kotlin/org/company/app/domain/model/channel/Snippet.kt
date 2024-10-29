@@ -9,7 +9,7 @@ data class Snippet(
     @SerialName("country")
     val country: String? = null,
     @SerialName("customUrl")
-    val customUrl: String,
+    val customUrl: String? = null,
     @SerialName("description")
     val description: String,
     @SerialName("localized")

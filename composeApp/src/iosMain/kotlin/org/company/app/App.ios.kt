@@ -8,23 +8,21 @@ import com.youtube.clone.db.YoutubeDatabase
 import io.kamel.core.utils.File
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.cache.HttpCache
-import io.ktor.client.plugins.cache.HttpCacheEntry
-import io.ktor.client.plugins.cache.storage.HttpCacheStorage
+import io.ktor.client.plugins.cache.storage.CacheStorage
+import io.ktor.client.plugins.cache.storage.CachedResponseData
 import io.ktor.http.Url
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import platform.Foundation.NSDocumentDirectory
-import platform.Foundation.NSLocale
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSURL
 import platform.Foundation.NSURLRequest
 import platform.Foundation.NSURLSession
 import platform.Foundation.NSURLSessionConfiguration
 import platform.Foundation.NSUserDomainMask
-import platform.Foundation.countryCode
-import platform.Foundation.currentLocale
 import platform.Foundation.dataTaskWithRequest
-import platform.Foundation.regionCode
 import platform.Foundation.writeToFile
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
@@ -97,23 +95,33 @@ actual class VideoDownloader {
 actual fun HttpClientConfig<*>.setupHttpCache() {
     install(HttpCache) {
         val cacheDir = File("cache_directory")
-        val cacheStorage = object : HttpCacheStorage() {
-            private val cache = HashMap<String, HttpCacheEntry>()
+        val cacheStorage = object : CacheStorage {
+            private val cache = HashMap<String, CachedResponseData>()
+            private val lock = Mutex()
 
-            override fun find(url: Url, varyKeys: Map<String, String>): HttpCacheEntry? {
-                return cache[url.toString()]
+
+            private fun generateCacheKey(url: Url, varyKeys: Map<String, String>): String {
+                return url.toString() + varyKeys.entries.joinToString { "${it.key}:${it.value}" }
             }
 
-            override fun findByUrl(url: Url): Set<HttpCacheEntry> {
-                val entry = cache[url.toString()] ?: return emptySet()
-                return setOf(entry)
+            override suspend fun find(
+                url: Url,
+                varyKeys: Map<String, String>
+            ): CachedResponseData? {
+                val key = generateCacheKey(url, varyKeys)
+                return lock.withLock {
+                    cache[key]
+                }
             }
-
-            override fun store(url: Url, value: HttpCacheEntry) {
-                if (cache.size < 10 * 1024 * 1024) {
-                    cache[url.toString()] = value
-                } else {
-
+            override suspend fun findAll(url: Url): Set<CachedResponseData> {
+                return lock.withLock {
+                    cache.filterKeys { it.startsWith(url.toString()) }.values.toSet()
+                }
+            }
+            override suspend fun store(url: Url, data: CachedResponseData) {
+                val key = generateCacheKey(url, data.varyKeys)
+                lock.withLock {
+                    cache[key] = data
                 }
             }
         }

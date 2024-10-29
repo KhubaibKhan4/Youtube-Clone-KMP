@@ -65,14 +65,13 @@ kotlin {
             implementation(libs.sqlDelight.extension)
             implementation(libs.navigation.compose)
             implementation(libs.lifecycle.viewmodel.compose)
-            implementation(libs.urlencoder.lib)
             implementation(libs.alert.kmp)
             implementation(libs.mediaplayer.kmp)
             implementation(libs.gitlive.firebase.firestore)
             implementation(libs.gitlive.firebase.database)
-            implementation(libs.gitlive.firebase.analytics)
-            implementation(libs.gitlive.firebase.messaging)
-            implementation(libs.cupertino.adaptive)
+            //implementation(libs.gitlive.firebase.analytics)
+            //implementation(libs.gitlive.firebase.messaging)
+            //implementation(libs.cupertino.adaptive)
         }
 
         commonTest.dependencies {

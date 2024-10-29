@@ -123,7 +123,7 @@ fun SearchChannelItem(
                 }
             }
             Text(
-                text = channel.snippet.customUrl,
+                text = channel.snippet.customUrl ?: "@Unknown",
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
                 fontWeight = FontWeight.SemiBold
             )
