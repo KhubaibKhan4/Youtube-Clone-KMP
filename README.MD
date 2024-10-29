@@ -74,7 +74,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Core Libraries**: `12.1.0`
 - **Kotlinx Libraries**:
   - `kotlinx-coroutines`: `1.9.0`
-  - `kotlinx-serialization`: `1.7.1`
+  - `kotlinx-serialization`: `1.7.3`
   - `kotlinx-datetime`: `0.6.0`
 - **Networking**:
   - `ktor`: `2.3.12`
