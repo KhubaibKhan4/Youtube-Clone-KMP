@@ -721,7 +721,7 @@ fun ShortItem(
             tonalElevation = 8.dp,
             scrimColor = Color.Transparent,
             dragHandle = null,
-            windowInsets = BottomSheetDefaults.windowInsets,
+            //windowInsets = BottomSheetDefaults.windowInsets,
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth()
