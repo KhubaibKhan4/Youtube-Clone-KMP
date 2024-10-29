@@ -3,7 +3,7 @@
 core = "12.1.0"
 cupertinoAdaptive = "0.1.0-alpha04"
 kotestProperty = "5.9.1"
-kotlin = "2.0.0"
+kotlin = "2.0.20"
 agp = "8.2.2"
 compose = "1.7.0"
 kotlinxCoroutinesSwing = "1.9.0"
