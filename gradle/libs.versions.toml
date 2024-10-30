@@ -22,12 +22,12 @@ voyager = "1.1.0-beta03"
 napier = "2.7.1"
 buildConfig = "5.3.5"
 kotlinx-coroutines = "1.9.0"
-ktor = "3.0.0"
+ktor = "3.0.1"
 kotlinx-serialization = "1.7.3"
 kotlinx-datetime = "0.6.1"
 koin = "4.0.0"
 koinComposeMultiplatform = "4.0.0"
-kamelImage = "0.9.5"
+kamelImage = "1.0.1"
 size = "0.5.0"
 sqlDelight = "2.0.2"
 glace-effect = "1.1.1"
@@ -70,6 +70,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 io-ktor-ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
+kamel-image-default = { module = "media.kamel:kamel-image-default", version.ref = "kamelImage" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 voyager-tab-navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }

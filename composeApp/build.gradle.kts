@@ -62,6 +62,7 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.kamel.image)
+            implementation(libs.kamel.image.default)
             implementation(libs.sqlDelight.extension)
             implementation(libs.navigation.compose)
             implementation(libs.lifecycle.viewmodel.compose)
