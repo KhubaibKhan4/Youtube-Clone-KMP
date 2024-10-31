@@ -77,7 +77,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `kotlinx-serialization`: `1.7.3`
   - `kotlinx-datetime`: `0.6.1`
 - **Networking**:
-  - `ktor`: `3.0.0`
+  - `ktor`: `3.0.1`
 - **Dependency Injection**:
   - `koin`: `4.0.0`
   - `koinComposeMultiplatform`: `4.0.0`
