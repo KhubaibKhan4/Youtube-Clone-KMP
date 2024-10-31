@@ -75,7 +75,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Kotlinx Libraries**:
   - `kotlinx-coroutines`: `1.9.0`
   - `kotlinx-serialization`: `1.7.3`
-  - `kotlinx-datetime`: `0.6.0`
+  - `kotlinx-datetime`: `0.6.1`
 - **Networking**:
   - `ktor`: `3.0.0`
 - **Dependency Injection**:
