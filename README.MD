@@ -102,7 +102,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `size`: `0.5.0`
 - **Firebase Bom**
   - `firebase-bom`:`33.5.1`
-- **Voyager Navigation**: `1.1.0-beta02`
+- **Voyager Navigation**: `1.1.0-beta03`
 - **Other Utilities**:
   - `official-viewmodel`: `2.8.0`
 - **JavaFX**: `22-ea+16`
