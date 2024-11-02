@@ -104,7 +104,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `firebase-bom`:`33.5.1`
 - **Voyager Navigation**: `1.1.0-beta03`
 - **Other Utilities**:
-  - `official-viewmodel`: `2.8.0`
+  - `official-viewmodel`: `2.7.0-alpha03`
 - **JavaFX**: `22-ea+16`
 - **AlertKMP**: `1.0.5`
 - **MediaPlayer-KMP**: `2.0.0`
