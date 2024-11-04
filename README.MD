@@ -105,6 +105,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Voyager Navigation**: `1.1.0-beta03`
 - **Other Utilities**:
   - `official-viewmodel`: `2.8.0-alpha10`
+  - `compose-navigagtion`: `2.8.3`
 - **JavaFX**: `22-ea+16`
 - **AlertKMP**: `1.0.5`
 - **MediaPlayer-KMP**: `2.0.0`
