@@ -49,8 +49,6 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import io.ktor.client.HttpClientConfig
-import io.ktor.util.Platform
-import kotlinx.serialization.descriptors.PrimitiveKind
 import org.company.app.di.appModule
 import org.company.app.presentation.ui.navigation.rails.items.NavigationItem
 import org.company.app.presentation.ui.navigation.rails.navbar.NavigationSideBar
