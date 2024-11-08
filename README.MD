@@ -82,7 +82,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `koin`: `4.0.0`
   - `koinComposeMultiplatform`: `4.0.0`
 - **UI/UX**:
-  - `compose-uitooling`: `1.6.8`
+  - `compose-uitooling`: `1.9.3`
 - **Media Handling**:
   - `media3Ui`: `1.4.1`
   - `media3ExoplayerDash`: `1.4.1`
