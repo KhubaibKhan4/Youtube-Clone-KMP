@@ -29,6 +29,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -518,7 +519,10 @@ fun VideosList(
                                     columns = GridCells.Adaptive(300.dp)
                                 ) {
                                     youtube.items?.let { items ->
-                                        items(items) { videos ->
+                                        itemsIndexed(items) { index,videos ->
+                                            if (index > 0 && index % 10 == 0){
+                                                VideoItemGridCard(videos, canFavourite = canFavourite)
+                                            }
                                             VideoItemCard(videos, canFavourite = canFavourite)
                                         }
                                     }
@@ -534,7 +538,10 @@ fun VideosList(
                                         state = lazyListState,
                                         columns = GridCells.Fixed(columns)
                                     ) {
-                                        items(youtube.items ?: listOf()) { video ->
+                                        itemsIndexed(youtube.items ?: listOf()) { index,video ->
+                                            if(index > 0 && index % 10 == 0){
+                                                VideoItemGridCard(video = video, canFavourite = canFavourite)
+                                            }
                                             VideoItemGridCard(video, canFavourite = canFavourite)
                                         }
                                     }
@@ -545,7 +552,10 @@ fun VideosList(
                                         columns = GridCells.Adaptive(300.dp)
                                     ) {
                                         youtube.items?.let { items ->
-                                            items(items) { videos ->
+                                            itemsIndexed(items) { index,videos ->
+                                                if (index > 0 && index % 10 ==0){
+                                                    VideoItemCard(videos, canFavourite = canFavourite)
+                                                }
                                                 VideoItemCard(videos, canFavourite = canFavourite)
                                             }
                                         }
