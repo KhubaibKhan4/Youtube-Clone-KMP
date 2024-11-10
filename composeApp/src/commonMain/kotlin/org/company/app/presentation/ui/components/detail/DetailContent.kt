@@ -785,32 +785,32 @@ fun DetailContent(
                     }
                 }
             }
-            if (unSubscribe) {
-                AlertDialog(
-                    onDismissRequest = {
-                        unSubscribe = false
-                    },
-                    text = {
-                        Text("Unsubscribe from ${channelData?.snippet?.title}")
-                    },
-                    confirmButton = {
-                        TextButton(onClick = {
-                            isSubscribed = false
-                            unSubscribe = false
-                            notificationMessage.value = "Subscription Removed"
-                        }) {
-                            Text("Unsubscribe")
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = {
-                            unSubscribe = false
-                        }) {
-                            Text("Cancel")
-                        }
-                    }
-                )
-            }
+//            if (unSubscribe) {
+//                AlertDialog(
+//                    onDismissRequest = {
+//                        unSubscribe = false
+//                    },
+//                    text = {
+//                        Text("Unsubscribe from ${channelData?.snippet?.title}")
+//                    },
+//                    confirmButton = {
+//                        TextButton(onClick = {
+//                            isSubscribed = false
+//                            unSubscribe = false
+//                            notificationMessage.value = "Subscription Removed"
+//                        }) {
+//                            Text("Unsubscribe")
+//                        }
+//                    },
+//                    dismissButton = {
+//                        TextButton(onClick = {
+//                            unSubscribe = false
+//                        }) {
+//                            Text("Cancel")
+//                        }
+//                    }
+//                )
+//            }
             if (notificationMessage.value.isNotBlank()) {
                 Notify(notificationMessage.value)
             }
