@@ -836,8 +836,9 @@ fun DetailContent(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
+                    val comments = "Comments ${formatViewComments(video?.statistics?.commentCount.toString().replaceAfter("." , ""))}"
                     Text(
-                        text = "Comments ${formatViewComments(video?.statistics?.commentCount.toString()) ?: 0.0}",
+                        text = comments ?: "No Comments®",
                         fontSize = MaterialTheme.typography.labelMedium.fontSize
                     )
                     Spacer(modifier = Modifier.weight(1f))
