@@ -785,7 +785,7 @@ fun DetailContent(
                     }
                 }
             }
-g
+
             if (notificationMessage.value.isNotBlank()) {
                 Notify(notificationMessage.value)
             }
