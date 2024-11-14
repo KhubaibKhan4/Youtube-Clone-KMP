@@ -1,7 +1,6 @@
 [versions]
 
 core = "12.1.0"
-cupertinoAdaptive = "0.1.0-alpha04"
 kotestProperty = "5.9.1"
 kotlin = "2.0.20"
 agp = "8.2.2"
@@ -47,7 +46,6 @@ androidx-media3-exoplayer-dash = { module = "androidx.media3:media3-exoplayer-da
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3Exoplayer" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
 core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "core" }
-cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version.ref = "cupertinoAdaptive" }
 custom-ui = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui", version.ref = "core" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotestProperty" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinxCoroutinesSwing" }
