@@ -374,6 +374,14 @@ We'd like to thank the following individuals and organizations for their contrib
 - No Contributor Yet.
 - Checkout Other cool projects on my profile as well.
 
+**Stargazers**
+
+[![Stargazers repo roster for @KhubaibKhan4/Youtube-Clone-KMP](http://reporoster.com/stars/dark/KhubaibKhan4/Youtube-Clone-KMP)](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/stargazers)
+
+**Forkers**
+
+[![Forkers repo roster for @KhubaibKhan4/Youtube-Clone-KMP](http://reporoster.com/forks/dark/KhubaibKhan4/Youtube-Clone-KMP)](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/network/members)
+
 
 ## FAQs
 Here are some frequently asked questions about the YouTube Clone project:
