@@ -68,7 +68,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 
 - **Kotlin Multiplatform**: `2.0.0`
 - **AGP (Android Gradle Plugin)**: `8.2.2`
-- **Compose**: `1.7.0`
+- **Compose**: `1.7.1`
   - `androidx-appcompat`: `1.7.0`
   - `androidx-activityCompose`: `1.9.3`
   - `compose-uitooling`: `1.7.4`
