@@ -291,6 +291,12 @@ To Setup the Server Driven UI using Firebase. You need to create a new firebase 
  </picture>
 </a>
 
+## Tech Stack
+
+**Client:** Compose Multiplatform, Kotlin Multiplatform
+
+**Rest API:** YouTube Data API V3, YouTube Analytics API
+
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
  - install JDK 17 on your machine
