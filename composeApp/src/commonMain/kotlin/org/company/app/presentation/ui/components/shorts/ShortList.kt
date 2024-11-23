@@ -209,7 +209,7 @@ fun ShortItem(
             .padding(top = 10.dp),
         contentAlignment = Alignment.Center
     ) {
-        VideoPlayer(url = shortsUrl, modifier = Modifier.fillMaxWidth().height(340.dp))
+        VideoPlayer(url = shortsUrl, modifier = Modifier.fillMaxWidth().height(340.dp), autoPlay = true)
         Napier.d(message = "Video ID: ${video.id}", tag = "REELS")
         Column(
             modifier = Modifier.fillMaxSize(),

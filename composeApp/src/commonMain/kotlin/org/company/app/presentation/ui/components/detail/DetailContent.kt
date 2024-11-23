@@ -284,7 +284,8 @@ fun DetailContent(
             if (displayVideoPlayer) {
                 VideoPlayer(
                     modifier = Modifier.fillMaxWidth().height(340.dp),
-                    url = "https://www.youtube.com/watch?v=${video?.id}"
+                    url = "https://www.youtube.com/watch?v=${video?.id}",
+                    autoPlay = true
                 )
                 IconButton(onClick = {
                     displayVideoPlayer = false
