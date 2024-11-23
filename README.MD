@@ -81,8 +81,8 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Networking**:
   - `ktor`: `3.0.1`
 - **Dependency Injection**:
-  - `koin`: `4.0.0`
-  - `koinComposeMultiplatform`: `4.0.0`
+  - `koin`: `4.0.1`
+  - `koinComposeMultiplatform`: `4.0.1`
 - **UI/UX**:
   - `compose-uitooling`: `1.9.3`
 - **Media Handling**:
@@ -110,7 +110,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `compose-navigagtion`: `2.8.3`
 - **JavaFX**: `22-ea+16`
 - **AlertKMP**: `1.0.7`
-- **MediaPlayer-KMP**: `2.0.3`
+- **MediaPlayer-KMP**: `2.0.4`
 
 ## Getting Started
 
