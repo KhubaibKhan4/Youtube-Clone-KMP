@@ -1,5 +1,8 @@
 [versions]
 
+adaptive = "1.0.1"
+adaptiveLayout = "1.0.1"
+adaptiveNavigation = "1.0.1"
 core = "12.1.0"
 kotestProperty = "5.9.1"
 kotlin = "2.0.21"
@@ -36,6 +39,9 @@ gitlive = "2.1.0"
 
 
 [libraries]
+adaptive-navigation = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation", version.ref = "adaptiveNavigation" }
+adaptive-layout = { module = "org.jetbrains.compose.material3.adaptive:adaptive-layout", version.ref = "adaptiveLayout" }
+adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "adaptive" }
 androidx-glance-app-widget = {module = "androidx.glance:glance-appwidget", version.ref = "glace-effect"}
 androidx-glance-material3 = {module = "androidx.glance:glance-material3", version.ref = "glace-effect"}
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
