@@ -2,7 +2,7 @@
 
 core = "12.1.0"
 kotestProperty = "5.9.1"
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 agp = "8.2.2"
 compose = "1.7.1"
 kotlinxCoroutinesSwing = "1.9.0"
