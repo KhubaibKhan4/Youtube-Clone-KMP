@@ -86,9 +86,9 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **UI/UX**:
   - `compose-uitooling`: `1.9.3`
 - **Media Handling**:
-  - `media3Ui`: `1.4.1`
-  - `media3ExoplayerDash`: `1.4.1`
-  - `media3Exoplayer`: `1.4.1`
+  - `media3Ui`: `1.5.1`
+  - `media3ExoplayerDash`: `1.5.1`
+  - `media3Exoplayer`: `1.5.1`
 - **Logging**:
   - `napier`: `2.7.1`
 - **Database/Storage**:
@@ -108,6 +108,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Other Utilities**:
   - `official-viewmodel`: `2.8.0-alpha10`
   - `compose-navigagtion`: `2.8.3`
+  - `compose-adaptive`: `1.0.1`
 - **JavaFX**: `22-ea+16`
 - **AlertKMP**: `1.0.8`
 - **MediaPlayer-KMP**: `2.0.4`
