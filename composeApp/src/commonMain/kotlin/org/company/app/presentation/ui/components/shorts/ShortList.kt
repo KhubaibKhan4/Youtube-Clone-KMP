@@ -109,7 +109,7 @@ import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun ShortList(youtube: Youtube, viewModel: MainViewModel = koinInject<MainViewModel>()) {
     val windowSizeClass = calculateWindowSizeClass()
