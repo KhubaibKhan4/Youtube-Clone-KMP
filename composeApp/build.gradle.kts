@@ -73,6 +73,10 @@ kotlin {
             //implementation(libs.gitlive.firebase.analytics)
             //implementation(libs.gitlive.firebase.messaging)
             //implementation(libs.cupertino.adaptive)
+
+            implementation("org.jetbrains.compose.material3.adaptive:adaptive:1.0.1")
+            implementation("org.jetbrains.compose.material3.adaptive:adaptive-layout:1.0.1")
+            implementation("org.jetbrains.compose.material3.adaptive:adaptive-navigation:1.0.1")
         }
 
         commonTest.dependencies {
