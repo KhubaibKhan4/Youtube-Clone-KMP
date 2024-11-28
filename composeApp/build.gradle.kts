@@ -72,7 +72,6 @@ kotlin {
             implementation(libs.gitlive.firebase.database)
             //implementation(libs.gitlive.firebase.analytics)
             //implementation(libs.gitlive.firebase.messaging)
-            //implementation(libs.cupertino.adaptive)
 
             implementation(libs.adaptive)
             implementation(libs.adaptive.layout)
