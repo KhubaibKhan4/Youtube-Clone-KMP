@@ -255,7 +255,6 @@ fun ShortItem(
                 }
             }
 
-            // Video Interaction Buttons
             Column(
                 modifier = Modifier
                     .padding(top = 140.dp)
@@ -721,7 +720,6 @@ fun ShortItem(
             tonalElevation = 8.dp,
             scrimColor = Color.Transparent,
             dragHandle = null,
-            //windowInsets = BottomSheetDefaults.windowInsets,
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth()
@@ -901,7 +899,7 @@ fun ShortItem(
                         fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                         modifier = Modifier.fillMaxWidth().padding(
                             horizontal = 16.dp, vertical = 8.dp
-                        ), // Adjust padding as needed
+                        ),
                         maxLines = 1,
                         textAlign = TextAlign.Justify,
                         overflow = TextOverflow.Ellipsis,

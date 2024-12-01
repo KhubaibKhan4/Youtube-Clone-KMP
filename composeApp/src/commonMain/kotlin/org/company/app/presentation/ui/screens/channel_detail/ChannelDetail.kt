@@ -96,7 +96,7 @@ class ChannelDetail(
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
-                //Description
+
                 Text(
                     text = "Description",
                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
@@ -120,7 +120,7 @@ class ChannelDetail(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                //Links
+
                 Text(
                     text = "Links",
                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
@@ -148,7 +148,7 @@ class ChannelDetail(
                             text = "Follow",
                             fontSize = MaterialTheme.typography.titleSmall.fontSize,
                         )
-                        // Use regular expressions to find social links
+
                         val socialLinks =
                             Regex("(?i)\\b(?:twitter|instagram|facebook|linkedin|youtube)\\b[\\w/@]+")
                                 .findAll(description.toString())
@@ -167,7 +167,6 @@ class ChannelDetail(
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
-                //Links
                 Text(
                     text = "Categories",
                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
@@ -204,7 +203,7 @@ class ChannelDetail(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                //More Info
+
                 Text(
                     text = "More info",
                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
@@ -218,7 +217,6 @@ class ChannelDetail(
                 Spacer(modifier = Modifier.height(8.dp))
 
 
-                // Channel Link
                 Row(
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 12.dp),
@@ -242,7 +240,6 @@ class ChannelDetail(
                     Spacer(modifier = Modifier.height(6.dp))
                 }
 
-                // Country
                 Row(
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 12.dp),
@@ -259,7 +256,6 @@ class ChannelDetail(
                     Spacer(modifier = Modifier.height(6.dp))
                 }
 
-                // View Info
                 Row(
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 12.dp),
@@ -276,7 +272,7 @@ class ChannelDetail(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                //More Info
+
                 Text(
                     text = "Verification",
                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
@@ -288,7 +284,7 @@ class ChannelDetail(
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                // Verification
+
                 Row(
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 12.dp),

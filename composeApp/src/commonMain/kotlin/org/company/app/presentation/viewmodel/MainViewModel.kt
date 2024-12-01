@@ -48,8 +48,8 @@ class MainViewModel(
     private val _channelBranding = MutableStateFlow<Channels>(ResultState.LOADING)
     val channelBranding: StateFlow<Channels> = _channelBranding.asStateFlow()
 
-    private val _relevance_videos = MutableStateFlow<YouTube>(ResultState.LOADING)
-    val relevanceVideos: StateFlow<YouTube> = _relevance_videos.asStateFlow()
+    private val _relevanceVideos = MutableStateFlow<YouTube>(ResultState.LOADING)
+    val relevanceVideos: StateFlow<YouTube> = _relevanceVideos.asStateFlow()
 
     private val _search = MutableStateFlow<Searches>(ResultState.LOADING)
     val search: StateFlow<Searches> = _search.asStateFlow()
@@ -187,13 +187,13 @@ class MainViewModel(
 
     fun getRelevanceVideos() {
         viewModelScope.launch {
-            _relevance_videos.value = ResultState.LOADING
+            _relevanceVideos.value = ResultState.LOADING
             try {
                 val response = repository.getRelevanceVideos()
-                _relevance_videos.value = ResultState.SUCCESS(response)
+                _relevanceVideos.value = ResultState.SUCCESS(response)
             } catch (e: Exception) {
                 val error = e.message.toString()
-                _relevance_videos.value = ResultState.ERROR(error)
+                _relevanceVideos.value = ResultState.ERROR(error)
             }
 
         }
@@ -402,7 +402,7 @@ class MainViewModel(
             try {
                 val exitingVideo =
                     database.youtubeEntityQueries.getVideoByTitle(title).executeAsOneOrNull()
-                if (exitingVideo == null || exitingVideo.id == null && !exitingVideo.title.contains(
+                if (exitingVideo == null || exitingVideo.id.toString().isBlank() && !exitingVideo.title.contains(
                         title
                     )
                 ) {
