@@ -2,6 +2,7 @@ package org.company.app.presentation.ui.screens.channel_screen
  
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -64,6 +65,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType  
 import androidx.compose.ui.text.style.TextAlign
@@ -111,6 +113,7 @@ fun ChannelContent(
     channel: Item,
     viewModel: MainViewModel = koinInject<MainViewModel>(),
 ) {
+    val localUri = LocalUriHandler.current
     val isDark by LocalThemeIsDark.current
     var playlists by remember { mutableStateOf<Youtube?>(null) }
     var multipleVideo by remember { mutableStateOf<Youtube?>(null) }
@@ -557,10 +560,17 @@ fun ChannelContent(
                 }
             }
 
+            val socialLinks = Regex("https?://\\S+")
+                .findAll(channel.brandingSettings.channel.description.toString())
+                .map { it.value }
+                .toList()
 
             Text(
-                text = "facebook.com/grandThumb?ref=book...",
-                color = if (isDark) Color.White else Color.Black
+                text = socialLinks.firstOrNull() ?: "",
+                color = Color.Blue,
+                modifier = Modifier.clickable {
+                    localUri.openUri(socialLinks.firstOrNull() ?: "")
+                }
             )
 
             TextButton(
