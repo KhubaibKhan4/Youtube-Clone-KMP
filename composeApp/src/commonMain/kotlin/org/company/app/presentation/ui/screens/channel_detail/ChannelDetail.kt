@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -33,7 +34,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -133,7 +137,9 @@ class ChannelDetail(
                 )
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
                     verticalAlignment = Alignment.Top,
                     horizontalArrangement = Arrangement.Start
                 ) {
@@ -145,24 +151,39 @@ class ChannelDetail(
                         horizontalAlignment = Alignment.Start
                     ) {
                         Text(
-                            text = "Follow",
+                            text = "Follow:",
                             fontSize = MaterialTheme.typography.titleSmall.fontSize,
                         )
 
-                        val socialLinks =
-                            Regex("(?i)\\b(?:twitter|instagram|facebook|linkedin|youtube)\\b[\\w/@]+")
-                                .findAll(description.toString())
-                                .map { it.value }
-                                .toList()
 
-                        for (link in socialLinks) {
-                            Text(
-                                text = link,
-                                fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                                color = Color.Blue
-                            )
-                            println("Social Link: $link")
-                        }
+                        val socialLinks = Regex("https?://\\S+")
+                            .findAll(channel.brandingSettings.channel.description.toString())
+                            .map { it.value }
+                            .toList()
+
+                        println("Extracted Links: $socialLinks")
+
+                            for (link in socialLinks) {
+                                ClickableText(
+                                    text = AnnotatedString(
+                                        text = link,
+                                        spanStyles = listOf(
+                                            AnnotatedString.Range(
+                                                item = SpanStyle(
+                                                    color = Color.Blue,
+                                                    textDecoration = TextDecoration.Underline
+                                                ),
+                                                start = 0,
+                                                end = link.length
+                                            )
+                                        )
+                                    ),
+                                    onClick = {
+                                        localUri.openUri(link)
+                                        println("Clicked Link: $link")
+                                    }
+                                )
+                            }
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
