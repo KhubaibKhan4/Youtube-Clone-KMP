@@ -132,11 +132,11 @@ kotlin {
 
 android {
     namespace = "org.company.app"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 34
+        minSdk = 28
+        targetSdk = 35
 
         applicationId = "org.company.app.androidApp"
         versionCode = 1
