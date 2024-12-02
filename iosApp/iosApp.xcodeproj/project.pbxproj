@@ -148,6 +148,7 @@
 			mainGroup = A93A952E29CC810C00F8E227;
 			packageReferences = (
 				493205AE2C95B89A00564F49 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				497E2B7C2CFE2BAC00FFA205 /* XCRemoteSwiftPackageReference "firebase-kotlin-sdk" */,
 			);
 			productRefGroup = A93A953829CC810C00F8E227 /* Products */;
 			projectDirPath = "";
@@ -425,6 +426,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 11.2.0;
+			};
+		};
+		497E2B7C2CFE2BAC00FFA205 /* XCRemoteSwiftPackageReference "firebase-kotlin-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/GitLiveApp/firebase-kotlin-sdk.git";
+			requirement = {
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
