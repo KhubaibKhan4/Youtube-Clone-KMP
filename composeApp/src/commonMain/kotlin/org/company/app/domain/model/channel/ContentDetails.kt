@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ContentDetails(
     @SerialName("relatedPlaylists")
-    val relatedPlaylists: org.company.app.domain.model.channel.RelatedPlaylists
+    val relatedPlaylists: RelatedPlaylists
 )
