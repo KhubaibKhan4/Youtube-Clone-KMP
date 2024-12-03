@@ -7,11 +7,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Item(
     @SerialName("brandingSettings")
-    val brandingSettings: org.company.app.domain.model.channel.BrandingSettings,
+    val brandingSettings: BrandingSettings,
     @SerialName("contentDetails")
-    val contentDetails: org.company.app.domain.model.channel.ContentDetails,
+    val contentDetails: ContentDetails,
     @SerialName("contentOwnerDetails")
-    val contentOwnerDetails: org.company.app.domain.model.channel.ContentOwnerDetails?,
+    val contentOwnerDetails: ContentOwnerDetails?,
     @SerialName("etag")
     val etag: String,
     @SerialName("id")
@@ -19,11 +19,11 @@ data class Item(
     @SerialName("kind")
     val kind: String,
     @SerialName("snippet")
-    val snippet: org.company.app.domain.model.channel.Snippet,
+    val snippet: Snippet,
     @SerialName("statistics")
-    val statistics: org.company.app.domain.model.channel.Statistics,
+    val statistics: Statistics,
     @SerialName("status")
-    val status: org.company.app.domain.model.channel.Status,
+    val status: Status,
     @SerialName("topicDetails")
-    val topicDetails: org.company.app.domain.model.channel.TopicDetails? = null
+    val topicDetails: TopicDetails? = null
 )
