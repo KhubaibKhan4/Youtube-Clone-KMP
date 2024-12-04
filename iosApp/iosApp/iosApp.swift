@@ -6,11 +6,11 @@ import Firebase
 @main
 struct iosApp: App {
     init() {
-            FirebaseApp.configure() 
+            FirebaseApp.configure()
         }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView() 
         }
     }
 }
