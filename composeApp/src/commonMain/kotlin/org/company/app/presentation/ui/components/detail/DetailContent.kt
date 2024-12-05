@@ -885,6 +885,7 @@ fun DetailContent(
                 ) {
                     Column(
                         modifier = Modifier.fillMaxWidth()
+                            .height(500.dp)
                             .verticalScroll(state = rememberScrollState())
                     ) {
                         Row(
