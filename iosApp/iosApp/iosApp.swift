@@ -2,7 +2,6 @@ import UIKit
 import SwiftUI
 import ComposeApp
 import Firebase
-
 @main
 struct iosApp: App {
     init() {
