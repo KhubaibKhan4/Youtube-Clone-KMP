@@ -67,7 +67,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 
 # Tech Stack Highlights
 
-- **Kotlin Multiplatform**: `2.0.0`
+- **Kotlin**: `2.0.21`
 - **AGP (Android Gradle Plugin)**: `8.2.2`
 - **Compose**: `1.7.1`
   - `androidx-appcompat`: `1.7.0`
