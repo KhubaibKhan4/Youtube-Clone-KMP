@@ -34,7 +34,7 @@ sqlDelight = "2.0.2"
 glace-effect = "1.1.1"
 alertKmp = "1.0.8"
 junitJupiter = "5.8.1"
-firebase-bom = "33.6.0"
+firebase-bom = "33.7.0"
 gitlive = "2.1.0"
 
 
