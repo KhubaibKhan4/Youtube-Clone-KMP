@@ -98,7 +98,6 @@ kotlin {
             implementation(libs.androidx.media3.exoplayer.dash)
             implementation(libs.androidx.media3.ui)
             implementation(libs.core)
-            implementation(libs.core)
             implementation(libs.custom.ui)
             implementation(libs.sqlDelight.driver.android)
             implementation(libs.koin.android)
