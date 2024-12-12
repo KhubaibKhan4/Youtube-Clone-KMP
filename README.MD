@@ -72,7 +72,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Compose**: `1.7.1`
   - `androidx-appcompat`: `1.7.0`
   - `androidx-activityCompose`: `1.9.3`
-  - `compose-uitooling`: `1.7.4`
+  - `compose-uitooling`: `1.7.6`
   - `composeImageLoader`: `1.7.1`
 - **Core Libraries**: `12.1.0`
 - **Kotlinx Libraries**:
@@ -104,7 +104,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Size Measurement**:
   - `size`: `0.5.0`
 - **Firebase Bom**
-  - `firebase-bom`:`33.5.1`
+  - `firebase-bom`:`33.7.0`
 - **Voyager Navigation**: `1.1.0-beta03`
 - **Other Utilities**:
   - `official-viewmodel`: `2.8.0-alpha10`
