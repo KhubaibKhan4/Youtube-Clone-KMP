@@ -789,8 +789,8 @@ fun DetailContent(
 
             if (notificationMessage.value.isNotBlank() && subscribedMenu.not()) {
                 //Notify(notificationMessage.value)
-                val notification = createNotification(type = NotificationType.TOAST)
-                notification.show(message = notificationMessage.value, title = "Subscription", duration = NotificationDuration.LONG)
+                val notification = createNotification(type = NotificationType.TOP)
+                notification.show(message = notificationMessage.value, title = "Subscription", duration = NotificationDuration.SHORT)
             }
 
             HorizontalDivider(
