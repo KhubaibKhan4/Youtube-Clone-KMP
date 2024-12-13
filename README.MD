@@ -111,7 +111,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
   - `compose-navigagtion`: `2.8.3`
   - `compose-adaptive`: `1.0.1`
 - **JavaFX**: `22-ea+16`
-- **AlertKMP**: `1.0.8`
+- **AlertKMP**: `2.0.0`
 - **MediaPlayer-KMP**: `2.0.4`
 
 ## Getting Started
