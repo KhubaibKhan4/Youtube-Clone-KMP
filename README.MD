@@ -83,8 +83,8 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Networking**:
   - `ktor`: `3.0.1`
 - **Dependency Injection**:
-  - `koin`: `4.0.1`
-  - `koinComposeMultiplatform`: `4.0.1`
+  - `koin`: `4.0.1-Beta1`
+  - `koinComposeMultiplatform`: `4.0.1-Beta1`
 - **UI/UX**:
   - `compose-uitooling`: `1.9.3`
 - **Media Handling**:
