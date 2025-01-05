@@ -1,0 +1,19 @@
+platform :ios, '13.0'
+
+target 'iosApp' do
+  use_frameworks! # Required for Firebase SDK
+  
+  # Add your existing dependencies here
+  # Add Firebase GitLive dependencies
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Database'
+
+  # Link to your Compose Multiplatform framework
+  pod 'MyCocoaPod', :path => '../composeApp/MyCocoaPod.podspec'
+
+  # Optionally, you may want to include other Firebase components if required
+  # pod 'Firebase/Analytics'
+  # pod 'Firebase/Messaging'
+end
