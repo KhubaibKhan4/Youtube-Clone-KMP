@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.libres)
     alias(libs.plugins.compose.compiler)
     id("com.google.gms.google-services")
+    alias(libs.plugins.ocoapods)
 }
 kotlin {
     androidTarget {
@@ -24,6 +25,41 @@ kotlin {
         browser()
         binaries.executable()
     }
+
+    cocoapods {
+        version = "1.0"
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        ios.deploymentTarget = "17.0"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "composeApp"
+            isStatic = true
+        }
+
+        // Firebase dependencies
+        /*pod("Firebase") {
+            version = "~> 11.5.0"
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }*/
+        pod("FirebaseCore") {
+            version = "~> 11.5.0"
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        /*pod("FirebaseAnalytics") {
+            version = "~> 11.5.0"
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }*/
+        pod("FirebaseFirestore") {
+            version = "~> 11.5.0"
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        pod("FirebaseDatabase") {
+            version ="~> 11.5.0"
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+    }
+
 
     listOf(
         iosX64(),

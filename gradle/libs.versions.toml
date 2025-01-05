@@ -36,6 +36,7 @@ alertKmp = "2.0.0"
 junitJupiter = "5.8.1"
 firebase-bom = "33.7.0"
 gitlive = "2.1.0"
+firebasecore = "11.6.0"
 
 
 [libraries]
@@ -105,3 +106,4 @@ kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 libres = { id = "io.github.skeptick.libres", version.ref = "libres" }
+ocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
