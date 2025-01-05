@@ -1,0 +1,15 @@
+platform :ios, '15.6'
+
+target 'iosApp' do
+  use_frameworks! :linkage => :static
+
+  # Path to the Compose Multiplatform framework
+  pod 'composeApp', :path => '../composeApp'
+
+  # Firebase libraries
+  #pod 'Firebase', '~> 11.5.0'
+  #pod 'FirebaseCore', '~> 11.5.0'
+  #pod 'FirebaseAnalytics', '~> 11.5.0'
+  #pod 'FirebaseFirestore', '~> 11.5.0'
+  #pod 'FirebaseDatabase', '~> 11.5.0'
+end
