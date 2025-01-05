@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -10,12 +11,13 @@ plugins {
     alias(libs.plugins.libres)
     alias(libs.plugins.compose.compiler)
     id("com.google.gms.google-services")
+    alias(libs.plugins.kotlinCocoapods)
 }
 kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "19"
+                jvmTarget = "20"
             }
         }
     }
@@ -36,6 +38,37 @@ kotlin {
             // Required when using NativeSQLiteDriver
             linkerOpts.add("-lsqlite3")
         }
+    }
+
+
+    cocoapods {
+        // Required properties
+        // Specify the required Pod version here. Otherwise, the Gradle project version is used.
+        version = "1.0"
+        summary = "Some description for a Kotlin/Native module"
+        homepage = "Link to a Kotlin/Native module homepage"
+
+        // Optional properties
+        // Configure the Pod name here instead of changing the Gradle project name
+        name = "MyCocoaPod"
+
+        framework {
+            // Required properties
+            // Framework name configuration. Use this property instead of deprecated 'frameworkName'
+            baseName = "composeApp"
+
+            // Optional properties
+            // Specify the framework linking type. It's dynamic by default.
+            isStatic = false
+            // Dependency export
+            // Uncomment and specify another project module if you have one:
+            // export(project(":<your other KMP module>"))
+            transitiveExport = false // This is default.
+        }
+
+        // Maps custom Xcode configuration to NativeBuildType
+        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
     }
 
     sourceSets {
@@ -131,11 +164,11 @@ kotlin {
 
 android {
     namespace = "org.company.app"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 34
 
         applicationId = "org.company.app.androidApp"
         versionCode = 1
