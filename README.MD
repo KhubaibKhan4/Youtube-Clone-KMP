@@ -52,7 +52,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - Channel Video Search
 - Pull to refresh.
 - Local Notifications Integration on Android & iOS.
-- Media player KMP Implementation 
+- Media player KMP Implementation [![MediaPlayer-KMP]](https://www.github.com/khubaibkhan4)
 
 ## 🚀 Future Plans
 - TV and Wear OS Versions
