@@ -139,7 +139,7 @@ To use the app, follow these steps:
    - Ensure that the API key is not hard-coded or exposed directly in your source code.
 5. **Download Videos Setup**
    - Use `yt-dlp` to perform download operation in the applications. 
-   - Download the `yt-dlp.exe` file from the official Repository and place that into you Mac, Linux & Windows and just provide it's path in the `actual class VideoDownloader` in each platforms.
+   - Download the `yt-dlp.exe` file from the official Repository and place that into you Mac, Linux & Windows and just provide it's path in the `actual class VideoDownloader` in each platforms. ( NOTE: Using this for educational purposes)
 
 6. **Start Using the App:**
    - Build and run your app to start utilizing the YouTube Data API functionalities.
