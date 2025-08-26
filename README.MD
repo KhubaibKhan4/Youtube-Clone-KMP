@@ -61,102 +61,6 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - FCM Support
 - Video Caching Support
 
-## 🌟 Contributions
-If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
-
-# Open To Work
-Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm here for you. I'm open to work, available for Freelance or Remote Work Opportunities. Feel free to reach me out on Email.
-
-# Tech Stack Highlights
-
-- **Kotlin**: `2.0.21`
-- **AGP (Android Gradle Plugin)**: `8.2.2`
-- **Compose**: `1.7.1`
-  - `androidx-appcompat`: `1.7.0`
-  - `androidx-activityCompose`: `1.9.3`
-  - `compose-uitooling`: `1.7.6`
-  - `composeImageLoader`: `1.7.1`
-- **Core Libraries**: `12.1.0`
-- **Kotlinx Libraries**:
-  - `kotlinx-coroutines`: `1.9.0`
-  - `kotlinx-serialization`: `1.7.3`
-  - `kotlinx-datetime`: `0.6.1`
-- **Networking**:
-  - `ktor`: `3.0.1`
-- **Dependency Injection**:
-  - `koin`: `4.0.1-Beta1`
-  - `koinComposeMultiplatform`: `4.0.1-Beta1`
-- **UI/UX**:
-  - `compose-uitooling`: `1.9.3`
-- **Media Handling**:
-  - `media3Ui`: `1.5.1`
-  - `media3ExoplayerDash`: `1.5.1`
-  - `media3Exoplayer`: `1.5.1`
-- **Logging**:
-  - `napier`: `2.7.1`
-- **Database/Storage**:
-  - `sql-delight`: `2.0.2`
-- **JSON Parsing**:
-  - `json`: `1.6.3`
-- **Build Configurations**:
-  - `buildConfig`: `5.3.5`
-- **Cross-Platform Image Loading**:
-  - `kamelImage`: `1.0.1`
-  - `kamelDefault`: `1.0.1`
-- **Size Measurement**:
-  - `size`: `0.5.0`
-- **Firebase Bom**
-  - `firebase-bom`:`33.7.0`
-- **Voyager Navigation**: `1.1.0-beta03`
-- **Other Utilities**:
-  - `official-viewmodel`: `2.8.0-alpha10`
-  - `compose-navigagtion`: `2.8.3`
-  - `compose-adaptive`: `1.0.1`
-- **JavaFX**: `22-ea+16`
-- **AlertKMP**: `2.0.0`
-- **MediaPlayer-KMP**: `2.0.4`
-
-## Getting Started
-
-To use the app, follow these steps:
-
-1. **Create YouTube API V3 credentials:**
-   - Navigate to the [Google Cloud Console](https://console.cloud.google.com/).
-   - Create a new project or select an existing one.
-   - Enable the YouTube Data API v3 for your project.
-   - Generate an API key for your project.
-
-2. **Add the credentials to `composeApp/src/kotlin/com/company/app/utils/`:**
-   - Open the `Constant.kt` file in your project.
-   - Add the following line: `API_KEY=Your_API_VALUE`, replacing `Your_API_VALUE` with the API key generated in step 1.
-
-3. **Ensure API Key Security:**
-   - Restrict your API key to prevent unauthorized usage.
-   - Configure API key restrictions based on IP addresses, referrers, or Android app signatures to enhance security.
-
-4. **Integrate API Key into the App:**
-   - Use the `BuildConfig.API_KEY` variable in your code to access the API key securely. (Removed for Now, due to some bugs)
-   - Ensure that the API key is not hard-coded or exposed directly in your source code.
-5. **Download Videos Setup**
-   - Use `yt-dlp` to perform download operation in the applications. 
-   - Download the `yt-dlp.exe` file from the official Repository and place that into you Mac, Linux & Windows and just provide it's path in the `actual class VideoDownloader` in each platforms. ( NOTE: Using this for educational purposes)
-
-6. **Start Using the App:**
-   - Build and run your app to start utilizing the YouTube Data API functionalities.
-   - Implement features such as video search, playback, playlists, and more using the API key.
-
-Feel free to reach out if you have any questions or need further assistance on the Discussion Tab!
-
-## 🤝 Connect with Me
-
-Let's chat about potential projects, job opportunities, or any other collaboration! Feel free to connect with me through the following channels:
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/khubaibkhandev)
-[![Twitter](https://img.shields.io/badge/Twitter-Follow-blue?style=for-the-badge&logo=twitter)](https://twitter.com/codespacepro)
-[![Email](https://img.shields.io/badge/Email-Drop%20a%20Message-red?style=for-the-badge&logo=gmail)](mailto:18.bscs.803@gmail.com)
-
-
-
 ## Download Installers
 [<img src="https://user-images.githubusercontent.com/114044633/223920025-83687de0-e463-4c5d-8122-e06e4bb7d40c.png" width="200">](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/raw/master/screenshots/youtube-clone-kmp.apk)
 
@@ -281,6 +185,100 @@ If you want to the live version of YouTube Clone KMP then checkout:
 | ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/106.png) |
 | ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/107.png) |
 | ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/108.png) |
+
+## 🌟 Contributions
+If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
+
+# Open To Work
+Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm here for you. I'm open to work, available for Freelance or Remote Work Opportunities. Feel free to reach me out on Email.
+
+# Tech Stack Highlights
+
+- **Kotlin**: `2.0.21`
+- **AGP (Android Gradle Plugin)**: `8.2.2`
+- **Compose**: `1.7.1`
+  - `androidx-appcompat`: `1.7.0`
+  - `androidx-activityCompose`: `1.9.3`
+  - `compose-uitooling`: `1.7.6`
+  - `composeImageLoader`: `1.7.1`
+- **Core Libraries**: `12.1.0`
+- **Kotlinx Libraries**:
+  - `kotlinx-coroutines`: `1.9.0`
+  - `kotlinx-serialization`: `1.7.3`
+  - `kotlinx-datetime`: `0.6.1`
+- **Networking**:
+  - `ktor`: `3.0.1`
+- **Dependency Injection**:
+  - `koin`: `4.0.1-Beta1`
+  - `koinComposeMultiplatform`: `4.0.1-Beta1`
+- **UI/UX**:
+  - `compose-uitooling`: `1.9.3`
+- **Media Handling**:
+  - `media3Ui`: `1.5.1`
+  - `media3ExoplayerDash`: `1.5.1`
+  - `media3Exoplayer`: `1.5.1`
+- **Logging**:
+  - `napier`: `2.7.1`
+- **Database/Storage**:
+  - `sql-delight`: `2.0.2`
+- **JSON Parsing**:
+  - `json`: `1.6.3`
+- **Build Configurations**:
+  - `buildConfig`: `5.3.5`
+- **Cross-Platform Image Loading**:
+  - `kamelImage`: `1.0.1`
+  - `kamelDefault`: `1.0.1`
+- **Size Measurement**:
+  - `size`: `0.5.0`
+- **Firebase Bom**
+  - `firebase-bom`:`33.7.0`
+- **Voyager Navigation**: `1.1.0-beta03`
+- **Other Utilities**:
+  - `official-viewmodel`: `2.8.0-alpha10`
+  - `compose-navigagtion`: `2.8.3`
+  - `compose-adaptive`: `1.0.1`
+- **JavaFX**: `22-ea+16`
+- **AlertKMP**: `2.0.0`
+- **MediaPlayer-KMP**: `2.0.4`
+
+## Getting Started
+
+To use the app, follow these steps:
+
+1. **Create YouTube API V3 credentials:**
+   - Navigate to the [Google Cloud Console](https://console.cloud.google.com/).
+   - Create a new project or select an existing one.
+   - Enable the YouTube Data API v3 for your project.
+   - Generate an API key for your project.
+
+2. **Add the credentials to `composeApp/src/kotlin/com/company/app/utils/`:**
+   - Open the `Constant.kt` file in your project.
+   - Add the following line: `API_KEY=Your_API_VALUE`, replacing `Your_API_VALUE` with the API key generated in step 1.
+
+3. **Ensure API Key Security:**
+   - Restrict your API key to prevent unauthorized usage.
+   - Configure API key restrictions based on IP addresses, referrers, or Android app signatures to enhance security.
+
+4. **Integrate API Key into the App:**
+   - Use the `BuildConfig.API_KEY` variable in your code to access the API key securely. (Removed for Now, due to some bugs)
+   - Ensure that the API key is not hard-coded or exposed directly in your source code.
+5. **Download Videos Setup**
+   - Use `yt-dlp` to perform download operation in the applications. 
+   - Download the `yt-dlp.exe` file from the official Repository and place that into you Mac, Linux & Windows and just provide it's path in the `actual class VideoDownloader` in each platforms. ( NOTE: Using this for educational purposes)
+
+6. **Start Using the App:**
+   - Build and run your app to start utilizing the YouTube Data API functionalities.
+   - Implement features such as video search, playback, playlists, and more using the API key.
+
+Feel free to reach out if you have any questions or need further assistance on the Discussion Tab!
+
+## 🤝 Connect with Me
+
+Let's chat about potential projects, job opportunities, or any other collaboration! Feel free to connect with me through the following channels:
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/khubaibkhandev)
+[![Twitter](https://img.shields.io/badge/Twitter-Follow-blue?style=for-the-badge&logo=twitter)](https://twitter.com/codespacepro)
+[![Email](https://img.shields.io/badge/Email-Drop%20a%20Message-red?style=for-the-badge&logo=gmail)](mailto:18.bscs.803@gmail.com)
 
 ## Server Driven Ui Setup
 To Setup the Server Driven UI using Firebase. You need to create a new firebase project and add Android, iOS, Web And Desktop inside your project. Make sure to provide the `.json` file in Your `commonMain` & also inside your iOS App as well. Moreover, Provide the `projectId, apiKey, applicationId` inside your `jsMain` & `jvmMain` Modules.
@@ -411,5 +409,24 @@ To optimize performance in the YouTube Clone project, consider the following tip
 - **Code Profiling**: Profile your code to identify and optimize performance bottlenecks.
 - **Resource Management**: Ensure efficient use of system resources, such as memory and CPU, to improve overall performance.
 
-## Disclaimer
-This project is for educational purposes. All the Design Credit Goes to YouTube Official Team. 
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Create a Pull Request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+- [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html)
+- [Jetpack Compose](https://developer.android.com/jetpack/compose)
+- [SwiftUI](https://developer.apple.com/xcode/swiftui/)
+
+---
+
+> Inspired by YouTube, built for learning and demonstration purposes only. This project is not affiliated with or endorsed by Google or YouTube.
