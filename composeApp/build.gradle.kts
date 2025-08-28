@@ -33,6 +33,14 @@ kotlin {
         it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+
+            binaryOption("bundleId","org.company.app.YouTube-Clone")
+
+            freeCompilerArgs += listOf(
+                "-Xbinary=bundleId=org.company.app.YouTube-Clone",
+                "-opt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlinx.cinterop.ExperimentalForeignApi"
+            )
             // Required when using NativeSQLiteDriver
             linkerOpts.add("-lsqlite3")
         }
