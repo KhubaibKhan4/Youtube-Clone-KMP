@@ -56,13 +56,12 @@ import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.usecases.ResultState
 import org.company.app.presentation.ui.components.common.ErrorBox
-import org.company.app.presentation.ui.components.shimmer.ShimmerEffectMain
 import org.company.app.presentation.ui.components.shimmer.ShimmerEffectSingleVideo
 import org.company.app.presentation.ui.screens.detail.DetailScreen
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.utils.formatVideoDuration
-import org.company.app.utils.getFormattedDateHome
+import org.company.app.core.common.formatVideoDuration
+import org.company.app.core.common.getFormattedDateHome
 import org.koin.compose.koinInject
 import kotlin.random.Random
 

@@ -1,4 +1,4 @@
-package org.company.app.utils
+package org.company.app.core.common
 
 fun formatVideoDuration(duration: String?): String {
     if (duration == null) return "00:00"

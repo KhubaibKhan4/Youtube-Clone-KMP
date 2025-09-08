@@ -58,7 +58,6 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -67,7 +66,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -116,11 +114,10 @@ import org.company.app.presentation.ui.screens.detail.formatLikes
 import org.company.app.presentation.ui.screens.detail.formatSubscribers
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.utils.LayoutType
-import org.company.app.utils.formatVideoDuration
-import org.company.app.utils.formatViewCount
-import org.company.app.utils.getFormattedDate
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.company.app.core.common.LayoutType
+import org.company.app.core.common.formatVideoDuration
+import org.company.app.core.common.formatViewCount
+import org.company.app.core.common.getFormattedDate
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import youtube_clone.composeapp.generated.resources.Res

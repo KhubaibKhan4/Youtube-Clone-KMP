@@ -37,7 +37,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.company.app.theme.LocalThemeIsDark
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @Composable
 fun ShimmerEffectMain() {

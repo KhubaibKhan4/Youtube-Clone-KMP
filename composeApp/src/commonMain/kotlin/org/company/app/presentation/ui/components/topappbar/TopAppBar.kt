@@ -38,7 +38,6 @@ import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.Cast
 import androidx.compose.material.icons.outlined.Download
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.WatchLater
@@ -93,16 +92,14 @@ import org.company.app.presentation.ui.screens.account.AccountScreen
 import org.company.app.presentation.ui.screens.detail.DetailScreen
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.utils.formatVideoDuration
-import org.company.app.utils.formatViewCount
-import org.company.app.utils.getFormattedDateHome
+import org.company.app.core.common.formatVideoDuration
+import org.company.app.core.common.formatViewCount
+import org.company.app.core.common.getFormattedDateHome
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import youtube_clone.composeapp.generated.resources.Res
-import youtube_clone.composeapp.generated.resources.youtube_logo_dark
 import youtube_clone.composeapp.generated.resources.youtube_logo_icon_dark
 import youtube_clone.composeapp.generated.resources.youtube_logo_icon_light
-import youtube_clone.composeapp.generated.resources.youtube_logo_light
 import org.company.app.domain.model.channel.Item as ChannelItem
 import org.company.app.domain.model.videos.Item as YouTubeItem
 

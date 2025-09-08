@@ -1,4 +1,4 @@
-package org.company.app.utils
+package org.company.app.core.common
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant

@@ -60,9 +60,9 @@ import org.company.app.domain.model.videos.Item
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.screens.detail.DetailScreen
-import org.company.app.utils.formatVideoDuration
-import org.company.app.utils.formatViewCount
-import org.company.app.utils.getFormattedDate
+import org.company.app.core.common.formatVideoDuration
+import org.company.app.core.common.formatViewCount
+import org.company.app.core.common.getFormattedDate
 
 @Composable
 fun PlaylistsVideosList(

@@ -3,7 +3,6 @@ package org.company.app.presentation.ui.components.shorts
 import Notify
 import VideoPlayer
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -52,7 +51,6 @@ import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Feedback
 import androidx.compose.material.icons.outlined.Report
 import androidx.compose.material.icons.outlined.VideoLibrary
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults

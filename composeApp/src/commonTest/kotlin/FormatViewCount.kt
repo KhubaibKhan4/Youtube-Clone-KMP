@@ -1,5 +1,3 @@
-import androidx.compose.runtime.Composable
-import org.company.app.utils.formatViewCount
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

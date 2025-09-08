@@ -18,14 +18,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Comment
-import androidx.compose.material.icons.filled.MyLocation
-import androidx.compose.material.icons.filled.Pin
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.outlined.SmsFailed
 import androidx.compose.material.icons.outlined.ThumbDown
 import androidx.compose.material.icons.outlined.ThumbUp
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -62,7 +59,7 @@ import org.company.app.theme.LocalThemeIsDark
 import org.company.app.presentation.ui.components.common.ErrorBox
 import org.company.app.presentation.ui.components.custom_image.NetworkImage
 import org.company.app.presentation.ui.screens.detail.formatLikes
-import org.company.app.utils.getFormattedDate
+import org.company.app.core.common.getFormattedDate
 import org.koin.compose.koinInject
 
 @Composable

@@ -1,4 +1,4 @@
-package org.company.app.utils
+package org.company.app.core.common
 
 object Constant {
     const val BASE_URL = "https://www.googleapis.com/youtube/v3/"

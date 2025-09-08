@@ -5,7 +5,6 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.database.database
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -19,8 +18,8 @@ import org.company.app.data.remote.YoutubeClientApi
 import org.company.app.data.repository.YouTubeServiceImpl
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.setupHttpCache
-import org.company.app.utils.Constant
-import org.company.app.utils.Constant.BASE_URL
+import org.company.app.core.common.Constant
+import org.company.app.core.common.Constant.BASE_URL
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
