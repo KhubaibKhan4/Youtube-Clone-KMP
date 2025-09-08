@@ -10,12 +10,12 @@ import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
 import org.company.app.domain.repository.YouTubeService
-import org.company.app.utils.Layout
-import org.company.app.utils.LayoutInformation
-import org.company.app.utils.LayoutMeta
-import org.company.app.utils.LayoutType
-import org.company.app.utils.Meta
-import org.company.app.utils.UiData
+import org.company.app.core.common.Layout
+import org.company.app.core.common.LayoutInformation
+import org.company.app.core.common.LayoutMeta
+import org.company.app.core.common.LayoutType
+import org.company.app.core.common.Meta
+import org.company.app.core.common.UiData
 
 class YouTubeServiceImpl(
     private val youtubeClientApi: YoutubeClientApi,

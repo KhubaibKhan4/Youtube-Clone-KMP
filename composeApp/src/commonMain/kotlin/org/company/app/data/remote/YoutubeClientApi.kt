@@ -2,24 +2,13 @@ package org.company.app.data.remote
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logger
-import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
-import io.ktor.http.ContentType
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
 import org.company.app.domain.model.categories.VideoCategories
 import org.company.app.domain.model.channel.Channel
 import org.company.app.domain.model.comments.Comments
 import org.company.app.domain.model.search.Search
 import org.company.app.domain.model.videos.Youtube
-import org.company.app.utils.Constant.API_KEY
-import org.company.app.utils.Constant.BASE_URL
-import org.company.app.utils.Constant.TIMEOUT
+import org.company.app.core.common.Constant.API_KEY
 
 class YoutubeClientApi(
     private val client: HttpClient

@@ -1,4 +1,4 @@
-package org.company.app.utils
+package org.company.app.core.common
 
 import androidx.compose.runtime.Composable
 

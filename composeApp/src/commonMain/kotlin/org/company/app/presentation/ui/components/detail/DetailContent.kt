@@ -52,7 +52,6 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.NotificationsOff
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.VideoLibrary
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -119,9 +118,9 @@ import org.company.app.presentation.ui.screens.detail.formatViewCount
 import org.company.app.presentation.ui.screens.detail.getFormattedDateLikeMonthDay
 import org.company.app.presentation.viewmodel.MainViewModel
 import org.company.app.theme.LocalThemeIsDark
-import org.company.app.utils.Constant
-import org.company.app.utils.formatVideoDuration
-import org.company.app.utils.getFormattedDate
+import org.company.app.core.common.Constant
+import org.company.app.core.common.formatVideoDuration
+import org.company.app.core.common.getFormattedDate
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
