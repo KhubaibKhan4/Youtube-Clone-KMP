@@ -189,10 +189,6 @@ compose.desktop {
     }
 }
 
-compose.experimental {
-    web.application {}
-}
-
 tasks.getByPath("jvmProcessResources").dependsOn("libresGenerateResources")
 tasks.getByPath("jvmSourcesJar").dependsOn("libresGenerateResources")
 tasks.getByPath("jsProcessResources").dependsOn("libresGenerateResources")
