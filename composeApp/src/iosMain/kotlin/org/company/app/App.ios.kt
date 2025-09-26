@@ -118,6 +118,18 @@ actual fun HttpClientConfig<*>.setupHttpCache() {
                     cache.filterKeys { it.startsWith(url.toString()) }.values.toSet()
                 }
             }
+
+            override suspend fun remove(
+                url: Url,
+                varyKeys: Map<String, String>
+            ) {
+                // TODO("Not yet implemented")
+            }
+
+            override suspend fun removeAll(url: Url) {
+               // TODO("Not yet implemented")
+            }
+
             override suspend fun store(url: Url, data: CachedResponseData) {
                 val key = generateCacheKey(url, data.varyKeys)
                 lock.withLock {
