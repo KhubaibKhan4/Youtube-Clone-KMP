@@ -1,8 +1,11 @@
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
+import androidx.compose.ui.window.ComposeViewport
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.FirebaseOptions
 import dev.gitlive.firebase.initialize
+import kotlinx.browser.document
+import kotlinx.browser.window
 import org.company.app.App
 import org.jetbrains.skiko.wasm.onWasmReady
 
@@ -22,7 +25,7 @@ fun main() {
     }
 
     onWasmReady {
-        CanvasBasedWindow("Youtube Clone") {
+        ComposeViewport(viewportContainerId = "ComposeTarget") {
             App()
         }
     }
