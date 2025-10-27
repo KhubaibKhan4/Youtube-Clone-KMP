@@ -1,7 +1,7 @@
 [versions]
 
 adaptive = "1.1.2"
-adaptiveLayout = "1.1.2"
+adaptiveLayout = "1.2.0+dev3137"
 adaptiveNavigation = "1.1.2"
 core = "13.0.0"
 kotestProperty = "5.9.1"
