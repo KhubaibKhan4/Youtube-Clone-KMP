@@ -1,5 +1,10 @@
 package org.company.app.presentation.ui.screens.subscriptions
 
+import org.company.app.presentation.ui.components.common.SignInNotice
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +33,8 @@ import org.company.app.presentation.ui.components.topappbar.TopBar
 class SubscriptionScreen : Screen {
     @Composable
     override fun Content() {
+        var showSignIn by remember { mutableStateOf(false) }
+        if (showSignIn) SignInNotice(onDismiss = { showSignIn = false })
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,7 +69,7 @@ class SubscriptionScreen : Screen {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 TextButton(
-                    onClick = {},
+                    onClick = { showSignIn = true },
                     shape = RoundedCornerShape(24.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Blue,

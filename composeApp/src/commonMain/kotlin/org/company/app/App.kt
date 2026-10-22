@@ -1,6 +1,13 @@
 package org.company.app
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.runtime.remember
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
+import dev.chrisbanes.haze.materials.HazeMaterials
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -75,6 +83,7 @@ internal fun App() = AppTheme {
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun AppContent() {
+    val isDark by LocalThemeIsDark.current
     val items = listOf(
         NavigationItem(
             title = "Home",
@@ -111,14 +120,12 @@ fun AppContent() {
         tab = HomeTab,
         disposeNestedNavigators = true
     ) { tabNavigator ->
-        Scaffold(bottomBar = {
+        val hazeState = remember { HazeState() }
+        Scaffold(
+            containerColor = MaterialTheme.colorScheme.background,
+            bottomBar = {
             if (!showNavigationRail) {
-                NavigationBar(
-                    modifier = Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.ime),
-                    containerColor = MaterialTheme.colorScheme.background,
-                    contentColor = contentColorFor(Color.Red),
-                    tonalElevation = 8.dp
-                ) {
+                GlassNavigationBar(hazeState = hazeState, isDark = isDark) {
                     TabItem(HomeTab)
                     TabItem(ShortsTab)
                     TabItem(SubscriptionsTab)
@@ -126,14 +133,18 @@ fun AppContent() {
                 }
             }
         }) {
+            // Content draws behind the glass bar so the blur has something to sample;
+            // screens read LocalBottomBarPadding to keep their last items reachable.
             Column(
                 modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
-                    .padding(
-                        bottom = it.calculateBottomPadding(),
-                        start = if (showNavigationRail) 80.dp else 0.dp
-                    )
+                    .hazeSource(hazeState)
+                    .padding(start = if (showNavigationRail) 80.dp else 0.dp)
             ) {
+                androidx.compose.runtime.CompositionLocalProvider(
+                    LocalBottomBarPadding provides it.calculateBottomPadding()
+                ) {
                 CurrentTab()
+                }
             }
         }
     }
@@ -195,8 +206,7 @@ fun RowScope.TabItem(tab: Tab) {
     val isDark by LocalThemeIsDark.current
     val tabNavigator = LocalTabNavigator.current
     NavigationBarItem(
-        modifier = Modifier
-            .height(58.dp).clip(RoundedCornerShape(16.dp)),
+        modifier = Modifier.height(58.dp),
         selected = tabNavigator.current == tab,
         onClick = {
             tabNavigator.current = tab
@@ -221,13 +231,48 @@ fun RowScope.TabItem(tab: Tab) {
         },
         enabled = true,
         alwaysShowLabel = true,
-        interactionSource = MutableInteractionSource(),
+        interactionSource = remember { MutableInteractionSource() },
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = Color.Red,
-            unselectedIconColor = Color.Black,
-            indicatorColor = Color.LightGray
+            unselectedIconColor = if (isDark) Color.White else Color.Black,
+            indicatorColor = Color.Red.copy(alpha = 0.14f)
         ),
     )
+}
+
+/** Height of the floating glass bar, so scrolling content can pad past it. */
+val LocalBottomBarPadding = androidx.compose.runtime.staticCompositionLocalOf { 0.dp }
+
+@OptIn(ExperimentalHazeMaterialsApi::class)
+@Composable
+private fun GlassNavigationBar(
+    hazeState: HazeState,
+    isDark: Boolean,
+    content: @Composable RowScope.() -> Unit,
+) {
+    val shape = RoundedCornerShape(28.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .windowInsetsPadding(WindowInsets.navigationBars)
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+    ) {
+        NavigationBar(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(shape)
+                .hazeEffect(state = hazeState, style = HazeMaterials.ultraThin())
+                .border(
+                    width = 1.dp,
+                    color = (if (isDark) Color.White else Color.Black).copy(alpha = 0.08f),
+                    shape = shape
+                ),
+            containerColor = Color.Transparent,
+            tonalElevation = 0.dp,
+            windowInsets = WindowInsets(0, 0, 0, 0),
+            content = content
+        )
+    }
 }
 
 internal expect fun openUrl(url: String?)

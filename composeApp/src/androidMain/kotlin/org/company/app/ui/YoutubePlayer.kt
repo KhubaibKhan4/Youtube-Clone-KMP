@@ -72,7 +72,7 @@ fun YoutubeVideoPlayer(
             println("iFramePlayer Error Reason = $error")
         }
     }
-    val playerBuilder = IFramePlayerOptions.Builder().apply {
+    val playerBuilder = IFramePlayerOptions.Builder(mContext).apply {
         controls(1)
         fullscreen(0)
         autoplay(1)
