@@ -84,6 +84,8 @@ kotlin {
             implementation(libs.adaptive)
             implementation(libs.adaptive.layout)
             implementation(libs.adaptive.navigation)
+            implementation(libs.haze)
+            implementation(libs.haze.materials)
         }
 
         commonTest.dependencies {
@@ -139,7 +141,7 @@ kotlin {
 
 android {
     namespace = "org.company.app"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 28

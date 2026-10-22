@@ -1,5 +1,6 @@
 package org.company.app.presentation.ui.screens.library
 
+import org.company.app.presentation.ui.components.common.SignInNotice
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -34,6 +35,8 @@ import org.company.app.provideShortCuts
 class LibraryScreen : Screen {
     @Composable
     override fun Content() {
+        var showSignIn by remember { mutableStateOf(false) }
+        if (showSignIn) SignInNotice(onDismiss = { showSignIn = false })
         var isShortEnabled by remember { mutableStateOf(false) }
         
         Column(
@@ -72,7 +75,7 @@ class LibraryScreen : Screen {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 TextButton(
-                    onClick = {},
+                    onClick = { showSignIn = true },
                     shape = RoundedCornerShape(24.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Blue,

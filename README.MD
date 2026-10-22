@@ -1,8 +1,23 @@
 # YouTube Clone Kotlin Multiplatform
-![YouTube Clone KMP](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/banner_poster.jpg)
+<p align="center">
+  <img src="screenshots/banners/banner_hero.png" alt="YouTube Clone KMP" width="100%" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Kotlin-2.2.20-7F52FF?logo=kotlin&logoColor=white" />
+  <img src="https://img.shields.io/badge/Compose%20Multiplatform-1.9.0-4285F4?logo=jetpackcompose&logoColor=white" />
+  <img src="https://img.shields.io/badge/Platforms-Android%20%7C%20iOS%20%7C%20Desktop%20%7C%20Web-FF0000" />
+  <img src="https://img.shields.io/github/stars/KhubaibKhan4/Youtube-Clone-KMP?style=flat&color=FFC107" />
+  <img src="https://img.shields.io/github/license/KhubaibKhan4/Youtube-Clone-KMP" />
+</p>
 
 ## Overview
 YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices. A Better Version of Original App (A Big Bold Claim).
+
+## ✨ What's New
+- **Glass UI**: a floating, frosted-glass bottom navigation bar powered by [Haze](https://github.com/chrisbanes/haze)
+- **Android build fixed** for the latest YouTube player library, now targeting `compileSdk 36`
+- **Clear sign-in messaging**: the Sign In buttons now explain that this build has no account sign-in yet instead of doing nothing
 
 ## 🚀 Key Features
 - **Cross-Platform Compatibility (Android, iOS, Web & Desktop Applications)**
@@ -65,12 +80,21 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 [<img src="https://user-images.githubusercontent.com/114044633/223920025-83687de0-e463-4c5d-8122-e06e4bb7d40c.png" width="200">](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/raw/master/screenshots/youtube-clone-kmp.apk)
 
 ## Web Preview
-If you want to the live version of YouTube Clone KMP then checkout: 
- ```groovy
-  https://khubaibkhan4.github.io/Youtube-Clone-KMP/
- ```
+Try the live version: **https://khubaibkhan4.github.io/Youtube-Clone-KMP/**
+
+<details>
+<summary><b>More web previews</b></summary>
+
+
+
+</details>
 
 ## Android Screen Shots
+
+<img src="screenshots/banners/banner_android.png" alt="Android screenshots" width="100%" />
+
+<details>
+<summary><b>See all Android screenshots</b></summary>
 
 | ![Screenshot 1](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/1.png) | ![Screenshot 2](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/9.png) | ![Screenshot 3](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/59.png) |
 | --- | --- | --- |
@@ -86,7 +110,14 @@ If you want to the live version of YouTube Clone KMP then checkout:
 | ![Screenshot 31](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/53.png) | ![Screenshot 32](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/62.png) | ![Screenshot 33](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/63.png) |
 | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/65.png) | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/69.png) | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/70.png) | ![Screenshot 34](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/71.png) |
 
+</details>
+
 ## iOS Screen Shots
+
+<img src="screenshots/banners/banner_ios.png" alt="iOS screenshots" width="100%" />
+
+<details>
+<summary><b>See all iOS screenshots</b></summary>
 
 <p align="center">
   <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/76.png" width="30%" />
@@ -136,8 +167,14 @@ If you want to the live version of YouTube Clone KMP then checkout:
   <img src="https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/111.png" width="30%" />
 </p>
 
+</details>
 
 ## Desktop Screen Shots
+
+<img src="screenshots/banners/banner_desktop.png" alt="Desktop screenshots" width="100%" />
+
+<details>
+<summary><b>See all Desktop screenshots</b></summary>
 
 | ![Screenshot 1](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/4.png) | 
 | --- |
@@ -170,7 +207,14 @@ If you want to the live version of YouTube Clone KMP then checkout:
 | ![Screenshot 28](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/61.png) | 
 | ![Screenshot 29](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/66.png) | 
 
+</details>
+
 ## Web Screen Shots
+
+<img src="screenshots/banners/banner_web.png" alt="Web screenshots" width="100%" />
+
+<details>
+<summary><b>See all Web screenshots</b></summary>
 
 | ![Screenshot 1](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/97.png) | 
 | --- |
@@ -186,6 +230,8 @@ If you want to the live version of YouTube Clone KMP then checkout:
 | ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/107.png) |
 | ![Screenshot 4](https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/108.png) |
 
+</details>
+
 ## 🌟 Contributions
 If you wanna contribute, Please make sure to add new features & Then make a PR.Feel free to contribute to the project and stay tuned for more exciting updates!
 
@@ -194,16 +240,16 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 
 # Tech Stack Highlights
 
-- **Kotlin**: `2.0.21`
-- **AGP (Android Gradle Plugin)**: `8.2.2`
-- **Compose**: `1.7.1`
-  - `androidx-appcompat`: `1.7.0`
-  - `androidx-activityCompose`: `1.9.3`
+- **Kotlin**: `2.2.20`
+- **AGP (Android Gradle Plugin)**: `8.9.1`
+- **Compose Multiplatform**: `1.9.0`
+  - `androidx-appcompat`: `1.7.1`
+  - `androidx-activityCompose`: `1.11.0`
   - `compose-uitooling`: `1.7.6`
   - `composeImageLoader`: `1.7.1`
-- **Core Libraries**: `12.1.0`
+- **Android YouTube Player**: `13.0.0`
 - **Kotlinx Libraries**:
-  - `kotlinx-coroutines`: `1.9.0`
+  - `kotlinx-coroutines`: `1.10.2`
   - `kotlinx-serialization`: `1.7.3`
   - `kotlinx-datetime`: `0.6.1`
 - **Networking**:
@@ -214,9 +260,9 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **UI/UX**:
   - `compose-uitooling`: `1.9.3`
 - **Media Handling**:
-  - `media3Ui`: `1.5.1`
-  - `media3ExoplayerDash`: `1.5.1`
-  - `media3Exoplayer`: `1.5.1`
+  - `media3Ui`: `1.8.0`
+  - `media3ExoplayerDash`: `1.8.0`
+  - `media3Exoplayer`: `1.8.0`
 - **Logging**:
   - `napier`: `2.7.1`
 - **Database/Storage**:
@@ -233,6 +279,7 @@ Do you wanna Convert your thoughts into Physicall & Successfull Project Then I'm
 - **Firebase Bom**
   - `firebase-bom`:`33.7.0`
 - **Voyager Navigation**: `1.1.0-beta03`
+- **Haze (glass effects)**: `1.6.10`
 - **Other Utilities**:
   - `official-viewmodel`: `2.8.0-alpha10`
   - `compose-navigagtion`: `2.8.3`

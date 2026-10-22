@@ -1,5 +1,6 @@
 package org.company.app.presentation.ui.components.video_list
 
+import org.company.app.LocalBottomBarPadding
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -508,7 +509,7 @@ fun VideosList(
                         var canFavourite = info.layoutMeta.favouriteEnabled
                         when (info.layoutMeta.layoutType) {
                             is LayoutType.List -> {
-                                LazyVerticalGrid(
+                                LazyVerticalGrid(contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current), 
                                     modifier = Modifier.fillMaxSize(),
                                     state = lazyListState,
                                     columns = GridCells.Adaptive(300.dp)
@@ -528,7 +529,7 @@ fun VideosList(
                                 val columns =
                                     (info.layoutMeta.layoutType as LayoutType.Grid).columns
                                 if (columns > 1) {
-                                    LazyVerticalGrid(
+                                    LazyVerticalGrid(contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current), 
                                         modifier = Modifier.fillMaxSize(),
                                         state = lazyListState,
                                         columns = GridCells.Fixed(columns)
@@ -541,7 +542,7 @@ fun VideosList(
                                         }
                                     }
                                 } else {
-                                    LazyVerticalGrid(
+                                    LazyVerticalGrid(contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current), 
                                         modifier = Modifier.fillMaxSize(),
                                         state = lazyListState,
                                         columns = GridCells.Adaptive(300.dp)
@@ -560,7 +561,7 @@ fun VideosList(
                             }
                         }
                     } ?: run {
-                        LazyVerticalGrid(
+                        LazyVerticalGrid(contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current), 
                             modifier = Modifier.fillMaxSize(),
                             state = lazyListState,
                             columns = GridCells.Adaptive(300.dp)
@@ -619,7 +620,7 @@ fun VideosList(
                 Box(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
+                    LazyVerticalGrid(contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current), columns = GridCells.Adaptive(300.dp)) {
                         videosByCategories?.items?.let { items ->
                             items(items) { videos ->
                                 SearchVideoItemCard(videos)

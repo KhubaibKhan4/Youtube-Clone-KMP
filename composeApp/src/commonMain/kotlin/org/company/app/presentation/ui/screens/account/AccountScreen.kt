@@ -1,5 +1,9 @@
 package org.company.app.presentation.ui.screens.account
 
+import org.company.app.presentation.ui.components.common.SignInNotice
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,6 +57,8 @@ import youtube_clone.composeapp.generated.resources.youtube_music
 object AccountScreen : Tab {
     @Composable
     override fun Content() {
+        var showSignIn by remember { mutableStateOf(false) }
+        if (showSignIn) SignInNotice(onDismiss = { showSignIn = false })
         val navigator = LocalNavigator.current
         val isDark by LocalThemeIsDark.current
         Column(
@@ -107,7 +113,7 @@ object AccountScreen : Tab {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TextButton(
-                    onClick = {},
+                    onClick = { showSignIn = true },
                     enabled = true,
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(
